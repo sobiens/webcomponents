@@ -1,0 +1,29 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master"  CodeBehind="MVCSample.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.MVCSample" %>
+
+<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
+
+
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+        <hgroup class="title">
+        <h1><%: Title %></h1>
+        <br />
+        <h2>General Example</h2>
+    </hgroup>
+    <div class="article" style="float: left;width: 74%;">
+            <link href="/Css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
+            <script src="/Scripts/soby.spservice.js"></script>
+            <script src="/Scripts/soby.ui.components.js"></script>
+            <script src="/Scripts/Tutorials/WebAPI/Grid/general.js"></script>
+            <div id='soby_BooksDiv'></div>
+        <a href="javascript:void(0)" onclick="soby_ShowHideViewSource('mvc')">
+            <img src="/Images/viewsource.png" border="0" width="20px" /> View source
+        </a>
+        <div id="ViewSourceDiv" class="viewsource" codefile="/Scripts/Tutorials/WebAPI/Grid/mvcsample.txt" style="display:none;background-color:ivory">
+            <div class="viewsourcecodefileoutput"></div>
+        </div>
+    </div>
+
+    <aside>
+        <uc1:SobyGridSideMenuControl runat="server" id="SobyGridSideMenuControl" />
+    </aside>
+</asp:Content>

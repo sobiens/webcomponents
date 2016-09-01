@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobiens.Web.Components", "Sobiens.Web.Components\Sobiens.Web.Components.csproj", "{AD99CDA2-C2EA-4082-A3C7-C975CD70F9E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobiens.Web.Components.TutorialServices", "Sobiens.Web.Components.TutorialServices\Sobiens.Web.Components.TutorialServices.csproj", "{A53F8169-B87F-4B39-9947-DB0B76E9CC03}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{684090EC-576D-4761-96EE-B228698393A9}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobiens.Web.Components.Mvc", "Sobiens.Web.Components.Mvc\Sobiens.Web.Components.Mvc.csproj", "{E340E2F2-2469-4074-9F32-DFB5D700A0A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobiens.Web.Components.MVCTutorial", "Sobiens.Web.Components.MVCTutorial\Sobiens.Web.Components.MVCTutorial.csproj", "{6486BE66-C4ED-4A4D-8CDC-67EFBC108EDA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD99CDA2-C2EA-4082-A3C7-C975CD70F9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD99CDA2-C2EA-4082-A3C7-C975CD70F9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD99CDA2-C2EA-4082-A3C7-C975CD70F9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD99CDA2-C2EA-4082-A3C7-C975CD70F9E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A53F8169-B87F-4B39-9947-DB0B76E9CC03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A53F8169-B87F-4B39-9947-DB0B76E9CC03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A53F8169-B87F-4B39-9947-DB0B76E9CC03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A53F8169-B87F-4B39-9947-DB0B76E9CC03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E340E2F2-2469-4074-9F32-DFB5D700A0A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E340E2F2-2469-4074-9F32-DFB5D700A0A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E340E2F2-2469-4074-9F32-DFB5D700A0A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E340E2F2-2469-4074-9F32-DFB5D700A0A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6486BE66-C4ED-4A4D-8CDC-67EFBC108EDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6486BE66-C4ED-4A4D-8CDC-67EFBC108EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6486BE66-C4ED-4A4D-8CDC-67EFBC108EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6486BE66-C4ED-4A4D-8CDC-67EFBC108EDA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

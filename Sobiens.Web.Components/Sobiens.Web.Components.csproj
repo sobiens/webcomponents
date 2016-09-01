@@ -1,0 +1,727 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AD99CDA2-C2EA-4082-A3C7-C975CD70F9E4}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sobiens.Web.Components</RootNamespace>
+    <AssemblyName>Sobiens.Web.Components</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>5f13ab17</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AspNet.ScriptManager.jQuery, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.3.1.0\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.jQuery.UI.Combined, Version=1.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.UI.Combined.1.12.0\lib\net45\AspNet.ScriptManager.jQuery.UI.Combined.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.3.4.13329\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.FriendlyUrls, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Membership.OpenAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Membership.OpenAuth.2.0.1\lib\net45\Microsoft.AspNet.Membership.OpenAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Providers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.2.0.0\lib\net40\System.Web.Providers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="About.aspx" />
+    <Content Include="Account\Login.aspx" />
+    <Content Include="Account\Manage.aspx" />
+    <Content Include="Account\OpenAuthProviders.ascx" />
+    <Content Include="Account\Register.aspx" />
+    <Content Include="Account\RegisterExternalLogin.aspx" />
+    <Content Include="API Documentation\Grid\Grid.aspx" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Bold-webfont.svg" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-BoldItalic-webfont.svg" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Italic-webfont.svg" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Light-webfont.svg" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-LightItalic-webfont.svg" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Regular-webfont.svg" />
+    <Content Include="API Documentation\Grid\index.html" />
+    <Content Include="API Documentation\Grid\scripts\linenumber.js" />
+    <Content Include="API Documentation\Grid\scripts\prettify\Apache-License-2.0.txt" />
+    <Content Include="API Documentation\Grid\scripts\prettify\lang-css.js" />
+    <Content Include="API Documentation\Grid\scripts\prettify\prettify.js" />
+    <Content Include="API Documentation\Grid\soby.ui.components.js.html" />
+    <Content Include="API Documentation\Grid\soby_WebGrid.html" />
+    <Content Include="API Documentation\Grid\styles\jsdoc-default.css" />
+    <Content Include="API Documentation\Grid\styles\prettify-jsdoc.css" />
+    <Content Include="API Documentation\Grid\styles\prettify-tomorrow.css" />
+    <Content Include="Contact.aspx" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Controls\SobyMetroStyleGridSideMenuControl.ascx" />
+    <Content Include="Controls\SobyCarouselSideMenuControl.ascx" />
+    <Content Include="Controls\SobyGridSideMenuControl.ascx" />
+    <Content Include="Css\bootstrap-theme.css" />
+    <Content Include="Css\bootstrap-theme.min.css" />
+    <Content Include="Css\bootstrap.css" />
+    <Content Include="Css\bootstrap.min.css" />
+    <Content Include="Css\main.css" />
+    <Content Include="Css\soby.ui.components.css" />
+    <Content Include="Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\Carousel\Clarissa.jpg" />
+    <Content Include="Images\Carousel\David Copperfield.jpg" />
+    <Content Include="Images\Carousel\Don Quixote.jpg" />
+    <Content Include="Images\Carousel\Frankenstein.jpg" />
+    <Content Include="Images\Carousel\Gulliver’s Travels.jpg" />
+    <Content Include="Images\Carousel\Jane Eyre.jpg" />
+    <Content Include="Images\Carousel\Moby Dick.jpg" />
+    <Content Include="Images\Carousel\Nightmare Abbey.jpg" />
+    <Content Include="Images\Carousel\Northanger Abbey.jpg" />
+    <Content Include="Images\Carousel\Pride and Prejudice.jpg" />
+    <Content Include="Images\Carousel\Robinson Crusoe.jpg" />
+    <Content Include="Images\Carousel\Sybil.jpg" />
+    <Content Include="Images\Carousel\Tom Jones.jpg" />
+    <Content Include="Images\Carousel\Vanity Fair.jpg" />
+    <Content Include="Images\ecbarw.png" />
+    <Content Include="Images\filter.gif" />
+    <Content Include="Images\filteroff.gif" />
+    <Content Include="Images\formatmap16x16.png" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\loading16.gif" />
+    <Content Include="Images\Logo\Sobiens_Logo.gif" />
+    <Content Include="Images\next.gif" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
+    <Content Include="Default.aspx" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\prev.gif" />
+    <Content Include="Images\rsort.gif" />
+    <Content Include="Images\sort.gif" />
+    <Content Include="Images\SORTAZLang.gif" />
+    <Content Include="Images\SORTZALang.gif" />
+    <Content Include="Images\spcommon.png" />
+    <Content Include="Images\Tutorials\Soby_WebGrid_Grouping.png" />
+    <Content Include="Images\viewsource.png" />
+    <Content Include="js\bootstrap.js" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\npm.js" />
+    <Content Include="packages.config" />
+    <Content Include="Css\bootstrap-theme.css.map" />
+    <Content Include="Css\bootstrap-theme.min.css.map" />
+    <Content Include="Css\bootstrap.css.map" />
+    <Content Include="Css\bootstrap.min.css.map" />
+    <Content Include="Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Bold-webfont.eot" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Bold-webfont.woff" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-BoldItalic-webfont.eot" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-BoldItalic-webfont.woff" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Italic-webfont.eot" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Italic-webfont.woff" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Light-webfont.eot" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Light-webfont.woff" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-LightItalic-webfont.eot" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-LightItalic-webfont.woff" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Regular-webfont.eot" />
+    <Content Include="API Documentation\Grid\fonts\OpenSans-Regular-webfont.woff" />
+    <None Include="Scripts\jquery-3.1.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.0.js" />
+    <Content Include="Scripts\jquery-3.1.0.min.js" />
+    <Content Include="Scripts\jquery-3.1.0.slim.js" />
+    <Content Include="Scripts\jquery-3.1.0.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.0.js" />
+    <Content Include="Scripts\jquery-ui-1.12.0.min.js" />
+    <TypeScriptCompile Include="Scripts\main.ts" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\soby.spservice.js" />
+    <Content Include="Scripts\soby.ui.components.js" />
+    <Content Include="Scripts\test.js" />
+    <Content Include="Scripts\Tutorials\SP\soby.carousel.js" />
+    <Content Include="Scripts\Tutorials\SP\soby.customers.js" />
+    <Content Include="Scripts\Tutorials\SP\soby.metroui.js" />
+    <Content Include="Scripts\Tutorials\SP\soby.news.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Carousel\general.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\admin.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\celltemplate.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\customdatabinding.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\editing.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\filtering.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\mvcsample.txt" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\general.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\grouping.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\masterdetails.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\nestedgrids.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\paging.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\selection.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\sorting.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\soby.customers.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\soby.news.js" />
+    <Content Include="Tutorials\SobyCarousel\General.aspx" />
+    <Content Include="Tutorials\SobyGrid\Admin.aspx" />
+    <Content Include="Tutorials\SobyGrid\MVCSample.aspx" />
+    <Content Include="Tutorials\SobyGrid\Grouping.aspx" />
+    <Content Include="Tutorials\SobyGrid\Paging.aspx" />
+    <Content Include="Tutorials\SobyGrid\Themes.aspx" />
+    <Content Include="Tutorials\SobyGrid\ContextMenu.aspx" />
+    <Content Include="Tutorials\SobyGrid\NestedGrids.aspx" />
+    <Content Include="Tutorials\SobyGrid\DragDrop.aspx" />
+    <Content Include="Tutorials\SobyGrid\Selection.aspx" />
+    <Content Include="Tutorials\SobyGrid\Columns.aspx" />
+    <Content Include="Tutorials\SobyGrid\CellTemplate.aspx" />
+    <Content Include="Tutorials\SobyGrid\Aggregates.aspx" />
+    <Content Include="Tutorials\SobyGrid\CustomDataBinding.aspx" />
+    <Content Include="Tutorials\SobyGrid\Editing.aspx" />
+    <Content Include="Tutorials\SobyGrid\Filtering.aspx" />
+    <Content Include="Tutorials\SobyGrid\Sorting.aspx" />
+    <Content Include="Tutorials\SobyGrid\Localization.aspx" />
+    <Content Include="Tutorials\SobyGrid\ModifyRecords.aspx" />
+    <Content Include="Tutorials\SobyGrid\Master-Details.aspx" />
+    <Content Include="Tutorials\SobyGrid\KeyboardNavigation.aspx" />
+    <Content Include="Tutorials\SobyMetroStyleGrid\General.aspx" />
+    <Content Include="Tutorials\SobyWizard\General.aspx" />
+    <Content Include="Tutorials\WebComponents.aspx" />
+    <Content Include="Tutorials\SobyGrid\Getting Started.aspx" />
+    <Content Include="ViewSwitcher.ascx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.0.min.map" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Site.Mobile.Master" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API Documentation\Grid\Grid.aspx.cs">
+      <DependentUpon>Grid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="API Documentation\Grid\Grid.aspx.designer.cs">
+      <DependentUpon>Grid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Manage.aspx.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Manage.aspx.designer.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\OpenAuthProviders.ascx.cs">
+      <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\OpenAuthProviders.ascx.designer.cs">
+      <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\RegisterExternalLogin.aspx.cs">
+      <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
+      <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobyMetroStyleGridSideMenuControl.ascx.cs">
+      <DependentUpon>SobyMetroStyleGridSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyMetroStyleGridSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyMetroStyleGridSideMenuControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobyCarouselSideMenuControl.ascx.cs">
+      <DependentUpon>SobyCarouselSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyCarouselSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyCarouselSideMenuControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobyGridSideMenuControl.ascx.cs">
+      <DependentUpon>SobyGridSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyGridSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyGridSideMenuControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.designer.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyCarousel\General.aspx.cs">
+      <DependentUpon>General.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyCarousel\General.aspx.designer.cs">
+      <DependentUpon>General.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Admin.aspx.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Admin.aspx.designer.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\MVCSample.aspx.cs">
+      <DependentUpon>MVCSample.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\MVCSample.aspx.designer.cs">
+      <DependentUpon>MVCSample.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Grouping.aspx.cs">
+      <DependentUpon>Grouping.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Grouping.aspx.designer.cs">
+      <DependentUpon>Grouping.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Paging.aspx.cs">
+      <DependentUpon>Paging.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Paging.aspx.designer.cs">
+      <DependentUpon>Paging.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Themes.aspx.cs">
+      <DependentUpon>Themes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Themes.aspx.designer.cs">
+      <DependentUpon>Themes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\ContextMenu.aspx.cs">
+      <DependentUpon>ContextMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\ContextMenu.aspx.designer.cs">
+      <DependentUpon>ContextMenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\NestedGrids.aspx.cs">
+      <DependentUpon>NestedGrids.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\NestedGrids.aspx.designer.cs">
+      <DependentUpon>NestedGrids.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\DragDrop.aspx.cs">
+      <DependentUpon>DragDrop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\DragDrop.aspx.designer.cs">
+      <DependentUpon>DragDrop.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Selection.aspx.cs">
+      <DependentUpon>Selection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Selection.aspx.designer.cs">
+      <DependentUpon>Selection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Columns.aspx.cs">
+      <DependentUpon>Columns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Columns.aspx.designer.cs">
+      <DependentUpon>Columns.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\CellTemplate.aspx.cs">
+      <DependentUpon>CellTemplate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\CellTemplate.aspx.designer.cs">
+      <DependentUpon>CellTemplate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Aggregates.aspx.cs">
+      <DependentUpon>Aggregates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Aggregates.aspx.designer.cs">
+      <DependentUpon>Aggregates.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\CustomDataBinding.aspx.cs">
+      <DependentUpon>CustomDataBinding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\CustomDataBinding.aspx.designer.cs">
+      <DependentUpon>CustomDataBinding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Editing.aspx.cs">
+      <DependentUpon>Editing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Editing.aspx.designer.cs">
+      <DependentUpon>Editing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Filtering.aspx.cs">
+      <DependentUpon>Filtering.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Filtering.aspx.designer.cs">
+      <DependentUpon>Filtering.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Sorting.aspx.cs">
+      <DependentUpon>Sorting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Sorting.aspx.designer.cs">
+      <DependentUpon>Sorting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Localization.aspx.cs">
+      <DependentUpon>Localization.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Localization.aspx.designer.cs">
+      <DependentUpon>Localization.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\ModifyRecords.aspx.cs">
+      <DependentUpon>ModifyRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\ModifyRecords.aspx.designer.cs">
+      <DependentUpon>ModifyRecords.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Master-Details.aspx.cs">
+      <DependentUpon>Master-Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Master-Details.aspx.designer.cs">
+      <DependentUpon>Master-Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\KeyboardNavigation.aspx.cs">
+      <DependentUpon>KeyboardNavigation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\KeyboardNavigation.aspx.designer.cs">
+      <DependentUpon>KeyboardNavigation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyMetroStyleGrid\General.aspx.cs">
+      <DependentUpon>General.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyMetroStyleGrid\General.aspx.designer.cs">
+      <DependentUpon>General.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyWizard\General.aspx.cs">
+      <DependentUpon>General.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyWizard\General.aspx.designer.cs">
+      <DependentUpon>General.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\WebComponents.aspx.cs">
+      <DependentUpon>WebComponents.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\WebComponents.aspx.designer.cs">
+      <DependentUpon>WebComponents.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.designer.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Scripts\Tutorials\StaticData\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\Web.config" />
+    <Content Include="Site.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\jqueryui.d.ts" />
+    <TypeScriptCompile Include="Scripts\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\soby.spservice.ts" />
+    <TypeScriptCompile Include="Scripts\soby.ui.components.ts" />
+    <TypeScriptCompile Include="Scripts\test.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.carousel.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.customers.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.metroui.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.news.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\admin.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\celltemplate.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\filtering.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\editing.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\customdatabinding.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\grouping.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\selection.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\nestedgrids.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\paging.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\sorting.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\general.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\masterdetails.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Carousel\general.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\soby.customers.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\MetroStyleGrid\general.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\soby.news.ts" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptModuleKind>commonjs</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
+    <TypeScriptJsxEmit>
+    </TypeScriptJsxEmit>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>5519</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:5519/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

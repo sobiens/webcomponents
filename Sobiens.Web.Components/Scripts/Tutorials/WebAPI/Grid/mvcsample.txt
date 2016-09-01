@@ -1,0 +1,41 @@
+@using Sobiens.Web.Components.Mvc
+@using Sobiens.Web.Components.Mvc.SobyGrid
+@{
+    ViewBag.Title = "MVC Tutorial";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+        <p>@(Html.SobyGrid()
+                    .ID("grid")
+                    .Width("100%")
+                    .Height("500px")
+                    .PrimaryKey("ID")
+                    .ImageUrl("http://localhost:5519/Images")
+                    .SchemaColumns((schemaColumns) =>
+                    {
+                        schemaColumns.Add("Id", FieldTypes.Number);
+                        schemaColumns.Add("Title", FieldTypes.Number);
+                        schemaColumns.Add("Year", FieldTypes.Number);
+                        schemaColumns.Add("Price", FieldTypes.Number);
+                        schemaColumns.Add("Genre", FieldTypes.Number);
+                    })
+                    .Columns(columns =>
+                    {
+                        columns.Add("Title", "Title", ShowFieldsOn.All, "", "", true, true, true);
+                        columns.Add("Year", "Year", ShowFieldsOn.All, "", "", true, true, true);
+                        columns.Add("Price", "Price", ShowFieldsOn.All, "", "", true, true, true);
+                    })
+                    .DataSource((transports) => { 
+                        transports.SetAdd("http://localhost:7287/api/Books", "json", "application/json; charset=utf-8", "GET");
+                        transports.SetDelete("http://localhost:7287/api/Books(#key)", "json", "application/json; charset=utf-8", "GET");
+                        transports.SetRead ("http://localhost:7287/api/Books", "json", "application/json; charset=utf-8", "GET");
+                        transports.SetUpdate("http://localhost:7287/api/Books(#key)", "json", "application/json; charset=utf-8", "GET");
+                    })
+                    .Render())  </p>

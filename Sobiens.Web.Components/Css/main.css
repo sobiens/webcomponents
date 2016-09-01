@@ -1,0 +1,29 @@
+﻿.api-information-table div[class*="col-"]{border:1px solid #bbb}
+.api-information-headerrow div{background-color:#ededed}
+.api-information-headerrow div[class*="col-"]{font-weight:bold}
+.soby-apidocumentation article, .soby-apidocumentation .prettyprint{ width:100%}    
+.soby-apidocumentation section{ background-color:transparent;border-bottom:none}
+.soby-apidocumentation { background-color:white}    
+.soby-apidocumentation h4{ padding-top:10px;}    
+dl.details{display:none}
+
+.featured .content-wrapper {
+    /* background-color: #7ac0da; */
+    background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+    background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+    /* background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6)); */
+    background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+    background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+}
+header{
+    /* background-color: #7ac0da; */
+    background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+    background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+    /* background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6)); */
+    background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+    background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+    height:100px;
+}
+.main-content, html, #body, footer {
+    background-color:white;
+}
