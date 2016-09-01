@@ -3,6 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+
 // VERSION 1.0.1.3
 function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
     return $.ajax({
