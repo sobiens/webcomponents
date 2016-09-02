@@ -159,7 +159,7 @@ function soby_PopulateGridWCFDataBinding() {
     var customerService = new soby_WebServiceService(customerDataSourceBuilder);
     customerService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWCFUrl() + "/Customers", "json", "application/json; charset=utf-8", "GET");
     var customerGrid = new soby_WebGrid("#soby_CustomersDiv", "Customers", customerService, "There is no record found.");
-    customerGrid.ImagesFolderUrl = "/Images";
+    customerGrid.ImagesFolderUrl = "/media/images";
     customerGrid.IsEditable = false;
     customerGrid.IsSelectable = false;
     customerGrid.AddKeyField("ID");
@@ -183,7 +183,7 @@ function soby_PopulateGridWCFDataBinding() {
     var customerAddressesService = new soby_WebServiceService(customerAddressesDataSourceBuilder);
     customerAddressesService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWCFUrl() + "/CustomerAddresses", "json", "application/json; charset=utf-8", "GET");
     var customerAddressesGrid = new soby_WebGrid("#soby_CustomerAddressesDiv", "Addresses", customerAddressesService, "There is no record found.");
-    customerAddressesGrid.ImagesFolderUrl = "/Images";
+    customerAddressesGrid.ImagesFolderUrl = "/media/images";
     customerAddressesGrid.DisplayTitle = false;
     customerAddressesGrid.IsSelectable = false;
     customerAddressesGrid.IsEditable = false;
@@ -200,7 +200,7 @@ function soby_PopulateGridWCFDataBinding() {
     var customerPhonesService = new soby_WebServiceService(customerPhonesDataSourceBuilder);
     customerPhonesService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWCFUrl() + "/customerPhones", "json", "application/json; charset=utf-8", "GET");
     var customerPhonesGrid = new soby_WebGrid("#soby_CustomerPhonesDiv", "Phones", customerPhonesService, "There is no record found.");
-    customerPhonesGrid.ImagesFolderUrl = "/Images";
+    customerPhonesGrid.ImagesFolderUrl = "/media/images";
     customerPhonesGrid.DisplayTitle = false;
     customerPhonesGrid.IsSelectable = false;
     customerPhonesGrid.IsEditable = false;

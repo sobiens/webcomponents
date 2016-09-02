@@ -208,7 +208,8 @@
     <Content Include="Css\bootstrap.css" />
     <Content Include="Css\bootstrap.min.css" />
     <Content Include="Css\main.css" />
-    <Content Include="Css\soby.ui.components.css" />
+    <Content Include="download\Versions.aspx" />
+    <Content Include="media\css\soby.ui.components.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
@@ -226,14 +227,14 @@
     <Content Include="Images\Carousel\Sybil.jpg" />
     <Content Include="Images\Carousel\Tom Jones.jpg" />
     <Content Include="Images\Carousel\Vanity Fair.jpg" />
-    <Content Include="Images\ecbarw.png" />
-    <Content Include="Images\filter.gif" />
-    <Content Include="Images\filteroff.gif" />
-    <Content Include="Images\formatmap16x16.png" />
+    <Content Include="media\images\ecbarw.png" />
+    <Content Include="media\images\filter.gif" />
+    <Content Include="media\images\filteroff.gif" />
+    <Content Include="media\images\formatmap16x16.png" />
     <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\loading16.gif" />
+    <Content Include="media\images\loading16.gif" />
     <Content Include="Images\Logo\Sobiens_Logo.gif" />
-    <Content Include="Images\next.gif" />
+    <Content Include="media\images\next.gif" />
     <Content Include="Images\orderedList0.png" />
     <Content Include="Images\orderedList1.png" />
     <Content Include="Images\orderedList2.png" />
@@ -247,17 +248,18 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Images\prev.gif" />
-    <Content Include="Images\rsort.gif" />
-    <Content Include="Images\sort.gif" />
-    <Content Include="Images\SORTAZLang.gif" />
-    <Content Include="Images\SORTZALang.gif" />
-    <Content Include="Images\spcommon.png" />
+    <Content Include="media\images\prev.gif" />
+    <Content Include="media\images\rsort.gif" />
+    <Content Include="media\images\sort.gif" />
+    <Content Include="media\images\SORTAZLang.gif" />
+    <Content Include="media\images\SORTZALang.gif" />
+    <Content Include="media\images\spcommon.png" />
     <Content Include="Images\Tutorials\Soby_WebGrid_Grouping.png" />
     <Content Include="Images\viewsource.png" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\npm.js" />
+    <Content Include="media\js\jquery-3.1.0.js" />
     <Content Include="packages.config" />
     <Content Include="Css\bootstrap-theme.css.map" />
     <Content Include="Css\bootstrap-theme.min.css.map" />
@@ -279,6 +281,7 @@
     <Content Include="API Documentation\Grid\fonts\OpenSans-LightItalic-webfont.woff" />
     <Content Include="API Documentation\Grid\fonts\OpenSans-Regular-webfont.eot" />
     <Content Include="API Documentation\Grid\fonts\OpenSans-Regular-webfont.woff" />
+    <Content Include="download\Sobiens.Web.Components 1.0.3.2.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
@@ -289,8 +292,8 @@
     <TypeScriptCompile Include="Scripts\main.ts" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\soby.spservice.js" />
-    <Content Include="Scripts\soby.ui.components.js" />
+    <Content Include="media\js\soby.spservice.js" />
+    <Content Include="media\js\soby.ui.components.js" />
     <Content Include="Scripts\test.js" />
     <Content Include="Scripts\Tutorials\SP\soby.carousel.js" />
     <Content Include="Scripts\Tutorials\SP\soby.customers.js" />
@@ -438,6 +441,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="download\Versions.aspx.cs">
+      <DependentUpon>Versions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="download\Versions.aspx.designer.cs">
+      <DependentUpon>Versions.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -651,8 +661,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\jqueryui.d.ts" />
     <TypeScriptCompile Include="Scripts\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\soby.spservice.ts" />
-    <TypeScriptCompile Include="Scripts\soby.ui.components.ts" />
+    <TypeScriptCompile Include="media\js\soby.spservice.ts" />
+    <TypeScriptCompile Include="media\js\soby.ui.components.ts" />
     <TypeScriptCompile Include="Scripts\test.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.carousel.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.customers.ts" />

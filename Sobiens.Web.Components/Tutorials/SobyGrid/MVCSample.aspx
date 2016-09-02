@@ -10,7 +10,7 @@
         <h2>General Example</h2>
     </hgroup>
     <div class="article" style="float: left;width: 74%;">
-            <link href="/Css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
+            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>            <link href="/Css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/Scripts/soby.spservice.js"></script>
             <script src="/Scripts/soby.ui.components.js"></script>
             <script src="/Scripts/Tutorials/WebAPI/Grid/general.js"></script>

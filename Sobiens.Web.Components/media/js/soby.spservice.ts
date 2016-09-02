@@ -79,15 +79,15 @@ class SobyFilters implements ISobyFilter {
     Filters = new Array();
     AddFilter(fieldName: string, filterValue: string, fieldType: number, filterType: number, lookupID: boolean) {
         var sobyFilter = new SobyFilter(fieldName, filterValue, fieldType, filterType, lookupID);
-        this.Filters[this.Filters.length] = sobyFilter;
+        this.Filters.push(sobyFilter);
     }
 
     AddFilterObject(filter: SobyFilter) {
-        this.Filters[this.Filters.length] = filter;
+        this.Filters.push(filter);
     }
 
     AddFilterCollection(sobyFilters: SobyFilters) {
-        this.Filters[this.Filters.length] = sobyFilters;
+        this.Filters.push(sobyFilters);
         /*
         for (var i = 0; i < sobyFilters.Filters.length; i++) {
             this.Filters[this.Filters.length] = sobyFilters.Filters[i];
@@ -409,6 +409,10 @@ class SobyGroupByField {
 class SobyHeaders extends Array<SobyHeader> {
 }
 class SobyHeader {
+    constructor(key: string, value: string) {
+        this.Key = key;
+        this.Value = value;
+    }
     Key: string;
     Value: string;
 }
@@ -514,7 +518,8 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
     }
 
     AddHeader(key: string, value: string) {
-        this.Headers[this.Headers.length] = new WSHeader(key, value);
+        var header: SobyHeader = new SobyHeader(key, value);
+        this.Headers.push(header);
     }
 
     AddSchemaField(fieldName: string, fieldType: number, args) {
@@ -1041,6 +1046,8 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
             var viewField = this.SchemaFields[i];
             builder.AddSchemaField(viewField.FieldName, viewField.FieldType, viewField.Args);
         }
+
+        builder.Filters = this.Filters.Clone();
 
         for (var i = 0; i < this.Headers.length; i++) {
             var header = this.Headers[i];

@@ -4,6 +4,7 @@ $(function () {
 function soby_PopulateGridGeneral() {
     var bookDataSourceBuilder = new soby_WSBuilder();
     bookDataSourceBuilder.Filters = new SobyFilters(false);
+    //    bookDataSourceBuilder.Filters.AddFilter("Title", "test", SobyFieldTypes.Text, SobyFilterTypes.Equal, null);
     bookDataSourceBuilder.AddSchemaField("Id", SobyFieldTypes.Number, null);
     bookDataSourceBuilder.AddSchemaField("Title", SobyFieldTypes.Text, null);
     bookDataSourceBuilder.AddSchemaField("Year", SobyFieldTypes.Number, null);
@@ -16,7 +17,7 @@ function soby_PopulateGridGeneral() {
     bookService.Transport.Update = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "PUT");
     bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "DELETE");
     var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
-    bookGrid.ImagesFolderUrl = "/Images";
+    bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddKeyField("Id");
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null);

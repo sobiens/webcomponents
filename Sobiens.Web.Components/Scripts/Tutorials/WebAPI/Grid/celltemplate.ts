@@ -18,7 +18,7 @@ function soby_PopulateGridCellTemplate() {
     bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "DELETE");
 
     var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
-    bookGrid.ImagesFolderUrl = "/Images";
+    bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddKeyField("Id");
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
     var cellTemplate1 = { TemplateType: "CellContent", PopupLinkText: "More info", Template: "<div><div style='background-color: blue;color: white;padding: 5px;float: left;width:150px'><strong>#{Genre} - #{Year}</strong></div><div style='background-color: black;color: white;padding: 5px;float: left;text-align:right;width:30px'>$#{Price}</div></div>" };

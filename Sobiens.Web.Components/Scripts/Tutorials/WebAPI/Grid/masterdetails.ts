@@ -13,7 +13,7 @@ function soby_PopulateGridMasterDetails() {
 
 
     var authorGrid = new soby_WebGrid("#soby_AuthorsDiv", "Authors", authorService, "There is no record found.");
-    authorGrid.ImagesFolderUrl = "/Images";
+    authorGrid.ImagesFolderUrl = "/media/images";
     authorGrid.AddColumn("Name", "Name", SobyShowFieldsOn.All, null, null, true, true, false, null);
     authorGrid.IsSelectable = false;
     authorGrid.IsEditable = false;
@@ -30,7 +30,7 @@ function soby_PopulateGridMasterDetails() {
     authorBooksService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
 
     var authorBooksGrid = new soby_WebGrid("#soby_CustomerPhonesDiv", "Books", authorBooksService, "There is no record found.");
-    authorBooksGrid.ImagesFolderUrl = "/Images";
+    authorBooksGrid.ImagesFolderUrl = "/media/images";
     authorBooksGrid.DisplayTitle = false;
     authorBooksGrid.IsSelectable = false;
     authorBooksGrid.IsEditable = false;

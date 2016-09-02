@@ -60,7 +60,7 @@ function soby_PopulateEntityGrid(entitySetName, entitySetType) {
 
     var entityGrid = new soby_WebGrid("#soby_AdminEntityGridDiv", entitySetName, entityService, "There is no record found.");
     entityGrid.AddKeyField(keyFieldName);
-    entityGrid.ImagesFolderUrl = "/Images";
+    entityGrid.ImagesFolderUrl = "/media/images";
     for (var i = 0; i < properties.length; i++) {
         var property = $(properties[i]);
         var name = property.attr("Name");
@@ -82,7 +82,6 @@ function soby_PopulateEntityGrid(entitySetName, entitySetType) {
 
             var referencedPropertyTitleFieldName = referencedProperty;
             var navigationPropertyEntitySetProperties = soby_SchemaXml.find("Schema EntityType[Name='" + navigationPropertyName + "'] Property[Name!='" + referencedProperty + "']");
-            console.log(navigationPropertyEntitySetProperties)
             if (navigationPropertyEntitySetProperties.length > 0)
                 referencedPropertyTitleFieldName = $(navigationPropertyEntitySetProperties[0]).attr("Name");
             
