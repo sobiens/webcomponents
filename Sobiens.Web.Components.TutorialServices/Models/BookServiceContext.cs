@@ -29,5 +29,10 @@ namespace Sobiens.Web.Components.TutorialServices.Models
 
         public System.Data.Entity.DbSet<Sobiens.Web.Components.TutorialServices.Models.Phone> Phones { get; set; }
 
+        public System.Data.Entity.DbSet<Sobiens.Web.Components.TutorialServices.Models.Product> Products { get; set; }
+
+        public System.Data.Entity.DbSet<Sobiens.Web.Components.TutorialServices.Models.Order> Orders { get; set; }
+
+        public System.Data.Entity.DbSet<Sobiens.Web.Components.TutorialServices.Models.OrderItem> OrderItems { get; set; }
     }
 }

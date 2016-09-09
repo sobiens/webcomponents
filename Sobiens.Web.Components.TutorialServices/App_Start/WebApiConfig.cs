@@ -16,6 +16,13 @@ namespace Sobiens.Web.Components.TutorialServices
             ODataModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Book>("Books");
             builder.EntitySet<Author>("Authors");
+            builder.EntitySet<Customer>("CustomersOData");
+            builder.EntitySet<Address>("CustomerAddressesOData");
+            builder.EntitySet<Phone>("CustomerPhonesOData");
+            builder.EntitySet<Product>("Products");
+            builder.EntitySet<Order>("Orders");
+            builder.EntitySet<OrderItem>("OrderItems");
+            
             config.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: "api",
