@@ -5,7 +5,38 @@
 .soby-apidocumentation section{ background-color:transparent;border-bottom:none}
 .soby-apidocumentation { background-color:white}    
 .soby-apidocumentation h4{ padding-top:10px;}    
+.html .tag_start{
+    color: maroon;
+    font-weight: bold;
+}
+.html .attr_name{
+    color: red;
+}
+.html .attr_value{
+    color: #3A3AFF;
+}
+.js .code_keyword{
+    color: #00f;
+}
+.css .class_name{
+    color: maroon;
+    font-weight: bold;
+}
+.css .attr_name{
+    color: red;
+}
+.css .attr_value{
+    color: #3A3AFF;
+}
+.css .code_comment{
+    color: green;
+}
+
 dl.details{display:none}
+
+.featured + .main-content {
+    background: none;
+}
 
 .featured .content-wrapper {
     /* background-color: #7ac0da; */
@@ -17,13 +48,42 @@ dl.details{display:none}
 }
 header{
     /* background-color: #7ac0da; */
-    background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-    background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+    /*  background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+    background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);*/
     /* background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6)); */
-    background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-    background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+/*     background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+    background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);*/
     height:100px;
+}
+header .content-wrapper {
+    padding-top: 5px;
 }
 .main-content, html, #body, footer {
     background-color:white;
+}
+.main-content {
+    padding-top: 0px; 
+}
+
+a.navbar-brand {
+    padding:0px;
+}
+
+@media (min-width:768px) { /* don't break navbar on small screen */
+    .nav_center {
+        width: 960px /* need to found your width according to your entry*/
+    }
+}
+
+body{
+ font-family:"Segoe UI", Helvetica, Verdana, sans-serif !important;
+}
+h1{font-size: 34px !important;}
+hgroup.title {
+    margin-bottom: 0px;
+}
+header{
+    height:initial;
+}
+nav.navbar-default{
 }

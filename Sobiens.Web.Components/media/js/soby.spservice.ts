@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.1.3
+﻿// VERSION 1.0.4.2
 function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
     return $.ajax({
         type: method,
@@ -65,8 +65,30 @@ class SobyFilterTypesObject {
     BeginsWith: number = 8;
     Membership: number = 9;
 }
+class SobyAggregateTypesObject {
+    Average: number = 0;
+    Count: number = 1;
+    Max: number = 2;
+    Min: number = 3;
+    Sum: number = 4;
+    GetAggregateTypeName(aggregateType: number) {
+        if (aggregateType == 0)
+            return "Average";
+        else if (aggregateType == 1)
+            return "Count";
+        else if (aggregateType == 2)
+            return "Max";
+        else if (aggregateType == 3)
+            return "Min";
+        else if (aggregateType == 4)
+            return "Sum";
+
+    }
+}
+
 var SobyFieldTypes = new SobyFieldTypesObject();
 var SobyFilterTypes = new SobyFilterTypesObject();
+var SobyAggregateTypes = new SobyAggregateTypesObject();
 interface ISobyFilter {
 }
 
@@ -388,6 +410,17 @@ class SobyOrderByField {
     FieldName: string;
     IsAsc: boolean = false;
 }
+class SobyAggregateFields extends Array<SobyAggregateField> {
+    ContainsField(fieldName: string) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+                return true;
+        }
+
+        return false;
+    }
+}
+
 class SobyGroupByFields extends Array<SobyGroupByField> {
     ContainsField(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
@@ -398,6 +431,15 @@ class SobyGroupByFields extends Array<SobyGroupByField> {
         return false;
     }
 }
+class SobyAggregateField{
+    constructor(fieldName: string, aggregateType: number) {
+        this.FieldName = fieldName;
+        this.AggregateType = aggregateType;
+    }
+    FieldName: string;
+    AggregateType: number = 0;
+}
+
 class SobyGroupByField {
     constructor(fieldName: string, isAsc: boolean) {
         this.FieldName = fieldName;
@@ -871,6 +913,8 @@ class soby_WebServiceService implements soby_ServiceInterface {
             this.DataSourceBuilderTemp.AddOrderFields(this.OrderByFields);
 //        if (this.SortFieldName != null && this.SortFieldName != "")
 //            this.DataSourceBuilderTemp.AddOrderField(this.SortFieldName, this.IsAscending);
+        console.log("this.Filters:")
+        console.log(this.Filters)
         if (this.Filters.Filters.length > 0) {
             this.DataSourceBuilderTemp.Filters.AddFilterCollection(this.Filters);
         }

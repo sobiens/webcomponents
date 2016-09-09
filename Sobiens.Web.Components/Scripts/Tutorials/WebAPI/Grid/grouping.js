@@ -1,3 +1,4 @@
+var bookGrid = null;
 $(function () {
     soby_PopulateGridGrouping();
 });
@@ -15,7 +16,7 @@ function soby_PopulateGridGrouping() {
     bookService.Transport.Add = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "POST");
     bookService.Transport.Update = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "PUT");
     bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "DELETE");
-    var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
+    bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
     bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.IsGroupable = true;
     bookGrid.AddKeyField("Id");
@@ -26,6 +27,7 @@ function soby_PopulateGridGrouping() {
     bookGrid.AddColumn("AuthorId", "Author", SobyShowFieldsOn.All, function (item) {
         return item.Author.Name;
     }, null, true, true, true, null);
+    bookGrid.AddGroupByField("Genre", true);
     bookGrid.Initialize(true);
 }
 //# sourceMappingURL=general.js.map 

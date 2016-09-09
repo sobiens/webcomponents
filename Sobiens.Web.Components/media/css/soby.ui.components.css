@@ -1,17 +1,152 @@
 ﻿/*********************** SOBY GRID *****************************/
-.soby_grid.active{border:solid 1px blue } 
-.soby_griddatarow.alt { background-color: #ededed } 
-.soby_griddatarow.selected { background-color: rgba( 156,206,240,0.5 ); color:white;} 
-.soby_gridcell.selected { background-color: #0072c6; color:white;} 
-.soby_tabletitle { font-weight: bold;font-size:14px;color:#0072C6;line-height:1.4 } 
-.soby_tabheader { float:left;padding:5px;background-color:#e6e6e6;margin-right:2px;border:1px solid #aaaaaa } 
-.soby_tabheader.active {background-color:white;border-bottom:0px solid} 
-.soby_tabcontent {border:1px solid #aaaaaa} 
-.soby_gridheadercell:hover, .soby_gridheadercell:hover a {
-    background-color:rgba( 205,230,247,0.5 );
-}
-.soby_griddatarow.selected .soby-list-selectitem.soby-list-selectitem, .soby-itmHoverEnabled:hover .soby-list-selectitem.soby-list-selectitem  {
+/*
+    .datagrid table td, .datagrid table th { padding: 3px 10px; }
+    .datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; color:#FFFFFF; font-size: 15px; font-weight: bold; border-left: 1px solid #0070A8; }
+     .datagrid table thead th:first-child { border: none; }
+    .datagrid table tbody td { color: #00496B; border-left: 1px solid #E1EEF4;font-size: 12px;font-weight: normal; }
+    .datagrid table tbody .alt td { background: #E1EEF4; color: #00496B; }
+    .datagrid table tbody td:first-child { border-left: none; }
+    .datagrid table tbody tr:last-child td { border-bottom: none; }
+    .datagrid table tfoot td div { border-top: 1px solid #006699;background: #E1EEF4;} 
+    .datagrid table tfoot td { padding: 0; font-size: 12px }
+     .datagrid table tfoot td div{ padding: 2px; }
+    .datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }
+    .datagrid table tfoot  li { display: inline; }
+    .datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #006699;-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; }
+    .datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #006699; color: #FFFFFF; background: none; background-color:#00557F;}div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
+    */
+    /**************** Classic Theme **************/
+    .soby_grid.classic.active{border:solid 1px blue } 
+    .soby_grid.classic .soby_griddatarow.alt {  } 
+    .soby_grid.classic .soby_griddatarow.selected { background-color: rgba( 123,179,211,0.5 ); color:white;}
+    .soby_grid.classic tbody { border: 1px solid rgba( 156,206,240,0.5 ); }
+    .soby_grid.classic .soby_gridcell
+        , .soby_grid.classic .soby_gridaggregatecell
+        , .soby_grid.classic .soby_selectitemcell {
+            overflow: hidden;    border-bottom: 1px solid rgba( 156,206,240,0.5 );    border-right: 1px solid rgba( 156,206,240,0.5 );    border-top-width: 0;    border-left-width: 0;    padding: 3px 6px;
+    }
+    .soby_grid.classic .soby_gridcell.selected { background-color: #0072c6; color:white;} 
+    .soby_grid.classic .soby_tabletitle { color:#0072C6; } 
+    .soby_grid.classic .soby_tabheader { background-color:#e6e6e6;border:1px solid #aaaaaa } 
+    .soby_grid.classic .soby_tabheader.active {background-color:white;} 
+    .soby_grid.classic .soby_tabcontent {border:1px solid #aaaaaa} 
+    .soby_grid.classic .soby_gridheadercell:hover, .soby_grid.classic .soby_gridheadercell:hover a { background-color:rgba( 205,230,247,0.5 ); }
+    .soby_grid.classic .soby-itmHoverEnabled:hover { background-color:rgba( 205,230,247,0.5 );}
+    .soby_grid.classic .soby_griddatarow.selected .soby-itmHoverEnabled:hover { background-color:rgba( 156,206,240,0.5 ); }
+    .soby_grid.classic .soby_griddatarow.selected .soby_selectitemcell, .soby_grid.classic .soby_gridheadercell { background-color:#0072c6;}
+    .soby_grid.classic .soby_gridheaderlink { color:white}
+    .sobygridmenu.classic{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    .sobyitemdialog.classic { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    /*********************************************/
 
+    /**************** Winter Snow Theme **************/
+    .soby_grid.snow.active{border:solid 1px blue } 
+    .soby_grid.snow .soby_griddatarow.alt {  } 
+    .soby_grid.snow .soby_griddatarow.selected { background-color: #3b82bf; color:white;}
+    .soby_grid.snow tbody { border: 1px solid #9cb6d9; }
+    .soby_grid.snow .soby_gridcell, .soby_grid.snow .soby_selectitemcell {    overflow: hidden;    border-bottom: 1px solid #9cb6d9;    border-right: 1px solid #9cb6d9;    border-top-width: 0;    border-left-width: 0;    padding: 3px 6px;}
+    .soby_grid.snow .soby_gridcell.selected { background-color: #3b74bf; color:white;} 
+    .soby_grid.snow .soby_tabletitle { color:#3b74bf; } 
+    .soby_grid.snow .soby_tabheader { background-color:#3b74bf;border:1px solid #aaaaaa } 
+    .soby_grid.snow .soby_tabheader.active {background-color:white;} 
+    .soby_grid.snow .soby_gridheadercell:hover, .soby_grid.snow .soby_gridheadercell:hover a { background-color:#1f5aa6; }
+    .soby_grid.snow .soby_tabcontent {border:1px solid #aaaaaa} 
+    .soby_grid.snow .soby-itmHoverEnabled:hover { background-color:#e9ebf2;}
+    .soby_grid.snow .soby_griddatarow.selected .soby-itmHoverEnabled:hover { background-color:#9cb6d9; }
+    .soby_grid.snow .soby_griddatarow.selected .soby_selectitemcell, .soby_grid.snow .soby_gridheadercell { background-color:#e9ebf2;}
+    .soby_grid.snow .soby_gridheaderlink { color:white}
+    .sobygridmenu.snow{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    .sobyitemdialog.snow { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    /*********************************************/
+
+    /**************** Sunrise Theme **************/
+    .soby_grid.sunrise.active{border:solid 1px blue } 
+    .soby_grid.sunrise .soby_griddatarow.alt {  } 
+    .soby_grid.sunrise .soby_griddatarow.selected { background-color: #4666a6; color:white;}
+    .soby_grid.sunrise tbody { border: 1px solid #2d4d7c; }
+    .soby_grid.sunrise .soby_gridcell, .soby_grid.sunrise .soby_selectitemcell {    overflow: hidden;    border-bottom: 1px solid #2d4d7c;    border-right: 1px solid #2d4d7c;    border-top-width: 0;    border-left-width: 0;    padding: 3px 6px;}
+    .soby_grid.sunrise .soby_gridcell.selected { background-color: #89abd9; color:white;} 
+    .soby_grid.sunrise .soby_tabletitle { color:#89abd9; } 
+    .soby_grid.sunrise .soby_tabheader { background-color:#89abd9;border:1px solid #aaaaaa } 
+    .soby_grid.sunrise .soby_tabheader.active {background-color:white;} 
+    .soby_grid.sunrise .soby_gridheadercell:hover, .soby_grid.sunrise .soby_gridheadercell:hover a { background-color:#ba7284; }
+    .soby_grid.sunrise .soby_tabcontent {border:1px solid #aaaaaa} 
+    .soby_grid.sunrise .soby-itmHoverEnabled:hover { background-color:#fcb796;}
+    .soby_grid.sunrise .soby_griddatarow.selected .soby-itmHoverEnabled:hover { background-color:#2d4d7c; }
+    .soby_grid.sunrise .soby_griddatarow.selected .soby_selectitemcell, .soby_grid.sunrise .soby_gridheadercell { background-color:#fcb796;}
+    .soby_grid.sunrise .soby_gridheaderlink { color:white}
+    .sobygridmenu.sunrise{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    .sobyitemdialog.sunrise { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    /*********************************************/
+
+    /**************** Forest Theme **************/
+    .soby_grid.forest.active{border:solid 1px blue } 
+    .soby_grid.forest .soby_griddatarow.alt {  } 
+    .soby_grid.forest .soby_griddatarow.selected { background-color: #1d2f0c; color:white;}
+    .soby_grid.forest tbody { border: 1px solid #4c7c20; }
+    .soby_grid.forest .soby_gridcell, .soby_grid.forest .soby_selectitemcell {    overflow: hidden;    border-bottom: 1px solid #4c7c20;    border-right: 1px solid #4c7c20;    border-top-width: 0;    border-left-width: 0;    padding: 3px 6px;}
+    .soby_grid.forest .soby_gridcell.selected { background-color: #384928; color:white;} 
+    .soby_grid.forest .soby_tabletitle { color:#384928; } 
+    .soby_grid.forest .soby_tabheader { background-color:#384928;border:1px solid #aaaaaa } 
+    .soby_grid.forest .soby_tabheader.active {background-color:white;} 
+    .soby_grid.forest .soby_gridheadercell:hover, .soby_grid.forest .soby_gridheadercell:hover a { background-color:#5f7c45; }
+    .soby_grid.forest .soby_tabcontent {border:1px solid #aaaaaa} 
+    .soby_grid.forest .soby-itmHoverEnabled:hover { background-color:#7bc833;}
+    .soby_grid.forest .soby_griddatarow.selected .soby-itmHoverEnabled:hover { background-color:#4c7c20; }
+    .soby_grid.forest .soby_griddatarow.selected .soby_selectitemcell, .soby_grid.forest .soby_gridheadercell { background-color:#7bc833;}
+    .soby_grid.forest .soby_gridheaderlink { color:white}
+    .sobygridmenu.forest{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    .sobyitemdialog.forest { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    /*********************************************/
+
+    /**************** Raspberry Theme **************/
+    .soby_grid.raspberry.active{border:solid 1px blue } 
+    .soby_grid.raspberry .soby_griddatarow.alt {  } 
+    .soby_grid.raspberry .soby_griddatarow.selected { background-color: #b1c1c5; color:white;}
+    .soby_grid.raspberry tbody { border: 1px solid #d9e3de; }
+    .soby_grid.raspberry .soby_gridcell, .soby_grid.raspberry .soby_selectitemcell {    overflow: hidden;    border-bottom: 1px solid #d9e3de;    border-right: 1px solid #d9e3de;    border-top-width: 0;    border-left-width: 0;    padding: 3px 6px;}
+    .soby_grid.raspberry .soby_gridcell.selected { background-color: #2c2429; color:white;} 
+    .soby_grid.raspberry .soby_tabletitle { color:#2c2429; } 
+    .soby_grid.raspberry .soby_tabheader { background-color:#2c2429;border:1px solid #aaaaaa } 
+    .soby_grid.raspberry .soby_tabheader.active {background-color:white;} 
+    .soby_grid.raspberry .soby_gridheadercell:hover, .soby_grid.raspberry .soby_gridheadercell:hover a { background-color:#201a1f; }
+    .soby_grid.raspberry .soby_tabcontent {border:1px solid #aaaaaa} 
+    .soby_grid.raspberry .soby-itmHoverEnabled:hover { background-color:#b20064;}
+    .soby_grid.raspberry .soby_griddatarow.selected .soby-itmHoverEnabled:hover { background-color:#d9e3de; }
+    .soby_grid.raspberry .soby_griddatarow.selected .soby_selectitemcell, .soby_grid.raspberry .soby_gridheadercell { background-color:#b20064;}
+    .soby_grid.raspberry .soby_gridheaderlink { color:white}
+    .sobygridmenu.raspberry{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    .sobyitemdialog.raspberry { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    /*********************************************/
+
+    /**************** Autumn Theme **************/
+    .soby_grid.autumn.active{border:solid 1px blue } 
+    .soby_grid.autumn .soby_griddatarow.alt {  } 
+    .soby_grid.autumn .soby_griddatarow.selected { background-color: #bedcf5; color:white;}
+    .soby_grid.autumn tbody { border: 1px solid #87aac3; }
+    .soby_grid.autumn .soby_gridcell, .soby_grid.autumn .soby_selectitemcell {    overflow: hidden;    border-bottom: 1px solid #87aac3;    border-right: 1px solid #87aac3;    border-top-width: 0;    border-left-width: 0;    padding: 3px 6px;}
+    .soby_grid.autumn .soby_gridcell.selected { background-color: #5c7f99; color:white;} 
+    .soby_grid.autumn .soby_tabletitle { color:#5c7f99; } 
+    .soby_grid.autumn .soby_tabheader { background-color:#5c7f99;border:1px solid #aaaaaa } 
+    .soby_grid.autumn .soby_tabheader.active {background-color:white;} 
+    .soby_grid.autumn .soby_gridheadercell:hover, .soby_grid.autumn .soby_gridheadercell:hover a { background-color:#322328; }
+    .soby_grid.autumn .soby_tabcontent {border:1px solid #aaaaaa} 
+    .soby_grid.autumn .soby-itmHoverEnabled:hover { background-color:#fffadc;}
+    .soby_grid.autumn .soby_griddatarow.selected .soby-itmHoverEnabled:hover { background-color:#87aac3; }
+    .soby_grid.autumn .soby_griddatarow.selected .soby_selectitemcell, .soby_grid.autumn .soby_gridheadercell { background-color:#fffadc;}
+    .soby_grid.autumn .soby_gridheaderlink { color:black}
+    .soby_grid.autumn .soby-itmHoverEnabled:hover a, .soby_grid.autumn .soby_gridheaderlink:hover { color:white}
+    .sobygridmenu.autumn{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    .sobyitemdialog.autumn { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    /*********************************************/
+
+.soby_grid{border-collapse: initial; text-align: left; width: 100%;}
+.soby_grid {background: #fff; overflow: hidden; border: 1px solid #006699; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+
+.soby_tabletitle { font-weight: bold;font-size:14px;line-height:1.4 } 
+.soby_tabheader { float:left;padding:5px;margin-right:2px;} 
+.soby_tabheader.active {border-bottom:0px solid} 
+.soby_griddatarow.selected .soby-list-selectitem.soby-list-selectitem, .soby-itmHoverEnabled:hover .soby-list-selectitem.soby-list-selectitem  {
 }
 .soby-icon-img{
     position: absolute;
@@ -44,8 +179,8 @@
 }
 
 .soby-list-collapse {
-    top: -148px;
-    left: -249px;
+    top: -162px;
+    left: -231px;
 }
 
 .soby-groupby-heading{
@@ -93,22 +228,16 @@
 .soby_griddatarow.selected .soby-list-selectitem-span, .soby-itmHoverEnabled:hover .soby-list-selectitem-span  {
     visibility: visible !important;
 }
-.soby-itmHoverEnabled:hover {
-    background-color:rgba( 205,230,247,0.5 );
-}
-.soby_griddatarow.selected .soby-itmHoverEnabled:hover {
-    background-color:rgba( 156,206,240,0.5 );
-}
-.soby_griddatarow.selected .soby_selectitemcell {
-    background-color:#0072c6;
-}
 .sobygridmenu{
-    position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;
+    position:absolute;display:none;border: 1px solid;padding:10px;
 }
 .sobyitemdialog {
-    position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;
+    position:absolute;display:none;border: 1px solid;padding:10px;
 }
 
+.soby_gridaggregatecell{
+    font-weight:bold;
+}
 
 /***************************************************************/
 

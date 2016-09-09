@@ -6,9 +6,11 @@
         <br />
         <h2>Sobiens web components is available for download in a zip file, which can be downloaded below.</h2>
     </hgroup>
+    <br />
     <div class="article" style="float: left;width: 74%;">
         <ul>
             <li><a href="Sobiens.Web.Components 1.0.3.2.zip">Sobiens.Web.Components 1.0.3.2</a></li>
+            <li><a href="Sobiens.Web.Components 1.0.4.2.zip">Sobiens.Web.Components 1.0.4.2</a></li>
         </ul>
     </div>
 

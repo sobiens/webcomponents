@@ -98,6 +98,7 @@ declare class SobyGroupByField {
 declare class SobyHeaders extends Array<SobyHeader> {
 }
 declare class SobyHeader {
+    constructor(key: string, value: string);
     Key: string;
     Value: string;
 }

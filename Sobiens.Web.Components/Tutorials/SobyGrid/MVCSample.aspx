@@ -2,13 +2,19 @@
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
-
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
+    <section class="featured">
+        <div class="content-wrapper">
         <hgroup class="title">
         <h1><%: Title %></h1>
         <br />
         <h2>General Example</h2>
     </hgroup>
+        </div>
+    </section>
+</asp:Content>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+
     <div class="article" style="float: left;width: 74%;">
             <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>            <link href="/Css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/Scripts/soby.spservice.js"></script>

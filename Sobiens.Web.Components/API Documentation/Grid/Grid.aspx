@@ -2,7 +2,27 @@
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
-
+<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
+    <style>
+        nav {
+            float: none !important;
+            margin-top: 0px !important;
+            width: 100% !important;
+            box-sizing: initial !important;
+            border-left: 0px solid #ccc !important;
+            padding-left: 0px !important;
+        }
+    </style>
+    <section class="featured">
+        <div class="content-wrapper">
+    <hgroup class="title">
+        <h1><%: Title %></h1>
+        <br />
+        <h2>Filtering Example</h2>
+    </hgroup>
+        </div>
+    </section>
+</asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -11,9 +31,6 @@
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-    <hgroup class="title">
-        <h1><%: Title %></h1>
-    </hgroup>
     <div class="soby-apidocumentation">
         <div id="main">
 

@@ -1,3 +1,4 @@
+var bookGrid = null;
 $(function () {
     soby_PopulateGridSorting();
 });
@@ -11,9 +12,10 @@ function soby_PopulateGridSorting() {
     bookDataSourceBuilder.AddSchemaField("Genre", SobyFieldTypes.Text, null);
     var bookService = new soby_WebServiceService(bookDataSourceBuilder);
     bookService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
-    var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
+    bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
     bookGrid.IsEditable = false;
     bookGrid.ImagesFolderUrl = "/media/images";
+    bookGrid.AddOrderByField("Title", true);
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null);
     bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null);

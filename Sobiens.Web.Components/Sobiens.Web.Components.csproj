@@ -209,6 +209,7 @@
     <Content Include="Css\bootstrap.min.css" />
     <Content Include="Css\main.css" />
     <Content Include="download\Versions.aspx" />
+    <Content Include="Images\Tutorials\Soby_WebGrid_Aggregates.png" />
     <Content Include="media\css\soby.ui.components.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\accent.png" />
@@ -303,6 +304,7 @@
     <Content Include="Scripts\Tutorials\WebAPI\Grid\admin.js" />
     <Content Include="Scripts\Tutorials\WebAPI\Grid\celltemplate.js" />
     <Content Include="Scripts\Tutorials\WebAPI\Grid\customdatabinding.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\customerorders.js" />
     <Content Include="Scripts\Tutorials\WebAPI\Grid\editing.js" />
     <Content Include="Scripts\Tutorials\WebAPI\Grid\filtering.js" />
     <Content Include="Scripts\Tutorials\WebAPI\Grid\mvcsample.txt" />
@@ -315,11 +317,14 @@
     <Content Include="Scripts\Tutorials\WebAPI\Grid\sorting.js" />
     <Content Include="Scripts\Tutorials\WebAPI\Grid\soby.customers.js" />
     <Content Include="Scripts\Tutorials\WebAPI\soby.news.js" />
+    <Content Include="Sobiens_20x20.ico" />
     <Content Include="Tutorials\SobyCarousel\General.aspx" />
+    <Content Include="Tutorials\Setting Up.aspx" />
     <Content Include="Tutorials\SobyGrid\Admin.aspx" />
     <Content Include="Tutorials\SobyGrid\MVCSample.aspx" />
     <Content Include="Tutorials\SobyGrid\Grouping.aspx" />
     <Content Include="Tutorials\SobyGrid\Paging.aspx" />
+    <Content Include="Tutorials\SobyGrid\Customer Orders.aspx" />
     <Content Include="Tutorials\SobyGrid\Themes.aspx" />
     <Content Include="Tutorials\SobyGrid\ContextMenu.aspx" />
     <Content Include="Tutorials\SobyGrid\NestedGrids.aspx" />
@@ -474,6 +479,13 @@
     <Compile Include="Tutorials\SobyCarousel\General.aspx.designer.cs">
       <DependentUpon>General.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\Setting Up.aspx.cs">
+      <DependentUpon>Setting Up.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\Setting Up.aspx.designer.cs">
+      <DependentUpon>Setting Up.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyGrid\Admin.aspx.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -501,6 +513,13 @@
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Paging.aspx.designer.cs">
       <DependentUpon>Paging.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Customer Orders.aspx.cs">
+      <DependentUpon>Customer Orders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Customer Orders.aspx.designer.cs">
+      <DependentUpon>Customer Orders.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Themes.aspx.cs">
       <DependentUpon>Themes.aspx</DependentUpon>
@@ -669,14 +688,17 @@
     <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.metroui.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.news.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\admin.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\aggregates.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\celltemplate.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\filtering.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\editing.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\customdatabinding.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\grouping.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\customerorders.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\selection.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\nestedgrids.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\paging.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\themes.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\sorting.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\masterdetails.ts" />

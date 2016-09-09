@@ -3,7 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-// VERSION 1.0.1.3
+// VERSION 1.0.4.2
 function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
     return $.ajax({
         type: method,
@@ -69,8 +69,31 @@ var SobyFilterTypesObject = (function () {
     }
     return SobyFilterTypesObject;
 })();
+var SobyAggregateTypesObject = (function () {
+    function SobyAggregateTypesObject() {
+        this.Average = 0;
+        this.Count = 1;
+        this.Max = 2;
+        this.Min = 3;
+        this.Sum = 4;
+    }
+    SobyAggregateTypesObject.prototype.GetAggregateTypeName = function (aggregateType) {
+        if (aggregateType == 0)
+            return "Average";
+        else if (aggregateType == 1)
+            return "Count";
+        else if (aggregateType == 2)
+            return "Max";
+        else if (aggregateType == 3)
+            return "Min";
+        else if (aggregateType == 4)
+            return "Sum";
+    };
+    return SobyAggregateTypesObject;
+})();
 var SobyFieldTypes = new SobyFieldTypesObject();
 var SobyFilterTypes = new SobyFilterTypesObject();
+var SobyAggregateTypes = new SobyAggregateTypesObject();
 var SobyFilters = (function () {
     function SobyFilters(isOr) {
         this.Filters = new Array();
@@ -360,6 +383,20 @@ var SobyOrderByField = (function () {
     }
     return SobyOrderByField;
 })();
+var SobyAggregateFields = (function (_super) {
+    __extends(SobyAggregateFields, _super);
+    function SobyAggregateFields() {
+        _super.apply(this, arguments);
+    }
+    SobyAggregateFields.prototype.ContainsField = function (fieldName) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+                return true;
+        }
+        return false;
+    };
+    return SobyAggregateFields;
+})(Array);
 var SobyGroupByFields = (function (_super) {
     __extends(SobyGroupByFields, _super);
     function SobyGroupByFields() {
@@ -374,6 +411,14 @@ var SobyGroupByFields = (function (_super) {
     };
     return SobyGroupByFields;
 })(Array);
+var SobyAggregateField = (function () {
+    function SobyAggregateField(fieldName, aggregateType) {
+        this.AggregateType = 0;
+        this.FieldName = fieldName;
+        this.AggregateType = aggregateType;
+    }
+    return SobyAggregateField;
+})();
 var SobyGroupByField = (function () {
     function SobyGroupByField(fieldName, isAsc) {
         this.IsAsc = false;
@@ -755,6 +800,8 @@ var soby_WebServiceService = (function () {
             this.DataSourceBuilderTemp.AddOrderFields(this.OrderByFields);
         //        if (this.SortFieldName != null && this.SortFieldName != "")
         //            this.DataSourceBuilderTemp.AddOrderField(this.SortFieldName, this.IsAscending);
+        console.log("this.Filters:");
+        console.log(this.Filters);
         if (this.Filters.Filters.length > 0) {
             this.DataSourceBuilderTemp.Filters.AddFilterCollection(this.Filters);
         }

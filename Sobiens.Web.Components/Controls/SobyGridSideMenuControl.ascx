@@ -12,7 +12,7 @@
     <li><a href="/Tutorials/SobyGrid/Grouping.aspx">Grouping</a></li>
     <li><a href="/Tutorials/SobyGrid/CustomDataBinding.aspx">Custom Data Binding</a></li>
     <li><a href="/Tutorials/SobyGrid/MVCSample.aspx">MVC Sample</a></li>
-    <li style="display:none"><a href="/Tutorials/SobyGrid/Aggregates.aspx">Aggregates</a></li>
+    <li><a href="/Tutorials/SobyGrid/Aggregates.aspx">Aggregates</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/Columns.aspx">Columns</a></li>
     <li><a href="/Tutorials/SobyGrid/Selection.aspx">Selection</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/DragDrop.aspx">Drag Drop</a></li>
@@ -21,5 +21,6 @@
     <li><a href="/Tutorials/SobyGrid/Master-Details.aspx">Master-Details</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/ContextMenu.aspx">Context Menu</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/KeyboardNavigation.aspx">Keyboard Navigation</a></li>
-    <li style="display:none"><a href="/Tutorials/SobyGrid/Themes.aspx">Themes</a></li>
+    <li><a href="/Tutorials/SobyGrid/Themes.aspx">Themes</a></li>
+    <li>Labs<ul><li><a href="/Tutorials/SobyGrid/Customer Orders.aspx">Customer Orders</a></li></ul></li>
 </ul>
