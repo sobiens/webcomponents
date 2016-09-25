@@ -1,0 +1,47 @@
+﻿using SobyGrid_WebAPIExample.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
+using System.Web.OData.Builder;
+using System.Web.OData.Extensions;
+
+namespace SobyGrid_WebAPIExample
+{
+    public static class WebApiConfig
+    {
+        public static void Register(HttpConfiguration config)
+        {
+            // Web API configuration and services
+            config.Select();
+            config.Filter();
+            config.Expand();
+            config.Count();
+            config.OrderBy();
+            config.MaxTop(10000);
+
+            // Web API routes
+            //config.MapHttpAttributeRoutes();
+
+            // New code:
+            ODataModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Task>("Tasks");
+            builder.EntitySet<Category>("Categories");
+            builder.EntitySet<Status>("Statuses");
+            builder.EntitySet<Priority>("Priorities");
+
+            config.MapODataServiceRoute(
+                routeName: "ODataRoute",
+                routePrefix: "api",
+                model: builder.GetEdmModel());
+
+            /*
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "apix/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+             */
+        }
+    }
+}
