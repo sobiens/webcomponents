@@ -29,5 +29,12 @@
             It is still being implemented.
             <a href="Tutorials/SobyCarousel/General.aspx">Tutorials</a>
         </li>
+        <li class="four">
+            <h5>Item Selection</h5>
+            You can easily find a web hosting company that offers the right mix of features and price for your applications.
+            It is still being implemented.
+            <a href="Tutorials/SobyItemSelection/Getting Started.aspx">Item Selection</a>
+        </li>
+
     </ol>
 </asp:Content>

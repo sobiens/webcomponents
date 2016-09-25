@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.4.2
+﻿// VERSION 1.0.4.8
 function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
     return $.ajax({
         type: method,
@@ -441,12 +441,14 @@ class SobyAggregateField{
 }
 
 class SobyGroupByField {
-    constructor(fieldName: string, isAsc: boolean) {
+    constructor(fieldName: string, isAsc: boolean, displayFunction) {
         this.FieldName = fieldName;
         this.IsAsc = isAsc;
+        this.DisplayFunction = displayFunction;
     }
     FieldName: string;
     IsAsc: boolean = false;
+    DisplayFunction = null;
 }
 class SobyHeaders extends Array<SobyHeader> {
 }
@@ -479,6 +481,7 @@ interface soby_ServiceInterface {
     EndIndex: number;
     NextPageString: string;
     NextPageExist :boolean;
+    Args: Array<any>;
     Transport: soby_Transport;
 //    constructor(dataSourceBuilder: soby_DataSourceBuilderAbstract);
     GroupBy(orderFields: SobyGroupByFields);
@@ -490,7 +493,7 @@ interface soby_ServiceInterface {
     PopulateNavigationInformation();
     NavigationInformationBeingPopulated();
     NavigationInformationPopulated();
-    PopulateItems();
+    PopulateItems(args:Array<any>);
     GetFieldNames();
     ItemPopulated(items: Array<soby_Item>);
     ItemBeingPopulated();
@@ -637,6 +640,7 @@ class soby_SharePointService implements soby_ServiceInterface {
     StartIndex: number = 0;
     EndIndex: number = 0;
     NextPageStrings:Array<string>;
+    Args: Array<any>;
 //    IsAscending: boolean = true;
     OrderByFields: SobyOrderByFields = new SobyOrderByFields();
     Filters: Array<soby_Filter> = new Array < soby_Filter>();
@@ -656,7 +660,7 @@ class soby_SharePointService implements soby_ServiceInterface {
 //        this.OrderByFields[this.OrderByFields.length] = new SobyOrderByField(fieldName, isAsc);
 //        this.SortFieldName = viewField.FieldName;
 //        this.IsAscending = isAsc;
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     Filter(filters, clearOtherFilters) {
         this.PageIndex = 0;
@@ -676,14 +680,14 @@ class soby_SharePointService implements soby_ServiceInterface {
             this.Filters[this.Filters.length] = filter;
         }
 
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     GoToPage(pageIndex) {
         this.DataSourceBuilderTemp.PageIndex = pageIndex;
         this.PageIndex = pageIndex;
         this.NextPageString = this.NextPageStrings[pageIndex];
 
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     CanNavigateToNextPage() {
         if (this.DataSourceBuilderTemp.PageIndex >= this.NextPageStrings.length - 1)
@@ -705,7 +709,7 @@ class soby_SharePointService implements soby_ServiceInterface {
     NavigationInformationPopulated() { }
 
 
-    PopulateItems() {
+    PopulateItems(args: Array<any>) {
         if (this.ItemBeingPopulated != null)
             this.ItemBeingPopulated();
 
@@ -795,6 +799,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
     StartIndex: number = 0;
     EndIndex: number = 0;
     NextPageStrings: Array<string>;
+    Args: Array<any>;
 //    IsAscending: boolean = true;
     Filters: SobyFilters = new SobyFilters(false);
     GroupByFields: SobyGroupByFields = new SobyGroupByFields();
@@ -853,7 +858,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
     NavigationInformationPopulated() { }
     GroupBy(groupByFields: SobyGroupByFields) {
         this.GroupByFields = groupByFields;
-        this.PopulateItems();
+        this.PopulateItems(null);
     }
     Sort(orderByFields: SobyOrderByFields) {
         this.PageIndex = 0;
@@ -862,7 +867,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
 
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     Filter(filters:SobyFilters, clearOtherFilters: boolean) {
         this.PageIndex = 0;
@@ -879,13 +884,13 @@ class soby_WebServiceService implements soby_ServiceInterface {
             this.Filters.AddFilterObject(filters.Filters[i]);
         }
         */
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     GoToPage(pageIndex:number) {
         this.DataSourceBuilderTemp.PageIndex = pageIndex;
         this.PageIndex = pageIndex;
 
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     CanNavigateToNextPage() {
         if (this.NextPageExist == false)
@@ -900,7 +905,8 @@ class soby_WebServiceService implements soby_ServiceInterface {
         return true;
     };
 
-    PopulateItems() {
+    PopulateItems(args: Array<any>) {
+        this.Args = args;
         if (this.ItemBeingPopulated != null)
             this.ItemBeingPopulated();
 
@@ -1034,14 +1040,15 @@ function soby_StaticDataService(items) {
     this.PageIndex = 0;
     this.StartIndex = 0;
     this.EndIndex = 0;
+    this.Args=null;
     this.Sort = function (propertyName, isAsc) {
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     this.Filter = function (propertyName, value, clearOtherFilters) {
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     this.GoToPage = function (pageIndex) {
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     this.CanNavigateToNextPage = function () {
         return true;
@@ -1049,7 +1056,8 @@ function soby_StaticDataService(items) {
     this.CanNavigateToPreviousPage = function () {
         return true;
     };
-    this.PopulateItems = function () {
+    this.PopulateItems = function (args: Array<any>) {
+        this.Args = args;
         if (this.ItemBeingPopulated != null)
             this.ItemBeingPopulated();
 
@@ -1253,6 +1261,11 @@ function soby_LogMessage(message) {
     try {
         console.log(message);
     } catch (err) { }
+}
+
+function soby_DateToIso(d) {
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+    return (new Date(d - tzoffset)).toISOString();
 }
 
 function soby_DateFromISO(d) {
@@ -2543,22 +2556,3 @@ var sobyObject = function () {
     this.SPLibrary = new this.SPLibraryObject();
 }
 var soby = new sobyObject();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

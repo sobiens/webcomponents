@@ -420,10 +420,12 @@ var SobyAggregateField = (function () {
     return SobyAggregateField;
 })();
 var SobyGroupByField = (function () {
-    function SobyGroupByField(fieldName, isAsc) {
+    function SobyGroupByField(fieldName, isAsc, displayFunction) {
         this.IsAsc = false;
+        this.DisplayFunction = null;
         this.FieldName = fieldName;
         this.IsAsc = isAsc;
+        this.DisplayFunction = displayFunction;
     }
     return SobyGroupByField;
 })();
@@ -583,7 +585,7 @@ var soby_SharePointService = (function () {
         //        this.OrderByFields[this.OrderByFields.length] = new SobyOrderByField(fieldName, isAsc);
         //        this.SortFieldName = viewField.FieldName;
         //        this.IsAscending = isAsc;
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     ;
     soby_SharePointService.prototype.Filter = function (filters, clearOtherFilters) {
@@ -602,14 +604,14 @@ var soby_SharePointService = (function () {
             filter.LookupID = filters[i].LookupID;
             this.Filters[this.Filters.length] = filter;
         }
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     ;
     soby_SharePointService.prototype.GoToPage = function (pageIndex) {
         this.DataSourceBuilderTemp.PageIndex = pageIndex;
         this.PageIndex = pageIndex;
         this.NextPageString = this.NextPageStrings[pageIndex];
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     ;
     soby_SharePointService.prototype.CanNavigateToNextPage = function () {
@@ -630,7 +632,7 @@ var soby_SharePointService = (function () {
     };
     soby_SharePointService.prototype.NavigationInformationBeingPopulated = function () { };
     soby_SharePointService.prototype.NavigationInformationPopulated = function () { };
-    soby_SharePointService.prototype.PopulateItems = function () {
+    soby_SharePointService.prototype.PopulateItems = function (args) {
         if (this.ItemBeingPopulated != null)
             this.ItemBeingPopulated();
         this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
@@ -744,7 +746,7 @@ var soby_WebServiceService = (function () {
     soby_WebServiceService.prototype.NavigationInformationPopulated = function () { };
     soby_WebServiceService.prototype.GroupBy = function (groupByFields) {
         this.GroupByFields = groupByFields;
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     soby_WebServiceService.prototype.Sort = function (orderByFields) {
         this.PageIndex = 0;
@@ -752,7 +754,7 @@ var soby_WebServiceService = (function () {
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     ;
     soby_WebServiceService.prototype.Filter = function (filters, clearOtherFilters) {
@@ -768,13 +770,13 @@ var soby_WebServiceService = (function () {
             this.Filters.AddFilterObject(filters.Filters[i]);
         }
         */
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     ;
     soby_WebServiceService.prototype.GoToPage = function (pageIndex) {
         this.DataSourceBuilderTemp.PageIndex = pageIndex;
         this.PageIndex = pageIndex;
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     ;
     soby_WebServiceService.prototype.CanNavigateToNextPage = function () {
@@ -789,7 +791,8 @@ var soby_WebServiceService = (function () {
         return true;
     };
     ;
-    soby_WebServiceService.prototype.PopulateItems = function () {
+    soby_WebServiceService.prototype.PopulateItems = function (args) {
+        this.Args = args;
         if (this.ItemBeingPopulated != null)
             this.ItemBeingPopulated();
         this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
@@ -909,14 +912,15 @@ function soby_StaticDataService(items) {
     this.PageIndex = 0;
     this.StartIndex = 0;
     this.EndIndex = 0;
+    this.Args = null;
     this.Sort = function (propertyName, isAsc) {
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     this.Filter = function (propertyName, value, clearOtherFilters) {
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     this.GoToPage = function (pageIndex) {
-        this.PopulateItems();
+        this.PopulateItems(null);
     };
     this.CanNavigateToNextPage = function () {
         return true;
@@ -924,7 +928,8 @@ function soby_StaticDataService(items) {
     this.CanNavigateToPreviousPage = function () {
         return true;
     };
-    this.PopulateItems = function () {
+    this.PopulateItems = function (args) {
+        this.Args = args;
         if (this.ItemBeingPopulated != null)
             this.ItemBeingPopulated();
         this.ItemPopulated(this.Items);
@@ -1114,6 +1119,10 @@ function soby_LogMessage(message) {
         console.log(message);
     }
     catch (err) { }
+}
+function soby_DateToIso(d) {
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+    return (new Date(d - tzoffset)).toISOString();
 }
 function soby_DateFromISO(d) {
     var xDate = d.split(" ")[0];

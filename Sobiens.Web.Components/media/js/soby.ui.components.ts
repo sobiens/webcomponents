@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.4.2
+﻿// VERSION 1.0.4.8
 // ********************* SOBY EDIT CONTROLS *****************************
 var soby_EditControls = new Array();
 interface ISobyEditControlInterface {
@@ -85,7 +85,7 @@ class SobyLookupSelectBox implements ISobyEditControlInterface {
         customerDataSourceBuilder.AddSchemaField(this.Args.TitleFieldName, SobyFieldTypes.Text, null);
         var customerService = new soby_WebServiceService(customerDataSourceBuilder);
         customerService.Transport.Read = new soby_TransportRequest(readTransport.Url, readTransport.DataType, readTransport.ContentType, readTransport.Type);
-        customerService.PopulateItems();
+        customerService.PopulateItems(null);
         var editControl = this; 
         customerService.ItemPopulated = function (items) {
             var selectbox = $("#" + editControl.ContainerClientId + " select.sobyselectbox");
@@ -996,7 +996,7 @@ class soby_WebGrid {
     DropColumn(ev) {
         ev.preventDefault();
         var fieldName = ev.dataTransfer.getData("text");
-        this.GroupBy(fieldName, true);
+        this.GroupBy(fieldName, true, null);
     }
 
     /**
@@ -1334,7 +1334,7 @@ class soby_WebGrid {
         this.DataService.Sort(this.OrderByFields);
     }
 
-    AddGroupByField(fieldName: string, isAsc: boolean) {
+    AddGroupByField(fieldName: string, isAsc: boolean, displayFunction) {
         var exist = false;
         for (var i = 0; i < this.GroupByFields.length; i++) {
             if (this.GroupByFields[i].FieldName == fieldName) {
@@ -1345,7 +1345,7 @@ class soby_WebGrid {
         if (exist == true)
             return;
 
-        this.GroupByFields.push(new SobyGroupByField(fieldName, isAsc));
+        this.GroupByFields.push(new SobyGroupByField(fieldName, isAsc, displayFunction));
     }
 
     /**
@@ -1357,8 +1357,8 @@ class soby_WebGrid {
      * // Group by Title field as ascending
      * grid.GroupBy('Title', true)
      */
-    GroupBy(fieldName: string, isAsc: boolean) {
-        this.AddGroupByField(fieldName, isAsc);
+    GroupBy(fieldName: string, isAsc: boolean, displayFunction) {
+        this.AddGroupByField(fieldName, isAsc, displayFunction);
         this.DataService.GroupBy(this.GroupByFields);
     }
 
@@ -1373,7 +1373,7 @@ class soby_WebGrid {
      */
     AggregateBy(fieldName: string, aggregateType: number) {
         this.AddAggregateField(fieldName, aggregateType);
-        this.DataService.PopulateItems();
+        this.DataService.PopulateItems(null);
     }
 
     /**
@@ -1769,7 +1769,7 @@ class soby_WebGrid {
         if (populateItems == true) {
             this.DataService.DataSourceBuilder.OrderByFields = this.OrderByFields;
             this.DataService.DataSourceBuilder.Filters = this.Filters;
-            this.DataService.PopulateItems();
+            this.DataService.PopulateItems(null);
         }
      }
 
@@ -1932,12 +1932,22 @@ class soby_WebGrid {
 
             var hasDifferentGroupValue = false;
             for (var x = 0; x < this.GroupByFields.length; x++) {
-                var value = item[this.GroupByFields[x].FieldName];
+                var value = null;
+                if (this.GroupByFields[x].DisplayFunction != null) {
+                    value = this.GroupByFields[x].DisplayFunction(item);
+                }
+                else {
+                    value = item[this.GroupByFields[x].FieldName];
+                } 
                 //lastGroupByValues["Level_" + x] == null || 
                 if (i == 0 || hasDifferentGroupValue == true || lastGroupByValues["Level_" + x].Value != value) {
                     hasDifferentGroupValue = true;
                     lastGroupByValues["Level_" + x] = { Level:x, Value:value };
                     var displayname = this.GroupByFields[x].FieldName;
+                    var gridColumn = this.GetColumn(this.GroupByFields[x].FieldName);
+                    if (gridColumn != null)
+                        displayname = gridColumn.DisplayName;
+
                     var groupByRow = $("<tr class='soby_gridgroupbyrow'></tr>");
                     groupByRow.attr("level", x);
                     if (x == 0) {
@@ -2568,5 +2578,275 @@ function soby_Menu(contentDivSelector, dataService, displayNameField, idField, p
 
         $(this.ContentDivSelector).addClass("sobymenu");
     }
+}
+// ************************************************************
+
+// ********************* ITEM SELECTION *****************************
+var soby_ItemSelections = new Array();
+class SobyItemSelectorTypeObject {
+    GridView: number = 0;
+    TreeView: number = 1;
+    CardView: number = 2;
+}
+var SobyItemSelectorTypes = new SobyItemSelectorTypeObject();
+
+class soby_ItemSelection {
+    constructor(contentDivSelector, title, itemSelectorType:number, autoCompleteDataService, advancedSearchDataService, emptyDataHtml, dialogID, selectorUrl, valueFieldName, textFieldName) {
+        this.ItemSelectionID= "soby_itemselection_" + soby_guid();
+        this.ContentDivSelector= contentDivSelector;
+        this.Title = title;
+        this.ItemSelectorType = itemSelectorType;
+        this.AutoCompleteDataService = autoCompleteDataService;
+        this.AdvancedSearchDataService = advancedSearchDataService;
+        this.EmptyDataHtml= emptyDataHtml;
+        this.DialogID= dialogID;
+        this.SelectorUrl= selectorUrl;
+        this.ValueFieldName= valueFieldName;
+        this.TextFieldName = textFieldName;
+        this.EnsureItemSelectionExistency();
+        this.InitializeAdvancedSearchControl();
+    }
+
+    ItemSelectorType: number = null;
+    AdvancedSearchAsGrid: soby_WebGrid = null;
+    ItemSelectionID:string = "";
+    ContentDivSelector: string = "";
+    Title: string = "";
+    AutoCompleteDataService: soby_ServiceInterface = null;
+    AdvancedSearchDataService: soby_ServiceInterface = null;
+    AllowMultipleSelections: boolean = true;
+    EmptyDataHtml: string = "";
+    DialogID: string = "";
+    SelectorUrl: string = "";
+    ValueFieldName: string = "";
+    TextFieldName: string = "";
+    ImagesFolderUrl: string = "/_layouts/1033/images";
+    InitializeAdvancedSearchControl() {
+        if (this.ItemSelectorType == SobyItemSelectorTypes.GridView) {
+            this.AdvancedSearchAsGrid = new soby_WebGrid("#" + this.DialogID + " .itemselectionadvancedsearchgridview", this.Title, this.AdvancedSearchDataService, this.EmptyDataHtml);
+
+            this.AdvancedSearchAsGrid.IsEditable = false;
+            for (var i = 0; i < this.AdvancedSearchDataService.DataSourceBuilder.SchemaFields.length; i++) {
+                var schemaField = this.AdvancedSearchDataService.DataSourceBuilder.SchemaFields[i];
+                this.AdvancedSearchAsGrid.AddColumn(schemaField.FieldName, schemaField.FieldName, SobyShowFieldsOn.All, null, null, true, true, true, null);
+            }
+
+//            this.AdvancedSearchAsGrid.
+            this.AdvancedSearchAsGrid.ImagesFolderUrl = this.ImagesFolderUrl;
+        }
+    }
+    Initialize() {
+        var selectedItemsHiddenField = $("<input type='hidden' class='selecteditemvalues'>");
+        var itemNameInput = $("<input type='text' class='itemname' style='width:100px;padding:3px 0px 3px 0px'>");
+        var advancedSelection = $("<a id='" + this.ItemSelectionID + "_advancedbutton' href='javascript:void(0)'><img src='" + this.ImagesFolderUrl + "/bizpicker.gif' border='0'></a>");
+        var selectedItemsMaintenancePanel = $("<div class='selecteditemmaintenancepanel'></div>");
+        $(this.ContentDivSelector).append(selectedItemsHiddenField);
+        $(this.ContentDivSelector).append(itemNameInput);
+        $(this.ContentDivSelector).append(advancedSelection);
+        $(this.ContentDivSelector).append(selectedItemsMaintenancePanel);
+        advancedSelection.unbind("click");
+        advancedSelection.bind('click', { MainControlID: this.ItemSelectionID, DialogID: this.DialogID, SelectorUrl: this.SelectorUrl }, this.OpenItemPicker);
+        var itemSelectorObj = this;
+        var itemSelection = this;
+        this.AutoCompleteDataService.ItemPopulated = function (items) {
+            var response = itemSelection.AutoCompleteDataService.Args[0];
+            
+            var autoCompleteItems = new Array();
+            for (var i = 0; i < items.length; i++) {
+                autoCompleteItems.push({ Text: items[i][itemSelection.ValueFieldName], value: items[i][itemSelection.TextFieldName], Value: items[i][itemSelection.TextFieldName] });
+            }
+
+            response(autoCompleteItems);
+        }
+        $(this.ContentDivSelector + " .itemname").autocomplete({
+            source: function (request, response) {
+                itemSelection.AutoCompleteDataService.DataSourceBuilder.Filters = new SobyFilters(false);
+                itemSelection.AutoCompleteDataService.DataSourceBuilder.Filters.AddFilter(itemSelection.TextFieldName, request.term, SobyFieldTypes.Text, SobyFilterTypes.Contains, false);
+
+                itemSelection.AutoCompleteDataService.PopulateItems([response]);
+            },
+            select: function (event, ui) {
+                itemSelectorObj.AddItem(ui.item.Value, ui.item.Text);
+            },
+            minLength: 2
+        });
+        this.GenerateItemTable();
+
+        // Add custom initialization here
+    }
+    OpenItemPicker(event) {
+//        var selectorUrl = event.data.SelectorUrl;
+        var mainControlID = event.data.MainControlID;
+        var dialogObject = ShowCommonHtmlDialog("testtt", event.data.DialogID, function (args) {
+            console.log("selected items")
+            console.log(args);
+            var values = args.split(soby_FilterValueSeperator);
+            for (var i = 0; i < values.length; i = i + 2) {
+                soby_ItemSelections[mainControlID].AddItem(values[i + 1], values[i]);
+            }
+        });
+        dialogObject.html("<div class='itemselectionadvancedsearchgridview'></div><p align='right'><input type='button' value='Ekle' onclick=\"soby_ItemSelections['" + mainControlID + "'].SelectItemsFromAdvancedSearchDialog()\"></p>")
+        soby_ItemSelections[mainControlID].AdvancedSearchAsGrid.Initialize(true);
+
+    }
+    SelectItemsFromAdvancedSearchDialog() {
+        var data = this.AdvancedSearchAsGrid.GetSelectedDataItems();
+        var selectedValuesString = "";
+        for (var i = 0; i < data.length; i++) {
+            if (selectedValuesString != "")
+                selectedValuesString += soby_FilterValueSeperator;
+            selectedValuesString += data[i][this.ValueFieldName] + soby_FilterValueSeperator + data[i][this.TextFieldName];
+        }
+        var commonCloseDialog = eval("CommonCloseDialog");
+        commonCloseDialog(this.DialogID, selectedValuesString);
+
+    }
+    GetItemArray() {
+        var text = $(this.ContentDivSelector + " .selecteditemvalues").val();
+        if (text == null || text == "") {
+            return new Array();
+        }
+        else {
+            return eval(text);
+        }
+    }
+    AddItem(text, value) {
+        var array = new Array();
+        var exist = false;
+        if (this.AllowMultipleSelections == true)
+            array = this.GetItemArray();
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].Value == value)
+                exist = true;
+        }
+        if (exist == false)
+            array[array.length] = new function () { this.Text = text, this.Value = value };
+        this.SetItemArray(array);
+        this.GenerateItemTable();
+    }
+    RemoveItem(value) {
+        var array = this.GetItemArray();
+        var newArray = new Array();
+        for (var i = array.length - 1; i > -1; i--) {
+            if (array[i].Value != value) {
+                newArray[newArray.length] = { "Text": array[i].Text, "Value": array[i].Value };
+            }
+        }
+        this.SetItemArray(newArray);
+        this.GenerateItemTable();
+    }
+    SetItemArray(array) {
+        /*
+        Sample Text
+        var a = new Array(new function () { this.Text = "Item1"; this.Value = "1" });
+        */
+        var text = "[";
+        for (var i = 0; i < array.length; i++) {
+            if (i > 0) {
+                text += ",";
+            }
+            text += "{ \"Text\" : \"" + array[i].Text + "\", \"Value\" : \"" + array[i].Value + "\" }";
+        }
+        text += "]";
+
+        $(this.ContentDivSelector + " .selecteditemvalues").val(text);
+        if (this.OnSelectionChanged != null)
+            this.OnSelectionChanged();
+    }
+    GenerateItemTable() {
+        var tableHTML = "<table class='ms-formtable' cellspacing='0' cellpadding='0' border='0' width='100%' style='margin-top: 8px;'>";
+        var array = this.GetItemArray();
+        for (var key in array) {
+            tableHTML += "<tr class='mtdataitemrow'><td width='20'><a href='javascript:void(0)' onclick=\"soby_ItemSelections['" + this.ItemSelectionID + "'].RemoveItem('" + array[key].Value + "')\" class='itemSelectorDeleteLink'><span class='soby-icon-imgSpan'> <img class='soby-list-delete soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span></a></td><td>" + array[key].Text + "</td></tr>";
+        }
+        if (array.length == 0) {
+            tableHTML += "<tr class='mtdataitemrow'><td>No item has been selected.</td></tr>";
+        }
+        tableHTML += "</table>";
+        $(this.ContentDivSelector + " .selecteditemmaintenancepanel").html(tableHTML);
+    }
+    EnsureItemSelectionExistency() {
+        for (var key in soby_ItemSelections) {
+            if (key == this.ItemSelectionID)
+                return;
+        }
+
+        soby_ItemSelections[this.ItemSelectionID] = this;
+    }
+    OnSelectionChanged = null;
+}
+// ************************************************************
+
+// ********************* COMMON FUNCTIONS *****************************
+function ShowCommonDialog(url, title, dialogID, onCloseCallback) {
+    var showDialog = eval("window.parent.ShowDialog");
+    showDialog(url, title, dialogID, onCloseCallback);
+}
+
+function ShowDialog(url, title, dialogID, onCloseCallback) {
+    var dialogObject = $("#" + dialogID);
+    if (dialogObject.length == 0) {
+        dialogObject = $('<div id=\"' + dialogID + '\"></div>')
+    }
+    var obj = dialogObject.html('<iframe src=\"' + url + '\" width=\"100%\" height=\"100%\"></iframe>')
+        .dialog({
+            autoOpen: false,
+            modal: true,
+            height: 700,
+            width: 800,
+            title: title
+        }).data("argument", null)
+    obj.unbind("dialogclose");
+    obj.bind('dialogclose', function (event) {
+        if (onCloseCallback != null) {
+            var argument = $(this).data("argument");
+            onCloseCallback(argument);
+        }
+    });
+    dialogObject.dialog('open');
+}
+function ShowCommonHtmlDialog(title, dialogID, onCloseCallback) {
+    var showDialog = eval("window.parent.ShowDialog");
+    return ShowHtmlDialog(title, dialogID, onCloseCallback);
+}
+
+function ShowHtmlDialog(title, dialogID, onCloseCallback) {
+    var dialogObject = $("#" + dialogID);
+    if (dialogObject.length == 0) {
+        dialogObject = $('<div id=\"' + dialogID + '\"></div>')
+    }
+    var obj = dialogObject.dialog({
+            autoOpen: false,
+            modal: true,
+            height: 700,
+            width: 800,
+            title: title
+        }).data("argument", null)
+    obj.unbind("dialogclose");
+    obj.bind('dialogclose', function (event) {
+        if (onCloseCallback != null) {
+            var argument = $(this).data("argument");
+            onCloseCallback(argument);
+        }
+    });
+    dialogObject.dialog('open');
+    return dialogObject;
+}
+
+function CloseDialog(dialogID, argument) {
+    $("#" + dialogID).dialog('close')
+}
+function CommonCloseDialog(dialogID, argument) {
+    var setCommonDialogArgument = eval("window.parent.SetCommonDialogArgument");
+    var closeDialog = eval("window.parent.CloseDialog");
+    setCommonDialogArgument(dialogID, argument);
+    closeDialog(dialogID, argument);
+}
+function SetDialogArgument(dialogID, argument) {
+    $("#" + dialogID).dialog().data("argument", argument)
+}
+
+function SetCommonDialogArgument(dialogID, argument) {
+    $("#" + dialogID).dialog().data("argument", argument)
 }
 // ************************************************************

@@ -11,6 +11,7 @@
     <li><a href="/Tutorials/SobyGrid/Editing.aspx">Editing</a></li>
     <li><a href="/Tutorials/SobyGrid/Grouping.aspx">Grouping</a></li>
     <li><a href="/Tutorials/SobyGrid/CustomDataBinding.aspx">Custom Data Binding</a></li>
+    <li><a href="/Tutorials/SobyGrid/WebAPIOData.aspx">Web API and OData Implementation</a></li>
     <li><a href="/Tutorials/SobyGrid/MVCSample.aspx">MVC Sample</a></li>
     <li><a href="/Tutorials/SobyGrid/Aggregates.aspx">Aggregates</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/Columns.aspx">Columns</a></li>

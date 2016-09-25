@@ -16,6 +16,21 @@ function soby_ShowHideViewSource() {
         $(".viewsource").hide();
     }
 }
+function soby_ShowHideViewCode(containerId, codeFile) {
+    if ($("#" + containerId).is(":visible") == false) {
+        if ($("#" + containerId + " .viewsourcecodefileoutput").html() == "") {
+            $.get(codeFile, function (codefileHtml) {
+                codefileHtml = $('<div/>').text(codefileHtml).html();
+                codefileHtml = codefileHtml.replace(/    /gi, "&nbsp;&nbsp;&nbsp;&nbsp;");
+                $("#" + containerId + " .viewsourcecodefileoutput").html(codefileHtml);
+            }, 'html');
+        }
+        $("#" + containerId).show();
+    }
+    else {
+        $("#" + containerId).hide();
+    }
+}
 function soby_GetTutorialWebAPIUrl() {
     if (window.location.href.indexOf("http://webcomponents.sobiens.com/") > -1)
         return "http://webcomponentsservices.sobiens.com/api";
