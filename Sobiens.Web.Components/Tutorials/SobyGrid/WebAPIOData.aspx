@@ -15,6 +15,7 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <p>This example demonstrates how to use Web API and OData in the Soby Data Grid. <br />
+        <img src="/Images/Tutorials/Soby_WebGrid_WebAPIOData_TaskApplication.png" />
         <ul>
             <li>So we will start with creating a project. Navigate to <strong>File >> New >> Project</strong>.</li>
             <li>Select <strong>"ASP.NET Web Application"</strong> as shown.<br />

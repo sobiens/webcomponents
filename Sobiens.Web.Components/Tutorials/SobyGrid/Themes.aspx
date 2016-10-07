@@ -41,7 +41,7 @@
                 <div class="col-md-2" style="text-align:center">Autumn</div>
             </div></p>
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
-            <script src="/media/js/soby.spservice.js"></script>
+            <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
             <script src="/Scripts/Tutorials/WebAPI/Grid/themes.js"></script>
             <div id='soby_BooksDiv'></div><br />

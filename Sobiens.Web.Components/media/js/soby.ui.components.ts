@@ -604,8 +604,12 @@ class soby_WebGrid {
             var row = $("#" + selectedRowIDs[i]);
             var rowIndex = parseInt(row.attr("rowindex"));
             var dbInstance = this.Items[rowIndex];
-            var dbInstanceId = dbInstance[this.KeyFields[0]];
-            this.DataService.DeleteItem(dbInstanceId);
+            var keyValues = new Array();
+            for (var t = 0; t < this.KeyFields.length; t++) {
+                keyValues[keyValues.length] = dbInstance[this.KeyFields[t]];
+            }
+
+            this.DataService.DeleteItem(this.KeyFields, keyValues);
         }
     }
 
@@ -845,6 +849,28 @@ class soby_WebGrid {
         }
 
         return selectedDataItems;
+    }
+
+    SelectAllRows() {
+        var isSelected = $(".soby_gridheaderrow").hasClass("selected");
+        if (isSelected == true) {
+            $(".soby_gridheaderrow").removeClass("selected");
+        }
+        else {
+            $(".soby_gridheaderrow").addClass("selected");
+        }
+        var rowsSelectors = $(this.ContentDivSelector + " .soby_griddatarow");
+        for (var i = 0; i < rowsSelectors.length; i++) {
+            if (isSelected == false) {
+                var rowId = $(rowsSelectors[i]).attr("id");
+                $(rowsSelectors[i]).addClass("selected");
+                if (this.OnRowSelected != null)
+                    this.OnRowSelected(this, rowId);
+            }
+            else {
+                $(rowsSelectors[i]).removeClass("selected");
+            }
+        }
     }
 
     /**
@@ -1474,7 +1500,7 @@ class soby_WebGrid {
         headerRow.find("th").remove();
 
         if (this.IsSelectable == true || this.DataRelations.length > 0 || this.GroupByFields.length > 0) {
-            var headerCell = $("<th class='soby_gridheadercell' style='text-align:center'>#</th>");
+            var headerCell = $("<th class='soby_gridheadercell soby_selectitemcell' width='20px' style='padding:5px;text-align:center'><a href='javascript:void (0)' class='soby-list-selectitem-a' onclick=\"soby_WebGrids['" + this.GridID + "'].SelectAllRows();\"><span class='soby-icon-imgSpan soby-list-selectitem-span'> <img class='soby-icon-img soby-list-selectitem' alt='' src='/media/images/spcommon.png?rev=43'> </span></a></th>");
             if (this.GroupByFields.length>0)
                 headerCell.attr("colspan", this.GroupByFields.length);
             headerRow.append(headerCell);
@@ -2116,7 +2142,7 @@ class soby_WebGrid {
 
         $(this.ContentDivSelector + " .loadingrow").hide();
         if (items.length == 0) {
-            $(this.ContentDivSelector).html(this.EmptyDataHtml);
+//            $(this.ContentDivSelector).html(this.EmptyDataHtml);
         }
         this.PopulateAggregateRows();
         this.GenerateGroupByPanePane();
@@ -2401,16 +2427,21 @@ class soby_MetroTilesGrid {
 
 // ********************* CAML BUILDER WIZARD TEMPLATE *****************************
 var soby_Wizards = new Array();
-function soby_Wizard(contentDivSelector) {
-    this.WizardID = "soby_wizardgrid_" + soby_guid();
-    this.ContentDivSelector = contentDivSelector;
-    this.CurrentTabIndex = -1;
-    this.MaxWidth = null;
-    this.TileWidth = "150";
-    this.TileHeight = "120";
-    this.Width = "600";
-    this.Items = null;
-    this.EnsureWizardsExistency = function () {
+class soby_Wizard {
+    constructor(contentDivSelector: string) {
+        this.WizardID = "soby_wizardgrid_" + soby_guid();
+        this.ContentDivSelector = contentDivSelector;
+        this.EnsureWizardsExistency();
+    }
+    WizardID:string = "";
+    ContentDivSelector = "";
+    CurrentTabIndex = -1;
+    MaxWidth = null;
+    TileWidth = "150";
+    TileHeight = "120";
+    Width = "600";
+    Items = null;
+    EnsureWizardsExistency = function () {
         for (var key in soby_Wizards) {
             if (key == this.WizardID)
                 return;
@@ -2419,9 +2450,8 @@ function soby_Wizard(contentDivSelector) {
         soby_Wizards[this.WizardID] = this;
     }
 
-    this.EnsureWizardsExistency();
 
-    this.GetItemById = function (id) {
+    GetItemById = function (id) {
         for (var i = 0; i < this.Items.length; i++) {
             if (this.Items[i].LinkId == id)
                 return this.Items[i];
@@ -2430,7 +2460,7 @@ function soby_Wizard(contentDivSelector) {
         return null;
     }
 
-    this.ActivateWizardTab = function (linkId) {
+    ActivateWizardTab = function (linkId) {
         var item = this.GetItemById(linkId);
         $(this.ContentDivSelector + " a.sobywizardtablink").removeClass("active");
         $(this.ContentDivSelector + " > ul > li a[linkid='" + linkId + "']").addClass("active");
@@ -2438,22 +2468,22 @@ function soby_Wizard(contentDivSelector) {
         $(item.ContainerId).show();
     }
 
-    this.GoToNextTab = function () {
+    GoToNextTab = function () {
         if (this.CurrentTabIndex < this.Items.length) {
             this.GoToTab(this.CurrentTabIndex + 1);
         }
     }
 
-    this.GoToPreviousTab = function () {
+    GoToPreviousTab = function () {
         if (this.CurrentTabIndex > 0) {
             this.GoToTab(this.CurrentTabIndex - 1);
         }
     }
 
-    this.EventBeforeTabChange = null;
-    this.EventAfterTabChange = null;
+    EventBeforeTabChange = null;
+    EventAfterTabChange = null;
 
-    this.GoToTab = function (tabIndex) {
+    GoToTab = function (tabIndex) {
         if (this.EventBeforeTabChange != null)
             if (this.EventBeforeTabChange(tabIndex) == false)
                 return;
@@ -2475,8 +2505,7 @@ function soby_Wizard(contentDivSelector) {
             this.EventAfterTabChange(tabIndex);
     }
 
-
-    this.Initialize = function () {
+    Initialize = function () {
         $(this.ContentDivSelector).addClass("sobywizard");
         var wizardLinks = $(this.ContentDivSelector + " > ul > li a")
         wizardLinks.addClass("sobywizardtablink");
@@ -2513,19 +2542,29 @@ function soby_Wizard(contentDivSelector) {
 
 // ********************* CAML BUILDER MENU TEMPLATE *****************************
 var soby_Menus = new Array();
-function soby_Menu(contentDivSelector, dataService, displayNameField, idField, parentIdField) {
-    this.MenuID = "soby_menugrid_" + soby_guid();
-    this.ContentDivSelector = contentDivSelector;
-    this.DisplayNameField = displayNameField;
-    this.IDField = idField;
-    this.ParentIDField = parentIdField;
-    this.DataService = dataService;
-    this.MaxWidth = null;
-    this.TileWidth = "150";
-    this.TileHeight = "120";
-    this.Width = "600";
-    this.Items = null;
-    this.EnsureMenusExistency = function () {
+class soby_Menu {
+    constructor(contentDivSelector, dataService, displayNameField, idField, parentIdField){
+        this.MenuID = "soby_menugrid_" + soby_guid();
+        this.ContentDivSelector = contentDivSelector;
+        this.DisplayNameField = displayNameField;
+        this.IDField = idField;
+        this.ParentIDField = parentIdField;
+        this.DataService = dataService;
+        this.EnsureMenusExistency();
+    }
+
+    MenuID = "";
+    ContentDivSelector = "";
+    DisplayNameField = "";
+    IDField = "";
+    ParentIDField = "";
+    DataService = null;
+    MaxWidth = null;
+    TileWidth = "150";
+    TileHeight = "120";
+    Width = "600";
+    Items = null;
+    EnsureMenusExistency = function () {
         for (var key in soby_Menus) {
             if (key == this.MenuID)
                 return;
@@ -2534,9 +2573,8 @@ function soby_Menu(contentDivSelector, dataService, displayNameField, idField, p
         soby_Menus[this.MenuID] = this;
     }
 
-    this.EnsureMenusExistency();
 
-    this.GetItemById = function (id) {
+    GetItemById = function (id) {
         for (var i = 0; i < this.Items.length; i++) {
             if (this.Items[i].LinkId == id)
                 return this.Items[i];
@@ -2545,7 +2583,7 @@ function soby_Menu(contentDivSelector, dataService, displayNameField, idField, p
         return null;
     }
 
-    this.ActivateMenuTab = function (linkId) {
+    ActivateMenuTab = function (linkId) {
         var item = this.GetItemById(linkId);
         $(this.ContentDivSelector + " a.sobymenutablink").removeClass("active");
         $(this.ContentDivSelector + " > ul > li a[linkid='" + linkId + "']").addClass("active");
@@ -2553,10 +2591,10 @@ function soby_Menu(contentDivSelector, dataService, displayNameField, idField, p
         $(item.ContainerId).show();
     }
 
-    this.EventBeforeTabChange = null;
-    this.EventAfterTabChange = null;
+    EventBeforeTabChange = null;
+    EventAfterTabChange = null;
 
-    this.PopulateGridData = function (items) {
+    PopulateGridData = function (items) {
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             var displayName = item[this.DisplayNameField];
@@ -2569,7 +2607,7 @@ function soby_Menu(contentDivSelector, dataService, displayNameField, idField, p
         }
     }
 
-    this.Initialize = function () {
+    Initialize = function () {
         var menu = this;
         this.DataService.ItemPopulated = function (items) {
             menu.PopulateGridData(items);
@@ -2632,10 +2670,10 @@ class soby_ItemSelection {
             }
 
 //            this.AdvancedSearchAsGrid.
-            this.AdvancedSearchAsGrid.ImagesFolderUrl = this.ImagesFolderUrl;
         }
     }
     Initialize() {
+        this.AdvancedSearchAsGrid.ImagesFolderUrl = this.ImagesFolderUrl;
         var selectedItemsHiddenField = $("<input type='hidden' class='selecteditemvalues'>");
         var itemNameInput = $("<input type='text' class='itemname' style='width:100px;padding:3px 0px 3px 0px'>");
         var advancedSelection = $("<a id='" + this.ItemSelectionID + "_advancedbutton' href='javascript:void(0)'><img src='" + this.ImagesFolderUrl + "/bizpicker.gif' border='0'></a>");
@@ -2850,3 +2888,4 @@ function SetCommonDialogArgument(dialogID, argument) {
     $("#" + dialogID).dialog().data("argument", argument)
 }
 // ************************************************************
+

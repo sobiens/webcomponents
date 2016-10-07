@@ -200,6 +200,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Controls\SobyTreeViewSideMenuControl.ascx" />
     <Content Include="Controls\SobyItemSelectionSideMenuControl.ascx" />
     <Content Include="Controls\SobyMetroStyleGridSideMenuControl.ascx" />
     <Content Include="Controls\SobyCarouselSideMenuControl.ascx" />
@@ -210,6 +211,8 @@
     <Content Include="Css\bootstrap.min.css" />
     <Content Include="Css\main.css" />
     <Content Include="download\Versions.aspx" />
+    <Content Include="Images\Tutorials\Soby_ItemSelection_Autocomplete.png" />
+    <Content Include="Images\Tutorials\Soby_TreeView_Default.png" />
     <Content Include="Images\Tutorials\Soby_WebGrid_Aggregates.png" />
     <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_CreateProject.png" />
     <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_ProjectTemplate.png" />
@@ -220,6 +223,7 @@
     <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_CreateProjectStep1.png" />
     <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_CreateProjectStep2.png" />
     <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_CreateSobyWebComponentsFolder.png" />
+    <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_TaskApplication.png" />
     <Content Include="media\css\jquery-ui.min.css" />
     <Content Include="media\css\soby.ui.components.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
@@ -274,6 +278,7 @@
     <Content Include="js\npm.js" />
     <Content Include="media\js\jquery-3.1.0.js" />
     <Content Include="media\js\jquery-ui-1.12.0.min.js" />
+    <Content Include="media\js\soby.service.js" />
     <Content Include="packages.config" />
     <Content Include="Css\bootstrap-theme.css.map" />
     <Content Include="Css\bootstrap-theme.min.css.map" />
@@ -299,6 +304,7 @@
     <Content Include="download\Sobiens.Web.Components 1.0.4.2.zip" />
     <Content Include="Images\Tutorials\logs\kohler.log" />
     <Content Include="download\Sobiens.Web.Components 1.0.4.8.zip" />
+    <Content Include="download\Sobiens.Web.Components 1.0.4.10.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
@@ -306,6 +312,9 @@
     <Content Include="Scripts\jquery-3.1.0.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.min.js" />
+    <Content Include="Web.sitemap" />
+    <TypeScriptCompile Include="media\js\soby.spservice.ts" />
+    <TypeScriptCompile Include="media\js\soby.ui.components.treeview.ts" />
     <TypeScriptCompile Include="Scripts\main.ts" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
@@ -338,6 +347,9 @@
     <Content Include="Tutorials\SobyCarousel\General.aspx" />
     <Content Include="Tutorials\Setting Up.aspx" />
     <Content Include="Tutorials\SobyGrid\Admin.aspx" />
+    <Content Include="Tutorials\SobyGrid\SetupWizard.aspx" />
+    <Content Include="Tutorials\SobyGrid\StaticDataBinding.aspx" />
+    <Content Include="Tutorials\SobyGrid\WebAPIODataDemo.aspx" />
     <Content Include="Tutorials\SobyGrid\WebAPIOData.aspx" />
     <Content Include="Tutorials\SobyGrid\MVCSample.aspx" />
     <Content Include="Tutorials\SobyGrid\Grouping.aspx" />
@@ -367,11 +379,14 @@
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\WebApiConfig.cs.txt" />
     <Content Include="Tutorials\SobyItemSelection\Getting Started.aspx" />
     <Content Include="Tutorials\SobyMetroStyleGrid\General.aspx" />
+    <Content Include="Tutorials\SobyTreeView\Getting Started.aspx" />
     <Content Include="Tutorials\SobyWizard\General.aspx" />
     <Content Include="Tutorials\WebComponents.aspx" />
     <Content Include="Tutorials\SobyGrid\Getting Started.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\staticdatabinding.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\TreeView\treeview.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -443,6 +458,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobyTreeViewSideMenuControl.ascx.cs">
+      <DependentUpon>SobyTreeViewSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyTreeViewSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyTreeViewSideMenuControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\SobyItemSelectionSideMenuControl.ascx.cs">
       <DependentUpon>SobyItemSelectionSideMenuControl.ascx</DependentUpon>
@@ -524,6 +546,27 @@
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\SetupWizard.aspx.cs">
+      <DependentUpon>SetupWizard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\SetupWizard.aspx.designer.cs">
+      <DependentUpon>SetupWizard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\StaticDataBinding.aspx.cs">
+      <DependentUpon>StaticDataBinding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\StaticDataBinding.aspx.designer.cs">
+      <DependentUpon>StaticDataBinding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\WebAPIODataDemo.aspx.cs">
+      <DependentUpon>WebAPIODataDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\WebAPIODataDemo.aspx.designer.cs">
+      <DependentUpon>WebAPIODataDemo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\WebAPIOData.aspx.cs">
       <DependentUpon>WebAPIOData.aspx</DependentUpon>
@@ -692,6 +735,13 @@
     <Compile Include="Tutorials\SobyMetroStyleGrid\General.aspx.designer.cs">
       <DependentUpon>General.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\SobyTreeView\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyTreeView\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyWizard\General.aspx.cs">
       <DependentUpon>General.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -724,6 +774,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\Tutorials\StaticData\" />
+    <Folder Include="Scripts\Tutorials\WebAPI\Wizard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
@@ -732,7 +783,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\jqueryui.d.ts" />
     <TypeScriptCompile Include="Scripts\jquery.d.ts" />
-    <TypeScriptCompile Include="media\js\soby.spservice.ts" />
+    <TypeScriptCompile Include="media\js\soby.service.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.ts" />
     <TypeScriptCompile Include="Scripts\test.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.carousel.ts" />

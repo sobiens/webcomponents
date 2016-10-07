@@ -48,7 +48,12 @@ function soby_PopulateWebNewsImages(itemID) {
         for (var i = 0; i < attachments.length; i++) {
             items[items.length] = { Image: attachments[i], Title: "", Body: "" };
         }
-        var staticDataService = new soby_StaticDataService(items);
+        var dataSourceBuilder = new soby_StaticDataBuilder();
+        dataSourceBuilder.Filters = new SobyFilters(false);
+        dataSourceBuilder.AddSchemaField("ID", SobyFieldTypes.Text, null);
+        dataSourceBuilder.AddSchemaField("Title", SobyFieldTypes.Text, null);
+        dataSourceBuilder.AddSchemaField("Body", SobyFieldTypes.Text, null);
+        var staticDataService = new soby_StaticDataService(dataSourceBuilder, items);
         var carousel = new soby_Carousel("#soby_newsImageDiv_" + itemID, "Carousel", staticDataService, "There is no record found.", "Image", "Title", "Body", false);
         carousel.MaxWidth = 600;
         carousel.Initialize(true);

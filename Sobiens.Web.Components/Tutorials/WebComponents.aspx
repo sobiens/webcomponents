@@ -9,10 +9,11 @@
     <article>
         <ul>
             <li><a href="SobyGrid/General.aspx">Grid</a></li>
-            <li><a href="SobyCarousel/General.aspx">Carousel</a></li>
-            <li><a href="SobyMetroStyleGrid/General.aspx">Metro Style Grid</a></li>
-            <li><a href="SobyWizard/General.aspx">Wizard</a></li>
+            <li style="display:none"><a href="SobyMetroStyleGrid/General.aspx">Metro Style Grid</a></li>
+            <li style="display:none"><a href="SobyWizard/General.aspx">Wizard</a></li>
+            <li><a href="SobyTreeView/Getting Started.aspx">Tree View</a></li>
             <li><a href="SobyItemSelection/Getting Started.aspx">Item Selection</a></li>
+            <li><a href="SobyCarousel/General.aspx">Carousel</a></li>
         </ul>
 
     </article>

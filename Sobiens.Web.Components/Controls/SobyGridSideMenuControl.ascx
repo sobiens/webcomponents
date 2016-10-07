@@ -3,6 +3,7 @@
 <h3>Tutorials</h3>
 <ul>
     <li><a href="/Tutorials/SobyGrid/Getting Started.aspx">Getting Started</a></li>
+    <li><a href="/Tutorials/SobyGrid/SetupWizard.aspx">Wizard</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/ModifyRecords.aspx">Modify records</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/Localization.aspx">Localization</a></li>
     <li><a href="/Tutorials/SobyGrid/Sorting.aspx">Sorting</a></li>
@@ -10,7 +11,10 @@
     <li><a href="/Tutorials/SobyGrid/Paging.aspx">Paging</a></li>
     <li><a href="/Tutorials/SobyGrid/Editing.aspx">Editing</a></li>
     <li><a href="/Tutorials/SobyGrid/Grouping.aspx">Grouping</a></li>
-    <li><a href="/Tutorials/SobyGrid/CustomDataBinding.aspx">Custom Data Binding</a></li>
+    <li>Data Binding<ul>
+            <li><a href="/Tutorials/SobyGrid/StaticDataBinding.aspx">Static Data Binding</a></li>
+            <li><a href="/Tutorials/SobyGrid/CustomDataBinding.aspx">Custom Data Binding</a></li>
+        </ul></li>
     <li><a href="/Tutorials/SobyGrid/WebAPIOData.aspx">Web API and OData Implementation</a></li>
     <li><a href="/Tutorials/SobyGrid/MVCSample.aspx">MVC Sample</a></li>
     <li><a href="/Tutorials/SobyGrid/Aggregates.aspx">Aggregates</a></li>

@@ -7,7 +7,7 @@
     </hgroup>
 
     <article>
-        <script src="../../Scripts/soby.spservice.js"></script>
+        <script src="../../Scripts/soby.service.js"></script>
         <script src="../../Scripts/soby.ui.components.js"></script>
         <script src="../../Scripts/Tutorials/WebAPI/soby.customers.js"></script>
     </article>

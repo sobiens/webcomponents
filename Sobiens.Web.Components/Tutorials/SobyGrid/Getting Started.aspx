@@ -17,7 +17,7 @@
 
     <div class="article" style="float: left; width: 74%;">
             <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>        <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
-        <script src="/media/js/soby.spservice.js"></script>
+        <script src="/media/js/soby.service.js"></script>
         <script src="/media/js/soby.ui.components.js"></script>
         <script src="/Scripts/Tutorials/WebAPI/Grid/general.js"></script>
         <p>
@@ -36,7 +36,7 @@
             <img src="/Images/Tutorials/Soby_WebGrid_Grouping.png" />
             <a href="Grouping.aspx"><strong>View demo and tutorial</strong></a>
         </p>
-        <h3>Grouping</h3>
+        <h3>Aggregates</h3>
         <p>
             <strong>Soby WebGrid</strong> allows user to display aggregate values on grouped view.<br /><br />
             <img src="/Images/Tutorials/Soby_WebGrid_Aggregates.png" />

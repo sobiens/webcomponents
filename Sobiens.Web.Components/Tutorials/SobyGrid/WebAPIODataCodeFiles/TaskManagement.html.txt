@@ -6,7 +6,7 @@
 <body>
     <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="/media/js/soby.spservice.js"></script>
+    <script src="/media/js/soby.service.js"></script>
     <script src="/media/js/soby.ui.components.js"></script>
     <div id='soby_TasksDiv'></div>
 

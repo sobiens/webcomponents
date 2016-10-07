@@ -225,7 +225,7 @@
 .soby-list-selectitem-a:hover {
     background-color:transparent;
 }
-.soby_griddatarow.selected .soby-list-selectitem-span, .soby-itmHoverEnabled:hover .soby-list-selectitem-span  {
+.soby_gridheaderrow.selected .soby-list-selectitem-span, .soby_griddatarow.selected .soby-list-selectitem-span, .soby-itmHoverEnabled:hover .soby-list-selectitem-span  {
     visibility: visible !important;
 }
 .sobygridmenu{
@@ -302,4 +302,8 @@
 .sobymenu > ul > li:first-child .sobymenutablink:before, .sobymenu > li:last-child .sobymenutablink:after {    border: none; } 
 .sobymenutablink.active:after {border-left: 30px solid orange;} 
 .sobymenunavigationbar { clear: both; text-align: center; } 
+/***************************************************************/
+
+/*********************** SOBY TREE VIEW *****************************/
+.soby_treeviewnode { list-style:none; }
 /***************************************************************/

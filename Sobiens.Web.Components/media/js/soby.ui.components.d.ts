@@ -401,6 +401,7 @@ declare class soby_WebGrid {
      * grid.GetSelectedDataItems();
      */
     GetSelectedDataItems(): any[];
+    SelectAllRows(): void;
     /**
      * Selects the row
      *
@@ -771,9 +772,48 @@ declare class soby_MetroTilesGrid {
     ItemPopulated(items: Array<soby_Item>): void;
 }
 declare var soby_Wizards: any[];
-declare function soby_Wizard(contentDivSelector: any): void;
+declare class soby_Wizard {
+    constructor(contentDivSelector: string);
+    WizardID: string;
+    ContentDivSelector: string;
+    CurrentTabIndex: number;
+    MaxWidth: any;
+    TileWidth: string;
+    TileHeight: string;
+    Width: string;
+    Items: any;
+    EnsureWizardsExistency: () => void;
+    GetItemById: (id: any) => any;
+    ActivateWizardTab: (linkId: any) => void;
+    GoToNextTab: () => void;
+    GoToPreviousTab: () => void;
+    EventBeforeTabChange: any;
+    EventAfterTabChange: any;
+    GoToTab: (tabIndex: any) => void;
+    Initialize: () => void;
+}
 declare var soby_Menus: any[];
-declare function soby_Menu(contentDivSelector: any, dataService: any, displayNameField: any, idField: any, parentIdField: any): void;
+declare class soby_Menu {
+    constructor(contentDivSelector: any, dataService: any, displayNameField: any, idField: any, parentIdField: any);
+    MenuID: string;
+    ContentDivSelector: string;
+    DisplayNameField: string;
+    IDField: string;
+    ParentIDField: string;
+    DataService: any;
+    MaxWidth: any;
+    TileWidth: string;
+    TileHeight: string;
+    Width: string;
+    Items: any;
+    EnsureMenusExistency: () => void;
+    GetItemById: (id: any) => any;
+    ActivateMenuTab: (linkId: any) => void;
+    EventBeforeTabChange: any;
+    EventAfterTabChange: any;
+    PopulateGridData: (items: any) => void;
+    Initialize: () => void;
+}
 declare var soby_ItemSelections: any[];
 declare class SobyItemSelectorTypeObject {
     GridView: number;

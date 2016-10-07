@@ -10,7 +10,7 @@
     </hgroup>
     <div class="article" style="float: left;width: 74%;">
             <link href="/Css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
-            <script src="/Scripts/soby.spservice.js"></script>
+            <script src="/Scripts/soby.service.js"></script>
             <script src="/Scripts/soby.ui.components.js"></script>
             <script src="/Scripts/Tutorials/WebAPI/MetroStyleGrid/general.js"></script>
             <div id='soby_MetroStyleGridDiv'></div>
@@ -19,7 +19,7 @@
         </a>
         <div id="ViewSourceDiv" class="viewsource" codefile="/Scripts/Tutorials/WebAPI/MetroStyleGrid/general.js" style="display:none;background-color:ivory">
             &lt;link href="/Css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;<br />
-            &lt;script src="/Scripts/soby.spservice.js"&gt;&lt;/script&gt;<br />
+            &lt;script src="/Scripts/soby.service.js"&gt;&lt;/script&gt;<br />
             &lt;script src="/Scripts/soby.ui.components.js"&gt;&lt;/script&gt;<br />
             &lt;div id='soby_MetroStyleGridDiv'&gt;&lt;/div&gt;
             <div class="viewsourcecodefileoutput"></div>
