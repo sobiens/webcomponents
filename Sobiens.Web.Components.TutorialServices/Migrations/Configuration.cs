@@ -564,6 +564,111 @@ new OrderItem()
 }
 );
 
+            context.Categories.AddOrUpdate(x => x.Id,
+    new Category() { Id = 1, Name = "Architecture" },
+    new Category() { Id = 2, Name = "Development" },
+    new Category() { Id = 3, Name = "UI Design" }
+    );
+
+            context.Statuses.AddOrUpdate(x => x.Id,
+                new Status() { Id = 1, Title = "Not Started" },
+                new Status() { Id = 2, Title = "In Progress" },
+                new Status() { Id = 3, Title = "Completed" },
+                new Status() { Id = 4, Title = "Waiting on someone else" },
+                new Status() { Id = 5, Title = "Deferred" }
+                );
+
+            context.Priorities.AddOrUpdate(x => x.Id,
+                new Priority() { Id = 1, Title = "Low" },
+                new Priority() { Id = 2, Title = "Normal" },
+                new Priority() { Id = 3, Title = "High" }
+                );
+
+            context.Tasks.AddOrUpdate(x => x.Id,
+                new Task()
+                {
+                    Id = 1,
+                    Title = "Architecture design",
+                    CategoryId = 1,
+                    PriorityId = 1,
+                    StatusId = 1,
+                    DueDate = DateTime.Now.AddDays(5)
+                },
+                new Task()
+                {
+                    Id = 2,
+                    Title = "Data integration",
+                    CategoryId = 1,
+                    PriorityId = 3,
+                    StatusId = 2,
+                    DueDate = DateTime.Now.AddDays(6)
+                },
+                new Task()
+                {
+                    Id = 3,
+                    Title = "Bussiness layer improvements",
+                    CategoryId = 1,
+                    PriorityId = 2,
+                    StatusId = 3,
+                    DueDate = DateTime.Now.AddDays(7)
+                },
+                new Task()
+                {
+                    Id = 4,
+                    Title = "Data export utility",
+                    CategoryId = 2,
+                    PriorityId = 3,
+                    StatusId = 4,
+                    DueDate = DateTime.Now.AddDays(8)
+                },
+                new Task()
+                {
+                    Id = 5,
+                    Title = "Admin interface",
+                    CategoryId = 2,
+                    PriorityId = 1,
+                    StatusId = 5,
+                    DueDate = DateTime.Now.AddDays(9)
+                },
+                new Task()
+                {
+                    Id = 6,
+                    Title = "Theme integration",
+                    CategoryId = 3,
+                    PriorityId = 2,
+                    StatusId = 3,
+                    DueDate = DateTime.Now.AddDays(10)
+                },
+                new Task()
+                {
+                    Id = 7,
+                    Title = "Database design",
+                    CategoryId = 3,
+                    PriorityId = 1,
+                    StatusId = 2,
+                    DueDate = DateTime.Now.AddDays(11)
+                }
+                );
+
+            context.Premises.AddOrUpdate(x => x.Id,
+                new Premise() { Id = 1, Title = "Hotel A" },
+                new Premise() { Id = 2, Title = "Hotel B" },
+                new Premise() { Id = 3, Title = "Hotel C" });
+
+            context.Premises.AddOrUpdate(x => x.Id,
+                new Premise() { Id = 4, Title = "Floor 1", ParentId = 1 },
+                new Premise() { Id = 5, Title = "Floor 1", ParentId = 2 },
+                new Premise() { Id = 6, Title = "Floor 2", ParentId = 2 },
+                new Premise() { Id = 7, Title = "Floor 1", ParentId = 3 });
+
+            context.Premises.AddOrUpdate(x => x.Id,
+                new Premise() { Id = 8, Title = "Room 101", ParentId = 4 },
+                new Premise() { Id = 9, Title = "Room 101", ParentId = 5 },
+                new Premise() { Id = 10, Title = "Room 201", ParentId = 6 },
+                new Premise() { Id = 11, Title = "Room 101", ParentId = 7 }
+                );
+
+
         }
     }
 }

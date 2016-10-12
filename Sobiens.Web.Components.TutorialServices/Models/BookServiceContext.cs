@@ -34,5 +34,10 @@ namespace Sobiens.Web.Components.TutorialServices.Models
         public System.Data.Entity.DbSet<Sobiens.Web.Components.TutorialServices.Models.Order> Orders { get; set; }
 
         public System.Data.Entity.DbSet<Sobiens.Web.Components.TutorialServices.Models.OrderItem> OrderItems { get; set; }
+        public System.Data.Entity.DbSet<Task> Tasks { get; set; }
+        public System.Data.Entity.DbSet<Category> Categories { get; set; }
+        public System.Data.Entity.DbSet<Priority> Priorities { get; set; }
+        public System.Data.Entity.DbSet<Status> Statuses { get; set; }
+        public System.Data.Entity.DbSet<Premise> Premises { get; set; }
     }
 }

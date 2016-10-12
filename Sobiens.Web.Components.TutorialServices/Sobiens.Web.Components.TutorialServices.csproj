@@ -201,30 +201,38 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Attributes\ExtendedEnableQueryAttribute.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CustomerAddressesODataController.cs" />
     <Compile Include="Controllers\CustomerPhonesODataController.cs" />
     <Compile Include="Controllers\CustomersODataController.cs" />
     <Compile Include="Controllers\OrderItemsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\PrioritiesController.cs" />
+    <Compile Include="Controllers\PremisesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CustomerAddressesController.cs" />
     <Compile Include="Controllers\CustomerPhonesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\StatusesController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201609021127294_Initial.cs" />
-    <Compile Include="Migrations\201609021127294_Initial.Designer.cs">
-      <DependentUpon>201609021127294_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201609262311219_Initial.cs" />
+    <Compile Include="Migrations\201609262311219_Initial.Designer.cs">
+      <DependentUpon>201609262311219_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Author.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\OrderItem.cs" />
+    <Compile Include="Models\Premise.cs" />
+    <Compile Include="Models\Priority.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Book.cs" />
@@ -234,13 +242,11 @@
     <Compile Include="Models\Phone.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\ServiceResult.cs" />
+    <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\Task.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\BookServiceContext-20160801203825.mdf" />
-    <Content Include="App_Data\BookServiceContext-20160801203825_log.ldf">
-      <DependentUpon>BookServiceContext-20160801203825.mdf</DependentUpon>
-    </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -311,8 +317,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609021127294_Initial.resx">
-      <DependentUpon>201609021127294_Initial.cs</DependentUpon>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201609262311219_Initial.resx">
+      <DependentUpon>201609262311219_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

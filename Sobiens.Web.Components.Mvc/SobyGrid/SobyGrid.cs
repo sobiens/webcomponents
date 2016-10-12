@@ -32,7 +32,7 @@ namespace Sobiens.Web.Components.Mvc.SobyGrid
             StringBuilder sb = new StringBuilder();
             string gridContainerId = "sobygrid_" + this._ID;
             sb.Append("<link href=\"http://localhost:5519/Css/soby.ui.components.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\">");
-            sb.Append("<script src=\"http://localhost:5519/Scripts/soby.spservice.js\"></script>");
+            sb.Append("<script src=\"http://localhost:5519/Scripts/soby.service.js\"></script>");
             sb.Append("<script src=\"http://localhost:5519/Scripts/soby.ui.components.js\"></script>");
 
             sb.Append("<div id='" + gridContainerId + "'></div>" + Environment.NewLine);

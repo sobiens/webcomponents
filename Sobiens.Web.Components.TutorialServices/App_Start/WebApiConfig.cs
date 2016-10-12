@@ -22,6 +22,11 @@ namespace Sobiens.Web.Components.TutorialServices
             builder.EntitySet<Product>("Products");
             builder.EntitySet<Order>("Orders");
             builder.EntitySet<OrderItem>("OrderItems");
+            builder.EntitySet<Priority>("Priorities");
+            builder.EntitySet<Category>("Categories");
+            builder.EntitySet<Status>("Statuses");
+            builder.EntitySet<Task>("Tasks");
+            builder.EntitySet<Premise>("Premises");
             
             config.MapODataServiceRoute(
                 routeName: "ODataRoute",
