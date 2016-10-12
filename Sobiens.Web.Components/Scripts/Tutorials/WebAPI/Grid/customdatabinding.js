@@ -60,7 +60,7 @@ var soby_CustomWCFBuilder = (function (_super) {
             query = this.Filters.ToJson();
         }
         else {
-            query = this.Filters.ToQueryString();
+            query = this.Filters.ToQueryString(0);
             if (query != "")
                 query = "filter=" + query;
         }

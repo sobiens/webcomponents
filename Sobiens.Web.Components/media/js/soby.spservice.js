@@ -1,3 +1,236 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var soby_SharePointService = (function () {
+    function soby_SharePointService(dataSourceBuilder) {
+        this.NextPageString = "";
+        this.PageIndex = 0;
+        this.StartIndex = 0;
+        this.EndIndex = 0;
+        this.Filters = new SobyFilters(false);
+        this.GroupByFields = new SobyGroupByFields();
+        this.OrderByFields = new SobyOrderByFields();
+        this.NextPageExist = false;
+        this.DataSourceBuilder = dataSourceBuilder;
+        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
+        this.NextPageStrings = new Array();
+        this.NextPageStrings[0] = "";
+        this.Transport = new soby_Transport();
+    }
+    soby_SharePointService.prototype.PopulateNavigationInformation = function () {
+        if (this.NavigationInformationBeingPopulated != null)
+            this.NavigationInformationBeingPopulated();
+        var service = this;
+        var requestMethod = this.Transport.Read.Type;
+        var dataType = this.Transport.Read.DataType;
+        var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
+        if (countServiceUrl == null) {
+            service.NavigationInformationPopulated();
+            return;
+        }
+        this.DataSourceBuilderTemp.GetData("", function (result) {
+            var totalItemCount = parseInt(result);
+            soby_LogMessage("Total item count:" + totalItemCount);
+            var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
+            var endIndex = ((service.DataSourceBuilderTemp.PageIndex + 1) * service.DataSourceBuilderTemp.RowLimit);
+            if (service.DataSourceBuilderTemp.RowLimit == 0) {
+                startIndex = 0;
+                endIndex = 0;
+            }
+            if (endIndex != 0 && totalItemCount > endIndex) {
+                service.NextPageExist = true;
+            }
+            else {
+                service.NextPageExist = false;
+                endIndex = totalItemCount;
+            }
+            soby_LogMessage("NextPageExist:" + service.NextPageExist);
+            service.StartIndex = startIndex;
+            service.EndIndex = endIndex;
+            service.NavigationInformationPopulated();
+        }, function (XMLHttpRequest, textStatus, errorThrown) {
+            var errorMessage = "An error occured on populating grid" + errorThrown;
+            if (service.ErrorThrown != null)
+                service.ErrorThrown(errorMessage);
+            soby_LogMessage(errorMessage);
+        }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
+    };
+    soby_SharePointService.prototype.NavigationInformationBeingPopulated = function () { };
+    soby_SharePointService.prototype.NavigationInformationPopulated = function () { };
+    soby_SharePointService.prototype.GroupBy = function (groupByFields) {
+        this.GroupByFields = groupByFields;
+        this.PopulateItems(null);
+    };
+    soby_SharePointService.prototype.Sort = function (orderByFields) {
+        this.PageIndex = 0;
+        this.NextPageString = "";
+        this.NextPageStrings = new Array();
+        this.NextPageStrings[0] = "";
+        this.OrderByFields = orderByFields;
+        this.PopulateItems(null);
+    };
+    ;
+    soby_SharePointService.prototype.Filter = function (filters, clearOtherFilters) {
+        this.PageIndex = 0;
+        this.NextPageString = "";
+        this.NextPageStrings = new Array();
+        this.NextPageStrings[0] = "";
+        if (clearOtherFilters == true)
+            this.Filters = new SobyFilters(filters.IsOr);
+        this.Filters.AddFilterCollection(filters);
+        this.PopulateItems(null);
+    };
+    ;
+    soby_SharePointService.prototype.GoToPage = function (pageIndex) {
+        this.DataSourceBuilderTemp.PageIndex = pageIndex;
+        this.PageIndex = pageIndex;
+        this.PopulateItems(null);
+    };
+    ;
+    soby_SharePointService.prototype.CanNavigateToNextPage = function () {
+        if (this.NextPageExist == false)
+            return false;
+        return true;
+    };
+    ;
+    soby_SharePointService.prototype.CanNavigateToPreviousPage = function () {
+        if (this.DataSourceBuilderTemp.PageIndex == 0)
+            return false;
+        return true;
+    };
+    ;
+    soby_SharePointService.prototype.PopulateItems = function (args) {
+        this.Args = args;
+        if (this.ItemBeingPopulated != null)
+            this.ItemBeingPopulated();
+        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
+        for (var i = 0; i < this.GroupByFields.length; i++) {
+            this.DataSourceBuilderTemp.AddOrderField(this.GroupByFields[i].FieldName, this.GroupByFields[i].IsAsc);
+        }
+        if (this.OrderByFields.length > 0)
+            this.DataSourceBuilderTemp.AddOrderFields(this.OrderByFields);
+        if (this.Filters.Filters.length > 0) {
+            this.DataSourceBuilderTemp.Filters.AddFilterCollection(this.Filters);
+        }
+        this.DataSourceBuilderTemp.PageIndex = this.PageIndex;
+        this.DataSourceBuilderTemp.NextPageString = this.NextPageString;
+        var service = this;
+        var serviceUrl = this.Transport.Read.Url;
+        var requestMethod = this.Transport.Read.Type;
+        var dataType = this.Transport.Read.DataType;
+        var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read);
+        if (mainQuery != null && mainQuery != "") {
+            if (serviceUrl.indexOf("?") == -1) {
+                serviceUrl += "?";
+            }
+            else {
+                serviceUrl += "&";
+            }
+            serviceUrl += mainQuery;
+        }
+        this.DataSourceBuilderTemp.GetData("", function (result) {
+            soby_LogMessage(result);
+            var items = service.DataSourceBuilderTemp.ParseData(result);
+            soby_LogMessage(items);
+            soby_LogMessage("NextPageExist:" + result.NextPageExist);
+            service.NextPageExist = result.NextPageExist;
+            soby_LogMessage(service);
+            var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
+            var endIndex = startIndex + service.DataSourceBuilderTemp.ItemCount - 1;
+            if (service.DataSourceBuilderTemp.ItemCount == 0) {
+                startIndex = 0;
+                endIndex = 0;
+            }
+            service.StartIndex = startIndex;
+            service.EndIndex = endIndex;
+            service.ItemPopulated(items);
+        }, function (XMLHttpRequest, textStatus, errorThrown) {
+            var errorMessage = "An error occured on populating grid" + errorThrown;
+            if (service.ErrorThrown != null)
+                service.ErrorThrown(errorMessage);
+            soby_LogMessage(errorMessage);
+        }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
+    };
+    soby_SharePointService.prototype.Parse = function () {
+    };
+    soby_SharePointService.prototype.GetFieldNames = function () {
+        var fieldNames = new Array();
+        for (var i = 0; i < this.DataSourceBuilderTemp.SchemaFields.length; i++) {
+            fieldNames[fieldNames.length] = { FieldName: this.DataSourceBuilderTemp.SchemaFields[i].FieldName };
+        }
+        return fieldNames;
+    };
+    soby_SharePointService.prototype.ItemPopulated = function (items) { };
+    soby_SharePointService.prototype.ItemBeingPopulated = function () { };
+    soby_SharePointService.prototype.ErrorThrown = function (errorMessage) { };
+    soby_SharePointService.prototype.UpdateItem = function (key, objectInstance) {
+        var updateUrl = this.Transport.Update.Url.replace(/#key/gi, key);
+        ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, key], function (item, args) {
+            var service = args[0];
+            service.ItemUpdated(args);
+        }, function (errorThrown) {
+        });
+    };
+    soby_SharePointService.prototype.DeleteItem = function (keyNames, keyValues) {
+        var deleteUrl = this.Transport.Delete.Url.replace(/#key/gi, keyValues[0]);
+        ajaxHelper(deleteUrl, this.Transport.Delete.Type, null, [this, keyValues[0]], function (item, args) {
+            var service = args[0];
+            service.ItemDeleted(args);
+        }, function (errorThrown) {
+        });
+    };
+    soby_SharePointService.prototype.AddItem = function (objectInstance) {
+        ajaxHelper(this.Transport.Add.Url, this.Transport.Add.Type, objectInstance, [this], function (item, args) {
+            var service = args[0];
+            service.ItemAdded(args);
+        }, function (errorThrown) {
+        });
+    };
+    soby_SharePointService.prototype.ItemUpdated = function (args) { };
+    soby_SharePointService.prototype.ItemAdded = function (args) { };
+    soby_SharePointService.prototype.ItemDeleted = function (args) { };
+    return soby_SharePointService;
+})();
+var soby_SPRestBuilder = (function (_super) {
+    __extends(soby_SPRestBuilder, _super);
+    function soby_SPRestBuilder() {
+        _super.apply(this, arguments);
+    }
+    soby_SPRestBuilder.prototype.Clone = function () {
+        var builder = new soby_SPRestBuilder();
+        builder.RowLimit = this.RowLimit;
+        for (var i = 0; i < this.SchemaFields.length; i++) {
+            var viewField = this.SchemaFields[i];
+            builder.AddSchemaField(viewField.FieldName, viewField.FieldType, viewField.Args);
+        }
+        builder.Filters = this.Filters.Clone();
+        for (var i = 0; i < this.Headers.length; i++) {
+            var header = this.Headers[i];
+            builder.AddHeader(header.Key, header.Value);
+        }
+        for (var i = 0; i < this.OrderByFields.length; i++) {
+            var orderByField = this.OrderByFields[i];
+            builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
+        }
+        builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
+        return builder;
+    };
+    soby_SPRestBuilder.prototype.GetWhereQuery = function (transport) {
+        var query = "";
+        if (transport.Type == "POST") {
+            query = this.Filters.ToJson();
+        }
+        else {
+            query = this.Filters.ToQueryString(1);
+            if (query != "")
+                query = "$filter=" + query;
+        }
+        return query;
+    };
+    return soby_SPRestBuilder;
+})(soby_WSBuilder);
 // ********************* CAML BUILDER *****************************
 function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     this.WebUrl = webUrl;

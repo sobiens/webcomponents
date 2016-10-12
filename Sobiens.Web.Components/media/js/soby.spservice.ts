@@ -1,4 +1,260 @@
-﻿
+﻿class soby_SharePointService implements soby_ServiceInterface {
+    DataSourceBuilder: soby_DataSourceBuilderAbstract;
+    DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
+    constructor(dataSourceBuilder: soby_DataSourceBuilderAbstract) {
+        this.DataSourceBuilder = dataSourceBuilder;
+        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
+        this.NextPageStrings = new Array<string>();
+        this.NextPageStrings[0] = "";
+        this.Transport = new soby_Transport();
+    }
+    NextPageString: string = "";
+    PageIndex: number = 0;
+    StartIndex: number = 0;
+    EndIndex: number = 0;
+    NextPageStrings: Array<string>;
+    Args: Array<any>;
+    Filters: SobyFilters = new SobyFilters(false);
+    GroupByFields: SobyGroupByFields = new SobyGroupByFields();
+    OrderByFields: SobyOrderByFields = new SobyOrderByFields();
+    NextPageExist: boolean = false;
+    Transport: soby_Transport;
+
+    PopulateNavigationInformation() {
+        if (this.NavigationInformationBeingPopulated != null)
+            this.NavigationInformationBeingPopulated();
+
+        var service = this;
+        var requestMethod = this.Transport.Read.Type;
+        var dataType = this.Transport.Read.DataType;
+
+        var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
+        if (countServiceUrl == null) {
+            service.NavigationInformationPopulated();
+            return;
+        }
+        this.DataSourceBuilderTemp.GetData("",
+            function (result) {
+                var totalItemCount = parseInt(result);
+                soby_LogMessage("Total item count:" + totalItemCount);
+
+                var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
+                var endIndex = ((service.DataSourceBuilderTemp.PageIndex + 1) * service.DataSourceBuilderTemp.RowLimit);
+                if (service.DataSourceBuilderTemp.RowLimit == 0) {
+                    startIndex = 0;
+                    endIndex = 0;
+                }
+                if (endIndex != 0 && totalItemCount > endIndex) {
+                    service.NextPageExist = true;
+                }
+                else {
+                    service.NextPageExist = false;
+                    endIndex = totalItemCount;
+                }
+                soby_LogMessage("NextPageExist:" + service.NextPageExist);
+
+                service.StartIndex = startIndex;
+                service.EndIndex = endIndex;
+                service.NavigationInformationPopulated();
+            },
+            function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessage = "An error occured on populating grid" + errorThrown;
+                if (service.ErrorThrown != null)
+                    service.ErrorThrown(errorMessage);
+                soby_LogMessage(errorMessage);
+            },
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
+    }
+    NavigationInformationBeingPopulated() { }
+    NavigationInformationPopulated() { }
+    GroupBy(groupByFields: SobyGroupByFields) {
+        this.GroupByFields = groupByFields;
+        this.PopulateItems(null);
+    }
+    Sort(orderByFields: SobyOrderByFields) {
+        this.PageIndex = 0;
+        this.NextPageString = "";
+        this.NextPageStrings = new Array();
+        this.NextPageStrings[0] = "";
+        this.OrderByFields = orderByFields;
+
+        this.PopulateItems(null);
+    };
+    Filter(filters: SobyFilters, clearOtherFilters: boolean) {
+        this.PageIndex = 0;
+        this.NextPageString = "";
+        this.NextPageStrings = new Array();
+        this.NextPageStrings[0] = "";
+        if (clearOtherFilters == true)
+            this.Filters = new SobyFilters(filters.IsOr);
+
+        this.Filters.AddFilterCollection(filters);
+        this.PopulateItems(null);
+    };
+    GoToPage(pageIndex: number) {
+        this.DataSourceBuilderTemp.PageIndex = pageIndex;
+        this.PageIndex = pageIndex;
+
+        this.PopulateItems(null);
+    };
+    CanNavigateToNextPage() {
+        if (this.NextPageExist == false)
+            return false;
+
+        return true;
+    };
+    CanNavigateToPreviousPage() {
+        if (this.DataSourceBuilderTemp.PageIndex == 0)
+            return false;
+
+        return true;
+    };
+
+    PopulateItems(args: Array<any>) {
+        this.Args = args;
+        if (this.ItemBeingPopulated != null)
+            this.ItemBeingPopulated();
+
+        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
+        for (var i = 0; i < this.GroupByFields.length; i++) {
+            this.DataSourceBuilderTemp.AddOrderField(this.GroupByFields[i].FieldName, this.GroupByFields[i].IsAsc);
+
+        }
+        if (this.OrderByFields.length > 0)
+            this.DataSourceBuilderTemp.AddOrderFields(this.OrderByFields);
+        if (this.Filters.Filters.length > 0) {
+            this.DataSourceBuilderTemp.Filters.AddFilterCollection(this.Filters);
+        }
+
+        this.DataSourceBuilderTemp.PageIndex = this.PageIndex;
+        this.DataSourceBuilderTemp.NextPageString = this.NextPageString;
+
+        var service = this;
+        var serviceUrl = this.Transport.Read.Url;
+        var requestMethod = this.Transport.Read.Type;
+        var dataType = this.Transport.Read.DataType;
+        var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read);
+        if (mainQuery != null && mainQuery != "") {
+            if (serviceUrl.indexOf("?") == -1) {
+                serviceUrl += "?";
+            }
+            else {
+                serviceUrl += "&";
+            }
+            serviceUrl += mainQuery;
+        }
+
+        this.DataSourceBuilderTemp.GetData("",
+            function (result) {
+                soby_LogMessage(result);
+                var items = service.DataSourceBuilderTemp.ParseData(result);
+                soby_LogMessage(items);
+
+                soby_LogMessage("NextPageExist:" + result.NextPageExist);
+                service.NextPageExist = result.NextPageExist;
+                soby_LogMessage(service);
+
+                var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
+                var endIndex = startIndex + service.DataSourceBuilderTemp.ItemCount - 1;
+                if (service.DataSourceBuilderTemp.ItemCount == 0) {
+                    startIndex = 0;
+                    endIndex = 0;
+                }
+                service.StartIndex = startIndex;
+                service.EndIndex = endIndex;
+                service.ItemPopulated(items);
+            },
+            function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessage = "An error occured on populating grid" + errorThrown;
+                if (service.ErrorThrown != null)
+                    service.ErrorThrown(errorMessage);
+                soby_LogMessage(errorMessage);
+            },
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
+    }
+
+    Parse() {
+
+    }
+
+    GetFieldNames() {
+        var fieldNames = new Array();
+        for (var i = 0; i < this.DataSourceBuilderTemp.SchemaFields.length; i++) {
+            fieldNames[fieldNames.length] = { FieldName: this.DataSourceBuilderTemp.SchemaFields[i].FieldName }
+        }
+
+        return fieldNames;
+    }
+    ItemPopulated(items: Array<soby_Item>) { }
+    ItemBeingPopulated() { }
+    ErrorThrown(errorMessage: string) { }
+    UpdateItem(key: string, objectInstance) {
+        var updateUrl = this.Transport.Update.Url.replace(/#key/gi, key)
+        ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, key], function (item, args) {
+            var service = args[0];
+            service.ItemUpdated(args);
+        }, function (errorThrown) {
+        })
+    }
+    DeleteItem(keyNames: Array<string>, keyValues: Array<string>) {
+        var deleteUrl = this.Transport.Delete.Url.replace(/#key/gi, keyValues[0])
+        ajaxHelper(deleteUrl, this.Transport.Delete.Type, null, [this, keyValues[0]], function (item, args) {
+            var service = args[0];
+            service.ItemDeleted(args);
+        }, function (errorThrown) {
+        });
+    }
+    AddItem(objectInstance) {
+        ajaxHelper(this.Transport.Add.Url, this.Transport.Add.Type, objectInstance, [this], function (item, args) {
+            var service = args[0];
+            service.ItemAdded(args);
+        }, function (errorThrown) {
+        });
+    }
+    ItemUpdated(args) { }
+    ItemAdded(args) { }
+    ItemDeleted(args) { }
+}
+
+class soby_SPRestBuilder extends soby_WSBuilder {
+    Clone() {
+        var builder = new soby_SPRestBuilder();
+        builder.RowLimit = this.RowLimit;
+        for (var i = 0; i < this.SchemaFields.length; i++) {
+            var viewField = this.SchemaFields[i];
+            builder.AddSchemaField(viewField.FieldName, viewField.FieldType, viewField.Args);
+        }
+
+        builder.Filters = this.Filters.Clone();
+
+        for (var i = 0; i < this.Headers.length; i++) {
+            var header = this.Headers[i];
+            builder.AddHeader(header.Key, header.Value);
+        }
+
+        for (var i = 0; i < this.OrderByFields.length; i++) {
+            var orderByField = this.OrderByFields[i];
+            builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
+        }
+
+        builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
+
+        return builder;
+    }
+    GetWhereQuery(transport: soby_TransportRequest) {
+        var query = "";
+        if (transport.Type == "POST") {
+            query = this.Filters.ToJson();
+        }
+        else {
+            query = this.Filters.ToQueryString(1);
+            if (query != "")
+                query = "$filter=" + query;
+        }
+        return query;
+    }
+}
+
 // ********************* CAML BUILDER *****************************
 function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     this.WebUrl = webUrl;
