@@ -25,4 +25,3 @@ function soby_PopulateGridCellTemplate() {
     bookGrid.AddColumn("Year", "Description", SobyShowFieldsOn.All, null, cellTemplate2, true, true, true, null);
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=celltemplate.js.map

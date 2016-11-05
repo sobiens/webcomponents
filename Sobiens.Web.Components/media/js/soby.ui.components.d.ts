@@ -61,6 +61,26 @@ declare function soby_RemoveNoneExistenceGrid(): void;
 declare function soby_GetActiveDataGrid(): soby_WebGrid;
 declare function soby_GetAllGrids(): any[];
 declare function soby_RefreshAllGrids(): void;
+declare class sobyActionPaneButtons extends Array<sobyActionPaneButton> {
+    Add(key: string, text: string, index: number, imageUrl: string, className: string, visible: boolean, onClick: any, enabilityFunction: any): void;
+    Get(key: string): sobyActionPaneButton;
+    Hide(key: string): void;
+    Show(key: string): void;
+}
+declare class sobyActionPaneButton {
+    constructor(key: string, text: string, index: number, imageUrl: string, className: string, visible: boolean, onClick: any, enabilityFunction: any);
+    ID: string;
+    Key: string;
+    Text: string;
+    Index: number;
+    ImageUrl: string;
+    ClassName: string;
+    Visible: boolean;
+    OnClick: any;
+    EnabilityFunction: any;
+    Hide(): void;
+    Show(): void;
+}
 declare class soby_WebGrid {
     /************************************ MEMBERS *************************************/
     /**
@@ -94,6 +114,7 @@ declare class soby_WebGrid {
      */
     ActionInProgress: boolean;
     Active: boolean;
+    AllowExportData: boolean;
     GridID: string;
     ThemeName: string;
     ThemeClassName: string;
@@ -117,8 +138,10 @@ declare class soby_WebGrid {
     IsEditable: boolean;
     IsGroupable: boolean;
     Items: any;
+    ShowRefreshButton: boolean;
     ShowHeader: boolean;
     ImagesFolderUrl: string;
+    ActionPaneButtons: sobyActionPaneButtons;
     /************************************ END MEMBERS ********************************/
     /************************************ EVENTS *************************************/
     /**
@@ -195,6 +218,7 @@ declare class soby_WebGrid {
     constructor(contentDivSelector: string, title: string, dataService: any, emptyDataHtml: string);
     /************************************ END CONSTRUCTORS ***************************/
     /************************************ METHODS ************************************/
+    InitializeActionPaneButtons(): void;
     /**
      * Ensures grid is in the global grid array.
      *
@@ -467,6 +491,8 @@ declare class soby_WebGrid {
      * @ev Drag Event.
      */
     DropGroupByColumn(ev: any): void;
+    ExportToExcel(): void;
+    CopyToClipboard(elem: HTMLTextAreaElement): any;
     /**
      * Generates group by pane
      * @example
@@ -474,6 +500,7 @@ declare class soby_WebGrid {
      * grid.GenerateGroupByPanePane();
      */
     GenerateGroupByPanePane(): void;
+    SetActionPaneButtonsVisibility(): void;
     /**
      * Generates action pane
      * @example

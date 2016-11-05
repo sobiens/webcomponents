@@ -13,6 +13,7 @@ function soby_PopulateGridPaging() {
     bookDataSourceBuilder.AddSchemaField("Genre", SobyFieldTypes.Text, null);
     var bookService = new soby_WebServiceService(bookDataSourceBuilder);
     bookService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
+    bookDataSourceBuilder.RowLimit = 10;
 
     var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
     bookGrid.IsEditable = false;

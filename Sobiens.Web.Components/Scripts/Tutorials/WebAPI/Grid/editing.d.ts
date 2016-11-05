@@ -1,1 +1,1 @@
-declare function soby_PopulateGridEditing(): void;
+declare function soby_PopulateGridRefreshData(): void;

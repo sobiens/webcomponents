@@ -3,6 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+// VERSION 1.0.5.2
 var soby_SharePointService = (function () {
     function soby_SharePointService(dataSourceBuilder) {
         this.NextPageString = "";
@@ -120,7 +121,7 @@ var soby_SharePointService = (function () {
         var serviceUrl = this.Transport.Read.Url;
         var requestMethod = this.Transport.Read.Type;
         var dataType = this.Transport.Read.DataType;
-        var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read);
+        var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read, false);
         if (mainQuery != null && mainQuery != "") {
             if (serviceUrl.indexOf("?") == -1) {
                 serviceUrl += "?";
@@ -134,8 +135,6 @@ var soby_SharePointService = (function () {
             soby_LogMessage(result);
             var items = service.DataSourceBuilderTemp.ParseData(result);
             soby_LogMessage(items);
-            soby_LogMessage("NextPageExist:" + result.NextPageExist);
-            service.NextPageExist = result.NextPageExist;
             soby_LogMessage(service);
             var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
             var endIndex = startIndex + service.DataSourceBuilderTemp.ItemCount - 1;
@@ -192,7 +191,7 @@ var soby_SharePointService = (function () {
     soby_SharePointService.prototype.ItemAdded = function (args) { };
     soby_SharePointService.prototype.ItemDeleted = function (args) { };
     return soby_SharePointService;
-})();
+}());
 var soby_SPRestBuilder = (function (_super) {
     __extends(soby_SPRestBuilder, _super);
     function soby_SPRestBuilder() {
@@ -230,7 +229,7 @@ var soby_SPRestBuilder = (function (_super) {
         return query;
     };
     return soby_SPRestBuilder;
-})(soby_WSBuilder);
+}(soby_WSBuilder));
 // ********************* CAML BUILDER *****************************
 function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     this.WebUrl = webUrl;
@@ -1381,4 +1380,3 @@ var sobyObject = function () {
     this.SPLibrary = new this.SPLibraryObject();
 };
 var soby = new sobyObject();
-//# sourceMappingURL=soby.spservice.js.map

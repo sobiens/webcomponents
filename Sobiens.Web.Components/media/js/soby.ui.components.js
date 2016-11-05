@@ -1,4 +1,9 @@
-// VERSION 1.0.4.8
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+// VERSION 1.0.5.2
 // ********************* SOBY EDIT CONTROLS *****************************
 var soby_EditControls = new Array();
 var SobyTextBox = (function () {
@@ -34,7 +39,7 @@ var SobyTextBox = (function () {
         return true;
     };
     return SobyTextBox;
-})();
+}());
 var SobyLookupSelectBox = (function () {
     function SobyLookupSelectBox(containerClientId, fieldType, args) {
         this.ContainerClientId = containerClientId;
@@ -81,7 +86,7 @@ var SobyLookupSelectBox = (function () {
         return true;
     };
     return SobyLookupSelectBox;
-})();
+}());
 var SobyEditControlFactory = (function () {
     function SobyEditControlFactory() {
     }
@@ -102,7 +107,7 @@ var SobyEditControlFactory = (function () {
         return soby_EditControls[containerClientId];
     };
     return SobyEditControlFactory;
-})();
+}());
 var sobyEditControlFactory = new SobyEditControlFactory();
 // **********************************************************************
 // ********************* SOBY GRID *****************************
@@ -119,7 +124,7 @@ var SobyShowFieldsOnObject = (function () {
         this.EditNew = 6;
     }
     return SobyShowFieldsOnObject;
-})();
+}());
 var SobyShowFieldsOn = new SobyShowFieldsOnObject();
 $("form").click(function () {
     $(".sobygridmenu").hide();
@@ -197,6 +202,56 @@ function soby_RefreshAllGrids() {
         soby_WebGrids[x].Initialize(true);
     }
 }
+var sobyActionPaneButtons = (function (_super) {
+    __extends(sobyActionPaneButtons, _super);
+    function sobyActionPaneButtons() {
+        _super.apply(this, arguments);
+    }
+    sobyActionPaneButtons.prototype.Add = function (key, text, index, imageUrl, className, visible, onClick, enabilityFunction) {
+        this.push(new sobyActionPaneButton(key, text, index, imageUrl, className, visible, onClick, enabilityFunction));
+    };
+    sobyActionPaneButtons.prototype.Get = function (key) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i].Key.toLowerCase() == key.toLowerCase())
+                return this[i];
+        }
+    };
+    sobyActionPaneButtons.prototype.Hide = function (key) {
+        this.Get(key).Hide();
+    };
+    sobyActionPaneButtons.prototype.Show = function (key) {
+        this.Get(key).Show();
+    };
+    return sobyActionPaneButtons;
+}(Array));
+var sobyActionPaneButton = (function () {
+    function sobyActionPaneButton(key, text, index, imageUrl, className, visible, onClick, enabilityFunction) {
+        this.ID = "actionpanebutton_" + soby_guid();
+        this.Key = "";
+        this.Text = "";
+        this.Index = null;
+        this.ImageUrl = "";
+        this.ClassName = "";
+        this.Visible = true;
+        this.OnClick = null;
+        this.EnabilityFunction = null;
+        this.Key = key;
+        this.Text = text;
+        this.Index = index;
+        this.ImageUrl = imageUrl;
+        this.ClassName = className;
+        this.OnClick = onClick;
+        this.Visible = visible;
+        this.EnabilityFunction = enabilityFunction;
+    }
+    sobyActionPaneButton.prototype.Hide = function () {
+        $("#" + this.ID).hide();
+    };
+    sobyActionPaneButton.prototype.Show = function () {
+        $("#" + this.ID).show();
+    };
+    return sobyActionPaneButton;
+}());
 var soby_WebGrid = (function () {
     /************************************ END EVENTS *********************************/
     /************************************ CONSTRUCTORS *******************************/
@@ -269,6 +324,7 @@ var soby_WebGrid = (function () {
          */
         this.ActionInProgress = false;
         this.Active = false;
+        this.AllowExportData = false;
         this.GridID = "";
         this.ThemeName = "classic";
         this.ThemeClassName = this.ThemeName;
@@ -292,8 +348,10 @@ var soby_WebGrid = (function () {
         this.IsEditable = true;
         this.IsGroupable = false;
         this.Items = null;
+        this.ShowRefreshButton = true;
         this.ShowHeader = true;
         this.ImagesFolderUrl = "/_layouts/1033/images";
+        this.ActionPaneButtons = new sobyActionPaneButtons();
         /************************************ END MEMBERS ********************************/
         /************************************ EVENTS *************************************/
         /**
@@ -339,6 +397,61 @@ var soby_WebGrid = (function () {
     }
     /************************************ END CONSTRUCTORS ***************************/
     /************************************ METHODS ************************************/
+    soby_WebGrid.prototype.InitializeActionPaneButtons = function () {
+        if (this.ActionPaneButtons.length > 0)
+            return;
+        this.ActionPaneButtons.Add("ExportToExcel", "export item(s)", 0, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-icon-excel", true, function (grid) {
+            grid.ExportToExcel();
+        }, function (grid) { return grid.AllowExportData; });
+        this.ActionPaneButtons.Add("Delete", "delete item(s)", 1, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-delete", true, function (grid) {
+            grid.DeleteSelectedRows();
+        }, function (grid) {
+            return (grid.IsEditable == true && grid.GetSelectedRowIDs().length > 0);
+        });
+        this.ActionPaneButtons.Add("Edit", "edit item(s)", 2, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-edit", true, function (grid) {
+            grid.EditSelectedRow();
+        }, function (grid) {
+            return (grid.IsEditable == true && grid.GetSelectedRowIDs().length == 1);
+        });
+        this.ActionPaneButtons.Add("Refresh", "refresh", 3, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-refresh", true, function (grid) {
+            grid.Initialize(true);
+        }, function (grid) {
+            return (grid.ShowRefreshButton == true);
+        });
+        this.ActionPaneButtons.Add("Create", "new item", 4, this.ImagesFolderUrl + "/spcommon.png?rev=43", "soby-list-addnew", true, function (grid) {
+            grid.EditNewRow();
+        }, function (grid) {
+            return (grid.IsEditable == true);
+        });
+        /*
+        if (this.AllowExportData == true)
+        {
+            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].ExportToExcel()\"><span class='soby-icon-imgSpan'> <img class='soby-icon-excel soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>export items</span> </a>";
+            actionPaneContainer.append(html);
+        }
+        if (this.IsEditable == true && this.GetSelectedRowIDs().length > 0)
+        {
+            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].DeleteSelectedRows()\"><span class='soby-icon-imgSpan'> <img class='soby-list-delete soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>delete item</span> </a>";
+            actionPaneContainer.append(html);
+        }
+
+        if (this.IsEditable == true && this.GetSelectedRowIDs().length == 1)
+        {
+            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].EditSelectedRow()\"><span class='soby-icon-imgSpan'> <img class='soby-list-edit soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>edit item</span> </a>";
+            actionPaneContainer.append(html);
+        }
+        if (this.ShowRefreshButton == true)
+        {
+            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].Initialize(true);\"><span class='soby-icon-imgSpan'> <img class='soby-list-refresh soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>refresh</span> </a>";
+            actionPaneContainer.append(html);
+        }
+        if (this.IsEditable == true)
+        {
+            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].EditNewRow()\"><span class='soby-icon-imgSpan' > <img id='idHomePageNewItem-img' src= '" + this.ImagesFolderUrl + "/spcommon.png?rev=43' class='soby-list-addnew soby-icon-img' > </span><span>new item</span> </a>";
+            actionPaneContainer.append(html);
+        }
+        */
+    };
     /**
      * Ensures grid is in the global grid array.
      *
@@ -774,6 +887,7 @@ var soby_WebGrid = (function () {
                 $(rowsSelectors[i]).removeClass("selected");
             }
         }
+        this.SetActionPaneButtonsVisibility();
     };
     /**
      * Selects the row
@@ -806,6 +920,7 @@ var soby_WebGrid = (function () {
         this.SelectDetailGridTab(rowID, 0);
         if (this.OnRowSelected != null)
             this.OnRowSelected(this, rowID);
+        this.SetActionPaneButtonsVisibility();
     };
     /**
      * Selects the row
@@ -836,6 +951,7 @@ var soby_WebGrid = (function () {
         //this.SelectDetailGridTab(rowID, 0);
         if (this.OnCellSelected != null)
             this.OnCellSelected(this, rowID, cellIndex);
+        this.SetActionPaneButtonsVisibility();
     };
     /**
      * Hides/show filter pane
@@ -929,6 +1045,75 @@ var soby_WebGrid = (function () {
         this.GroupByFields = newGroupByFields;
         this.DataService.GroupBy(this.GroupByFields);
     };
+    soby_WebGrid.prototype.ExportToExcel = function () {
+        var dataText = "";
+        var rows = $(this.ContentDivSelector + " .soby_griddatarow");
+        for (var i = 0; i < rows.length; i++) {
+            var cells = $(rows[i]).find(".soby_gridcell");
+            for (var x = 0; x < cells.length; x++) {
+                dataText += $(cells[x]).text();
+                if (x < cells.length - 1)
+                    dataText += "\t";
+            }
+            if (i < rows.length - 1)
+                dataText += "\n";
+        }
+        $(this.ContentDivSelector + " .tempdatadiv").text(dataText);
+        var element = $(this.ContentDivSelector + " .tempdatadiv")[0];
+        var result = this.CopyToClipboard(element);
+        alert("It has been transferred to clipboard. You can paste into excel now.");
+    };
+    soby_WebGrid.prototype.CopyToClipboard = function (elem) {
+        // create hidden text element, if it doesn't already exist
+        var targetId = "_hiddenCopyText_";
+        var target = null;
+        var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+        var origSelectionStart, origSelectionEnd;
+        if (isInput) {
+            // can just use the original source element for the selection and copy
+            target = elem;
+            origSelectionStart = elem.selectionStart;
+            origSelectionEnd = elem.selectionEnd;
+        }
+        else {
+            // must use a temporary form element for the selection and copy
+            target = document.getElementById(targetId);
+            if (!target) {
+                target = document.createElement("textarea");
+                target.style.position = "absolute";
+                target.style.left = "-9999px";
+                target.style.top = "0";
+                target.id = targetId;
+                document.body.appendChild(target);
+            }
+            target.textContent = elem.textContent;
+        }
+        // select the content
+        var currentFocus = document.activeElement;
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+        // copy the selection
+        var succeed;
+        try {
+            succeed = document.execCommand("copy");
+        }
+        catch (e) {
+            succeed = false;
+        }
+        // restore original focus
+        //if (currentFocus && typeof currentFocus.focus === "function") {
+        //    currentFocus.focus();
+        //}
+        if (isInput) {
+            // restore prior selection
+            elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+        }
+        else {
+            // clear temporary content
+            target.textContent = "";
+        }
+        return succeed;
+    };
     /**
      * Generates group by pane
      * @example
@@ -972,6 +1157,16 @@ var soby_WebGrid = (function () {
         //        var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].EditNewRow()\"><span class='soby-icon-imgSpan' > <img id='idHomePageNewItem-img' src= '" + this.ImagesFolderUrl + "/spcommon.png?rev=43' class='soby-list-addnew soby-icon-img' > </span><span>new item</span> </a>";
         groupByPaneContainer.append(container);
     };
+    soby_WebGrid.prototype.SetActionPaneButtonsVisibility = function () {
+        for (var i = 0; i < this.ActionPaneButtons.length; i++) {
+            var actionPaneButton = this.ActionPaneButtons[i];
+            var isEnable = actionPaneButton.EnabilityFunction(this);
+            if (isEnable == true)
+                actionPaneButton.Show();
+            else
+                actionPaneButton.Hide();
+        }
+    };
     /**
      * Generates action pane
      * @example
@@ -980,21 +1175,59 @@ var soby_WebGrid = (function () {
      */
     soby_WebGrid.prototype.GenerateActionPane = function () {
         var actionPaneContainer = $(this.ContentDivSelector + " .actionpane");
+        if (actionPaneContainer.hasClass("isloaded") == true)
+            return;
         actionPaneContainer.html("");
-        if (this.IsEditable == false) {
+        for (var i = 0; i < this.ActionPaneButtons.length; i++) {
+            var actionPaneButton = this.ActionPaneButtons[i];
+            var link = $("<a href='javascript:void(0)'>" +
+                ((actionPaneButton.ImageUrl != "" && actionPaneButton.ImageUrl != null) ? "<span class='soby-icon-imgSpan' > <img class='" + actionPaneButton.ClassName + " soby-icon-img' src= '" + actionPaneButton.ImageUrl + "' > </span>" : "") +
+                "<span>" + actionPaneButton.Text + "</span> </a>");
+            link.attr("id", actionPaneButton.ID);
+            link.attr("key", actionPaneButton.Key);
+            link.attr("gridid", this.GridID);
+            link.click(function () {
+                var key = $(this).attr("key");
+                var gridId = $(this).attr("gridid");
+                var grid = soby_WebGrids[gridId];
+                var actionPaneButton = grid.ActionPaneButtons.Get(key);
+                if (actionPaneButton.OnClick != null)
+                    actionPaneButton.OnClick(grid);
+            });
+            actionPaneContainer.append(link);
+        }
+        /*
+        if (this.IsEditable == false && this.AllowExportData == false && this.ShowRefreshButton == false)
+        {
             $(this.ContentDivSelector + " .actionpanerow").hide();
             return;
         }
-        if (this.GetSelectedRowIDs().length > 0) {
+        if (this.AllowExportData == true) {
+            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].ExportToExcel()\"><span class='soby-icon-imgSpan'> <img class='soby-icon-excel soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>export items</span> </a>";
+            actionPaneContainer.append(html);
+        }
+        if (this.IsEditable == true && this.GetSelectedRowIDs().length > 0)
+        {
             var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].DeleteSelectedRows()\"><span class='soby-icon-imgSpan'> <img class='soby-list-delete soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>delete item</span> </a>";
             actionPaneContainer.append(html);
         }
-        if (this.GetSelectedRowIDs().length == 1) {
+
+        if (this.IsEditable == true && this.GetSelectedRowIDs().length == 1)
+        {
             var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].EditSelectedRow()\"><span class='soby-icon-imgSpan'> <img class='soby-list-edit soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>edit item</span> </a>";
             actionPaneContainer.append(html);
         }
-        var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].EditNewRow()\"><span class='soby-icon-imgSpan' > <img id='idHomePageNewItem-img' src= '" + this.ImagesFolderUrl + "/spcommon.png?rev=43' class='soby-list-addnew soby-icon-img' > </span><span>new item</span> </a>";
-        actionPaneContainer.append(html);
+        if (this.ShowRefreshButton == true)
+        {
+            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].Initialize(true);\"><span class='soby-icon-imgSpan'> <img class='soby-list-refresh soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>refresh</span> </a>";
+            actionPaneContainer.append(html);
+        }
+        if (this.IsEditable == true)
+        {
+            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].EditNewRow()\"><span class='soby-icon-imgSpan' > <img id='idHomePageNewItem-img' src= '" + this.ImagesFolderUrl + "/spcommon.png?rev=43' class='soby-list-addnew soby-icon-img' > </span><span>new item</span> </a>";
+            actionPaneContainer.append(html);
+        }
+        */
     };
     /**
      * Generates navigation pane
@@ -1100,8 +1333,12 @@ var soby_WebGrid = (function () {
     soby_WebGrid.prototype.ShowCellPopupContent = function (cellID) {
         $(this.ContentDivSelector + " .popup_content").hide();
         var cell = $("#" + cellID);
+        var windowWidth = $(window).width() / 4;
+        var windowHeight = $(window).height() / 4;
         var left = cell.position().left + 40;
         cell.find(".popup_content").css("left", left + "px");
+        cell.find(".popup_content").css("width", windowWidth + "px");
+        cell.find(".popup_content").css("height", windowHeight + "px");
         cell.find(".popup_content").show();
     };
     /**
@@ -1344,7 +1581,7 @@ var soby_WebGrid = (function () {
         headerRow.attr("ondrop", "soby_WebGrids['" + this.GridID + "'].DropGroupByColumn(event)");
         headerRow.find("th").remove();
         if (this.IsSelectable == true || this.DataRelations.length > 0 || this.GroupByFields.length > 0) {
-            var headerCell = $("<th class='soby_gridheadercell soby_selectitemcell' width='20px' style='padding:5px;text-align:center'><a href='javascript:void (0)' class='soby-list-selectitem-a' onclick=\"soby_WebGrids['" + this.GridID + "'].SelectAllRows();\"><span class='soby-icon-imgSpan soby-list-selectitem-span'> <img class='soby-icon-img soby-list-selectitem' alt='' src='/media/images/spcommon.png?rev=43'> </span></a></th>");
+            var headerCell = $("<th class='soby_gridheadercell soby_selectitemcell' width='20px' style='padding:5px;text-align:center'><a href='javascript:void (0)' class='soby-list-selectitem-a' onclick=\"soby_WebGrids['" + this.GridID + "'].SelectAllRows();\"><span class='soby-icon-imgSpan soby-list-selectitem-span'> <img class='soby-icon-img soby-list-selectitem' alt='' src='" + this.ImagesFolderUrl + "/spcommon.png?rev=43'> </span></a></th>");
             if (this.GroupByFields.length > 0)
                 headerCell.attr("colspan", this.GroupByFields.length);
             headerRow.append(headerCell);
@@ -1543,6 +1780,7 @@ var soby_WebGrid = (function () {
      * grid.Initialize(true);
      */
     soby_WebGrid.prototype.Initialize = function (populateItems) {
+        this.InitializeActionPaneButtons();
         $(this.ContentDivSelector).attr("onclick", "soby_WebGrids['" + this.GridID + "'].Activate()");
         $(this.ContentDivSelector).attr("gridid", this.GridID);
         var cellCount = 0;
@@ -1578,6 +1816,7 @@ var soby_WebGrid = (function () {
             $(this.ContentDivSelector).append(tableTitle);
         }
         $(this.ContentDivSelector).append(table);
+        $(this.ContentDivSelector).append("<div style='display:none' class='tempdatadiv'></div>");
         var grid = this;
         this.DataService.ItemPopulated = function (items) {
             grid.PopulateGridData(items);
@@ -1852,11 +2091,17 @@ var soby_WebGrid = (function () {
                     }
                     else if (this.Columns[x].CellTemplate.TemplateType == "PopupContent") {
                         var popupLinkText = this.Columns[x].CellTemplate.PopupLinkText;
-                        var popup_link = $("<a href='javascript:void(0)'></a>").text(popupLinkText);
+                        var popup_link = $("<a href='javascript:void(0)'></a>").html(popupLinkText);
                         popup_link.attr("onclick", "soby_WebGrids['" + this.GridID + "'].ShowCellPopupContent('" + cellID + "')");
-                        var popup_contentPanel = $("<div style='display:none;position: absolute;padding: 10px;border: 1px solid;background-color: white;padding-top: 0px;overflow: auto;height:90%;width:50%' class='popup_content'></div>");
-                        popup_contentPanel.append("<div style='text-align: right;position: fixed;margin-left: 43.5%;border: 1px solid;padding: 5px;'><a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].HideCellPopupContent('" + cellID + "')\">x</a></div>");
-                        popup_contentPanel.append(contentHtml);
+                        var popup_contentPanel = $("<div style='display:none;position: absolute;padding: 10px;border: 1px solid;background-color: white;padding-top: 0px;overflow: auto;' class='popup_content'></div>");
+                        var table1 = $("<table></table>");
+                        var row1 = $("<tr></tr>");
+                        var cell11 = $("<td style='width:95%'></td>");
+                        cell11.append(contentHtml);
+                        row1.append(cell11);
+                        row1.append("<td style='vertical-align: top;width:20px;'><a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].HideCellPopupContent('" + cellID + "')\">x</a></td>");
+                        table1.append(row1);
+                        popup_contentPanel.append(table1);
                         var popup_mainContentPanel = $("<div></div>");
                         popup_mainContentPanel.append(popup_link);
                         popup_mainContentPanel.append(popup_contentPanel);
@@ -1920,9 +2165,10 @@ var soby_WebGrid = (function () {
         this.DataService.PopulateNavigationInformation();
         if (this.OnGridPopulated != null)
             this.OnGridPopulated();
+        this.SetActionPaneButtonsVisibility();
     };
     return soby_WebGrid;
-})();
+}());
 // ************************************************************
 // ********************* CAML BUILDER CAROUSEL *****************************
 var soby_Carousels = new Array();
@@ -2037,7 +2283,7 @@ var soby_Carousel = (function () {
             this.DataService.PopulateItems();
     };
     return soby_Carousel;
-})();
+}());
 // ************************************************************
 // ********************* CAML BUILDER METRO TILES *****************************
 var soby_MetroTileGrids = new Array();
@@ -2139,7 +2385,7 @@ var soby_MetroTilesGrid = (function () {
     };
     soby_MetroTilesGrid.prototype.ItemPopulated = function (items) { };
     return soby_MetroTilesGrid;
-})();
+}());
 // ************************************************************
 // ********************* CAML BUILDER WIZARD TEMPLATE *****************************
 var soby_Wizards = new Array();
@@ -2239,7 +2485,7 @@ var soby_Wizard = (function () {
         this.EnsureWizardsExistency();
     }
     return soby_Wizard;
-})();
+}());
 // ************************************************************
 // ********************* CAML BUILDER MENU TEMPLATE *****************************
 var soby_Menus = new Array();
@@ -2307,7 +2553,7 @@ var soby_Menu = (function () {
         this.EnsureMenusExistency();
     }
     return soby_Menu;
-})();
+}());
 // ************************************************************
 // ********************* ITEM SELECTION *****************************
 var soby_ItemSelections = new Array();
@@ -2318,7 +2564,7 @@ var SobyItemSelectorTypeObject = (function () {
         this.CardView = 2;
     }
     return SobyItemSelectorTypeObject;
-})();
+}());
 var SobyItemSelectorTypes = new SobyItemSelectorTypeObject();
 var soby_ItemSelection = (function () {
     function soby_ItemSelection(contentDivSelector, title, itemSelectorType, autoCompleteDataService, advancedSearchDataService, emptyDataHtml, dialogID, selectorUrl, valueFieldName, textFieldName) {
@@ -2401,8 +2647,6 @@ var soby_ItemSelection = (function () {
         //        var selectorUrl = event.data.SelectorUrl;
         var mainControlID = event.data.MainControlID;
         var dialogObject = ShowCommonHtmlDialog("testtt", event.data.DialogID, function (args) {
-            console.log("selected items");
-            console.log(args);
             var values = args.split(soby_FilterValueSeperator);
             for (var i = 0; i < values.length; i = i + 2) {
                 soby_ItemSelections[mainControlID].AddItem(values[i + 1], values[i]);
@@ -2493,7 +2737,7 @@ var soby_ItemSelection = (function () {
         soby_ItemSelections[this.ItemSelectionID] = this;
     };
     return soby_ItemSelection;
-})();
+}());
 // ************************************************************
 // ********************* COMMON FUNCTIONS *****************************
 function ShowCommonDialog(url, title, dialogID, onCloseCallback) {
@@ -2564,4 +2808,3 @@ function SetCommonDialogArgument(dialogID, argument) {
     $("#" + dialogID).dialog().data("argument", argument);
 }
 // ************************************************************
-//# sourceMappingURL=soby.ui.components.js.map

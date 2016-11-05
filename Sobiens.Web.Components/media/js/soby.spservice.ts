@@ -1,4 +1,6 @@
-﻿class soby_SharePointService implements soby_ServiceInterface {
+﻿// VERSION 1.0.5.2
+class soby_SharePointService implements soby_ServiceInterface
+{
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
     DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
     constructor(dataSourceBuilder: soby_DataSourceBuilderAbstract) {
@@ -133,7 +135,7 @@
         var serviceUrl = this.Transport.Read.Url;
         var requestMethod = this.Transport.Read.Type;
         var dataType = this.Transport.Read.DataType;
-        var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read);
+        var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read, false);
         if (mainQuery != null && mainQuery != "") {
             if (serviceUrl.indexOf("?") == -1) {
                 serviceUrl += "?";
@@ -149,9 +151,6 @@
                 soby_LogMessage(result);
                 var items = service.DataSourceBuilderTemp.ParseData(result);
                 soby_LogMessage(items);
-
-                soby_LogMessage("NextPageExist:" + result.NextPageExist);
-                service.NextPageExist = result.NextPageExist;
                 soby_LogMessage(service);
 
                 var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;

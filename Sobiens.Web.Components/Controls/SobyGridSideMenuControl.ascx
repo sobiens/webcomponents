@@ -11,11 +11,18 @@
     <li><a href="/Tutorials/SobyGrid/Paging.aspx">Paging</a></li>
     <li><a href="/Tutorials/SobyGrid/Editing.aspx">Editing</a></li>
     <li><a href="/Tutorials/SobyGrid/Grouping.aspx">Grouping</a></li>
+    <li><a href="/Tutorials/SobyGrid/ActionBar.aspx">Action Bar</a></li>
     <li>Data Binding<ul>
             <li><a href="/Tutorials/SobyGrid/StaticDataBinding.aspx">Static Data Binding</a></li>
+            <li><a href="/Tutorials/SobyGrid/WebAPIOData.aspx">Web API and OData Implementation</a></li>
+            <li><a href="/Tutorials/SobyGrid/SPDataBinding.aspx">SP Data Binding</a></li>
             <li><a href="/Tutorials/SobyGrid/CustomDataBinding.aspx">Custom Data Binding</a></li>
         </ul></li>
-    <li><a href="/Tutorials/SobyGrid/WebAPIOData.aspx">Web API and OData Implementation</a></li>
+    <li><a href="/Tutorials/SobyGrid/RefreshData.aspx">Refresh Data</a></li>
+    <li>Export Data<ul>
+            <li><a href="/Tutorials/SobyGrid/ExportToExcel.aspx">Export To Excel</a></li>
+            <li><a href="/Tutorials/SobyGrid/ExportToXml.aspx">Export To Xml</a></li>
+        </ul></li>
     <li><a href="/Tutorials/SobyGrid/MVCSample.aspx">MVC Sample</a></li>
     <li><a href="/Tutorials/SobyGrid/Aggregates.aspx">Aggregates</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/Columns.aspx">Columns</a></li>

@@ -159,6 +159,10 @@
     left: -203px;
     top: -35px;
 }
+.soby-list-viewitem {
+    left: -231px;
+    top: -17px;
+}
 .soby-list-addnew {
     left: -131px;
     top: -134px;
@@ -178,11 +182,31 @@
     left: -249px;
 }
 
+.soby-list-search {
+    top: -287px;
+    left: -107px;
+}
+
 .soby-list-collapse {
     top: -162px;
     left: -231px;
 }
 
+.soby-icon-excel {
+    top: -242px;
+    left: -53px;
+}
+
+.soby-list-refresh
+{
+    top: -251.2px;
+    left: -161px;
+}
+.soby-list-warning
+{
+    top: -70.2px;
+    left: -179px;
+}
 .soby-groupby-heading{
  border:1px solid;
  max-width:100px;

@@ -20,6 +20,6 @@ function soby_PopulateGridSorting() {
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null);
     bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null);
     bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    bookGrid.AddOrderByField("Title", true);
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=sorting.js.map

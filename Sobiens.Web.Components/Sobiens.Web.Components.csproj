@@ -31,6 +31,7 @@
     </SccProvider>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>5f13ab17</NuGetPackageImportStamp>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -306,12 +307,28 @@
     <Content Include="download\Sobiens.Web.Components 1.0.4.8.zip" />
     <Content Include="download\Sobiens.Web.Components 1.0.4.10.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
     <Content Include="Scripts\jquery-3.1.0.slim.js" />
     <Content Include="Scripts\jquery-3.1.0.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.min.js" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\actionbar.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\refreshdata.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\spdatabinding.ts" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\actionbar.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\aggregates.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\exporttoexcel.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\refreshdata.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\spdatabinding.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\staticdatabinding.js" />
+    <Content Include="Scripts\Tutorials\WebAPI\Grid\themes.js" />
+    <Content Include="sitemap.xml" />
+    <Content Include="Tutorials\SobyGrid\ActionBar.aspx" />
+    <Content Include="Tutorials\SobyGrid\ExportToExcel.aspx" />
+    <Content Include="Tutorials\SobyGrid\RefreshData.aspx" />
+    <Content Include="Tutorials\SobyGrid\SPDataBinding.aspx" />
     <Content Include="Web.sitemap" />
     <TypeScriptCompile Include="media\js\soby.spservice.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.treeview.ts" />
@@ -547,6 +564,20 @@
     <Compile Include="Tutorials\SobyGrid\Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\SobyGrid\ActionBar.aspx.cs">
+      <DependentUpon>ActionBar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\ActionBar.aspx.designer.cs">
+      <DependentUpon>ActionBar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\RefreshData.aspx.cs">
+      <DependentUpon>RefreshData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\RefreshData.aspx.designer.cs">
+      <DependentUpon>RefreshData.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyGrid\SetupWizard.aspx.cs">
       <DependentUpon>SetupWizard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -554,12 +585,26 @@
     <Compile Include="Tutorials\SobyGrid\SetupWizard.aspx.designer.cs">
       <DependentUpon>SetupWizard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\SobyGrid\ExportToExcel.aspx.cs">
+      <DependentUpon>ExportToExcel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\ExportToExcel.aspx.designer.cs">
+      <DependentUpon>ExportToExcel.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyGrid\StaticDataBinding.aspx.cs">
       <DependentUpon>StaticDataBinding.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\StaticDataBinding.aspx.designer.cs">
       <DependentUpon>StaticDataBinding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\SPDataBinding.aspx.cs">
+      <DependentUpon>SPDataBinding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\SPDataBinding.aspx.designer.cs">
+      <DependentUpon>SPDataBinding.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\WebAPIODataDemo.aspx.cs">
       <DependentUpon>WebAPIODataDemo.aspx</DependentUpon>

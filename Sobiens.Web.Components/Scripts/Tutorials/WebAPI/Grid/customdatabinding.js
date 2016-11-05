@@ -143,7 +143,7 @@ var soby_CustomWCFBuilder = (function (_super) {
     };
     ;
     return soby_CustomWCFBuilder;
-})(soby_WSBuilder);
+}(soby_WSBuilder));
 $(function () {
     soby_PopulateGridWCFDataBinding();
 });
@@ -209,4 +209,3 @@ function soby_PopulateGridWCFDataBinding() {
     customerGrid.AddDataRelation("Title", "Id", customerPhonesGrid.GridID, "CustomerId");
     customerGrid.Initialize(true);
 }
-//# sourceMappingURL=customdatabinding.js.map

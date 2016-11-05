@@ -1,10 +1,10 @@
 ﻿
 document.write("<div id='soby_BooksDiv'></div>");
 $(function () {
-    soby_PopulateGridEditing();
+    soby_PopulateGridRefreshData();
 });
 
-function soby_PopulateGridEditing() {
+function soby_PopulateGridRefreshData() {
     var bookDataSourceBuilder = new soby_WSBuilder();
     bookDataSourceBuilder.Filters = new SobyFilters(false);
     bookDataSourceBuilder.AddSchemaField("Id", SobyFieldTypes.Number, null);
