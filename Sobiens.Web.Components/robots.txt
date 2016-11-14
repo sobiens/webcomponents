@@ -1,0 +1,14 @@
+User-Agent: *
+
+Disallow: /bin
+
+
+
+
+
+
+
+
+
+
+
