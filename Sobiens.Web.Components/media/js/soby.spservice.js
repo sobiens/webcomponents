@@ -3,7 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-// VERSION 1.0.5.2
+// VERSION 1.0.6.1
 var soby_SharePointService = (function () {
     function soby_SharePointService(dataSourceBuilder) {
         this.NextPageString = "";
@@ -78,12 +78,26 @@ var soby_SharePointService = (function () {
         this.NextPageString = "";
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
-        if (clearOtherFilters == true)
+        if (clearOtherFilters == true) {
             this.Filters = new SobyFilters(filters.IsOr);
-        this.Filters.AddFilterCollection(filters);
+        }
+        if (filters.Filters.length > 0)
+            this.Filters.AddFilterCollection(filters);
         this.PopulateItems(null);
     };
     ;
+    soby_SharePointService.prototype.SortAndFilter = function (orderByFields, filters, clearOtherFilters) {
+        this.PageIndex = 0;
+        this.NextPageString = "";
+        this.NextPageStrings = new Array();
+        this.NextPageStrings[0] = "";
+        this.OrderByFields = orderByFields;
+        if (clearOtherFilters == true)
+            this.Filters = new SobyFilters(filters.IsOr);
+        if (filters.Filters.length > 0)
+            this.Filters.AddFilterCollection(filters);
+        this.PopulateItems(null);
+    };
     soby_SharePointService.prototype.GoToPage = function (pageIndex) {
         this.DataSourceBuilderTemp.PageIndex = pageIndex;
         this.PageIndex = pageIndex;

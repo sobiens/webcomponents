@@ -62,7 +62,9 @@ declare function soby_GetActiveDataGrid(): soby_WebGrid;
 declare function soby_GetAllGrids(): any[];
 declare function soby_RefreshAllGrids(): void;
 declare class sobyActionPaneButtons extends Array<sobyActionPaneButton> {
+    AddButton(button: sobyActionPaneButton): void;
     Add(key: string, text: string, index: number, imageUrl: string, className: string, visible: boolean, onClick: any, enabilityFunction: any): void;
+    AddCollection(buttons: sobyActionPaneButtons): void;
     Get(key: string): sobyActionPaneButton;
     Hide(key: string): void;
     Show(key: string): void;
@@ -134,6 +136,7 @@ declare class soby_WebGrid {
     CellCount: number;
     DataRelations: any[];
     Columns: any[];
+    InitializedActionPaneButtons: boolean;
     IsSelectable: boolean;
     IsEditable: boolean;
     IsGroupable: boolean;

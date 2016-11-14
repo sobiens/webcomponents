@@ -26,5 +26,5 @@ function soby_PopulateGridRefreshData() {
     bookGrid.AddColumn("AuthorId", "Author", SobyShowFieldsOn.All, function (item) {
         return item.Author.Name;
     }, null, true, true, true, null);
-    bookGrid.Initialize(true);
+    bookGrid.Initialize(false);
 }

@@ -3,7 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-// VERSION 1.0.5.2
+// VERSION 1.0.6.1
 // ********************* SOBY EDIT CONTROLS *****************************
 var soby_EditControls = new Array();
 var SobyTextBox = (function () {
@@ -207,8 +207,16 @@ var sobyActionPaneButtons = (function (_super) {
     function sobyActionPaneButtons() {
         _super.apply(this, arguments);
     }
+    sobyActionPaneButtons.prototype.AddButton = function (button) {
+        this.push(new sobyActionPaneButton(button.Key, button.Text, button.Index, button.ImageUrl, button.ClassName, button.Visible, button.OnClick, button.EnabilityFunction));
+    };
     sobyActionPaneButtons.prototype.Add = function (key, text, index, imageUrl, className, visible, onClick, enabilityFunction) {
         this.push(new sobyActionPaneButton(key, text, index, imageUrl, className, visible, onClick, enabilityFunction));
+    };
+    sobyActionPaneButtons.prototype.AddCollection = function (buttons) {
+        for (var i = 0; i < buttons.length; i++) {
+            this.splice(0, 0, buttons[i]);
+        }
     };
     sobyActionPaneButtons.prototype.Get = function (key) {
         for (var i = 0; i < this.length; i++) {
@@ -344,6 +352,7 @@ var soby_WebGrid = (function () {
         this.CellCount = 0;
         this.DataRelations = new Array();
         this.Columns = new Array();
+        this.InitializedActionPaneButtons = false;
         this.IsSelectable = true;
         this.IsEditable = true;
         this.IsGroupable = false;
@@ -398,59 +407,34 @@ var soby_WebGrid = (function () {
     /************************************ END CONSTRUCTORS ***************************/
     /************************************ METHODS ************************************/
     soby_WebGrid.prototype.InitializeActionPaneButtons = function () {
-        if (this.ActionPaneButtons.length > 0)
+        if (this.InitializedActionPaneButtons == true)
             return;
-        this.ActionPaneButtons.Add("ExportToExcel", "export item(s)", 0, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-icon-excel", true, function (grid) {
+        var buttons = new sobyActionPaneButtons();
+        buttons.Add("ExportToExcel", "export item(s)", 0, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-icon-excel", true, function (grid) {
             grid.ExportToExcel();
         }, function (grid) { return grid.AllowExportData; });
-        this.ActionPaneButtons.Add("Delete", "delete item(s)", 1, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-delete", true, function (grid) {
+        buttons.Add("Delete", "delete item(s)", 1, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-delete", true, function (grid) {
             grid.DeleteSelectedRows();
         }, function (grid) {
             return (grid.IsEditable == true && grid.GetSelectedRowIDs().length > 0);
         });
-        this.ActionPaneButtons.Add("Edit", "edit item(s)", 2, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-edit", true, function (grid) {
+        buttons.Add("Edit", "edit item(s)", 2, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-edit", true, function (grid) {
             grid.EditSelectedRow();
         }, function (grid) {
             return (grid.IsEditable == true && grid.GetSelectedRowIDs().length == 1);
         });
-        this.ActionPaneButtons.Add("Refresh", "refresh", 3, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-refresh", true, function (grid) {
+        buttons.Add("Refresh", "refresh", 3, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-refresh", true, function (grid) {
             grid.Initialize(true);
         }, function (grid) {
             return (grid.ShowRefreshButton == true);
         });
-        this.ActionPaneButtons.Add("Create", "new item", 4, this.ImagesFolderUrl + "/spcommon.png?rev=43", "soby-list-addnew", true, function (grid) {
+        buttons.Add("Create", "new item", 4, this.ImagesFolderUrl + "/spcommon.png?rev=43", "soby-list-addnew", true, function (grid) {
             grid.EditNewRow();
         }, function (grid) {
             return (grid.IsEditable == true);
         });
-        /*
-        if (this.AllowExportData == true)
-        {
-            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].ExportToExcel()\"><span class='soby-icon-imgSpan'> <img class='soby-icon-excel soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>export items</span> </a>";
-            actionPaneContainer.append(html);
-        }
-        if (this.IsEditable == true && this.GetSelectedRowIDs().length > 0)
-        {
-            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].DeleteSelectedRows()\"><span class='soby-icon-imgSpan'> <img class='soby-list-delete soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>delete item</span> </a>";
-            actionPaneContainer.append(html);
-        }
-
-        if (this.IsEditable == true && this.GetSelectedRowIDs().length == 1)
-        {
-            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].EditSelectedRow()\"><span class='soby-icon-imgSpan'> <img class='soby-list-edit soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>edit item</span> </a>";
-            actionPaneContainer.append(html);
-        }
-        if (this.ShowRefreshButton == true)
-        {
-            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].Initialize(true);\"><span class='soby-icon-imgSpan'> <img class='soby-list-refresh soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>refresh</span> </a>";
-            actionPaneContainer.append(html);
-        }
-        if (this.IsEditable == true)
-        {
-            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].EditNewRow()\"><span class='soby-icon-imgSpan' > <img id='idHomePageNewItem-img' src= '" + this.ImagesFolderUrl + "/spcommon.png?rev=43' class='soby-list-addnew soby-icon-img' > </span><span>new item</span> </a>";
-            actionPaneContainer.append(html);
-        }
-        */
+        this.ActionPaneButtons.AddCollection(buttons);
+        this.InitializedActionPaneButtons = true;
     };
     /**
      * Ensures grid is in the global grid array.
@@ -1780,7 +1764,6 @@ var soby_WebGrid = (function () {
      * grid.Initialize(true);
      */
     soby_WebGrid.prototype.Initialize = function (populateItems) {
-        this.InitializeActionPaneButtons();
         $(this.ContentDivSelector).attr("onclick", "soby_WebGrids['" + this.GridID + "'].Activate()");
         $(this.ContentDivSelector).attr("gridid", this.GridID);
         var cellCount = 0;
@@ -1793,6 +1776,8 @@ var soby_WebGrid = (function () {
         var table = $("<table width='100%' id='" + this.GridID + "' class='soby_grid " + this.ThemeClassName + "' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].Activate()\"></table>");
         var tbody = $("<tbody></tbody>");
         var headerRow = $("<tr class='soby_gridheaderrow'></tr>");
+        var emptyDataRow = $("<tr class='emptydatarow' style='display:none'></tr>");
+        emptyDataRow.append("<td colspan='" + this.CellCount + "'>" + this.EmptyDataHtml + "</td>");
         var loadingRow = $("<tr class='loadingrow' style='display:none'></tr>");
         loadingRow.append("<td colspan='" + this.CellCount + "'><img src='" + this.ImagesFolderUrl + "/loading16.gif'> Loading...</td>");
         var actionPaneRow = $("<tr class='actionpanerow'></tr>");
@@ -1808,6 +1793,7 @@ var soby_WebGrid = (function () {
         tbody.append(filterPaneRow);
         tbody.append(headerRow);
         tbody.append(loadingRow);
+        tbody.append(emptyDataRow);
         tbody.append(navigationRow);
         table.append(tbody);
         $(this.ContentDivSelector).html("");
@@ -1843,9 +1829,27 @@ var soby_WebGrid = (function () {
             grid.Initialize(true);
         };
         if (populateItems == true) {
-            this.DataService.DataSourceBuilder.OrderByFields = this.OrderByFields;
-            this.DataService.DataSourceBuilder.Filters = this.Filters;
-            this.DataService.PopulateItems(null);
+            if (this.OrderByFields.length > 0 && this.Filters.Filters.length > 0) {
+                this.DataService.SortAndFilter(this.OrderByFields, this.Filters, true);
+            }
+            if (this.OrderByFields.length > 0) {
+                this.DataService.Sort(this.OrderByFields);
+            }
+            if (this.Filters.Filters.length > 0) {
+                this.DataService.Filter(this.Filters, true);
+            }
+            else {
+                this.DataService.PopulateItems(null);
+            }
+        }
+        else {
+            if (this.ShowHeader == true)
+                this.PopulateHeaderCells();
+            this.InitializeActionPaneButtons();
+            this.GenerateActionPane();
+            this.SetActionPaneButtonsVisibility();
+            $(this.ContentDivSelector + " .emptydatarow td").html("&nbsp;Please search to display data.");
+            $(this.ContentDivSelector + " .emptydatarow").show();
         }
     };
     soby_WebGrid.prototype.PopulateAggregateRowValues = function (aggregateRow) {
@@ -1969,6 +1973,7 @@ var soby_WebGrid = (function () {
      */
     soby_WebGrid.prototype.PopulateGridData = function (items) {
         this.Items = items;
+        this.InitializeActionPaneButtons();
         if (this.ShowHeader == true)
             this.PopulateHeaderCells();
         var lastGroupByValues = new Array();
@@ -2157,6 +2162,8 @@ var soby_WebGrid = (function () {
         }
         $(this.ContentDivSelector + " .loadingrow").hide();
         if (items.length == 0) {
+            $(this.ContentDivSelector + ".emptydatarow td").html(this.EmptyDataHtml);
+            $(this.ContentDivSelector + ".emptydatarow").show();
         }
         this.PopulateAggregateRows();
         this.GenerateGroupByPanePane();

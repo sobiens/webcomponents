@@ -182,9 +182,14 @@
     left: -249px;
 }
 
-.soby-list-search {
+.soby-list-version {
     top: -287px;
     left: -107px;
+}
+
+.soby-list-search {
+    top: -276px;
+    left: 0px;
 }
 
 .soby-list-collapse {

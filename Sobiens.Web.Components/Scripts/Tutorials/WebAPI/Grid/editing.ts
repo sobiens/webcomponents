@@ -30,7 +30,7 @@ function soby_PopulateGridRefreshData() {
         return item.Author.Name;
     }, null, true, true, true, null);
     
-    bookGrid.Initialize(true);
+    bookGrid.Initialize(false);
 }
 
  

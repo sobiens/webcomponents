@@ -280,6 +280,8 @@
     <Content Include="media\js\jquery-3.1.0.js" />
     <Content Include="media\js\jquery-ui-1.12.0.min.js" />
     <Content Include="media\js\soby.service.js" />
+    <Content Include="media\js\soby.ui.components.codeview.js" />
+    <Content Include="media\js\soby.ui.components.treeview.js" />
     <Content Include="packages.config" />
     <Content Include="Css\bootstrap-theme.css.map" />
     <Content Include="Css\bootstrap-theme.min.css.map" />
@@ -306,6 +308,7 @@
     <Content Include="Images\Tutorials\logs\kohler.log" />
     <Content Include="download\Sobiens.Web.Components 1.0.4.8.zip" />
     <Content Include="download\Sobiens.Web.Components 1.0.4.10.zip" />
+    <Content Include="download\Sobiens.Web.Components 1.0.5.2.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-3.1.0.js" />
@@ -314,6 +317,8 @@
     <Content Include="Scripts\jquery-3.1.0.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.min.js" />
+    <TypeScriptCompile Include="media\js\soby.ui.components.codeview.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\CodeView\codeview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\actionbar.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\refreshdata.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\spdatabinding.ts" />
@@ -325,6 +330,7 @@
     <Content Include="Scripts\Tutorials\WebAPI\Grid\staticdatabinding.js" />
     <Content Include="Scripts\Tutorials\WebAPI\Grid\themes.js" />
     <Content Include="sitemap.xml" />
+    <Content Include="Tutorials\SobyCodeView\CodeView.aspx" />
     <Content Include="Tutorials\SobyGrid\ActionBar.aspx" />
     <Content Include="Tutorials\SobyGrid\ExportToExcel.aspx" />
     <Content Include="Tutorials\SobyGrid\RefreshData.aspx" />
@@ -556,6 +562,13 @@
     </Compile>
     <Compile Include="Tutorials\Setting Up.aspx.designer.cs">
       <DependentUpon>Setting Up.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyCodeView\CodeView.aspx.cs">
+      <DependentUpon>CodeView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyCodeView\CodeView.aspx.designer.cs">
+      <DependentUpon>CodeView.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Admin.aspx.cs">
       <DependentUpon>Admin.aspx</DependentUpon>

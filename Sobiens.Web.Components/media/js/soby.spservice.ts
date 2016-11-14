@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.5.2
+﻿// VERSION 1.0.6.1
 class soby_SharePointService implements soby_ServiceInterface
 {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
@@ -79,6 +79,7 @@ class soby_SharePointService implements soby_ServiceInterface
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
+        
 
         this.PopulateItems(null);
     };
@@ -88,11 +89,28 @@ class soby_SharePointService implements soby_ServiceInterface
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
         if (clearOtherFilters == true)
+        {
             this.Filters = new SobyFilters(filters.IsOr);
-
-        this.Filters.AddFilterCollection(filters);
+        }
+        if (filters.Filters.length > 0)
+            this.Filters.AddFilterCollection(filters);
         this.PopulateItems(null);
     };
+    SortAndFilter(orderByFields: SobyOrderByFields, filters: SobyFilters, clearOtherFilters: boolean)
+    {
+        this.PageIndex = 0;
+        this.NextPageString = "";
+        this.NextPageStrings = new Array();
+        this.NextPageStrings[0] = "";
+        this.OrderByFields = orderByFields;
+        if (clearOtherFilters == true)
+            this.Filters = new SobyFilters(filters.IsOr);
+
+        if (filters.Filters.length > 0)
+            this.Filters.AddFilterCollection(filters);
+        this.PopulateItems(null);
+    }
+
     GoToPage(pageIndex: number) {
         this.DataSourceBuilderTemp.PageIndex = pageIndex;
         this.PageIndex = pageIndex;

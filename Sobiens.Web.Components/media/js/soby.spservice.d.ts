@@ -19,6 +19,7 @@ declare class soby_SharePointService implements soby_ServiceInterface {
     GroupBy(groupByFields: SobyGroupByFields): void;
     Sort(orderByFields: SobyOrderByFields): void;
     Filter(filters: SobyFilters, clearOtherFilters: boolean): void;
+    SortAndFilter(orderByFields: SobyOrderByFields, filters: SobyFilters, clearOtherFilters: boolean): void;
     GoToPage(pageIndex: number): void;
     CanNavigateToNextPage(): boolean;
     CanNavigateToPreviousPage(): boolean;
