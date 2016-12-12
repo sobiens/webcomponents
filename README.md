@@ -20,7 +20,7 @@ Soby web components provides set of libraries to make developers life easy. It i
             <a href="Tutorials/SobyItemSelection/Getting Started.aspx">Item Selection</a>
                 </div>
                 <div class="col-md-5">
-                    <img src="Images/Tutorials/Soby_ItemSelection_Autocomplete.png" width="350px" /></div>
+                    <img src="https://raw.githubusercontent.com/sobiens/webcomponents/master/Sobiens.Web.Components/Images/Tutorials/Soby_ItemSelection_Autocomplete.png" width="350px" /></div>
             </div>
         </li>
         <li class="three">
@@ -31,7 +31,7 @@ Soby web components provides set of libraries to make developers life easy. It i
             <a href="Tutorials/SobyTreeView/Getting Started.aspx">Tree View</a>
                 </div>
                 <div class="col-md-5">
-                    <img src="Images/Tutorials/Soby_TreeView_Default.png" width="350px" /></div>
+                    <img src="https://raw.githubusercontent.com/sobiens/webcomponents/master/Sobiens.Web.Components/Images/Tutorials/Soby_TreeView_Default.png" width="350px" /></div>
             </div>
         </li>
         <li class="four">
@@ -42,7 +42,7 @@ Soby web components provides set of libraries to make developers life easy. It i
             <a href="Tutorials/SobyCalendarView/Getting Started.aspx">Tree View</a>
                 </div>
                 <div class="col-md-5">
-                    <img src="Images/Tutorials/Soby_CalendarView_Default.png" width="350px" /></div>
+                    <img src="https://raw.githubusercontent.com/sobiens/webcomponents/master/Sobiens.Web.Components/Images/Tutorials/Soby_CalendarView_Default.png" width="350px" /></div>
             </div>
         </li>
         <li class="five">
