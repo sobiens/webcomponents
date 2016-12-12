@@ -52,7 +52,7 @@ Soby web components provides set of libraries to make developers life easy. It i
             It is still being implemented.
             <a href="Tutorials/SobyCarousel/General.aspx">Tutorials</a>
                 </div>
-                <div class="col-md-5"></div>
+                <div class="col-md-5">twt</div>
             </div>
         </li>
 
