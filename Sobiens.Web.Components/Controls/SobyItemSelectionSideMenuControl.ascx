@@ -3,4 +3,5 @@
 <h3>Tutorials</h3>
 <ul>
     <li><a href="/Tutorials/SobyItemSelection/Getting Started.aspx">Getting Started</a></li>
+    <li><a href="/Tutorials/SobyItemSelection/Single Selection.aspx">Single Selection</a></li>
 </ul>
