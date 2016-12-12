@@ -1,6 +1,6 @@
 # webcomponents
 Soby web components provides set of libraries to make developers life easy. It integrates number of data services (SP, WS etc) with its existing components. 
-    <ol class="round">
+    <ul class="round">
         <li class="one">
             <div class="row">
                 <div class="col-md-7">
@@ -11,7 +11,6 @@ Soby web components provides set of libraries to make developers life easy. It i
                 <div class="col-md-5">
                     <img src="https://raw.githubusercontent.com/sobiens/webcomponents/master/Sobiens.Web.Components/Images/Tutorials/Soby_WebGrid_Aggregates.png?raw=true" width="350px" ></div>
             </div>
-
         </li>
         <li class="two">
             <div class="row">
@@ -57,5 +56,5 @@ Soby web components provides set of libraries to make developers life easy. It i
             </div>
         </li>
 
-    </ol>
+    </ul>
 
