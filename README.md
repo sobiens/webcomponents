@@ -9,7 +9,7 @@ Soby web components provides set of libraries to make developers life easy. It i
             <a href="Tutorials/SobyGrid/Getting Started.aspx">Tutorials</a>
                 </div>
                 <div class="col-md-5">
-                    <img src="/sobiens/webcomponents/blob/master/Sobiens.Web.Components/Images/Tutorials/Soby_WebGrid_Aggregates.png?raw=true" width="350px" /></div>
+                    <img src="https://raw.githubusercontent.com/sobiens/webcomponents/master/Sobiens.Web.Components/Images/Tutorials/Soby_WebGrid_Aggregates.png?raw=true" width="350px" /></div>
             </div>
 
         </li>
