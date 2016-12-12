@@ -59,3 +59,4 @@ function soby_PopulateWebNewsImages(itemID) {
         carousel.Initialize(true);
     });
 }
+//# sourceMappingURL=soby.news.js.map

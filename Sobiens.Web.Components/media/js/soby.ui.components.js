@@ -39,7 +39,7 @@ var SobyTextBox = (function () {
         return true;
     };
     return SobyTextBox;
-}());
+})();
 var SobyLookupSelectBox = (function () {
     function SobyLookupSelectBox(containerClientId, fieldType, args) {
         this.ContainerClientId = containerClientId;
@@ -86,7 +86,7 @@ var SobyLookupSelectBox = (function () {
         return true;
     };
     return SobyLookupSelectBox;
-}());
+})();
 var SobyEditControlFactory = (function () {
     function SobyEditControlFactory() {
     }
@@ -107,7 +107,7 @@ var SobyEditControlFactory = (function () {
         return soby_EditControls[containerClientId];
     };
     return SobyEditControlFactory;
-}());
+})();
 var sobyEditControlFactory = new SobyEditControlFactory();
 // **********************************************************************
 // ********************* SOBY GRID *****************************
@@ -124,7 +124,7 @@ var SobyShowFieldsOnObject = (function () {
         this.EditNew = 6;
     }
     return SobyShowFieldsOnObject;
-}());
+})();
 var SobyShowFieldsOn = new SobyShowFieldsOnObject();
 $("form").click(function () {
     $(".sobygridmenu").hide();
@@ -231,7 +231,7 @@ var sobyActionPaneButtons = (function (_super) {
         this.Get(key).Show();
     };
     return sobyActionPaneButtons;
-}(Array));
+})(Array);
 var sobyActionPaneButton = (function () {
     function sobyActionPaneButton(key, text, index, imageUrl, className, visible, onClick, enabilityFunction) {
         this.ID = "actionpanebutton_" + soby_guid();
@@ -259,7 +259,7 @@ var sobyActionPaneButton = (function () {
         $("#" + this.ID).show();
     };
     return sobyActionPaneButton;
-}());
+})();
 var soby_WebGrid = (function () {
     /************************************ END EVENTS *********************************/
     /************************************ CONSTRUCTORS *******************************/
@@ -2175,7 +2175,7 @@ var soby_WebGrid = (function () {
         this.SetActionPaneButtonsVisibility();
     };
     return soby_WebGrid;
-}());
+})();
 // ************************************************************
 // ********************* CAML BUILDER CAROUSEL *****************************
 var soby_Carousels = new Array();
@@ -2290,7 +2290,7 @@ var soby_Carousel = (function () {
             this.DataService.PopulateItems();
     };
     return soby_Carousel;
-}());
+})();
 // ************************************************************
 // ********************* CAML BUILDER METRO TILES *****************************
 var soby_MetroTileGrids = new Array();
@@ -2392,7 +2392,7 @@ var soby_MetroTilesGrid = (function () {
     };
     soby_MetroTilesGrid.prototype.ItemPopulated = function (items) { };
     return soby_MetroTilesGrid;
-}());
+})();
 // ************************************************************
 // ********************* CAML BUILDER WIZARD TEMPLATE *****************************
 var soby_Wizards = new Array();
@@ -2492,7 +2492,7 @@ var soby_Wizard = (function () {
         this.EnsureWizardsExistency();
     }
     return soby_Wizard;
-}());
+})();
 // ************************************************************
 // ********************* CAML BUILDER MENU TEMPLATE *****************************
 var soby_Menus = new Array();
@@ -2560,7 +2560,7 @@ var soby_Menu = (function () {
         this.EnsureMenusExistency();
     }
     return soby_Menu;
-}());
+})();
 // ************************************************************
 // ********************* ITEM SELECTION *****************************
 var soby_ItemSelections = new Array();
@@ -2571,7 +2571,7 @@ var SobyItemSelectorTypeObject = (function () {
         this.CardView = 2;
     }
     return SobyItemSelectorTypeObject;
-}());
+})();
 var SobyItemSelectorTypes = new SobyItemSelectorTypeObject();
 var soby_ItemSelection = (function () {
     function soby_ItemSelection(contentDivSelector, title, itemSelectorType, autoCompleteDataService, advancedSearchDataService, emptyDataHtml, dialogID, selectorUrl, valueFieldName, textFieldName) {
@@ -2632,7 +2632,7 @@ var soby_ItemSelection = (function () {
             var response = itemSelection.AutoCompleteDataService.Args[0];
             var autoCompleteItems = new Array();
             for (var i = 0; i < items.length; i++) {
-                autoCompleteItems.push({ Text: items[i][itemSelection.ValueFieldName], value: items[i][itemSelection.TextFieldName], Value: items[i][itemSelection.TextFieldName] });
+                autoCompleteItems.push({ Text: eval("items[i]." + itemSelection.ValueFieldName), value: eval("items[i]." + itemSelection.TextFieldName), Value: eval("items[i]." + itemSelection.TextFieldName) });
             }
             response(autoCompleteItems);
         };
@@ -2731,7 +2731,7 @@ var soby_ItemSelection = (function () {
             tableHTML += "<tr class='mtdataitemrow'><td width='20'><a href='javascript:void(0)' onclick=\"soby_ItemSelections['" + this.ItemSelectionID + "'].RemoveItem('" + array[key].Value + "')\" class='itemSelectorDeleteLink'><span class='soby-icon-imgSpan'> <img class='soby-list-delete soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span></a></td><td>" + array[key].Text + "</td></tr>";
         }
         if (array.length == 0) {
-            tableHTML += "<tr class='mtdataitemrow'><td>No item has been selected.</td></tr>";
+            tableHTML += "<tr class='mtdataitemrow'><td>" + this.EmptyDataHtml + "</td></tr>";
         }
         tableHTML += "</table>";
         $(this.ContentDivSelector + " .selecteditemmaintenancepanel").html(tableHTML);
@@ -2744,7 +2744,7 @@ var soby_ItemSelection = (function () {
         soby_ItemSelections[this.ItemSelectionID] = this;
     };
     return soby_ItemSelection;
-}());
+})();
 // ************************************************************
 // ********************* COMMON FUNCTIONS *****************************
 function ShowCommonDialog(url, title, dialogID, onCloseCallback) {
@@ -2815,3 +2815,4 @@ function SetCommonDialogArgument(dialogID, argument) {
     $("#" + dialogID).dialog().data("argument", argument);
 }
 // ************************************************************
+//# sourceMappingURL=soby.ui.components.js.map

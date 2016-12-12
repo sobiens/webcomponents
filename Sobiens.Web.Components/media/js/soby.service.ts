@@ -309,6 +309,8 @@ class SobyFilter implements ISobyFilter {
             case SobyFilterTypes.Equal:
                 if (this.FieldType == SobyFieldTypes.Text)
                     valueFilterString = this.FieldName + " eq '" + value + "'";
+                else if (this.FieldType == SobyFieldTypes.DateTime)
+                    valueFilterString = this.FieldName + " eq datetime'" + value + "'";
                 else
                     valueFilterString = this.FieldName + " eq " + value;
                 break;
@@ -318,20 +320,34 @@ class SobyFilter implements ISobyFilter {
                     comparisionText = "ne"
                 if (this.FieldType == SobyFieldTypes.Text)
                     valueFilterString = this.FieldName + " " + comparisionText + " '" + value + "'";
+                else if (this.FieldType == SobyFieldTypes.DateTime)
+                    valueFilterString = this.FieldName + " " + comparisionText + " datetime'" + value + "'";
                 else
                     valueFilterString = this.FieldName + " " + comparisionText + " " + value;
                 break;
             case SobyFilterTypes.Greater:
-                valueFilterString = this.FieldName + " gt " + value;
+                if (this.FieldType == SobyFieldTypes.DateTime)
+                    valueFilterString = this.FieldName + " gt datetime'" + value + "'";
+                else
+                    valueFilterString = this.FieldName + " gt " + value;
                 break;
             case SobyFilterTypes.Lower:
-                valueFilterString = this.FieldName + " lt " + value;
+                if (this.FieldType == SobyFieldTypes.DateTime)
+                    valueFilterString = this.FieldName + " lt datetime'" + value + "'";
+                else
+                    valueFilterString = this.FieldName + " lt " + value;
                 break;
             case SobyFilterTypes.GreaterEqual:
-                valueFilterString = this.FieldName + " geq " + value;
+                if (this.FieldType == SobyFieldTypes.DateTime)
+                    valueFilterString = this.FieldName + " geq datetime'" + value + "'";
+                else
+                    valueFilterString = this.FieldName + " geq " + value;
                 break;
             case SobyFilterTypes.LowerEqual:
-                valueFilterString = this.FieldName + " leq " + value;
+                if (this.FieldType == SobyFieldTypes.DateTime)
+                    valueFilterString = this.FieldName + " leq datetime'" + value + "'";
+                else
+                    valueFilterString = this.FieldName + " leq " + value;
                 break;
             case SobyFilterTypes.Contains:
                 if (_type == 0)
@@ -961,7 +977,8 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         var result = (result.value !=null?result.value:result);
         for (var i = 0; i < result.length; i++) {
             for (var x = 0; x < this.SchemaFields.length; x++) {
-                if (this.SchemaFields[x].FieldType == SobyFieldTypes.DateTime) {
+                if (this.SchemaFields[x].FieldType == SobyFieldTypes.DateTime)
+                {
                     var propertyName = this.SchemaFields[x].FieldName;
                     var value = result[i][propertyName];
                     if (value != null && value != "")
@@ -1292,8 +1309,18 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
                 if (this.SchemaFields[x].FieldType == SobyFieldTypes.DateTime) {
                     var propertyName = this.SchemaFields[x].FieldName;
                     var value = result[i][propertyName];
-                    if (value != null && value != "")
-                        result[i][propertyName] = new Date(value.match(/\d+/)[0] * 1);
+                    if (value != null)
+                    {
+                        if (value instanceof Date == true)
+                            result[i][propertyName] = value;
+                        else if (value != "")
+                        {
+                            if (value.indexOf("20") == 0 || value.indexOf("19") == 0)
+                                result[i][propertyName] = new Date(value);
+                            else
+                                result[i][propertyName] = new Date(value.match(/\d+/)[0] * 1);
+                        }
+                    }
                 }
             }
         }

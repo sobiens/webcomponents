@@ -20,3 +20,4 @@ function soby_PopulateSPCarousel() {
     carousel.MaxWidth = 600;
     carousel.Initialize(true);
 }
+//# sourceMappingURL=soby.carousel.js.map

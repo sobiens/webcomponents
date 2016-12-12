@@ -29,3 +29,4 @@ function soby_PopulateGridEditing() {
     }, null, true, true, true, null);
     bookGrid.Initialize(true);
 }
+//# sourceMappingURL=refreshdata.js.map

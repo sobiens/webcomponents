@@ -205,7 +205,7 @@ var soby_SharePointService = (function () {
     soby_SharePointService.prototype.ItemAdded = function (args) { };
     soby_SharePointService.prototype.ItemDeleted = function (args) { };
     return soby_SharePointService;
-}());
+})();
 var soby_SPRestBuilder = (function (_super) {
     __extends(soby_SPRestBuilder, _super);
     function soby_SPRestBuilder() {
@@ -243,7 +243,7 @@ var soby_SPRestBuilder = (function (_super) {
         return query;
     };
     return soby_SPRestBuilder;
-}(soby_WSBuilder));
+})(soby_WSBuilder);
 // ********************* CAML BUILDER *****************************
 function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     this.WebUrl = webUrl;
@@ -1394,3 +1394,4 @@ var sobyObject = function () {
     this.SPLibrary = new this.SPLibraryObject();
 };
 var soby = new sobyObject();
+//# sourceMappingURL=soby.spservice.js.map

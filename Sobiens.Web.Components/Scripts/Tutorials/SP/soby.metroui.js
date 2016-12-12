@@ -24,3 +24,4 @@ function soby_PopulateSPMetroTiles() {
     carousel.MaxWidth = "600px";
     carousel.Initialize(true);
 }
+//# sourceMappingURL=soby.metroui.js.map

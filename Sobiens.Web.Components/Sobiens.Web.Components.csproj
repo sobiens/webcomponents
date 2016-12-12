@@ -158,6 +158,8 @@
     <Content Include="API Documentation\Grid\styles\jsdoc-default.css" />
     <Content Include="API Documentation\Grid\styles\prettify-jsdoc.css" />
     <Content Include="API Documentation\Grid\styles\prettify-tomorrow.css" />
+    <Content Include="Calendar\calendar\calendarjs.HTM" />
+    <Content Include="Calendar\calendar\css\spIE.css" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -201,6 +203,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Controls\SobyCalendarViewSideMenuControl.ascx" />
     <Content Include="Controls\SobyTreeViewSideMenuControl.ascx" />
     <Content Include="Controls\SobyItemSelectionSideMenuControl.ascx" />
     <Content Include="Controls\SobyMetroStyleGridSideMenuControl.ascx" />
@@ -212,6 +215,7 @@
     <Content Include="Css\bootstrap.min.css" />
     <Content Include="Css\main.css" />
     <Content Include="download\Versions.aspx" />
+    <Content Include="Images\Tutorials\Soby_CalendarView_Default.png" />
     <Content Include="Images\Tutorials\Soby_ItemSelection_Autocomplete.png" />
     <Content Include="Images\Tutorials\Soby_TreeView_Default.png" />
     <Content Include="Images\Tutorials\Soby_WebGrid_Aggregates.png" />
@@ -244,6 +248,7 @@
     <Content Include="Images\Carousel\Sybil.jpg" />
     <Content Include="Images\Carousel\Tom Jones.jpg" />
     <Content Include="Images\Carousel\Vanity Fair.jpg" />
+    <Content Include="media\css\soby.ui.components.calendarview.css" />
     <Content Include="media\images\bizpicker.gif" />
     <Content Include="media\images\ecbarw.png" />
     <Content Include="media\images\filter.gif" />
@@ -280,6 +285,7 @@
     <Content Include="media\js\jquery-3.1.0.js" />
     <Content Include="media\js\jquery-ui-1.12.0.min.js" />
     <Content Include="media\js\soby.service.js" />
+    <Content Include="media\js\soby.ui.components.calendar.js" />
     <Content Include="media\js\soby.ui.components.codeview.js" />
     <Content Include="media\js\soby.ui.components.treeview.js" />
     <Content Include="packages.config" />
@@ -318,7 +324,9 @@
     <Content Include="Scripts\jquery-ui-1.12.0.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.min.js" />
     <TypeScriptCompile Include="media\js\soby.ui.components.codeview.ts" />
+    <TypeScriptCompile Include="media\js\soby.ui.components.calendar.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\codeview.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CalendarView\calendarview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\actionbar.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\refreshdata.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\spdatabinding.ts" />
@@ -330,11 +338,13 @@
     <Content Include="Scripts\Tutorials\WebAPI\Grid\staticdatabinding.js" />
     <Content Include="Scripts\Tutorials\WebAPI\Grid\themes.js" />
     <Content Include="sitemap.xml" />
+    <Content Include="Tutorials\SobyCalendarView\Getting Started.aspx" />
     <Content Include="Tutorials\SobyCodeView\CodeView.aspx" />
     <Content Include="Tutorials\SobyGrid\ActionBar.aspx" />
     <Content Include="Tutorials\SobyGrid\ExportToExcel.aspx" />
     <Content Include="Tutorials\SobyGrid\RefreshData.aspx" />
     <Content Include="Tutorials\SobyGrid\SPDataBinding.aspx" />
+    <Content Include="Tutorials\SobyItemSelection\Single Selection.aspx" />
     <Content Include="Web.sitemap" />
     <TypeScriptCompile Include="media\js\soby.spservice.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.treeview.ts" />
@@ -409,6 +419,7 @@
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\staticdatabinding.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\singleselection.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\TreeView\treeview.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -481,6 +492,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobyCalendarViewSideMenuControl.ascx.cs">
+      <DependentUpon>SobyCalendarViewSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyCalendarViewSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyCalendarViewSideMenuControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\SobyTreeViewSideMenuControl.ascx.cs">
       <DependentUpon>SobyTreeViewSideMenuControl.ascx</DependentUpon>
@@ -562,6 +580,13 @@
     </Compile>
     <Compile Include="Tutorials\Setting Up.aspx.designer.cs">
       <DependentUpon>Setting Up.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyCalendarView\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyCalendarView\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyCodeView\CodeView.aspx.cs">
       <DependentUpon>CodeView.aspx</DependentUpon>
@@ -779,6 +804,13 @@
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\Task.cs.txt" />
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\TaskServiceContext.cs.txt" />
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\Configuration.cs.txt" />
+    <Compile Include="Tutorials\SobyItemSelection\Single Selection.aspx.cs">
+      <DependentUpon>Single Selection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyItemSelection\Single Selection.aspx.designer.cs">
+      <DependentUpon>Single Selection.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyItemSelection\Getting Started.aspx.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

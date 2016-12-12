@@ -2981,7 +2981,7 @@ class soby_ItemSelection {
             
             var autoCompleteItems = new Array();
             for (var i = 0; i < items.length; i++) {
-                autoCompleteItems.push({ Text: items[i][itemSelection.ValueFieldName], value: items[i][itemSelection.TextFieldName], Value: items[i][itemSelection.TextFieldName] });
+                autoCompleteItems.push({ Text: eval("items[i]." + itemSelection.ValueFieldName), value: eval("items[i]." + itemSelection.TextFieldName), Value: eval("items[i]." + itemSelection.TextFieldName) });
             }
 
             response(autoCompleteItems);
@@ -3085,8 +3085,9 @@ class soby_ItemSelection {
         for (var key in array) {
             tableHTML += "<tr class='mtdataitemrow'><td width='20'><a href='javascript:void(0)' onclick=\"soby_ItemSelections['" + this.ItemSelectionID + "'].RemoveItem('" + array[key].Value + "')\" class='itemSelectorDeleteLink'><span class='soby-icon-imgSpan'> <img class='soby-list-delete soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span></a></td><td>" + array[key].Text + "</td></tr>";
         }
-        if (array.length == 0) {
-            tableHTML += "<tr class='mtdataitemrow'><td>No item has been selected.</td></tr>";
+        if (array.length == 0)
+        {
+            tableHTML += "<tr class='mtdataitemrow'><td>" + this.EmptyDataHtml + "</td></tr>";
         }
         tableHTML += "</table>";
         $(this.ContentDivSelector + " .selecteditemmaintenancepanel").html(tableHTML);

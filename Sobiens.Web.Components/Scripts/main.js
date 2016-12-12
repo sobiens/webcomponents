@@ -43,3 +43,4 @@ function soby_GetTutorialWCFUrl() {
     else
         return "http://localhost:7287/wcf";
 }
+//# sourceMappingURL=main.js.map

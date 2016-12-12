@@ -58,3 +58,4 @@ function soby_PopulateSPHeader() {
     //customerGrid.PopulateGrid();
     customerGrid.Initialize(true);
 }
+//# sourceMappingURL=soby.customers.js.map
