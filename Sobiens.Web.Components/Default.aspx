@@ -29,6 +29,18 @@
         <li class="two">
             <div class="row">
                 <div class="col-md-7">
+                    <h5><a href="Tutorials/SobyGrid/Getting Started.aspx">Soby Data Repeater</a></h5>
+                    It is designed to ease the exhausting process of implementing the necessary code for sorting, navigation, grouping, searching and real time data editing in a simple data representation object.
+            <a href="Tutorials/SobyDataRepeater/Getting Started.aspx">Tutorials</a>
+                </div>
+                <div class="col-md-5">
+                    <a href="Tutorials/SobyGrid/Getting Started.aspx"><img src="Images/Tutorials/Soby_DataRepeater_Default.png" width="350px" /></a></div>
+            </div>
+
+        </li>
+        <li class="three">
+            <div class="row">
+                <div class="col-md-7">
             <h5><a href="Tutorials/SobyItemSelection/Getting Started.aspx">Item Selection</a></h5>
             It allows user to select items from either quick search (auto complete) or advanced search (popup grid).
             <a href="Tutorials/SobyItemSelection/Getting Started.aspx">Tutorials</a>
@@ -37,7 +49,7 @@
                     <a href="Tutorials/SobyItemSelection/Getting Started.aspx"><img src="Images/Tutorials/Soby_ItemSelection_Autocomplete.png" width="350px" /></a></div>
             </div>
         </li>
-        <li class="three">
+        <li class="four">
             <div class="row">
                 <div class="col-md-7">
             <h5><a href="Tutorials/SobyTreeView/Getting Started.aspx">Soby Tree View</a></h5>
@@ -48,7 +60,7 @@
                     <a href="Tutorials/SobyTreeView/Getting Started.aspx"><img src="Images/Tutorials/Soby_TreeView_Default.png" width="350px" /></a></div>
             </div>
         </li>
-        <li class="four">
+        <li class="five">
             <div class="row">
                 <div class="col-md-7">
             <h5><a href="Tutorials/SobyCalendarView/Getting Started.aspx">Soby Calendar View</a></h5>
@@ -59,7 +71,7 @@
                     <a href="Tutorials/SobyCalendarView/Getting Started.aspx"><img src="Images/Tutorials/Soby_CalendarView_Default.png" width="350px" /></a></div>
             </div>
         </li>
-        <li class="five">
+        <li class="six">
             <div class="row">
                 <div class="col-md-7">
             <h5><a href="Tutorials/SobyCarousel/General.aspx">Carousel</a></h5>
