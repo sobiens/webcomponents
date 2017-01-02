@@ -1,4 +1,4 @@
-// VERSION 1.0.6.1
+// VERSION 1.0.7.2
 // ********************* ITEM SELECTION *****************************
 var soby_CodeViews = new Array();
 var SobyCodeViewTypesObject = (function () {
@@ -8,7 +8,7 @@ var SobyCodeViewTypesObject = (function () {
         this.Xml = 2;
     }
     return SobyCodeViewTypesObject;
-})();
+}());
 var SobyCodeViewTypes = new SobyCodeViewTypesObject();
 var soby_CodeView = (function () {
     function soby_CodeView(contentDivSelector, title, codeViewType) {
@@ -55,6 +55,5 @@ var soby_CodeView = (function () {
         soby_CodeViews[this.CodeViewID] = this;
     };
     return soby_CodeView;
-})();
+}());
 // ************************************************************
-//# sourceMappingURL=soby.ui.components.codeview.js.map

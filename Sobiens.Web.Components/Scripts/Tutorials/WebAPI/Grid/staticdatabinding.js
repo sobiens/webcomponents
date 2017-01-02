@@ -29,4 +29,3 @@ function soby_PopulateGridStaticDataBinding() {
     customerGrid.AddColumn("Sex", "Sex", SobyShowFieldsOn.All, null, null, true, true, true, null);
     customerGrid.Initialize(true);
 }
-//# sourceMappingURL=staticdatabinding.js.map

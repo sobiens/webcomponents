@@ -78,6 +78,7 @@
             this.GenerateCodeButton.TabIndex = 4;
             this.GenerateCodeButton.Text = "Generate Code";
             this.GenerateCodeButton.UseVisualStyleBackColor = true;
+            this.GenerateCodeButton.Click += new System.EventHandler(this.GenerateCodeButton_Click);
             // 
             // Form1
             // 

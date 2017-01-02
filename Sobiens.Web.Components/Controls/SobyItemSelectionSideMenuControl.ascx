@@ -4,4 +4,5 @@
 <ul>
     <li><a href="/Tutorials/SobyItemSelection/Getting Started.aspx">Getting Started</a></li>
     <li><a href="/Tutorials/SobyItemSelection/Single Selection.aspx">Single Selection</a></li>
+    <li><a href="/Tutorials/SobyItemSelection/Autocomplete watermark.aspx">Autocomplete Watermark</a></li>
 </ul>

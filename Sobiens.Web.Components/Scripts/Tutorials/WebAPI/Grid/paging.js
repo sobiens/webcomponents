@@ -21,4 +21,3 @@ function soby_PopulateGridPaging() {
     bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null);
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=paging.js.map

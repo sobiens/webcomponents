@@ -117,6 +117,7 @@ declare class soby_WebGrid {
     ActionInProgress: boolean;
     Active: boolean;
     AllowExportData: boolean;
+    AllowMultipleSelections: boolean;
     GridID: string;
     ThemeName: string;
     ThemeClassName: string;
@@ -145,6 +146,7 @@ declare class soby_WebGrid {
     ShowHeader: boolean;
     ImagesFolderUrl: string;
     ActionPaneButtons: sobyActionPaneButtons;
+    LastGroupByValues: any[];
     /************************************ END MEMBERS ********************************/
     /************************************ EVENTS *************************************/
     /**
@@ -400,6 +402,13 @@ declare class soby_WebGrid {
      * grid.GetActiveRowID()
      */
     GetActiveRowID(): string;
+    /**
+     * Gets row identifiers
+     * @example
+     * // returns ["soby_griddatarow_bbe4e9e8-6e44-aca8-0129-15fc255df0ec", "soby_griddatarow_f0b7f7e8-6b89-accf-0446-88eda73e0bee"]
+     * grid.GetRowIds()
+     */
+    GetSelectedCellIds(): any[];
     /**
      * Gets selected cell identifier
      * @example
@@ -735,6 +744,57 @@ declare class soby_WebGrid {
     PopulateAggregateRowsValues(): void;
     PopulateAggregateRow(rowAddBefore: any, level: number, hasEmptyCell: boolean): void;
     PopulateAggregateRows(): void;
+    PopulateGroupByRow(itemIndex: number, item: any, row: any): any;
+    PopulateDetailRow(rowID: any): void;
+    PopulateSelectionCell(item: any, row: any, rowID: any): void;
+    PopulateViewColumns(item: any, row: any, rowID: any): void;
+    /**
+     * Populates the grid data
+     *
+     * @items Data items which returned from the service.
+     * @example
+     * // Populates the grid with the given items
+     * grid.PopulateGridData(items);
+     */
+    PopulateGridData(items: any): void;
+}
+declare class soby_DataRepeater extends soby_WebGrid {
+    /**
+     * Item data bound event.
+     *
+     * @event soby_WebGrid#ItemDataBound
+     * @type {object}
+     * @property {object} cellID - Identifier of the row.
+     * @property {object} item - Data item related with the row.
+     */
+    ItemDataBound: any;
+    MaxCellCount: number;
+    /**
+     * Gets selected data items
+     * @example
+     * // returns [Object, Object]
+     * grid.GetSelectedDataItems();
+     */
+    GetSelectedDataItems(): any[];
+    /**
+     * Selects the cell
+     *
+     * @rowID Identifier of the row.
+     * @cellIndex Index of the cell.
+     * @example
+     * // Selects the cell with given row identifier and cell index
+     * grid.SelectCell("soby_griddatarow_fdc30fcf-caee-eec7-a95f-16589d619c9c", 3);
+     */
+    SelectCell(rowID: any, cellIndex: any): void;
+    /**
+     * Selects the row
+     *
+     * @rowIndex Index of the row.
+     * @example
+     * // Selects the row with given row index
+     * grid.SelectRow(1);
+     */
+    SelectRowByIndex(rowIndex: any): void;
     /**
      * Populates the grid data
      *
@@ -862,6 +922,7 @@ declare class soby_ItemSelection {
     AdvancedSearchDataService: soby_ServiceInterface;
     AllowMultipleSelections: boolean;
     EmptyDataHtml: string;
+    WaterMark: string;
     DialogID: string;
     SelectorUrl: string;
     ValueFieldName: string;

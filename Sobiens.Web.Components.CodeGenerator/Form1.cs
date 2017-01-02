@@ -21,5 +21,10 @@ namespace Sobiens.Web.Components.CodeGenerator
         {
             int x = 3;
         }
+
+        private void GenerateCodeButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

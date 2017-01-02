@@ -23,4 +23,3 @@ function soby_PopulateItemSelection() {
     itemSelection.ImagesFolderUrl = "/media/images";
     itemSelection.Initialize();
 }
-//# sourceMappingURL=selection.js.map

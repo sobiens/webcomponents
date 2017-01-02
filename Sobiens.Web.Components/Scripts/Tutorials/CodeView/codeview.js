@@ -8,4 +8,3 @@ function soby_PopulateCodeView() {
     codeView.ImagesFolderUrl = "/media/images";
     codeView.Initialize();
 }
-//# sourceMappingURL=codeview.js.map

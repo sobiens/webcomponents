@@ -1,4 +1,4 @@
-// VERSION 1.0.6.1
+// VERSION 1.0.7.2
 // ********************* ITEM SELECTION *****************************
 var soby_TreeViews = new Array();
 var soby_TreeViewItems = new Array();
@@ -125,6 +125,5 @@ var soby_TreeView = (function () {
         soby_TreeViews[this.TreeViewID] = this;
     };
     return soby_TreeView;
-})();
+}());
 // ************************************************************
-//# sourceMappingURL=soby.ui.components.treeview.js.map

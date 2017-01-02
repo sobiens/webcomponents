@@ -43,4 +43,3 @@ function soby_PopulateNestedGrid() {
     };
     authorGrid.Initialize(true);
 }
-//# sourceMappingURL=nestedgrids.js.map

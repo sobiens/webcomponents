@@ -40,6 +40,8 @@ declare class SobyFilterTypesObject {
     LowerEqual: number;
     BeginsWith: number;
     Membership: number;
+    IsNull: number;
+    IsNotNull: number;
 }
 declare class SobyAggregateTypesObject {
     Average: number;

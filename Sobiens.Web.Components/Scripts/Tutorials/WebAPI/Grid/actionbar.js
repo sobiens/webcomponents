@@ -44,4 +44,3 @@ function soby_PopulateGridActionBar() {
     bookGrid.ShowRefreshButton = true;
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=actionbar.js.map

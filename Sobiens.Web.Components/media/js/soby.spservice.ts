@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.6.1
+﻿// VERSION 1.0.7.2
 class soby_SharePointService implements soby_ServiceInterface
 {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;

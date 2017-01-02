@@ -204,6 +204,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Controls\SobyCalendarViewSideMenuControl.ascx" />
+    <Content Include="Controls\SobyDataRepeaterSideMenuControl.ascx" />
     <Content Include="Controls\SobyTreeViewSideMenuControl.ascx" />
     <Content Include="Controls\SobyItemSelectionSideMenuControl.ascx" />
     <Content Include="Controls\SobyMetroStyleGridSideMenuControl.ascx" />
@@ -327,6 +328,7 @@
     <TypeScriptCompile Include="media\js\soby.ui.components.calendar.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\codeview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CalendarView\calendarview.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\editing.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\actionbar.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\refreshdata.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\spdatabinding.ts" />
@@ -340,10 +342,12 @@
     <Content Include="sitemap.xml" />
     <Content Include="Tutorials\SobyCalendarView\Getting Started.aspx" />
     <Content Include="Tutorials\SobyCodeView\CodeView.aspx" />
+    <Content Include="Tutorials\SobyDataRepeater\Getting Started.aspx" />
     <Content Include="Tutorials\SobyGrid\ActionBar.aspx" />
     <Content Include="Tutorials\SobyGrid\ExportToExcel.aspx" />
     <Content Include="Tutorials\SobyGrid\RefreshData.aspx" />
     <Content Include="Tutorials\SobyGrid\SPDataBinding.aspx" />
+    <Content Include="Tutorials\SobyItemSelection\Autocomplete watermark.aspx" />
     <Content Include="Tutorials\SobyItemSelection\Single Selection.aspx" />
     <Content Include="Web.sitemap" />
     <TypeScriptCompile Include="media\js\soby.spservice.ts" />
@@ -419,6 +423,7 @@
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\staticdatabinding.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\autocompletewatermark.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\singleselection.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\TreeView\treeview.ts" />
   </ItemGroup>
@@ -499,6 +504,13 @@
     </Compile>
     <Compile Include="Controls\SobyCalendarViewSideMenuControl.ascx.designer.cs">
       <DependentUpon>SobyCalendarViewSideMenuControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobyDataRepeaterSideMenuControl.ascx.cs">
+      <DependentUpon>SobyDataRepeaterSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyDataRepeaterSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyDataRepeaterSideMenuControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\SobyTreeViewSideMenuControl.ascx.cs">
       <DependentUpon>SobyTreeViewSideMenuControl.ascx</DependentUpon>
@@ -594,6 +606,13 @@
     </Compile>
     <Compile Include="Tutorials\SobyCodeView\CodeView.aspx.designer.cs">
       <DependentUpon>CodeView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyDataRepeater\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyDataRepeater\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Admin.aspx.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
@@ -804,6 +823,13 @@
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\Task.cs.txt" />
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\TaskServiceContext.cs.txt" />
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\Configuration.cs.txt" />
+    <Compile Include="Tutorials\SobyItemSelection\Autocomplete watermark.aspx.cs">
+      <DependentUpon>Autocomplete watermark.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyItemSelection\Autocomplete watermark.aspx.designer.cs">
+      <DependentUpon>Autocomplete watermark.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyItemSelection\Single Selection.aspx.cs">
       <DependentUpon>Single Selection.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

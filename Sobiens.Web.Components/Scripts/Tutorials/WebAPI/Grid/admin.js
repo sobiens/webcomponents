@@ -87,4 +87,3 @@ function soby_PopulateEntityGrid(entitySetName, entitySetType) {
     }
     entityGrid.Initialize(true);
 }
-//# sourceMappingURL=admin.js.map

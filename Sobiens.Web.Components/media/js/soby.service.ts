@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.6.1
+﻿// VERSION 1.0.7.2
 function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
     return $.ajax({
         type: method,
@@ -64,6 +64,8 @@ class SobyFilterTypesObject {
     LowerEqual: number = 7;
     BeginsWith: number = 8;
     Membership: number = 9;
+    IsNull: number = 10;
+    IsNotNull: number = 11;
 }
 class SobyAggregateTypesObject {
     Average: number = 0;
@@ -284,6 +286,12 @@ class SobyFilter implements ISobyFilter {
             case SobyFilterTypes.BeginsWith:
                 equvialentString = "BeginsWith";
                 break;
+            case SobyFilterTypes.IsNull:
+                equvialentString = "IsNull";
+                break;
+            case SobyFilterTypes.IsNotNull:
+                equvialentString = "IsNotNull";
+                break;
             case SobyFilterTypes.Membership:
                 equvialentString = "Membership";
                 valueString = "";
@@ -348,6 +356,15 @@ class SobyFilter implements ISobyFilter {
                     valueFilterString = this.FieldName + " leq datetime'" + value + "'";
                 else
                     valueFilterString = this.FieldName + " leq " + value;
+                break;
+            case SobyFilterTypes.IsNull:
+                    valueFilterString = this.FieldName + " eq null ";
+                break;
+            case SobyFilterTypes.IsNotNull:
+                var comparisionText = "neq";
+                if (_type == 1)
+                    comparisionText = "ne"
+                valueFilterString = this.FieldName + " " + comparisionText + " null ";
                 break;
             case SobyFilterTypes.Contains:
                 if (_type == 0)

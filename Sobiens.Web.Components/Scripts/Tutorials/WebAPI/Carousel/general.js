@@ -17,4 +17,3 @@ function soby_PopulateWebCarousel() {
     carousel.MaxWidth = 600;
     carousel.Initialize(true);
 }
-//# sourceMappingURL=general.js.map
