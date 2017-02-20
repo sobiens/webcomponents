@@ -371,6 +371,16 @@ class soby_WebGrid {
     ImagesFolderUrl: string = "/_layouts/1033/images";
     ActionPaneButtons: sobyActionPaneButtons = new sobyActionPaneButtons();
     LastGroupByValues = new Array();
+    TableTagName: string = "table";
+    TBodyTagName: string = "tbody";
+    THeadTagName: string = "thead";
+    RowTagName: string = "tr";
+    CellTagName: string = "td";
+    TableAdditionalClassNames: string = "";
+    RowAdditionalClassNames: string = "";
+    CellAdditionalClassNames: string = "";
+
+
     /************************************ END MEMBERS ********************************/
 
     /************************************ EVENTS *************************************/
@@ -844,8 +854,8 @@ class soby_WebGrid {
      * // Adds Title as a column
      * grid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
      */
-    AddColumn(fieldName, displayName, showFieldsOn: number, displayFunction, cellTemplate, sortable, filterable, editable, filterControl) {
-        this.Columns[this.Columns.length] = { FieldName: fieldName, DisplayName: displayName, ShowFieldsOn: showFieldsOn, DisplayFunction: displayFunction, CellTemplate: cellTemplate, Sortable: sortable, Filterable: filterable, Editable:editable, FilterControl: filterControl };
+    AddColumn(fieldName, displayName, showFieldsOn: number, displayFunction, cellTemplate, sortable, filterable, editable, filterControl, cellCss, cellClassNames) {
+        this.Columns[this.Columns.length] = { FieldName: fieldName, DisplayName: displayName, ShowFieldsOn: showFieldsOn, DisplayFunction: displayFunction, CellTemplate: cellTemplate, Sortable: sortable, Filterable: filterable, Editable: editable, FilterControl: filterControl, CellCss: cellCss, CellClassNames:cellClassNames };
     }
 
     /**
@@ -2000,24 +2010,24 @@ class soby_WebGrid {
             cellCount++;
         this.CellCount = cellCount;
 
-        var table = $("<table width='100%' id='" + this.GridID + "' class='soby_grid " + this.ThemeClassName + "' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].Activate()\"></table>");
-        var tbody = $("<tbody></tbody>");
-        var thead = $("<thead></thead>");
+        var table = $("<" + this.TableTagName + " width='100%' id='" + this.GridID + "' class='soby_grid " + this.ThemeClassName + " " + this.TableAdditionalClassNames + "' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].Activate()\"></" + this.TableTagName + ">");
+        var tbody = $("<" + this.TBodyTagName + "></" + this.TBodyTagName + ">");
+        var thead = $("<" + this.THeadTagName + "></" + this.THeadTagName + ">");
 
-        var headerRow = $("<tr class='soby_gridheaderrow'></tr>");
+        var headerRow = $("<" + this.RowTagName + " class='soby_gridheaderrow'></" + this.RowTagName + ">");
 
-        var emptyDataRow = $("<tr class='emptydatarow' style='display:none'></tr>");
-        emptyDataRow.append("<td colspan='" + this.CellCount + "'>" + this.EmptyDataHtml + "</td>");
-        var loadingRow = $("<tr class='loadingrow' style='display:none'></tr>");
-        loadingRow.append("<td colspan='" + this.CellCount + "'><img src='" + this.ImagesFolderUrl + "/loading16.gif'> Loading...</td>");
-        var actionPaneRow = $("<tr class='actionpanerow'></tr>");
-        actionPaneRow.append("<td class='actionpane' style='border: solid 1px gray;' colspan='" + this.CellCount + "'></td>");
-        var groupByPaneRow = $("<tr class='groupbypanerow'></tr>");
-        groupByPaneRow.append("<td class='groupbypane' style='border: solid 1px gray;' colspan='" + this.CellCount + "'></td>");
-        var filterPaneRow = $("<tr></tr>");
-        filterPaneRow.append("<td class='filterpane' style='border: solid 1px gray;background-color: lightgreen;' colspan='" + this.CellCount + "'></td>");
-        var navigationRow = $("<tr class='soby_gridnavigationrow'></tr>");
-        navigationRow.append("<td class='navigationpane' colspan='" + this.CellCount + "'></td>");
+        var emptyDataRow = $("<" + this.RowTagName + " class='emptydatarow' style='display:none'></" + this.RowTagName + ">");
+        emptyDataRow.append("<" + this.CellTagName + " colspan='" + this.CellCount + "'>" + this.EmptyDataHtml + "</" + this.CellTagName + ">");
+        var loadingRow = $("<" + this.RowTagName + " class='loadingrow' style='display:none'></" + this.RowTagName + ">");
+        loadingRow.append("<" + this.CellTagName + " colspan='" + this.CellCount + "'><img src='" + this.ImagesFolderUrl + "/loading16.gif'> Loading...</" + this.CellTagName + ">");
+        var actionPaneRow = $("<" + this.RowTagName + " class='actionpanerow'></" + this.RowTagName + ">");
+        actionPaneRow.append("<" + this.CellTagName + " class='actionpane' style='border: solid 1px gray;' colspan='" + this.CellCount + "'></" + this.CellTagName + ">");
+        var groupByPaneRow = $("<" + this.RowTagName + " class='groupbypanerow'></" + this.RowTagName + ">");
+        groupByPaneRow.append("<" + this.CellTagName + " class='groupbypane' style='border: solid 1px gray;' colspan='" + this.CellCount + "'></" + this.CellTagName + ">");
+        var filterPaneRow = $("<" + this.RowTagName + "></" + this.RowTagName + ">");
+        filterPaneRow.append("<" + this.CellTagName + " class='filterpane' style='border: solid 1px gray;background-color: lightgreen;' colspan='" + this.CellCount + "'></" + this.CellTagName + ">");
+        var navigationRow = $("<" + this.RowTagName + " class='soby_gridnavigationrow'></" + this.RowTagName + ">");
+        navigationRow.append("<" + this.CellTagName + " class='navigationpane' colspan='" + this.CellCount + "'></" + this.CellTagName + ">");
         
         thead.append(groupByPaneRow);
         thead.append(actionPaneRow);
@@ -2437,13 +2447,27 @@ class soby_WebGrid {
                  }
                  contentHtml = value;
              }
-
-             var cell = $("<td class='soby_gridcell' valign='top' style='padding:5px;'></td>").html(contentHtml);
+             var cell = $("<" + this.CellTagName + " class='soby_gridcell " + this.CellAdditionalClassNames + "' valign='top' style='padding:5px;'></" + this.CellTagName + ">").html(contentHtml);
              cell.attr("id", cellID);
              cell.attr("cellindex", cellIndex);
              cell.attr("columnindex", x);
              cell.attr("rowid", rowID);
-             cell.attr("onclick", "soby_WebGrids['" + this.GridID + "'].SelectCell('" + rowID + "', " + cellIndex + ")")
+             cell.attr("onclick", "soby_WebGrids['" + this.GridID + "'].SelectCell('" + rowID + "', " + cellIndex + ")");
+             if (this.Columns[x].CellCss != null && this.Columns[x].CellCss != "")
+             {
+                 var cssValues = this.Columns[x].CellCss.split(";");
+                 for (var d = 0; d < cssValues.length; d++)
+                 {
+                     var cssName = cssValues[d].split(":")[0];
+                     var cssValue = cssValues[d].split(":")[1];
+                     cell.css(cssName, cssValue);
+                 }
+             }
+
+             if (this.Columns[x].CellClassNames != null && this.Columns[x].CellClassNames != "")
+             {
+                 cell.addClass(this.Columns[x].CellClassNames);
+             }
 
              row.append(cell);
              cellIndex++
@@ -2473,7 +2497,7 @@ class soby_WebGrid {
         var currentRowToAddDataRowsAfter = null;
         for (var i = 0; i < items.length; i++) {
             var rowID = "soby_griddatarow_" + soby_guid();
-            var row = $("<tr class='soby_griddatarow'></tr>");
+            var row = $("<" + this.RowTagName + " class='soby_griddatarow " + this.RowAdditionalClassNames + "'></" + this.RowTagName + ">");
             if (i % 2 == 0)
                 row.addClass("alt");
             row.attr("id", rowID);
@@ -2488,7 +2512,7 @@ class soby_WebGrid {
             this.PopulateViewColumns(item, row, rowID);
             if (currentRowToAddDataRowsAfter == null)
             {
-                $(this.ContentDivSelector + " tbody").append(row);
+                $(this.ContentDivSelector + " " + this.TBodyTagName).append(row);
             }
             else
             {
@@ -2504,7 +2528,7 @@ class soby_WebGrid {
         $(this.ContentDivSelector + " .loadingrow").hide();
         if (items.length == 0)
         {
-            $(this.ContentDivSelector + ".emptydatarow td").html(this.EmptyDataHtml);
+            $(this.ContentDivSelector + ".emptydatarow " + this.CellTagName).html(this.EmptyDataHtml);
             $(this.ContentDivSelector + ".emptydatarow").show();
         }
         this.PopulateAggregateRows();
@@ -2531,6 +2555,7 @@ class soby_DataRepeater extends soby_WebGrid
      */
     ItemDataBound = null;
     MaxCellCount = 1;
+    ShouldContainRowElement: boolean = true;
 
     /**
      * Gets selected data items
@@ -2636,14 +2661,16 @@ class soby_DataRepeater extends soby_WebGrid
         var currentRow = null;
         var currentRowID = null;
         var currentRowIndex = -1;
+        if (this.ShouldContainRowElement == true)
+            currentRow = $(this.ContentDivSelector + " " + this.TBodyTagName);
         for (var i = 0; i < items.length; i++)
         {
             var cellIndex = i;
-            if (cellIndex % this.MaxCellCount == 0)
+            if (this.ShouldContainRowElement == true && cellIndex % this.MaxCellCount == 0)
             {
                 currentRowIndex++;
                 currentRowID = "soby_griddatarow_" + soby_guid();
-                currentRow = $("<tr class='soby_griddatarow'></tr>");
+                currentRow = $("<" + this.RowTagName + " class='soby_griddatarow " + this.RowAdditionalClassNames + "'></" + this.RowTagName + ">");
 
                 if (i % 2 == 0)
                     currentRow.addClass("alt");
@@ -2661,7 +2688,7 @@ class soby_DataRepeater extends soby_WebGrid
             //this.PopulateSelectionCell(item, currentRow, currentRowID);
 
             var cellID = "soby_gridcell_" + soby_guid();
-            var cell = $("<td class='soby_gridcell' valign='top' style='padding:5px;'></td>").html(this.ItemDataBound(cellID, item));
+            var cell = $("<" + this.CellTagName + " class='soby_gridcell " + this.CellAdditionalClassNames + "' valign='top' style='padding:5px;'></" + this.CellTagName + ">").html(this.ItemDataBound(cellID, item));
             cell.attr("id", cellID);
             cell.attr("cellindex", cellIndex);
             cell.attr("columnindex", cellIndex % this.MaxCellCount);
@@ -2670,7 +2697,7 @@ class soby_DataRepeater extends soby_WebGrid
 
             if (currentRowToAddDataRowsAfter == null)
             {
-                $(this.ContentDivSelector + " tbody").append(currentRow);
+                $(this.ContentDivSelector + " " + this.TBodyTagName).append(currentRow);
             }
             else
             {
@@ -2733,6 +2760,7 @@ class soby_Carousel{
     IsContentFieldUrl:boolean;
     MaxWidth:number = null;
     Items = null;
+    ItemDataBound = null;
     EnsureCarouselExistency() {
         for (var key in soby_Carousels) {
             if (key == this.CarouselID)
@@ -2787,16 +2815,8 @@ class soby_Carousel{
             var itemDiv = $("<div class='item'></div>");
             itemDiv.attr("index", i);
 
-            var imageSrc = items[i][this.ImageFieldName];
-            var caption = items[i][this.CaptionFieldName];
-            var image = $("<img alt='...' class='carouselimage'>");
-            image.attr("src", imageSrc);
-            itemDiv.append(image);
-            var captionDiv = $("<div class='carousel-caption'></div>");
-            var h3 = $("<h3></h3>");
-            h3.html(caption);
-            captionDiv.append(h3);
-            itemDiv.append(captionDiv);
+            itemDiv.html(this.ItemDataBound(i, items[i]));
+
             itemsDiv.append(itemDiv);
         }
 
@@ -3212,7 +3232,7 @@ class soby_ItemSelection {
             this.AdvancedSearchAsGrid.IsEditable = false;
             for (var i = 0; i < this.AdvancedSearchDataService.DataSourceBuilder.SchemaFields.length; i++) {
                 var schemaField = this.AdvancedSearchDataService.DataSourceBuilder.SchemaFields[i];
-                this.AdvancedSearchAsGrid.AddColumn(schemaField.FieldName, schemaField.FieldName, SobyShowFieldsOn.All, null, null, true, true, true, null);
+                this.AdvancedSearchAsGrid.AddColumn(schemaField.FieldName, schemaField.FieldName, SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
             }
 
 //            this.AdvancedSearchAsGrid.

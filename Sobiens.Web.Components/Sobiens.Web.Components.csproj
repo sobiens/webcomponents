@@ -231,6 +231,7 @@
     <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_CreateSobyWebComponentsFolder.png" />
     <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_TaskApplication.png" />
     <Content Include="media\css\jquery-ui.min.css" />
+    <Content Include="media\css\soby.ui.components.scheduler.css" />
     <Content Include="media\css\soby.ui.components.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\accent.png" />
@@ -324,10 +325,15 @@
     <Content Include="Scripts\jquery-3.1.0.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.min.js" />
+    <TypeScriptCompile Include="media\js\soby.ui.components.scheduler.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.codeview.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.calendar.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\codeview.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.customdates.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CalendarView\calendarview.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\customformat.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\paging.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\editing.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\actionbar.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\refreshdata.ts" />
@@ -342,13 +348,18 @@
     <Content Include="sitemap.xml" />
     <Content Include="Tutorials\SobyCalendarView\Getting Started.aspx" />
     <Content Include="Tutorials\SobyCodeView\CodeView.aspx" />
+    <Content Include="Tutorials\SobyDataRepeater\Custom Format.aspx" />
+    <Content Include="Tutorials\SobyDataRepeater\Paging.aspx" />
     <Content Include="Tutorials\SobyDataRepeater\Getting Started.aspx" />
     <Content Include="Tutorials\SobyGrid\ActionBar.aspx" />
+    <Content Include="Tutorials\SobyGrid\Cell Styles.aspx" />
     <Content Include="Tutorials\SobyGrid\ExportToExcel.aspx" />
     <Content Include="Tutorials\SobyGrid\RefreshData.aspx" />
     <Content Include="Tutorials\SobyGrid\SPDataBinding.aspx" />
     <Content Include="Tutorials\SobyItemSelection\Autocomplete watermark.aspx" />
     <Content Include="Tutorials\SobyItemSelection\Single Selection.aspx" />
+    <Content Include="Tutorials\SobyScheduler\Custom Dates.aspx" />
+    <Content Include="Tutorials\SobyScheduler\Getting Started.aspx" />
     <Content Include="Web.sitemap" />
     <TypeScriptCompile Include="media\js\soby.spservice.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.treeview.ts" />
@@ -381,7 +392,7 @@
     <Content Include="Scripts\Tutorials\WebAPI\ItemSelection\selection.js" />
     <Content Include="Scripts\Tutorials\WebAPI\soby.news.js" />
     <Content Include="Sobiens_20x20.ico" />
-    <Content Include="Tutorials\SobyCarousel\General.aspx" />
+    <Content Include="Tutorials\SobyCarousel\Getting Started.aspx" />
     <Content Include="Tutorials\Setting Up.aspx" />
     <Content Include="Tutorials\SobyGrid\Admin.aspx" />
     <Content Include="Tutorials\SobyGrid\SetupWizard.aspx" />
@@ -423,6 +434,7 @@
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\staticdatabinding.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\cellstyles.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\autocompletewatermark.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\singleselection.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\TreeView\treeview.ts" />
@@ -579,12 +591,12 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
-    <Compile Include="Tutorials\SobyCarousel\General.aspx.cs">
-      <DependentUpon>General.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyCarousel\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Tutorials\SobyCarousel\General.aspx.designer.cs">
-      <DependentUpon>General.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyCarousel\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\Setting Up.aspx.cs">
       <DependentUpon>Setting Up.aspx</DependentUpon>
@@ -607,6 +619,20 @@
     <Compile Include="Tutorials\SobyCodeView\CodeView.aspx.designer.cs">
       <DependentUpon>CodeView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\SobyDataRepeater\Custom Format.aspx.cs">
+      <DependentUpon>Custom Format.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyDataRepeater\Custom Format.aspx.designer.cs">
+      <DependentUpon>Custom Format.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyDataRepeater\Paging.aspx.cs">
+      <DependentUpon>Paging.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyDataRepeater\Paging.aspx.designer.cs">
+      <DependentUpon>Paging.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyDataRepeater\Getting Started.aspx.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -627,6 +653,13 @@
     </Compile>
     <Compile Include="Tutorials\SobyGrid\ActionBar.aspx.designer.cs">
       <DependentUpon>ActionBar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Cell Styles.aspx.cs">
+      <DependentUpon>Cell Styles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Cell Styles.aspx.designer.cs">
+      <DependentUpon>Cell Styles.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\RefreshData.aspx.cs">
       <DependentUpon>RefreshData.aspx</DependentUpon>
@@ -851,6 +884,20 @@
     <Compile Include="Tutorials\SobyMetroStyleGrid\General.aspx.designer.cs">
       <DependentUpon>General.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\SobyScheduler\Custom Dates.aspx.cs">
+      <DependentUpon>Custom Dates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyScheduler\Custom Dates.aspx.designer.cs">
+      <DependentUpon>Custom Dates.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyScheduler\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyScheduler\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyTreeView\Getting Started.aspx.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -889,7 +936,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\Tutorials\StaticData\" />
     <Folder Include="Scripts\Tutorials\WebAPI\Wizard\" />
   </ItemGroup>
   <ItemGroup>

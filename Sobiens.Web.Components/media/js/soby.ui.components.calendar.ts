@@ -258,10 +258,10 @@ class soby_CalendarView
         bookGrid.IsEditable = false;
         bookGrid.IsSelectable = false;
         bookGrid.ImagesFolderUrl = "/media/images";
-        bookGrid.AddColumn(this.TitleFieldName, "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
-        bookGrid.AddColumn(this.DescriptionFieldName, "Description", SobyShowFieldsOn.All, null, null, true, true, true, null);
-        bookGrid.AddColumn(this.StartDateFieldName, "Start Date", SobyShowFieldsOn.All, null, null, true, true, true, null);
-        bookGrid.AddColumn(this.EndDateFieldName, "End Date", SobyShowFieldsOn.All, null, null, true, true, true, null);
+        bookGrid.AddColumn(this.TitleFieldName, "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+        bookGrid.AddColumn(this.DescriptionFieldName, "Description", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+        bookGrid.AddColumn(this.StartDateFieldName, "Start Date", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+        bookGrid.AddColumn(this.EndDateFieldName, "End Date", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
 
         bookGrid.Initialize(true);
     }

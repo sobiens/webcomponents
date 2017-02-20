@@ -29,7 +29,7 @@ function soby_PopulateWebNews() {
         middleContentPanel.find("#soby_newsBody_" + item.ID).html(item.Body);
         content.append(panel);
         return content.html();
-    }, null, true, true, false, null);
+    }, null, true, true, false, null, null, null);
     newsGrid.ItemCreated = function (rowID, item) {
         soby_PopulateWebNewsImages(item.ID);
     };

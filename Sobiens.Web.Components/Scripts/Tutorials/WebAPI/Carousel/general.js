@@ -15,5 +15,19 @@ function soby_PopulateWebCarousel() {
     bookService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
     var carousel = new soby_Carousel("#soby_CarouselDiv", "Carousel", bookService, "There is no record found.", "ImageUrl", "Title", "Genre", false);
     carousel.MaxWidth = 600;
+    carousel.ItemDataBound = function (cellIndex, dataItem) {
+        var container = $("<div></div>");
+        var imageSrc = dataItem[this.ImageFieldName];
+        var caption = dataItem[this.CaptionFieldName];
+        var image = $("<img alt='...' class='carouselimage'>");
+        image.attr("src", imageSrc);
+        container.append(image);
+        var captionDiv = $("<div class='carousel-caption'></div>");
+        var h3 = $("<h3></h3>");
+        h3.html(caption);
+        captionDiv.append(h3);
+        container.append(captionDiv);
+        return container.html();
+    };
     carousel.Initialize(true);
 }

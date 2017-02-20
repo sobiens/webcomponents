@@ -81,6 +81,18 @@
                 <div class="col-md-5"></div>
             </div>
         </li>
+        <li class="seven">
+            <div class="row">
+                <div class="col-md-7">
+                    <h5><a href="Tutorials/SobyScheduler/Getting Started.aspx">Soby Scheduler</a></h5>
+                    It is still being implemented.
+            <a href="Tutorials/SobyScheduler/Getting Started.aspx">Tutorials</a>
+                </div>
+                <div class="col-md-5">
+                    <a href="Tutorials/SobyScheduler/Getting Started.aspx"><img src="Images/Tutorials/Soby_WebGrid_Aggregates.png" width="350px" /></a></div>
+            </div>
+
+        </li>
 
     </ol>
 </asp:Content>

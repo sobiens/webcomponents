@@ -15,9 +15,9 @@ function soby_PopulateGridCustomerOrders() {
     customerGrid.ImagesFolderUrl = "/media/images";
     customerGrid.AddColumn("FirstName", "Name", SobyShowFieldsOn.All, function (item) {
         return item.FirstName + " " + item.LastName;
-    }, null, true, true, false, null);
-    customerGrid.AddColumn("Sex", "Sex", SobyShowFieldsOn.All, null, null, true, true, false, null);
-    customerGrid.AddColumn("Age", "Age", SobyShowFieldsOn.All, null, null, true, true, false, null);
+    }, null, true, true, false, null, null, null);
+    customerGrid.AddColumn("Sex", "Sex", SobyShowFieldsOn.All, null, null, true, true, false, null, null, null);
+    customerGrid.AddColumn("Age", "Age", SobyShowFieldsOn.All, null, null, true, true, false, null, null, null);
     customerGrid.IsSelectable = true;
     customerGrid.IsEditable = false;
     customerGrid.IsGroupable = true;
@@ -47,10 +47,10 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     customerAddressesGrid.DisplayTitle = true;
     customerAddressesGrid.IsSelectable = false;
     customerAddressesGrid.IsEditable = false;
-    customerAddressesGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerAddressesGrid.AddColumn("Town", "Town", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerAddressesGrid.AddColumn("PostCode", "PostCode", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerAddressesGrid.AddColumn("Address1", "Address1", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    customerAddressesGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerAddressesGrid.AddColumn("Town", "Town", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerAddressesGrid.AddColumn("PostCode", "PostCode", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerAddressesGrid.AddColumn("Address1", "Address1", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     customerAddressesGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal);
     customerAddressesGrid.Initialize(true);
     var customerPhonesDataSourceBuilder = new soby_WSBuilder();
@@ -66,8 +66,8 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     customerPhonesGrid.DisplayTitle = true;
     customerPhonesGrid.IsSelectable = false;
     customerPhonesGrid.IsEditable = false;
-    customerPhonesGrid.AddColumn("Number", "Number", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerPhonesGrid.AddColumn("PhoneType", "PhoneType", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    customerPhonesGrid.AddColumn("Number", "Number", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerPhonesGrid.AddColumn("PhoneType", "PhoneType", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     customerPhonesGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal);
     customerPhonesGrid.Initialize(true);
     var orderDataSourceBuilder = new soby_WSBuilder();
@@ -78,7 +78,7 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     orderService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Orders", "json", "application/json; charset=utf-8", "GET");
     var orderGrid = new soby_WebGrid("#soby_OrdersDiv", "Orders", orderService, "There is no record found.");
     orderGrid.ImagesFolderUrl = "/media/images";
-    orderGrid.AddColumn("OrderDate", "OrderDate", SobyShowFieldsOn.All, null, null, true, true, false, null);
+    orderGrid.AddColumn("OrderDate", "OrderDate", SobyShowFieldsOn.All, null, null, true, true, false, null, null, null);
     orderGrid.IsSelectable = false;
     orderGrid.IsEditable = false;
     var orderItemsDataSourceBuilder = new soby_WSBuilder();
@@ -98,8 +98,8 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     orderItemsGrid.IsEditable = false;
     orderItemsGrid.AddColumn("ProductId", "Product", SobyShowFieldsOn.All, function (item) {
         return item.Product.Title;
-    }, null, true, true, true, null);
-    orderItemsGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    }, null, true, true, true, null, null, null);
+    orderItemsGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     orderGrid.AddDataRelation("Price", "Id", orderItemsGrid.GridID, "OrderId");
     orderGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal);
     orderGrid.Initialize(true);

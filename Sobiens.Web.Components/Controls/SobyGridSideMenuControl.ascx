@@ -29,6 +29,7 @@
     <li><a href="/Tutorials/SobyGrid/Selection.aspx">Selection</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/DragDrop.aspx">Drag Drop</a></li>
     <li><a href="/Tutorials/SobyGrid/CellTemplate.aspx">Cell Template</a></li>
+    <li><a href="/Tutorials/SobyGrid/Cell Styles.aspx">Cell Styles</a></li>
     <li><a href="/Tutorials/SobyGrid/NestedGrids.aspx">Nested Grids</a></li>
     <li><a href="/Tutorials/SobyGrid/Master-Details.aspx">Master-Details</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/ContextMenu.aspx">Context Menu</a></li>

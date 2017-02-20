@@ -20,10 +20,10 @@ function soby_PopulateGridCellTemplate() {
     var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
     bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddKeyField("Id");
-    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     var cellTemplate1 = { TemplateType: "CellContent", PopupLinkText: "More info", Template: "<div><div style='background-color: blue;color: white;padding: 5px;float: left;width:150px'><strong>#{Genre} - #{Year}</strong></div><div style='background-color: black;color: white;padding: 5px;float: left;text-align:right;width:30px'>$#{Price}</div></div>" };
     var cellTemplate2 = { TemplateType: "PopupContent", PopupLinkText: "More info", Template: "<div><div style='background-color: blue;color: white;padding: 5px;float: left;width:150px'><strong>#{Genre} - #{Year}</strong></div><div style='background-color: black;color: white;padding: 5px;float: left;text-align:right;width:30px'>$#{Price}</div></div>" }
-    bookGrid.AddColumn("Year", "Description", SobyShowFieldsOn.All, null, cellTemplate1, true, true, true, null);
-    bookGrid.AddColumn("Year", "Description", SobyShowFieldsOn.All, null, cellTemplate2, true, true, true, null);
+    bookGrid.AddColumn("Year", "Description", SobyShowFieldsOn.All, null, cellTemplate1, true, true, true, null, null, null);
+    bookGrid.AddColumn("Year", "Description", SobyShowFieldsOn.All, null, cellTemplate2, true, true, true, null, null, null);
     bookGrid.Initialize(true);
 }

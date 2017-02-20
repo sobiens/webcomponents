@@ -147,6 +147,14 @@ declare class soby_WebGrid {
     ImagesFolderUrl: string;
     ActionPaneButtons: sobyActionPaneButtons;
     LastGroupByValues: any[];
+    TableTagName: string;
+    TBodyTagName: string;
+    THeadTagName: string;
+    RowTagName: string;
+    CellTagName: string;
+    TableAdditionalClassNames: string;
+    RowAdditionalClassNames: string;
+    CellAdditionalClassNames: string;
     /************************************ END MEMBERS ********************************/
     /************************************ EVENTS *************************************/
     /**
@@ -368,7 +376,7 @@ declare class soby_WebGrid {
      * // Adds Title as a column
      * grid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
      */
-    AddColumn(fieldName: any, displayName: any, showFieldsOn: number, displayFunction: any, cellTemplate: any, sortable: any, filterable: any, editable: any, filterControl: any): void;
+    AddColumn(fieldName: any, displayName: any, showFieldsOn: number, displayFunction: any, cellTemplate: any, sortable: any, filterable: any, editable: any, filterControl: any, cellCss: any, cellClassNames: any): void;
     /**
      * Adds a data relation
      *
@@ -769,6 +777,7 @@ declare class soby_DataRepeater extends soby_WebGrid {
      */
     ItemDataBound: any;
     MaxCellCount: number;
+    ShouldContainRowElement: boolean;
     /**
      * Gets selected data items
      * @example
@@ -825,6 +834,7 @@ declare class soby_Carousel {
     IsContentFieldUrl: boolean;
     MaxWidth: number;
     Items: any;
+    ItemDataBound: any;
     EnsureCarouselExistency(): void;
     GoToItem(index: any): void;
     NextItem(): void;

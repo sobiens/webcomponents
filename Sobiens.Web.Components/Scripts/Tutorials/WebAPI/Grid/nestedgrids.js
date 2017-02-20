@@ -10,7 +10,7 @@ function soby_PopulateNestedGrid() {
     authorService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Authors", "json", "application/json; charset=utf-8", "GET");
     var authorGrid = new soby_WebGrid("#soby_AuthorsDiv", "Authors", authorService, "There is no record found.");
     authorGrid.ImagesFolderUrl = "/media/images";
-    authorGrid.AddColumn("Name", "Name", SobyShowFieldsOn.All, null, null, true, true, false, null);
+    authorGrid.AddColumn("Name", "Name", SobyShowFieldsOn.All, null, null, true, true, false, null, null, null);
     authorGrid.IsSelectable = true;
     authorGrid.IsEditable = false;
     var authorBooksDataSourceBuilder = new soby_WSBuilder();
@@ -29,10 +29,10 @@ function soby_PopulateNestedGrid() {
         authorBooksGrid.DisplayTitle = false;
         authorBooksGrid.IsSelectable = false;
         authorBooksGrid.IsEditable = false;
-        authorBooksGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
-        authorBooksGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null);
-        authorBooksGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null);
-        authorBooksGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null);
+        authorBooksGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+        authorBooksGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+        authorBooksGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+        authorBooksGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
         authorBooksGrid.Initialize(false);
         var selectedDataItems = grid.GetSelectedDataItems();
         var authorIds = new Array();

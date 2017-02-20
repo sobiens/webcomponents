@@ -19,10 +19,10 @@ function soby_PopulateGridAggregates() {
     bookGrid.IsGroupable = true;
     bookGrid.IsEditable = false;
     bookGrid.AddKeyField("Id");
-    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddGroupByField("Genre", true, null);
 //    bookGrid.AddAggregateField("Title", SobyAggregateTypes.Count);
     bookGrid.AddAggregateField("Price", SobyAggregateTypes.Sum);

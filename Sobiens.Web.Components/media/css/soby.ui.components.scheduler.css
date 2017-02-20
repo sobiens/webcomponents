@@ -1,0 +1,491 @@
+.soby_scheduler .soby_maintable {
+    border-color:#9999CC !important; border-width:1px !important; padding:3px !important; border-spacing: 0 !important; border-style: solid;
+    COLOR: #000000;FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px;margin:0px;
+    width:100%;
+}
+.soby_scheduler .schedulercategoriespanel{
+    width: 20%;
+    float: left;
+}
+.soby_scheduler .scheduleritemspanel{
+    width: 80%;
+    float: left;
+}
+
+.soby_scheduler .schedulitemlink{
+    position: absolute;
+    height:30px;
+}
+
+.soby_scheduler .categorytimecell, .soby_scheduler .timeheader{
+    border:solid 1px;
+    height:32px;
+}
+.soby_scheduler .timeheader {
+    background-color: #dde7fd;
+    font-weight: bold;
+    text-align: center;
+}
+.soby_scheduler .categorytimecell{
+    background-color: #edf2fd;
+}
+
+.soby_scheduler .categoriesheader{
+    background-color: #b8e6fe;
+}
+
+.soby_scheduler .categorieslabelcell{
+     background-color: #edf2fd;
+     border:solid 1px;
+}
+
+.soby_scheduler .scheduler-scroller-clip {
+    overflow: hidden;
+    position: relative;
+}
+.soby_scheduler .scheduler-scroller {
+    z-index: 1;
+}
+.soby_scheduler .scheduler-scroller-canvas{
+    box-sizing: border-box;
+    min-height: 100%;
+}
+.soby_scheduler .scheduler-content{
+    z-index: 2;
+    border-style: solid;
+    border-width: 0;
+    position: relative;
+}
+.soby_scheduler .scheduler-rows{}
+
+.soby_scheduler .navigationheader{
+    font-size:13px;
+    font-weight:bold;
+    COLOR: #ffcc99;
+}
+
+.soby_scheduler .navigationpanel{
+    text-align:center;
+}
+
+.soby_scheduler .dayheader{
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+    COLOR: #ffcc99;
+    height:32px;
+    border: solid 1px black;
+}
+
+.soby_scheduler .schedulitemlink {
+    border:1px solid;
+}
+
+.soby_scheduler .schedulitemlink.style0 {
+    background-color:darkslateblue;
+}
+.soby_scheduler .schedulitemlink.style1 {
+    background-color:darkorange;
+}
+.soby_scheduler .schedulitemlink.style2 {
+    background-color:yellowgreen;
+}
+.soby_scheduler .schedulitemlink.style3 {
+    background-color:rebeccapurple;
+}
+.soby_scheduler .schedulitemlink.style4 {
+    background-color:aqua;
+}
+.soby_scheduler .schedulitemlink.style5 {
+    background-color:rosybrown;
+}
+.soby_scheduler .schedulitemlink.style6 {
+    background-color:sandybrown;
+}
+.soby_scheduler .schedulitemlink.style7 {
+    background-color:deeppink;
+}
+.soby_scheduler .schedulitemlink.style8 {
+    background-color:dimgrey;
+}
+.soby_scheduler .schedulitemlink.style9 {
+    background-color:darkred;
+}
+.soby_scheduler .schedulitemlink.style10 {
+    background-color:cornflowerblue;
+}
+
+.soby_scheduler .viewtypetabs{
+    border-left: 1px #9999CC solid !important;
+    border-right: 1px #9999CC solid !important;
+    border-top: 1px #9999CC solid !important;
+}
+
+.soby_scheduler .prevmonthday, .soby_scheduler .nextmonthday, .soby_scheduler .weekday, .soby_scheduler .saturday, .soby_scheduler .sunday, .soby_scheduler .today, .soby_scheduler .weekdayheader, .soby_scheduler .saturdayheader, .soby_scheduler .sundayheader, .soby_scheduler .hourlabel, .soby_scheduler .hourdata, .soby_scheduler .weeklyviewdaynameheader, .soby_scheduler .weeklyviewdaydateheader {
+    border-color:#9999CC !important; border-width:1px !important; padding:3px !important; border-spacing: 0 !important; border-style: solid;
+}
+
+.soby_scheduler .weekdayheader, .soby_scheduler .saturdayheader, .soby_scheduler .sundayheader{
+    font-weight:bold
+}
+
+.soby_scheduler .weekdayheader{
+    BACKGROUND-COLOR: #dde7fd;
+}
+
+.soby_scheduler .prevmonthday, .soby_scheduler .nextmonthday, .soby_scheduler .viewtypeheader:hover, .soby_scheduler .viewtypeheader a:hover{
+    BACKGROUND-COLOR: #b8e6fe;
+}
+.soby_scheduler .viewtypeheader a:hover{
+    text-decoration:none;
+}
+.soby_scheduler .weekday, .soby_scheduler .hourlabel, .soby_scheduler .hourdata, .soby_scheduler .viewtypeheader{
+    BACKGROUND-COLOR: #edf2fd;
+}
+.soby_scheduler .today, .soby_scheduler .viewtypeheader.selected{
+    BACKGROUND-COLOR: #ffcc99;
+}
+
+.soby_scheduler .viewtypepanel{
+}
+
+.soby_scheduler .saturday, .soby_scheduler .saturdayheader{BACKGROUND-COLOR: #ffecd9;}
+.soby_scheduler .sunday, .soby_scheduler .sundayheader{BACKGROUND-COLOR: #ccf2cc;}
+
+.soby_scheduler .hourlabel{text-align:center;font-weight:bold;}
+.soby_scheduler .hourdata{}
+
+.soby_scheduler .weeklyviewdaynameheader, .soby_scheduler .weeklyviewdaydateheader{
+    text-align:center;font-weight:bold;
+}
+
+.soby_scheduler .tasklist {
+    padding-left: 0px;
+    list-style: none;
+}
+
+.soby_scheduler .tasklist li {
+    background-color:#CDE6F7;    border: 1px solid;
+}
+
+.spAlert {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9pt; font-weight: normal; color: #FF0000}
+.spLoadTXT {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #0066CC; font-style: normal; background-color: #E0ECFF; border-color: #E0ECFF #4088FF; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; font-weight: bold}
+.spMailTxt { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; font-style: normal; font-weight: normal; color: #000000 }  
+.SmlTblTitle
+{
+    BACKGROUND-COLOR: #ffffff;
+    COLOR: #ff7f00;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px;
+    FONT-WEIGHT: bold
+}
+.SmlTblLine1
+{
+    BACKGROUND-COLOR: #ffefdf;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: normal
+}
+.SmlTblLine1cr
+{
+    BACKGROUND-COLOR: #ffefdf;
+    COLOR: #FF0000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: normal
+}
+.SmlTblLine1Bold
+{
+    BACKGROUND-COLOR: #ffefdf;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: bold
+}
+.SmlTblLine2
+{
+    BACKGROUND-COLOR: #ffcc99;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: normal
+}
+.SmlTblLine2cr
+{
+    BACKGROUND-COLOR: #ffcc99;
+    COLOR: #FF0000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: normal
+}
+
+.SelectBox
+{
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px
+}
+.spTD5FrClndr
+{
+    BACKGROUND-COLOR: #b8e6fe;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px
+}
+.spTD4ClndrSmTxt
+{
+    BACKGROUND-COLOR: #ccf2cc;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: normal
+}
+.spClndrAppointment
+{
+    COLOR: #f07800;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: bold
+}
+.spTD1ClndrTitle
+{
+    BACKGROUND-COLOR: #ffecd9;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px;
+    FONT-STYLE: normal;
+    FONT-WEIGHT: normal
+}
+.spTD1
+{
+    BACKGROUND-COLOR: #dde7fd;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px
+}
+.spTD1White
+{
+    BACKGROUND-COLOR: #FFFFFF;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px
+}
+.spTD2
+{
+    BACKGROUND-COLOR: #edf2fd;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px
+}
+.SmlTblTitle2
+{
+    BACKGROUND-COLOR: #ffffff;
+    COLOR: #ff7f00;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: bold
+}
+.spButtons
+{
+    BACKGROUND-COLOR: #ffcc99;
+    BORDER-BOTTOM: #000000 1px solid;
+    BORDER-LEFT: #000000 1px solid;
+    BORDER-RIGHT: #000000 1px solid;
+    BORDER-TOP: #000000 1px solid;
+    COLOR: #666666;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: bold; border: #000000; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px
+}
+
+.spSendButtons
+{
+    BACKGROUND-COLOR: #B7C4E2;
+    BORDER-BOTTOM: #ffffff 1px solid;
+    BORDER-LEFT: #ffffff 1px solid;
+    BORDER-RIGHT: #ffffff 1px solid;
+    BORDER-TOP: #ffffff 1px solid;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: bold; border: #000000; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px
+}
+.spTxtboxs
+{
+    BORDER-BOTTOM: #9999cc 1px solid;
+    BORDER-LEFT: #9999cc 1px solid;
+    BORDER-RIGHT: #9999cc 1px solid;
+    BORDER-TOP: #9999cc 1px solid;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px
+}
+.SmlTblTitle3
+{
+    BACKGROUND-COLOR: #ffefdf;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: bold
+}
+.SmlTblTitle4
+{
+    BACKGROUND-COLOR: #ffcc99;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px;
+    FONT-WEIGHT: bold
+}
+.spTDUp
+{
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: bold
+}
+.SmlTblLine2BOLD
+{
+    BACKGROUND-COLOR: #ffcc99;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    FONT-WEIGHT: bold
+}
+.spWelcome
+{
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px;
+    FONT-WEIGHT: bold
+}
+.spIdentitys
+{
+    BACKGROUND-COLOR: #e6fca3;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px;
+    FONT-WEIGHT: bold
+}
+.spIdentitys2
+{
+    BACKGROUND-COLOR: #f0fae4;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px;
+    FONT-WEIGHT: bold
+}
+.spIdentitys3
+{
+    BACKGROUND-COLOR: #f0fae4;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px;
+    FONT-WEIGHT: normal
+}
+.spIdentitys1
+{
+    BACKGROUND-COLOR: #e6fca3;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 10px;
+    FONT-WEIGHT: bold
+}
+A:link
+{
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    TEXT-DECORATION: none
+    cursor: hand    
+}
+A:visited
+{
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    TEXT-DECORATION: none
+    cursor: hand    
+}
+A:Active
+{
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    TEXT-DECORATION: none
+    cursor: hand    
+}
+A:hover
+{
+    COLOR: red;
+    FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 9px;
+    TEXT-DECORATION: none
+    cursor: hand
+}
+
+.spTablePercent {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000; background-color: #33CC33}
+.spTablePercentWhite { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000; background-color: #FFFFFF}
+.spCheckAllTD {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #000000; background-color: #FF9900}
+.spExclamation {  font-family: "Courier New", Courier, mono; font-size: 18px; font-weight: bold; color: #FF0000}
+.spIdentitys4 { BACKGROUND-COLOR: #E8E8FF; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: bold; border-color: #E8E8FF #E8E8FF #000000; border-style: solid; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 1px; border-left-width: 0px}
+.spIdentitys3Efect { BACKGROUND-COLOR: #f0fae4; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: normal ; border: solid; border-width: 1px 1px 1px 0px; border-color: #EBFECD #8CDF1C #8CDF1C}
+.spCounter {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000; background-color: #ffefdf; border: #ffefdf; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px}
+.spNote {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; font-weight: normal; color: #000000; background-color: #FFFFCC; border-style: none}
+.spNote2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; font-weight: normal; color: #000000; background-color: #FFB400}
+.spTD4Detail { BACKGROUND-COLOR: #ccf2cc; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; FONT-WEIGHT: bold ; border: #8CDF1C; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px}
+.spCounter2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000; background-color: #ffcc99; border: 1px #ffcc99 solid}
+.spTabControlTXT {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; font-weight: bold; color: #000000}
+.SmlTblLine3 { BACKGROUND-COLOR: #ffcc99; COLOR: #000099; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; FONT-WEIGHT: bold}
+.SmlTblEror { BACKGROUND-COLOR: #ffffff; COLOR: #ff7f00; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 16px; FONT-WEIGHT: bold ; font-style: italic}
+.spIdentitys4Efect { BACKGROUND-COLOR: #f0fae4; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: normal ; border: solid; border-width: 0px 1px 1px 0px; border-color: black #8CDF1C #8CDF1C}
+.spIdentitys5CheckTbl { BACKGROUND-COLOR: #B6E77A; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: normal ; border-color: #EBFECD #8CDF1C #8CDF1C; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px }
+.spTD4Detail2 { BACKGROUND-COLOR: #ccf2cc; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: bold ; border: none}
+.SelectBox2 { FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px }
+.spLibrary1Efect { BACKGROUND-COLOR: #FDC968; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: bold; border: solid; border-width: 1px 1px 1px 0px; border-color: #FEE6CD #EFC25A #EFC25A}
+.spLibrary2Efect { BACKGROUND-COLOR: #FEFBDA; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: normal; border: solid; border-width: 1px 1px 1px 0px; border-color: #FFFFCC #FFCC00 #FFCC00}
+.spLibrary3 { BACKGROUND-COLOR: #FEFBDA; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: normal; border: none}
+.spLibrary4Efect { BACKGROUND-COLOR: #FEFBDA; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: normal; border: solid; border-width: 2px 2px 1px 0px; border-color: #FFCC00 #FFCC00 #FF3300 #FF3300}
+.spPageTitle {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 18px; font-weight: normal; color: #FF6600; font-style: normal}
+.spTD4DetailEmpty { BACKGROUND-COLOR: #ccf2cc; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; FONT-WEIGHT: bold ; border: none}
+.spTD4DetailEmptyUnBold { BACKGROUND-COLOR: #ccf2cc; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; FONT-WEIGHT: normal ; border: none}
+.spTblToolboxTXT {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000; background-color: #FFFFFF}
+.spTblNoteTransparent {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000}
+.spLayerTXT { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; font-style: normal; font-weight: normal; color: #000000 }
+.spLoadTXT {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #0066CC; font-style: normal; background-color: #E0ECFF; border-color: #E0ECFF #4088FF; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; font-weight: bold}
+.spTD5DtlOnlyBold { BACKGROUND-COLOR: #ccf2cc; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; FONT-WEIGHT: bold ; border: none}
+.spReportHeader {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; color: #000000}
+.spReportNormalTxt {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000}
+.spReportNormalTxtBold {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; font-weight: bold; color: #000000}
+.spReportTbl {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000; border: #666666; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px}
+
+.spTDLikeInputBox1 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000; background-color: #ffefdf; border: 1px #ffefdf solid}
+.spTDLikeInputBox2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000; background-color: #ffcc99; border: 1px #ffcc99 solid}
+.spTDLikeInputBoxHand1 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000; background-color: #ffefdf; border: 1px #ffefdf solid;cursor:hand}
+.spTDLikeInputBoxHand2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #000000; background-color: #ffcc99; border: 1px #ffcc99 solid;cursor:hand}
+.SmlTblTitleDis { BACKGROUND-COLOR: #ffffff; COLOR: #999999; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: bold }
+
+
+TABLE#tblCoolbar 
+	{ 
+	background-color:threedface; padding:1px; color:menutext; 
+	border-width:1px; border-style:solid; 
+	border-color:threedhighlight threedshadow threedshadow threedhighlight;
+	}
+.cbtn
+	{
+	height:18;
+	BORDER-LEFT: threedface 1px solid;
+	BORDER-RIGHT: threedface 1px solid;
+	BORDER-TOP: threedface 1px solid;
+	BORDER-BOTTOM: threedface 1px solid; 
+	
+	}
+
+.mytext {
+	BACKGROUND-COLOR: #ffffff; POSITION: relative
+}
+.Btn {
+	BACKGROUND-COLOR: buttonface; BORDER-BOTTOM: buttonface 1px solid; BORDER-LEFT: buttonface 1px solid; BORDER-RIGHT: buttonface 1px solid; BORDER-TOP: buttonface 1px solid; HEIGHT: 23px; POSITION: absolute; TOP: 1px; WIDTH: 23px
+}
+.Ico {
+	HEIGHT: 22px; LEFT: -1px; POSITION: absolute; TOP: -1px; WIDTH: 22px
+}
+.BtnDown {
+	BACKGROUND-COLOR: gainsboro; BORDER-BOTTOM: buttonhighlight 1px solid; BORDER-LEFT: buttonshadow 1px solid; BORDER-RIGHT: buttonhighlight 1px solid; BORDER-TOP: buttonshadow 1px solid; HEIGHT: 23px; POSITION: absolute; TOP: 1px; WIDTH: 24px
+}

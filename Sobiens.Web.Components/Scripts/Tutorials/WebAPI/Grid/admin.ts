@@ -88,11 +88,11 @@ function soby_PopulateEntityGrid(entitySetName, entitySetType) {
             entityDataSourceBuilder.AddSchemaField(name, SobyFieldTypes.Lookup, { ModelName: navigationPropertyName, ValueFieldType: SobyFieldTypes.Number, ValueFieldName: referencedProperty, TitleFieldName: referencedPropertyTitleFieldName, ReadTransport: new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/" + navigationPropertyEntitySetName, "json", "application/json; charset=utf-8", "GET") });
             entityGrid.AddColumn(name, navigationPropertyName, SobyShowFieldsOn.All, function (item) {
                 return item[navigationPropertyName][referencedPropertyTitleFieldName];
-            }, null, true, true, isEditable, null);
+            }, null, true, true, isEditable, null, null, null);
         }
         else {
             entityDataSourceBuilder.AddSchemaField(name, fieldType, null);
-            entityGrid.AddColumn(name, name, SobyShowFieldsOn.All, null, null, true, true, isEditable, null);
+            entityGrid.AddColumn(name, name, SobyShowFieldsOn.All, null, null, true, true, isEditable, null, null, null);
         }
     }
 

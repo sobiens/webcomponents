@@ -20,13 +20,13 @@ function soby_PopulateGridGrouping() {
     bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.IsGroupable = true;
     bookGrid.AddKeyField("Id");
-    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("AuthorId", "Author", SobyShowFieldsOn.All, function (item) {
         return item.Author.Name;
-    }, null, true, true, true, null);
+    }, null, true, true, true, null, null, null);
     bookGrid.AddGroupByField("Genre", true, null);
     /*
     bookGrid.AddGroupByField("AuthorId", true, function (item) {

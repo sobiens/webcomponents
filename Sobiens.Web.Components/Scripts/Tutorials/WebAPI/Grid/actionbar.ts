@@ -22,13 +22,13 @@ function soby_PopulateGridActionBar() {
     bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
     bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddKeyField("Id");
-    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("AuthorId", "Author", SobyShowFieldsOn.All, function (item) {
         return item.Author.Name;
-    }, null, true, true, true, null);
+    }, null, true, true, true, null, null, null);
     bookGrid.ActionPaneButtons.Add("CustomAction", "show selected items", 0, bookGrid.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-warning", true
         , function (grid)
         {

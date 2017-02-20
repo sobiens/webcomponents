@@ -169,10 +169,10 @@ function soby_PopulateGridWCFDataBinding() {
     customerGrid.IsEditable = false;
     customerGrid.IsSelectable = false;
     customerGrid.AddKeyField("ID");
-    customerGrid.AddColumn("FirstName", "FirstName", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerGrid.AddColumn("LastName", "LastName", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerGrid.AddColumn("Age", "Age", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerGrid.AddColumn("Sex", "Sex", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    customerGrid.AddColumn("FirstName", "FirstName", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerGrid.AddColumn("LastName", "LastName", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerGrid.AddColumn("Age", "Age", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerGrid.AddColumn("Sex", "Sex", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     /*
     customerGrid.AddColumn("Sex", "Sex", SobyShowFieldsOn.All, function (item) {
         return item.Author.Name;
@@ -196,10 +196,10 @@ function soby_PopulateGridWCFDataBinding() {
     customerAddressesGrid.DisplayTitle = false;
     customerAddressesGrid.IsSelectable = false;
     customerAddressesGrid.IsEditable = false;
-    customerAddressesGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerAddressesGrid.AddColumn("Town", "Town", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerAddressesGrid.AddColumn("PostCode", "PostCode", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerAddressesGrid.AddColumn("Address1", "Address1", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    customerAddressesGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerAddressesGrid.AddColumn("Town", "Town", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerAddressesGrid.AddColumn("PostCode", "PostCode", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerAddressesGrid.AddColumn("Address1", "Address1", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     customerGrid.AddDataRelation("Title", "Id", customerAddressesGrid.GridID, "CustomerId")
 
     var customerPhonesDataSourceBuilder = new soby_CustomWCFBuilder();
@@ -215,8 +215,8 @@ function soby_PopulateGridWCFDataBinding() {
     customerPhonesGrid.DisplayTitle = false;
     customerPhonesGrid.IsSelectable = false;
     customerPhonesGrid.IsEditable = false;
-    customerPhonesGrid.AddColumn("Number", "Number", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    customerPhonesGrid.AddColumn("PhoneType", "PhoneType", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    customerPhonesGrid.AddColumn("Number", "Number", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerPhonesGrid.AddColumn("PhoneType", "PhoneType", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     customerGrid.AddDataRelation("Title", "Id", customerPhonesGrid.GridID, "CustomerId")
 
     customerGrid.Initialize(true);
