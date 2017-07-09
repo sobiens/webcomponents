@@ -23,7 +23,7 @@
             bookGrid.SortResult(sortFieldName, isAsc);
 
         }
-    </script><br />
+    </script>    <div class="article col-md-9">
     <p>This example demonstrates how to use sorting in the Soby Data Grid. <br />
         "AddOrderByField" method takes two parameters. First one is the name of the field. Second one is a boolean value to state whether it should be sorted as ascending or descending. This method does not trigger data population, it just adds the orderbyfield which will be used on population.
         <pre class="js">bookGrid.AddOrderByField("Title", true); </pre>
@@ -57,8 +57,9 @@
         </pre>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
+        </div>
+        <div class="col-md-3">
 
-    <aside>
         <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

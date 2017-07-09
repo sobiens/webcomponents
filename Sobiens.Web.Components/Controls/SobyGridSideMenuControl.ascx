@@ -8,6 +8,7 @@
     <li style="display:none"><a href="/Tutorials/SobyGrid/Localization.aspx">Localization</a></li>
     <li><a href="/Tutorials/SobyGrid/Sorting.aspx">Sorting</a></li>
     <li><a href="/Tutorials/SobyGrid/Filtering.aspx">Filtering</a></li>
+    <li><a href="/Tutorials/SobyGrid/Custom Filtering.aspx">Custom Filtering</a></li>
     <li><a href="/Tutorials/SobyGrid/Paging.aspx">Paging</a></li>
     <li><a href="/Tutorials/SobyGrid/Editing.aspx">Editing</a></li>
     <li><a href="/Tutorials/SobyGrid/Grouping.aspx">Grouping</a></li>
@@ -25,6 +26,7 @@
         </ul></li>
     <li><a href="/Tutorials/SobyGrid/MVCSample.aspx">MVC Sample</a></li>
     <li><a href="/Tutorials/SobyGrid/Aggregates.aspx">Aggregates</a></li>
+    <li><a href="/Tutorials/SobyGrid/ResponsiveDesign.aspx">Responsive Design</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/Columns.aspx">Columns</a></li>
     <li><a href="/Tutorials/SobyGrid/Selection.aspx">Selection</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/DragDrop.aspx">Drag Drop</a></li>

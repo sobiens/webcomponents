@@ -96,6 +96,7 @@ interface ISobyFilter {
 
 class SobyFilters implements ISobyFilter {
     IsOr: boolean;
+    ShouldBeClearedOnUIFilterAction: boolean = false;
     constructor(isOr: boolean) {
         this.IsOr = isOr;
     }
@@ -104,8 +105,9 @@ class SobyFilters implements ISobyFilter {
     Clear() {
         this.Filters = new Array();
     }
-    AddFilter(fieldName: string, filterValue: string, fieldType: number, filterType: number, lookupID: boolean) {
+    AddFilter(fieldName: string, filterValue: string, fieldType: number, filterType: number, lookupID: boolean, shouldBeClearedOnUIFilterAction: boolean) {
         var sobyFilter = new SobyFilter(fieldName, filterValue, fieldType, filterType, lookupID);
+        sobyFilter.ShouldBeClearedOnUIFilterAction = shouldBeClearedOnUIFilterAction;
         this.Filters.push(sobyFilter);
     }
 
@@ -151,7 +153,7 @@ class SobyFilters implements ISobyFilter {
         var json = "";
         for (var i = 0; i < this.Filters.length; i++) {
             var argument = this.Filters[i];
-            json += "'" + argument.FieldName + "': \"" + argument.FilterValue + "\",";
+            json += "\"" + argument.FieldName + "\": \"" + argument.FilterValue + "\",";
         }
 
         if (json != "")
@@ -185,8 +187,9 @@ class SobyFilters implements ISobyFilter {
         var sobyFilters = new SobyFilters(this.IsOr);
         for (var i = 0; i < this.Filters.length; i++) {
             var filter = this.Filters[i];
-            if (filter instanceof SobyFilter) {
-                sobyFilters.AddFilter(filter.FieldName, filter.FilterValue, filter.FieldType, filter.FilterType, filter.LookupID);
+            if (filter instanceof SobyFilter)
+            {
+                sobyFilters.AddFilter(filter.FieldName, filter.FilterValue, filter.FieldType, filter.FilterType, filter.LookupID, filter.ShouldBeClearedOnUIFilterAction);
             }
             else {
                 sobyFilters.AddFilterCollection(filter.Clone());
@@ -202,6 +205,7 @@ class SobyFilter implements ISobyFilter {
     FieldType: number;
     FilterType: number;
     LookupID: boolean;
+    ShouldBeClearedOnUIFilterAction: boolean = false;
 
     constructor(fieldName: string, filterValue: string, fieldType: number, filterType: number, lookupID: boolean) {
         this.FieldName = fieldName;
@@ -247,6 +251,9 @@ class SobyFilter implements ISobyFilter {
             case SobyFieldTypes.Lookup:
                 valueTypeString = "Lookup";
                 break;
+            case SobyFieldTypes.User:
+                valueTypeString = "User";
+                break;
             case SobyFieldTypes.CurrentUserGroups:
                 valueTypeString = "CurrentUserGroups";
                 break;
@@ -288,9 +295,11 @@ class SobyFilter implements ISobyFilter {
                 break;
             case SobyFilterTypes.IsNull:
                 equvialentString = "IsNull";
+                valueString = "";
                 break;
             case SobyFilterTypes.IsNotNull:
                 equvialentString = "IsNotNull";
+                valueString = "";
                 break;
             case SobyFilterTypes.Membership:
                 equvialentString = "Membership";
@@ -446,7 +455,8 @@ class SobyOrderByFields extends Array<SobyOrderByField> {
         return false;
     }
 }
-class SobyOrderByField {
+class SobyOrderByField
+{
     constructor(fieldName: string, isAsc: boolean) {
         this.FieldName = fieldName;
         this.IsAsc = isAsc;
@@ -671,11 +681,34 @@ class soby_WebServiceService implements soby_ServiceInterface {
         var dataType = this.Transport.Read.DataType;
 
         var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
-        if (countServiceUrl == null) {
+        if (countServiceUrl == null || countServiceUrl == "") {
             service.NavigationInformationPopulated();
             return;
         }
-        this.DataSourceBuilderTemp.GetData("",
+
+        var data = "";
+        var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read, false);
+        if (mainQuery != null && mainQuery != "")
+        {
+            if (requestMethod.toLowerCase() == "post")
+            {
+                data = mainQuery;
+            }
+            else
+            {
+                if (countServiceUrl.indexOf("?") == -1)
+                {
+                    countServiceUrl += "?";
+                }
+                else
+                {
+                    countServiceUrl += "&";
+                }
+                countServiceUrl += mainQuery;
+            }
+        }
+
+        this.DataSourceBuilderTemp.GetData(data,
             function (result) {
                 var totalItemCount = parseInt(result);
                 soby_LogMessage("Total item count:" + totalItemCount);
@@ -700,7 +733,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
                 service.NavigationInformationPopulated();
             },
             function (XMLHttpRequest, textStatus, errorThrown) {
-                var errorMessage = "An error occured on populating grid" + errorThrown;
+                var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
                 if (service.ErrorThrown != null)
                     service.ErrorThrown(errorMessage);
                 soby_LogMessage(errorMessage);
@@ -790,18 +823,28 @@ class soby_WebServiceService implements soby_ServiceInterface {
         var serviceUrl = this.Transport.Read.Url;
         var requestMethod = this.Transport.Read.Type;
         var dataType = this.Transport.Read.DataType;
+        var data = "";
         var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read, false);
-        if (mainQuery != null && mainQuery != "") {
-            if (serviceUrl.indexOf("?") == -1) {
-                serviceUrl += "?";
+        if (mainQuery != null && mainQuery != "")
+        {
+            if (requestMethod.toLowerCase() == "post")
+            {
+                data = mainQuery;
             }
             else {
-                serviceUrl += "&";
+                if (serviceUrl.indexOf("?") == -1)
+                {
+                    serviceUrl += "?";
+                }
+                else
+                {
+                    serviceUrl += "&";
+                }
+                serviceUrl += mainQuery;
             }
-            serviceUrl += mainQuery;
         }
         
-        this.DataSourceBuilderTemp.GetData("",
+        this.DataSourceBuilderTemp.GetData(data,
             function (result) {
                 soby_LogMessage(result);
                 var items = service.DataSourceBuilderTemp.ParseData(result);
@@ -820,7 +863,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
                 service.ItemPopulated(items);
             },
             function (XMLHttpRequest, textStatus, errorThrown) {
-                var errorMessage = "An error occured on populating grid" + errorThrown;
+                var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
                 if (service.ErrorThrown != null)
                     service.ErrorThrown(errorMessage);
                 soby_LogMessage(errorMessage);
@@ -963,7 +1006,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         {
             if (excludePagingQuery == true)
                 pagingQuery = "''";
-            return "{" + whereQuery + ", " + orderByFieldsQuery + ", " + pagingQuery + "}";
+            return "{" + (whereQuery != "" ? whereQuery + ", " : "") + (orderByFieldsQuery != "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
         }
         else {
             var envelope = whereQuery;
@@ -1213,6 +1256,8 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
     Clone() {
         var builder = new soby_WSBuilder();
         builder.RowLimit = this.RowLimit;
+        builder.PageIndex = this.PageIndex;
+
         for (var i = 0; i < this.SchemaFields.length; i++) {
             var viewField = this.SchemaFields[i];
             builder.AddSchemaField(viewField.FieldName, viewField.FieldType, viewField.Args);
@@ -1239,8 +1284,12 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
         if (transport.Type == "POST")
             return "'pageIndex': " + this.PageIndex + ","
                 + "'pageItemCount': " + this.RowLimit;
-        else {
-            return "$skip=" + (this.PageIndex * this.RowLimit) + "&$top=" + this.RowLimit;
+        else
+        {
+            if (this.RowLimit > 0)
+                return "$skip=" + (this.PageIndex * this.RowLimit) + "&$top=" + this.RowLimit;
+            else
+                return "";
         }
     }
     GetViewFieldsQuery(transport: soby_TransportRequest) {
@@ -1292,7 +1341,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
         {
             if (excludePagingQuery == true)
                 pagingQuery = "''";
-            return "{" + whereQuery + ", " + orderByFieldsQuery + ", " + pagingQuery + "}";
+            return "{" + (whereQuery != "" ? whereQuery + ", " : "") + (orderByFieldsQuery != "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
         }
         else {
             var envelope = whereQuery;
@@ -1364,6 +1413,8 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
                 var data = data;
                 if (data.d != null)
                     data = data.d;
+                if (data.results != null)
+                    data = data.results;
                 if (callback)
                     callback(data);
             },

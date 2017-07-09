@@ -203,6 +203,10 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Controls\SobyValidatorViewSideMenuControl.ascx" />
+    <Content Include="Controls\SobyCheckBoxListSideMenuControl.ascx" />
+    <Content Include="Controls\SobySelectBoxSideMenuControl.ascx" />
+    <Content Include="Controls\SobySchedulerSideMenuControl.ascx" />
     <Content Include="Controls\SobyCalendarViewSideMenuControl.ascx" />
     <Content Include="Controls\SobyDataRepeaterSideMenuControl.ascx" />
     <Content Include="Controls\SobyTreeViewSideMenuControl.ascx" />
@@ -325,17 +329,23 @@
     <Content Include="Scripts\jquery-3.1.0.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.min.js" />
+    <TypeScriptCompile Include="media\js\soby.validator.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.scheduler.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.codeview.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.calendar.ts" />
+    <TypeScriptCompile Include="Scripts\SPContext.d.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\codeview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.customdates.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\Validator\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CalendarView\calendarview.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CheckBoxList\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\customformat.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\paging.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\editing.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\actionbar.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\customfiltering.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\responsivedesign.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\refreshdata.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\spdatabinding.ts" />
     <Content Include="Scripts\Tutorials\WebAPI\Grid\actionbar.js" />
@@ -347,12 +357,15 @@
     <Content Include="Scripts\Tutorials\WebAPI\Grid\themes.js" />
     <Content Include="sitemap.xml" />
     <Content Include="Tutorials\SobyCalendarView\Getting Started.aspx" />
+    <Content Include="Tutorials\SobyCheckBoxList\Getting Started.aspx" />
     <Content Include="Tutorials\SobyCodeView\CodeView.aspx" />
     <Content Include="Tutorials\SobyDataRepeater\Custom Format.aspx" />
     <Content Include="Tutorials\SobyDataRepeater\Paging.aspx" />
     <Content Include="Tutorials\SobyDataRepeater\Getting Started.aspx" />
     <Content Include="Tutorials\SobyGrid\ActionBar.aspx" />
     <Content Include="Tutorials\SobyGrid\Cell Styles.aspx" />
+    <Content Include="Tutorials\SobyGrid\CustomFiltering.aspx" />
+    <Content Include="Tutorials\SobyGrid\ResponsiveDesign.aspx" />
     <Content Include="Tutorials\SobyGrid\ExportToExcel.aspx" />
     <Content Include="Tutorials\SobyGrid\RefreshData.aspx" />
     <Content Include="Tutorials\SobyGrid\SPDataBinding.aspx" />
@@ -360,6 +373,9 @@
     <Content Include="Tutorials\SobyItemSelection\Single Selection.aspx" />
     <Content Include="Tutorials\SobyScheduler\Custom Dates.aspx" />
     <Content Include="Tutorials\SobyScheduler\Getting Started.aspx" />
+    <Content Include="Tutorials\SobySelectBox\Getting Started.aspx" />
+    <Content Include="Tutorials\SobyValidator\FormValidation.aspx" />
+    <Content Include="Tutorials\SobyValidator\Getting Started.aspx" />
     <Content Include="Web.sitemap" />
     <TypeScriptCompile Include="media\js\soby.spservice.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.treeview.ts" />
@@ -437,6 +453,7 @@
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\cellstyles.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\autocompletewatermark.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\singleselection.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\SelectBox\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\TreeView\treeview.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -509,6 +526,34 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobyValidatorViewSideMenuControl.ascx.cs">
+      <DependentUpon>SobyValidatorViewSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyValidatorViewSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyValidatorViewSideMenuControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobyCheckBoxListSideMenuControl.ascx.cs">
+      <DependentUpon>SobyCheckBoxListSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyCheckBoxListSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyCheckBoxListSideMenuControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobySelectBoxSideMenuControl.ascx.cs">
+      <DependentUpon>SobySelectBoxSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobySelectBoxSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobySelectBoxSideMenuControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobySchedulerSideMenuControl.ascx.cs">
+      <DependentUpon>SobySchedulerSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobySchedulerSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobySchedulerSideMenuControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\SobyCalendarViewSideMenuControl.ascx.cs">
       <DependentUpon>SobyCalendarViewSideMenuControl.ascx</DependentUpon>
@@ -612,6 +657,13 @@
     <Compile Include="Tutorials\SobyCalendarView\Getting Started.aspx.designer.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\SobyCheckBoxList\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyCheckBoxList\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyCodeView\CodeView.aspx.cs">
       <DependentUpon>CodeView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -660,6 +712,20 @@
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Cell Styles.aspx.designer.cs">
       <DependentUpon>Cell Styles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\CustomFiltering.aspx.cs">
+      <DependentUpon>CustomFiltering.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\CustomFiltering.aspx.designer.cs">
+      <DependentUpon>CustomFiltering.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\ResponsiveDesign.aspx.cs">
+      <DependentUpon>ResponsiveDesign.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\ResponsiveDesign.aspx.designer.cs">
+      <DependentUpon>ResponsiveDesign.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\RefreshData.aspx.cs">
       <DependentUpon>RefreshData.aspx</DependentUpon>
@@ -898,11 +964,32 @@
     <Compile Include="Tutorials\SobyScheduler\Getting Started.aspx.designer.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\SobySelectBox\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobySelectBox\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyTreeView\Getting Started.aspx.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Tutorials\SobyTreeView\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\FormValidation.aspx.cs">
+      <DependentUpon>FormValidation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\FormValidation.aspx.designer.cs">
+      <DependentUpon>FormValidation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\Getting Started.aspx.designer.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyWizard\General.aspx.cs">

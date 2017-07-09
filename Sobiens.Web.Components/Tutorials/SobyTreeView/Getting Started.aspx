@@ -14,8 +14,8 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-<br />
-    <p>xxxThis example demonstrates how to use Soby Item Selection with Soby Data Grid as the advanced search control. <br />
+    <div class="article col-md-9">
+    <p>This example demonstrates how to use Soby Item Selection with Soby Data Grid as the advanced search control. <br />
         Passing item selector type parameter as "SobyItemSelectorTypes.GridView" will load the advanced search as Soby Data Grid. 
         <pre class="js">itemSelection = new soby_ItemSelection("#soby_BooksDiv", "Meters", <strong>SobyItemSelectorTypes.GridView</strong>, autoCompleteBookDataService, advancedSearchBookDataService, "No record", "BookSelectionDialog", "/Management/CustomerSelection.html", "Id", "Title"); </pre>
     </p>
@@ -44,8 +44,8 @@
         </pre>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
-
-    <aside>
+</div>
+    <div class="col-md-3">
         <uc1:SobyTreeViewSideMenuControl runat="server" ID="SobyTreeViewSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

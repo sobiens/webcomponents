@@ -8,7 +8,7 @@ function soby_PopulateTreeView() {
     rootDataSourceBuilder.AddSchemaField("Id", SobyFieldTypes.Number, null);
     rootDataSourceBuilder.AddSchemaField("Title", SobyFieldTypes.Text, null);
 //    rootDataSourceBuilder.Filters.AddFilter("ParentId", "", SobyFieldTypes.Number, SobyFilterTypes.IsNull, false); 
-    rootDataSourceBuilder.Filters.AddFilter("ParentId", "0", SobyFieldTypes.Number, SobyFilterTypes.Equal, false); 
+    rootDataSourceBuilder.Filters.AddFilter("ParentId", "0", SobyFieldTypes.Number, SobyFilterTypes.Equal, false, false); 
     var premisesRootDataService = new soby_WebServiceService(rootDataSourceBuilder);
     premisesRootDataService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Premises", "json", "application/json; charset=utf-8", "GET");
 

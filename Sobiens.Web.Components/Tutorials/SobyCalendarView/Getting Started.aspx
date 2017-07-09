@@ -14,8 +14,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-<br />
-    <div class="article" style="float: left;width: 74%;">
+    <div class="article col-md-9">
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <link href="/media/css/soby.ui.components.calendarview.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
@@ -36,7 +35,7 @@
         </pre>
     </div>
 
-    <aside>
+    <div class="col-md-3">
         <uc1:SobyCalendarViewSideMenuControl runat="server" ID="SobyCalendarViewSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

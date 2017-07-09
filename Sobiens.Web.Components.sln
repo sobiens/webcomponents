@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobiens.Web.Components", "Sobiens.Web.Components\Sobiens.Web.Components.csproj", "{AD99CDA2-C2EA-4082-A3C7-C975CD70F9E4}"
 EndProject

@@ -105,13 +105,18 @@ class soby_Scheduler
     ImagesFolderUrl: string = "/_layouts/1033/images";
     MinuteWidthWeight: number = 1;
     CellHeight: number = 32;
-    SingleCellLengthAsMinute: number = 15;
+    //SingleCellLengthAsMinute: number = 15;
+    SingleTimeHeadingDurationAsMinute: number = 60;
+    SingleScheduleItemDurationAsMinute: number = 20;
     Year: number;
     Month: number;
     Day: number;
     Width: number;
     Height: number;
     ShowNavigation: boolean = true;
+    IsDateChangeAllowed: boolean = true;
+    IsCategoryChangeAllowed: boolean = true;
+    IsInDragState: boolean = false;
     Initialize()
     {
         this.OriginalScheduleItems = this.ScheduleItems.Clone();
@@ -325,7 +330,6 @@ class soby_Scheduler
 
     GenerateScheduler()
     {
-        console.log(this.ViewType)
         switch (this.ViewType)
         {
             case SobySchedulerTypes.Yearly: // YEARLY SHOWING
@@ -408,7 +412,6 @@ class soby_Scheduler
         }
         else if (this.ViewType == SobySchedulerTypes.CustomDates)
         {
-            console.log("Custom dates")
             //this.SchedulerTableStartDate = this.GetDayOfTheWeek(today, 0);
             //this.SchedulerTableEndDate = new Date(this.SchedulerTableStartDate.getFullYear(), this.SchedulerTableStartDate.getMonth(), this.SchedulerTableStartDate.getDate() + 6, 0, 0, 0, 0);
             var timeDiff = Math.abs(this.SchedulerTableEndDate.getTime() - this.SchedulerTableStartDate.getTime());
@@ -417,7 +420,7 @@ class soby_Scheduler
         
 
 
-        var oneDayCellCount = 24 * 4;
+        var oneDayCellCount = 24 * 60 / this.SingleScheduleItemDurationAsMinute;
         var cellCount = this.SchedulerTableTotalDays * oneDayCellCount;
         var table = $("<table width= " + this.Width + " class='soby_maintable' ></table>");
         var tbody = $("<tbody class='scheduler-body'></tbody>");
@@ -453,7 +456,7 @@ class soby_Scheduler
 
     GetSchedulerItemTableWidth()
     {
-        return (this.SingleCellLengthAsMinute * this.MinuteWidthWeight) * 4 * 24 * this.SchedulerTableTotalDays;
+        return this.MinuteWidthWeight * 60 * 24 * this.SchedulerTableTotalDays;
     }
 
     PopulateCategoryRows()
@@ -476,6 +479,7 @@ class soby_Scheduler
         var categoriesTimeContent = $("<div class='scheduler-content' ></div>");
         var categoriesTimeRows = $("<div class='scheduler-rows' ></div>");
 
+
         var categoriesLabelTable = $("<table style='width: 100%;margin-top: 11px;border: solid 1px;'></table>");
         var categoryLabelRow1 = $("<tr></tr>");
         var categoryLabelCell1 = $("<th class='categoriesheader' colspan='2' style='height:" + (this.CellHeight*2) + "px;' nowrap></td>");
@@ -483,31 +487,44 @@ class soby_Scheduler
         categoryLabelRow1.append(categoryLabelCell1);
         categoriesLabelTable.append(categoryLabelRow1);
 
+        var categoriesTimeRowsDragEffectDiv = $("<div class='scheduler-rows-drageffect' >&nbsp;</div>");
         var categoriesTimeTable = $("<table></table>");
 
         var dayHeadingRow = $("<tr class='dayheaderrow'></tr>");
         var timeHeadingRow = $("<tr class='timeheaderrow'></tr>");
         var currentDate = null;
-        for (var i = 0; i < this.SchedulerTableTotalDays * 24; i++)
+        var currentEndDate = null;
+        var oneDayTotalLabelCount = 24 * 60 / this.SingleTimeHeadingDurationAsMinute;
+        for (var i = 0; i < this.SchedulerTableTotalDays * oneDayTotalLabelCount; i++)
         {
-            currentDate = new Date(this.SchedulerTableStartDate.getFullYear(), this.SchedulerTableStartDate.getMonth(), this.SchedulerTableStartDate.getDate(), 0, i * 60, 0, 0);
-            var timeAsHour = (i % 24);
-            var timeAsMinute = (i % 24) * 60;
+            currentDate = new Date(this.SchedulerTableStartDate.getFullYear(), this.SchedulerTableStartDate.getMonth(), this.SchedulerTableStartDate.getDate(), 0, i * this.SingleTimeHeadingDurationAsMinute, 0, 0);
+            currentEndDate = new Date(this.SchedulerTableStartDate.getFullYear(), this.SchedulerTableStartDate.getMonth(), this.SchedulerTableStartDate.getDate(), 0, (i+1) * this.SingleTimeHeadingDurationAsMinute, 0, 0);
+            var timeAsHour = currentDate.getHours();
+            var timeAsMinute = currentDate.getMinutes();
+            var endTimeAsHour = currentEndDate.getHours();
+            var endTimeAsMinute = currentEndDate.getMinutes();
             if (timeAsMinute == 0)
             {
-                var dayHeadingCell = $("<th colspan='" + (24 * 4) + "' class='dayheader'></th>");
+                var dayHeadingCell = $("<th colspan='" + (oneDayTotalLabelCount) + "' class='dayheader'></th>");
                 dayHeadingCell.text(soby_GetFormatedDateString(currentDate));
                 dayHeadingRow.append(dayHeadingCell);
             }
 
 
-            var timeHeadingCell = $("<th colspan='4' class='timeheader'></th>");
-            timeHeadingCell.attr("width", ((this.SingleCellLengthAsMinute * this.MinuteWidthWeight) * 4) + "px");
+            var timeHeadingCell = $("<th colspan='1' class='timeheader'></th>");
+            timeHeadingCell.attr("width", (this.SingleTimeHeadingDurationAsMinute * this.MinuteWidthWeight) + "px");
             timeHeadingCell.attr("height", this.CellHeight + "px");
 
-            var timeLabel = "0" + timeAsHour;
-            if (timeAsHour > 9)
-                timeLabel = timeAsHour.toString();
+            var timeLabel = "";
+            if (this.SingleTimeHeadingDurationAsMinute == 60)
+            {
+                timeLabel = (timeAsHour > 9 ? timeAsHour.toString():"0" + timeAsHour);
+            }
+            else
+            {
+                timeLabel = (timeAsHour > 9 ? timeAsHour.toString() : "0" + timeAsHour) + ":" + (timeAsMinute > 9 ? timeAsMinute.toString() : "0" + timeAsMinute) +
+                    " - " + (endTimeAsHour > 9 ? endTimeAsHour.toString() : "0" + endTimeAsHour) + ":" + (endTimeAsMinute > 9 ? endTimeAsMinute.toString() : "0" + endTimeAsMinute);
+            }
             timeHeadingCell.text(timeLabel);
 
             timeHeadingRow.append(timeHeadingCell);
@@ -515,7 +532,8 @@ class soby_Scheduler
         categoriesTimeTable.append(dayHeadingRow);
         categoriesTimeTable.append(timeHeadingRow);
 
-        var cellCount = this.SchedulerTableTotalDays * 24 * 4;
+        var oneDayCellCount = 24 * 60 / this.SingleScheduleItemDurationAsMinute;
+        var cellCount = this.SchedulerTableTotalDays * oneDayCellCount;
         var totalCategoryCount = 0;
         for (var i = 0; i < this.ScheduleCategories.length; i++)
         {
@@ -570,6 +588,7 @@ class soby_Scheduler
         categoriesTimeScrollerCanvas.append(categoriesTimeContent);
         categoriesTimeContent.append(categoriesTimeRows);
         categoriesTimeRows.append(categoriesTimeTable)
+        categoriesTimeRows.append(categoriesTimeRowsDragEffectDiv);
         schedulerTimeArea.append(categoriesTimeScrollerClip);
     }
 
@@ -596,7 +615,7 @@ class soby_Scheduler
 
         var categoryTimeRow = this.GetCategoryTimeRow(scheduleItem.CategoryId);
         var categoryIndex = parseInt( $(".categorytimerow[categoryid=" + scheduleItem.CategoryId + "]").attr("categoryindex") );
-        var top = this.CellHeight * (categoryIndex+1) +1;
+        var top = this.CellHeight * (categoryIndex+2) +1;
         var left = (startMinutes * this.MinuteWidthWeight) + "px";
         var width = ((endMinutes - startMinutes) * this.MinuteWidthWeight) + "px";
         var linkId = "soby_ScheduleItem_" + scheduleItem.Id;
@@ -612,17 +631,23 @@ class soby_Scheduler
         var scheduler = this;
         $("#" + linkId).draggable({
             cursor: "move", cursorAt: { top: 10, left: 10 },
-            stop: function ()
+            start: function ()
             {
-                console.log("dragged");
+                $(".scheduler-rows-drageffect").show();
+                scheduler.IsInDragState = true;
+            },
+            drag: function (a, b)
+            {
                 var link = $(this);
                 var scheduleItemId = link.attr("scheduleitemid");
-                var top = parseInt( link.css("top").replace(/px/gi, ""));
+                var top = parseInt(link.css("top").replace(/px/gi, ""));
                 var left = parseInt(link.css("left").replace(/px/gi, ""));
-                var categoryIndex = Math.round(top / scheduler.CellHeight)-1 ;
+                var categoryIndex = Math.round(top / scheduler.CellHeight) - 2;
                 var categoryId = $(".categorytimerow[categoryindex='" + categoryIndex + "']").attr("categoryid");
                 var startMinute = (left / scheduler.MinuteWidthWeight);
-                startMinute = startMinute - (startMinute % scheduler.SingleCellLengthAsMinute);
+                startMinute = startMinute - (startMinute % scheduler.SingleScheduleItemDurationAsMinute);
+                //var endMinute = startMinute + scheduler.SingleScheduleItemDurationAsMinute;
+                /*
                 var scheduleItem = scheduler.ScheduleItems.GetItemById(scheduleItemId);
                 var differenceAsMinute = (scheduleItem.EndDate.getTime() - scheduleItem.StartDate.getTime()) / 1000;
                 differenceAsMinute /= 60;
@@ -631,16 +656,63 @@ class soby_Scheduler
                 var tempDate = new Date(scheduleItem.StartDate.getFullYear(), scheduleItem.StartDate.getMonth(), scheduleItem.StartDate.getDate(), 0, 0, 0, 0);
                 var startDate: Date = new Date(tempDate.getTime() + startMinute * 60000);
                 var endDate: Date = new Date(tempDate.getTime() + endMinute * 60000);
+                */
+                var dragTop = scheduler.CellHeight * (categoryIndex + 2) + 1;
+                var dragLeft = (startMinute * scheduler.MinuteWidthWeight) + "px";
+                var dragWidth = (scheduler.SingleScheduleItemDurationAsMinute * scheduler.MinuteWidthWeight) + "px";
+
+
+                $(".scheduler-rows-drageffect").css("top", dragTop);
+                $(".scheduler-rows-drageffect").css("left", dragLeft);
+                $(".scheduler-rows-drageffect").css("width", dragWidth);
+            },
+            stop: function ()
+            {
+                $(".scheduler-rows-drageffect").hide();
+                scheduler.IsInDragState = false;
+                var link = $(this);
+                var scheduleItemId = link.attr("scheduleitemid");
+                var top = parseInt( link.css("top").replace(/px/gi, ""));
+                var left = parseInt(link.css("left").replace(/px/gi, ""));
+                var categoryIndex = Math.round(top / scheduler.CellHeight) - 2;
+                var categoryId = $(".categorytimerow[categoryindex='" + categoryIndex + "']").attr("categoryid");
+                var startMinute = (left / scheduler.MinuteWidthWeight);
+                startMinute = startMinute - (startMinute % scheduler.SingleScheduleItemDurationAsMinute);
+                var scheduleItem = scheduler.ScheduleItems.GetItemById(scheduleItemId);
+                var differenceAsMinute = (scheduleItem.EndDate.getTime() - scheduleItem.StartDate.getTime()) / 1000;
+                differenceAsMinute /= 60;
+                differenceAsMinute = Math.abs(Math.round(differenceAsMinute));
+                var endMinute = startMinute + differenceAsMinute;
+                var tempDate = new Date(scheduleItem.StartDate.getFullYear(), scheduleItem.StartDate.getMonth(), scheduleItem.StartDate.getDate(), 0, 0, 0, 0);
+                var startDate: Date = new Date(tempDate.getTime() + startMinute * 60000);
+                var endDate: Date = new Date(tempDate.getTime() + endMinute * 60000);
+                var category: soby_ScheduleCategory = scheduler.ScheduleCategories.GetCategoryById(categoryId);
+                if (category.CanContainScheduleItems == false)
+                {
+                    alert("This category can not contain a schedule item");
+                    scheduler.ChangeView(scheduler.ViewType);
+                    return;
+                }
+
+                if (scheduler.IsCategoryChangeAllowed == false && scheduleItem.CategoryId != categoryId)
+                {
+                    alert("Category change is not allowed.");
+                    scheduler.ChangeView(scheduler.ViewType);
+                    return;
+                }
+
+                if (scheduler.IsDateChangeAllowed == false &&
+                    (scheduleItem.StartDate.toISOString() != startDate.toISOString() || scheduleItem.EndDate.toISOString() != endDate.toISOString())
+                )
+                {
+                    alert("Date change is not allowed.");
+                    scheduler.ChangeView(scheduler.ViewType);
+                    return;
+                }
+
                 var categoryScheduleItems: soby_ScheduleItems = scheduler.ScheduleItems.GetItemsByCategoryId(categoryId);
-                console.log(categoryScheduleItems)
-                console.log(categoryScheduleItems.length)
                 for (var i = 0; i < categoryScheduleItems.length; i++)
                 {
-                    console.log(categoryScheduleItems[i].StartDate)
-                    console.log(startDate)
-                    console.log(endDate)
-                    console.log(categoryScheduleItems[i].EndDate)
-                    console.log("------------------------")
                     if (categoryScheduleItems[i].Id == scheduleItemId)
                         continue;
                     if (
@@ -650,7 +722,7 @@ class soby_Scheduler
                     )
                     {
                         alert("Conflict exist, please select a different date");
-                        scheduler.ChangeView(SobySchedulerTypes.Daily);
+                        scheduler.ChangeView(scheduler.ViewType);
                         return;
                     }
                 }
@@ -659,11 +731,7 @@ class soby_Scheduler
                 scheduleItem.EndDate = new Date(tempDate.getTime() + endMinute * 60000);
                 scheduleItem.CategoryId = categoryId;
                 scheduler.ChangeScheduleDataItemStatus(scheduleItem, SobySchedulerDataItemStatuses.Modified);
-                console.log(differenceAsMinute)
-                console.log(startMinute)
-                console.log(scheduleItem)
-                console.log(categoryIndex)
-                scheduler.ChangeView(SobySchedulerTypes.Daily);
+                scheduler.ChangeView(scheduler.ViewType);
             }
         });
     }
@@ -760,6 +828,24 @@ class soby_Scheduler
     OnClick = null;
 }
 
+class soby_ScheduleCategories extends Array<soby_ScheduleCategory>
+{
+    GetCategoryById(categoryId)
+    {
+        for (var i = 0; i < this.length; i++)
+        {
+            if (this[i].Id == categoryId)
+                return this[i];
+
+            var category = this[i].SubCategories.GetCategoryById(categoryId);
+            if (category != null)
+                return category;
+        }
+
+        return null;
+    }
+}
+
 class soby_ScheduleItems extends Array<soby_ScheduleItem>
 {
     Clone(): soby_ScheduleItems
@@ -821,9 +907,6 @@ class soby_ScheduleItem
     }
 
 }
-class soby_ScheduleCategories extends Array<soby_ScheduleCategory>
-{
-}
 class soby_ScheduleCategory
 {
     constructor(id: string, title: string)
@@ -834,6 +917,7 @@ class soby_ScheduleCategory
     }
     Id: string = "";
     Title: string = "";
+    CanContainScheduleItems: boolean = true;
     SubCategories: soby_ScheduleCategories = null;
 
     AddCategory(id: string, title: string)

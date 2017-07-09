@@ -17,7 +17,7 @@ var SobySchedulerViewTypesObject = (function () {
         this.AllData = 6;
     }
     return SobySchedulerViewTypesObject;
-}());
+})();
 var SobySchedulerTypes = new SobySchedulerViewTypesObject();
 var SobySchedulerDataItemStatusObject = (function () {
     function SobySchedulerDataItemStatusObject() {
@@ -27,7 +27,7 @@ var SobySchedulerDataItemStatusObject = (function () {
         this.Deleted = 4;
     }
     return SobySchedulerDataItemStatusObject;
-}());
+})();
 var SobySchedulerDataItemStatuses = new SobySchedulerDataItemStatusObject();
 function soby_RemoveNoneExistenceScheduler() {
     var newArray = new Array();
@@ -75,8 +75,13 @@ var soby_Scheduler = (function () {
         this.ImagesFolderUrl = "/_layouts/1033/images";
         this.MinuteWidthWeight = 1;
         this.CellHeight = 32;
-        this.SingleCellLengthAsMinute = 15;
+        //SingleCellLengthAsMinute: number = 15;
+        this.SingleTimeHeadingDurationAsMinute = 60;
+        this.SingleScheduleItemDurationAsMinute = 20;
         this.ShowNavigation = true;
+        this.IsDateChangeAllowed = true;
+        this.IsCategoryChangeAllowed = true;
+        this.IsInDragState = false;
         this.OnSelectionChanged = null;
         this.OnClick = null;
         this.SchedulerID = "soby_scheduler_" + soby_guid();
@@ -263,7 +268,6 @@ var soby_Scheduler = (function () {
         this.GenerateScheduler();
     };
     soby_Scheduler.prototype.GenerateScheduler = function () {
-        console.log(this.ViewType);
         switch (this.ViewType) {
             case SobySchedulerTypes.Yearly:
                 //this.ShowYearlyView();
@@ -327,13 +331,12 @@ var soby_Scheduler = (function () {
             this.SchedulerTableEndDate = new Date(this.Year, this.Month, this.Day + 1, 0, 0, 0, 0);
         }
         else if (this.ViewType == SobySchedulerTypes.CustomDates) {
-            console.log("Custom dates");
             //this.SchedulerTableStartDate = this.GetDayOfTheWeek(today, 0);
             //this.SchedulerTableEndDate = new Date(this.SchedulerTableStartDate.getFullYear(), this.SchedulerTableStartDate.getMonth(), this.SchedulerTableStartDate.getDate() + 6, 0, 0, 0, 0);
             var timeDiff = Math.abs(this.SchedulerTableEndDate.getTime() - this.SchedulerTableStartDate.getTime());
             this.SchedulerTableTotalDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
         }
-        var oneDayCellCount = 24 * 4;
+        var oneDayCellCount = 24 * 60 / this.SingleScheduleItemDurationAsMinute;
         var cellCount = this.SchedulerTableTotalDays * oneDayCellCount;
         var table = $("<table width= " + this.Width + " class='soby_maintable' ></table>");
         var tbody = $("<tbody class='scheduler-body'></tbody>");
@@ -358,7 +361,7 @@ var soby_Scheduler = (function () {
         this.PopulateScheduleItemElements();
     };
     soby_Scheduler.prototype.GetSchedulerItemTableWidth = function () {
-        return (this.SingleCellLengthAsMinute * this.MinuteWidthWeight) * 4 * 24 * this.SchedulerTableTotalDays;
+        return this.MinuteWidthWeight * 60 * 24 * this.SchedulerTableTotalDays;
     };
     soby_Scheduler.prototype.PopulateCategoryRows = function () {
         var schedulerCategoryArea = $(this.ContentDivSelector + " .scheduler-body .scheduler-category-area");
@@ -380,31 +383,43 @@ var soby_Scheduler = (function () {
         categoryLabelCell1.text(this.CategoriesTitle);
         categoryLabelRow1.append(categoryLabelCell1);
         categoriesLabelTable.append(categoryLabelRow1);
+        var categoriesTimeRowsDragEffectDiv = $("<div class='scheduler-rows-drageffect' >&nbsp;</div>");
         var categoriesTimeTable = $("<table></table>");
         var dayHeadingRow = $("<tr class='dayheaderrow'></tr>");
         var timeHeadingRow = $("<tr class='timeheaderrow'></tr>");
         var currentDate = null;
-        for (var i = 0; i < this.SchedulerTableTotalDays * 24; i++) {
-            currentDate = new Date(this.SchedulerTableStartDate.getFullYear(), this.SchedulerTableStartDate.getMonth(), this.SchedulerTableStartDate.getDate(), 0, i * 60, 0, 0);
-            var timeAsHour = (i % 24);
-            var timeAsMinute = (i % 24) * 60;
+        var currentEndDate = null;
+        var oneDayTotalLabelCount = 24 * 60 / this.SingleTimeHeadingDurationAsMinute;
+        for (var i = 0; i < this.SchedulerTableTotalDays * oneDayTotalLabelCount; i++) {
+            currentDate = new Date(this.SchedulerTableStartDate.getFullYear(), this.SchedulerTableStartDate.getMonth(), this.SchedulerTableStartDate.getDate(), 0, i * this.SingleTimeHeadingDurationAsMinute, 0, 0);
+            currentEndDate = new Date(this.SchedulerTableStartDate.getFullYear(), this.SchedulerTableStartDate.getMonth(), this.SchedulerTableStartDate.getDate(), 0, (i + 1) * this.SingleTimeHeadingDurationAsMinute, 0, 0);
+            var timeAsHour = currentDate.getHours();
+            var timeAsMinute = currentDate.getMinutes();
+            var endTimeAsHour = currentEndDate.getHours();
+            var endTimeAsMinute = currentEndDate.getMinutes();
             if (timeAsMinute == 0) {
-                var dayHeadingCell = $("<th colspan='" + (24 * 4) + "' class='dayheader'></th>");
+                var dayHeadingCell = $("<th colspan='" + (oneDayTotalLabelCount) + "' class='dayheader'></th>");
                 dayHeadingCell.text(soby_GetFormatedDateString(currentDate));
                 dayHeadingRow.append(dayHeadingCell);
             }
-            var timeHeadingCell = $("<th colspan='4' class='timeheader'></th>");
-            timeHeadingCell.attr("width", ((this.SingleCellLengthAsMinute * this.MinuteWidthWeight) * 4) + "px");
+            var timeHeadingCell = $("<th colspan='1' class='timeheader'></th>");
+            timeHeadingCell.attr("width", (this.SingleTimeHeadingDurationAsMinute * this.MinuteWidthWeight) + "px");
             timeHeadingCell.attr("height", this.CellHeight + "px");
-            var timeLabel = "0" + timeAsHour;
-            if (timeAsHour > 9)
-                timeLabel = timeAsHour.toString();
+            var timeLabel = "";
+            if (this.SingleTimeHeadingDurationAsMinute == 60) {
+                timeLabel = (timeAsHour > 9 ? timeAsHour.toString() : "0" + timeAsHour);
+            }
+            else {
+                timeLabel = (timeAsHour > 9 ? timeAsHour.toString() : "0" + timeAsHour) + ":" + (timeAsMinute > 9 ? timeAsMinute.toString() : "0" + timeAsMinute) +
+                    " - " + (endTimeAsHour > 9 ? endTimeAsHour.toString() : "0" + endTimeAsHour) + ":" + (endTimeAsMinute > 9 ? endTimeAsMinute.toString() : "0" + endTimeAsMinute);
+            }
             timeHeadingCell.text(timeLabel);
             timeHeadingRow.append(timeHeadingCell);
         }
         categoriesTimeTable.append(dayHeadingRow);
         categoriesTimeTable.append(timeHeadingRow);
-        var cellCount = this.SchedulerTableTotalDays * 24 * 4;
+        var oneDayCellCount = 24 * 60 / this.SingleScheduleItemDurationAsMinute;
+        var cellCount = this.SchedulerTableTotalDays * oneDayCellCount;
         var totalCategoryCount = 0;
         for (var i = 0; i < this.ScheduleCategories.length; i++) {
             totalCategoryCount++;
@@ -448,6 +463,7 @@ var soby_Scheduler = (function () {
         categoriesTimeScrollerCanvas.append(categoriesTimeContent);
         categoriesTimeContent.append(categoriesTimeRows);
         categoriesTimeRows.append(categoriesTimeTable);
+        categoriesTimeRows.append(categoriesTimeRowsDragEffectDiv);
         schedulerTimeArea.append(categoriesTimeScrollerClip);
     };
     soby_Scheduler.prototype.PopulateScheduleItemElements = function () {
@@ -465,7 +481,7 @@ var soby_Scheduler = (function () {
         var endMinutes = scheduleItem.EndDate.getHours() * 60 + scheduleItem.EndDate.getMinutes();
         var categoryTimeRow = this.GetCategoryTimeRow(scheduleItem.CategoryId);
         var categoryIndex = parseInt($(".categorytimerow[categoryid=" + scheduleItem.CategoryId + "]").attr("categoryindex"));
-        var top = this.CellHeight * (categoryIndex + 1) + 1;
+        var top = this.CellHeight * (categoryIndex + 2) + 1;
         var left = (startMinutes * this.MinuteWidthWeight) + "px";
         var width = ((endMinutes - startMinutes) * this.MinuteWidthWeight) + "px";
         var linkId = "soby_ScheduleItem_" + scheduleItem.Id;
@@ -481,16 +497,48 @@ var soby_Scheduler = (function () {
         var scheduler = this;
         $("#" + linkId).draggable({
             cursor: "move", cursorAt: { top: 10, left: 10 },
-            stop: function () {
-                console.log("dragged");
+            start: function () {
+                $(".scheduler-rows-drageffect").show();
+                scheduler.IsInDragState = true;
+            },
+            drag: function (a, b) {
                 var link = $(this);
                 var scheduleItemId = link.attr("scheduleitemid");
                 var top = parseInt(link.css("top").replace(/px/gi, ""));
                 var left = parseInt(link.css("left").replace(/px/gi, ""));
-                var categoryIndex = Math.round(top / scheduler.CellHeight) - 1;
+                var categoryIndex = Math.round(top / scheduler.CellHeight) - 2;
                 var categoryId = $(".categorytimerow[categoryindex='" + categoryIndex + "']").attr("categoryid");
                 var startMinute = (left / scheduler.MinuteWidthWeight);
-                startMinute = startMinute - (startMinute % scheduler.SingleCellLengthAsMinute);
+                startMinute = startMinute - (startMinute % scheduler.SingleScheduleItemDurationAsMinute);
+                //var endMinute = startMinute + scheduler.SingleScheduleItemDurationAsMinute;
+                /*
+                var scheduleItem = scheduler.ScheduleItems.GetItemById(scheduleItemId);
+                var differenceAsMinute = (scheduleItem.EndDate.getTime() - scheduleItem.StartDate.getTime()) / 1000;
+                differenceAsMinute /= 60;
+                differenceAsMinute = Math.abs(Math.round(differenceAsMinute));
+                var endMinute = startMinute + differenceAsMinute;
+                var tempDate = new Date(scheduleItem.StartDate.getFullYear(), scheduleItem.StartDate.getMonth(), scheduleItem.StartDate.getDate(), 0, 0, 0, 0);
+                var startDate: Date = new Date(tempDate.getTime() + startMinute * 60000);
+                var endDate: Date = new Date(tempDate.getTime() + endMinute * 60000);
+                */
+                var dragTop = scheduler.CellHeight * (categoryIndex + 2) + 1;
+                var dragLeft = (startMinute * scheduler.MinuteWidthWeight) + "px";
+                var dragWidth = (scheduler.SingleScheduleItemDurationAsMinute * scheduler.MinuteWidthWeight) + "px";
+                $(".scheduler-rows-drageffect").css("top", dragTop);
+                $(".scheduler-rows-drageffect").css("left", dragLeft);
+                $(".scheduler-rows-drageffect").css("width", dragWidth);
+            },
+            stop: function () {
+                $(".scheduler-rows-drageffect").hide();
+                scheduler.IsInDragState = false;
+                var link = $(this);
+                var scheduleItemId = link.attr("scheduleitemid");
+                var top = parseInt(link.css("top").replace(/px/gi, ""));
+                var left = parseInt(link.css("left").replace(/px/gi, ""));
+                var categoryIndex = Math.round(top / scheduler.CellHeight) - 2;
+                var categoryId = $(".categorytimerow[categoryindex='" + categoryIndex + "']").attr("categoryid");
+                var startMinute = (left / scheduler.MinuteWidthWeight);
+                startMinute = startMinute - (startMinute % scheduler.SingleScheduleItemDurationAsMinute);
                 var scheduleItem = scheduler.ScheduleItems.GetItemById(scheduleItemId);
                 var differenceAsMinute = (scheduleItem.EndDate.getTime() - scheduleItem.StartDate.getTime()) / 1000;
                 differenceAsMinute /= 60;
@@ -499,22 +547,32 @@ var soby_Scheduler = (function () {
                 var tempDate = new Date(scheduleItem.StartDate.getFullYear(), scheduleItem.StartDate.getMonth(), scheduleItem.StartDate.getDate(), 0, 0, 0, 0);
                 var startDate = new Date(tempDate.getTime() + startMinute * 60000);
                 var endDate = new Date(tempDate.getTime() + endMinute * 60000);
+                var category = scheduler.ScheduleCategories.GetCategoryById(categoryId);
+                if (category.CanContainScheduleItems == false) {
+                    alert("This category can not contain a schedule item");
+                    scheduler.ChangeView(scheduler.ViewType);
+                    return;
+                }
+                if (scheduler.IsCategoryChangeAllowed == false && scheduleItem.CategoryId != categoryId) {
+                    alert("Category change is not allowed.");
+                    scheduler.ChangeView(scheduler.ViewType);
+                    return;
+                }
+                if (scheduler.IsDateChangeAllowed == false &&
+                    (scheduleItem.StartDate.toISOString() != startDate.toISOString() || scheduleItem.EndDate.toISOString() != endDate.toISOString())) {
+                    alert("Date change is not allowed.");
+                    scheduler.ChangeView(scheduler.ViewType);
+                    return;
+                }
                 var categoryScheduleItems = scheduler.ScheduleItems.GetItemsByCategoryId(categoryId);
-                console.log(categoryScheduleItems);
-                console.log(categoryScheduleItems.length);
                 for (var i = 0; i < categoryScheduleItems.length; i++) {
-                    console.log(categoryScheduleItems[i].StartDate);
-                    console.log(startDate);
-                    console.log(endDate);
-                    console.log(categoryScheduleItems[i].EndDate);
-                    console.log("------------------------");
                     if (categoryScheduleItems[i].Id == scheduleItemId)
                         continue;
                     if ((categoryScheduleItems[i].StartDate >= startDate && categoryScheduleItems[i].StartDate <= endDate)
                         ||
                             (startDate >= categoryScheduleItems[i].StartDate && startDate <= categoryScheduleItems[i].EndDate)) {
                         alert("Conflict exist, please select a different date");
-                        scheduler.ChangeView(SobySchedulerTypes.Daily);
+                        scheduler.ChangeView(scheduler.ViewType);
                         return;
                     }
                 }
@@ -522,11 +580,7 @@ var soby_Scheduler = (function () {
                 scheduleItem.EndDate = new Date(tempDate.getTime() + endMinute * 60000);
                 scheduleItem.CategoryId = categoryId;
                 scheduler.ChangeScheduleDataItemStatus(scheduleItem, SobySchedulerDataItemStatuses.Modified);
-                console.log(differenceAsMinute);
-                console.log(startMinute);
-                console.log(scheduleItem);
-                console.log(categoryIndex);
-                scheduler.ChangeView(SobySchedulerTypes.Daily);
+                scheduler.ChangeView(scheduler.ViewType);
             }
         });
     };
@@ -606,7 +660,24 @@ var soby_Scheduler = (function () {
         soby_Schedulers[this.SchedulerID] = this;
     };
     return soby_Scheduler;
-}());
+})();
+var soby_ScheduleCategories = (function (_super) {
+    __extends(soby_ScheduleCategories, _super);
+    function soby_ScheduleCategories() {
+        _super.apply(this, arguments);
+    }
+    soby_ScheduleCategories.prototype.GetCategoryById = function (categoryId) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i].Id == categoryId)
+                return this[i];
+            var category = this[i].SubCategories.GetCategoryById(categoryId);
+            if (category != null)
+                return category;
+        }
+        return null;
+    };
+    return soby_ScheduleCategories;
+})(Array);
 var soby_ScheduleItems = (function (_super) {
     __extends(soby_ScheduleItems, _super);
     function soby_ScheduleItems() {
@@ -635,7 +706,7 @@ var soby_ScheduleItems = (function (_super) {
         return newItems;
     };
     return soby_ScheduleItems;
-}(Array));
+})(Array);
 var soby_ScheduleItem = (function () {
     function soby_ScheduleItem(id, title, description, categoryId, startDate, endDate) {
         this.Id = "";
@@ -656,18 +727,12 @@ var soby_ScheduleItem = (function () {
         return new soby_ScheduleItem(this.Id, this.Title, this.Description, this.CategoryId, this.StartDate, this.EndDate);
     };
     return soby_ScheduleItem;
-}());
-var soby_ScheduleCategories = (function (_super) {
-    __extends(soby_ScheduleCategories, _super);
-    function soby_ScheduleCategories() {
-        _super.apply(this, arguments);
-    }
-    return soby_ScheduleCategories;
-}(Array));
+})();
 var soby_ScheduleCategory = (function () {
     function soby_ScheduleCategory(id, title) {
         this.Id = "";
         this.Title = "";
+        this.CanContainScheduleItems = true;
         this.SubCategories = null;
         this.Id = id;
         this.Title = title;
@@ -678,5 +743,6 @@ var soby_ScheduleCategory = (function () {
         this.SubCategories.push(category);
     };
     return soby_ScheduleCategory;
-}());
+})();
 // ************************************************************
+//# sourceMappingURL=soby.ui.components.scheduler.js.map

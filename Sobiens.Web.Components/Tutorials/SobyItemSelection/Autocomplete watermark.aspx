@@ -14,7 +14,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-<br />
+    <div class="article col-md-9">
     <p>This example demonstrates how to use Soby Item Selection as single selection. <br />
         Setting item selector "AllowMultipleSelections" property as false will make it work as single selection. 
         <pre class="js">itemSelection = new soby_ItemSelection("#soby_BooksDiv", "Meters", <strong>SobyItemSelectorTypes.GridView</strong>, autoCompleteBookDataService, advancedSearchBookDataService, "No record", "BookSelectionDialog", "/Management/CustomerSelection.html", "Id", "Title"); 
@@ -44,8 +44,8 @@
         </pre>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
-
-    <aside>
+</div>
+    <div class="col-md-3">
         <uc1:SobyItemSelectionSideMenuControl runat="server" ID="SobyItemSelectionSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

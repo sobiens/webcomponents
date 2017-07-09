@@ -14,15 +14,17 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-<br />
+    <div class="article col-md-9">
     <p>This example demonstrates how to use Soby Item Selection with Soby Data Grid as the advanced search control. <br />
         Passing item selector type parameter as "SobyItemSelectorTypes.GridView" will load the advanced search as Soby Data Grid. 
         <pre class="js">itemSelection = new soby_ItemSelection("#soby_BooksDiv", "Meters", <strong>SobyItemSelectorTypes.GridView</strong>, autoCompleteBookDataService, advancedSearchBookDataService, "No record", "BookSelectionDialog", "/Management/CustomerSelection.html", "Id", "Title"); </pre>
     </p>
 
         <div class="article" style="float: left;width: 74%;">
-            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>            <script src="/media/js/jquery-ui-1.12.0.min.js" type="text/javascript"></script>
-            <link href="/media/css/jquery-ui.min.css" rel="stylesheet" />            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
+            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
+            <script src="/media/js/jquery-ui-1.12.0.min.js" type="text/javascript"></script>
+            <link href="/media/css/jquery-ui.min.css" rel="stylesheet" />
+            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
             <script src="/Scripts/Tutorials/WebAPI/ItemSelection/selection.js"></script>
@@ -40,8 +42,8 @@
         </pre>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
-
-    <aside>
+        </div>
+    <div class="col-md-3">
         <uc1:SobyItemSelectionSideMenuControl runat="server" ID="SobyItemSelectionSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

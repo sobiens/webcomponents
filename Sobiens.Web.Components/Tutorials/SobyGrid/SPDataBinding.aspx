@@ -14,6 +14,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <div class="article col-md-9">
     <p>This example demonstrates how to use SharePoint Rest Service in the Soby Data Grid. <br />
     <br /><strong>SP Data Binding</strong>
     <a href="javascript:void(0)" onclick="soby_ShowHideViewCode('SPDataBindingViewSourceDiv', '/Scripts/Tutorials/WebAPI/Grid/spdatabinding.js')"><img src="/Images/viewsource.png" border="0" width="20px" /> View code</a>
@@ -30,7 +31,8 @@
 </pre>
     <br />Want to learn more about the grid component? Check out the <a href="/API Documentation/Grid/Grid.aspx">API documentation</a>.
         </p>
-    <aside>
+        </div>
+    <div class="article col-md-3">
         <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

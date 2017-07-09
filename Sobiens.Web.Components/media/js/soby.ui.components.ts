@@ -1,10 +1,15 @@
 ﻿// VERSION 1.0.7.2
+var testObj = null;
 // ********************* SOBY EDIT CONTROLS *****************************
 var soby_EditControls = new Array();
 interface ISobyEditControlInterface {
     ContainerClientId: string;
     FieldType: number;
-    Args:any;
+    Args: any;
+    ItemClassName: string;
+    ImagesFolderUrl: string;
+    ListItems: Array<SobyListItem>;
+    PopulateChoiceItems();
     IsValid: boolean;
     GetValue(): any;
     SetValue(value: string);
@@ -15,16 +20,33 @@ interface ISobyEditControlInterface {
     Validate():boolean;
 }
 
+class SobyListItem
+{
+    constructor(value: string, text: string)
+    {
+        this.Value = value;
+        this.Text = text;
+    }
+
+    Value: string;
+    Text: string;
+    Properties: any;
+}
+
 class SobyTextBox implements ISobyEditControlInterface {
     constructor(containerClientId: string, fieldType: number, args:any) {
         this.ContainerClientId = containerClientId;
         this.FieldType = fieldType;
         this.Args = args;
     }
+    ImagesFolderUrl: string;
+    ItemClassName: string;
     ContainerClientId: string;
     FieldType: number;
     Args: any;
     IsValid: boolean;
+    ListItems: Array<SobyListItem>;
+    PopulateChoiceItems() { }
     GetValue(): any {
         var value = $("#" + this.ContainerClientId + " input.sobytextbox").val();
         if (this.FieldType == SobyFieldTypes.Number) {
@@ -41,8 +63,14 @@ class SobyTextBox implements ISobyEditControlInterface {
     SetValue(value:string) {
         $("#" + this.ContainerClientId + " input.sobytextbox").val(value);
     }
-    Initialize() {
-        $("#" + this.ContainerClientId).html("<input type='textbox' class='sobytextbox'>");
+    Initialize()
+    {
+        var input = $("<input type='textbox' class='sobytextbox'>");
+        $("#" + this.ContainerClientId).html("");
+        if (this.ItemClassName != null && this.ItemClassName != "")
+            input.addClass(this.ItemClassName);
+        $("#" + this.ContainerClientId).append(input);
+
         soby_EditControls[this.ContainerClientId] = this;
         this.Initialized();
     }
@@ -56,49 +84,104 @@ class SobyTextBox implements ISobyEditControlInterface {
 
 
 class SobyLookupSelectBox implements ISobyEditControlInterface {
-    constructor(containerClientId: string, fieldType: number, args:any) {
+    constructor(containerClientId: string, fieldType: number, args: any)
+    {
         this.ContainerClientId = containerClientId;
         this.FieldType = fieldType;
         this.Args = args;
+        soby_EditControls[this.ContainerClientId] = this;
+
+        if (this.Args != null)
+        {
+            this.ValueFieldName = this.Args.ValueFieldName;
+            this.TitleFieldName = this.Args.TitleFieldName;
+
+            var readTransport = this.Args.ReadTransport;
+            var dataSourceBuilder = new soby_WSBuilder();
+            dataSourceBuilder.Filters = new SobyFilters(false);
+            dataSourceBuilder.AddSchemaField(this.Args.ValueFieldName, SobyFieldTypes.Text, null);
+            dataSourceBuilder.AddSchemaField(this.Args.TitleFieldName, SobyFieldTypes.Text, null);
+            if (this.Args.AdditionalReadFields != null)
+            {
+                var fieldNames = this.Args.AdditionalReadFields.split(",");
+                for (var i = 0; i < fieldNames.length; i++)
+                {
+                    dataSourceBuilder.AddSchemaField(fieldNames[i], SobyFieldTypes.Text, null);
+                }
+            }
+            dataSourceBuilder.RowLimit = 0;
+            var service = new soby_WebServiceService(dataSourceBuilder);
+            service.Transport.Read = new soby_TransportRequest(readTransport.Url, readTransport.DataType, readTransport.ContentType, readTransport.Type);
+            this.DataService = service;
+        }
     }
+    DataService: soby_ServiceInterface = null;
+    ValueFieldName: string = null;
+    TitleFieldName: string = null;
+    ItemClassName: string;
+    ImagesFolderUrl: string;
+
     ContainerClientId: string;
     FieldType: number;
     Args: any;
     IsValid: boolean;
-    GetValue(): any {
-        var value = $("#" + this.ContainerClientId + " select.sobyselectbox").val();
-        if (this.Args.ValueFieldType == SobyFieldTypes.Number)
-            value = parseInt(value);
-        return value;
+    ListItems: Array<SobyListItem>;
+    EmptyText: string = "Please Select";
+    ShowEmptyOption: boolean = false;
+    GetValue(): any
+    {
+        if ($("#" + this.ContainerClientId + " select.sobylookupselectbox option.listitem:selected") == null)
+            return null;
+
+        var itemIndex = parseInt($("#" + this.ContainerClientId + " select.sobylookupselectbox option.listitem:selected").attr("itemindex"));
+        return this.ListItems[itemIndex];
     }
     SetValue(value: string) {
-        $("#" + this.ContainerClientId + " select.sobyselectbox").val(value);
+        $("#" + this.ContainerClientId + " select.sobylookupselectbox").val(value);
     }
-    Initialize() {
-        $("#" + this.ContainerClientId).html("<select class='sobyselectbox'></select>");
-        soby_EditControls[this.ContainerClientId] = this;
-
-        var readTransport = this.Args.ReadTransport;
-        var customerDataSourceBuilder = new soby_WSBuilder();
-        customerDataSourceBuilder.Filters = new SobyFilters(false);
-        customerDataSourceBuilder.AddSchemaField(this.Args.ValueFieldName, SobyFieldTypes.Text, null);
-        customerDataSourceBuilder.AddSchemaField(this.Args.TitleFieldName, SobyFieldTypes.Text, null);
-        var customerService = new soby_WebServiceService(customerDataSourceBuilder);
-        customerService.Transport.Read = new soby_TransportRequest(readTransport.Url, readTransport.DataType, readTransport.ContentType, readTransport.Type);
-        customerService.PopulateItems(null);
-        var editControl = this; 
-        customerService.ItemPopulated = function (items) {
-            var selectbox = $("#" + editControl.ContainerClientId + " select.sobyselectbox");
-            selectbox.find("option").remove();
-            for (var i = 0; i < items.length; i++) {
-                var option = $("<option></option>");
-                option.attr("value", items[i][editControl.Args.ValueFieldName]);
-                option.text(items[i][editControl.Args.TitleFieldName]);
-                selectbox.append(option);
+    PopulateChoiceItems()
+    {
+        this.ListItems = new Array<SobyListItem>();
+        var editControl = this;
+        this.DataService.ItemPopulated = function (items)
+        {
+            if (editControl.ShowEmptyOption == true)
+            {
+                var listItem = new SobyListItem("", editControl.EmptyText);
+                listItem.Properties = new Array();
+                editControl.ListItems.push(listItem);
             }
-            editControl.Initialized();
+            for (var i = 0; i < items.length; i++)
+            {
+                var listItem = new SobyListItem(items[i][editControl.ValueFieldName], items[i][editControl.TitleFieldName]);
+                listItem.Properties = items[i];
+                editControl.ListItems.push(listItem);
+            }
+            editControl.DrawChoiceItems();
         }
-
+        this.DataService.PopulateItems(null);
+    }
+    DrawChoiceItems()
+    {
+        var selectbox = $("#" + this.ContainerClientId + " select.sobylookupselectbox");
+        selectbox.find("option.listitem").remove();
+        for (var i = 0; i < this.ListItems.length; i++)
+        {
+            var option = $("<option itemindex='" + i + "' class='listitem'></option>");
+            if (this.ItemClassName != null && this.ItemClassName != "")
+                option.addClass(this.ItemClassName);
+            option.attr("value", this.ListItems[i].Value);
+            option.text(this.ListItems[i].Text);
+            selectbox.append(option);
+        }
+        this.Initialized();
+    }
+    Initialize()
+    {
+        var selectBox = $("<select class='sobylookupselectbox' onchange=\"soby_EditControls['" + this.ContainerClientId + "'].ValueChanged()\"></select>");
+        $("#" + this.ContainerClientId).html("");
+        $("#" + this.ContainerClientId).append(selectBox);
+        this.PopulateChoiceItems();
     }
     Initialized() { }
     ValueBeingChanged() { }
@@ -106,6 +189,517 @@ class SobyLookupSelectBox implements ISobyEditControlInterface {
     Validate(): boolean {
         return true;
     }
+}
+
+class SobyCheckBoxList implements ISobyEditControlInterface
+{
+    constructor(containerClientId: string, fieldType: number, args: any)
+    {
+        this.ContainerClientId = containerClientId;
+        this.FieldType = fieldType;
+        this.Args = args;
+        soby_EditControls[this.ContainerClientId] = this;
+
+        if (this.Args != null)
+        {
+            this.ValueFieldName = this.Args.ValueFieldName;
+            this.TitleFieldName = this.Args.TitleFieldName;
+
+            var readTransport = this.Args.ReadTransport;
+            if (readTransport != null)
+            {
+                var dataSourceBuilder = new soby_WSBuilder();
+                dataSourceBuilder.Filters = new SobyFilters(false);
+                dataSourceBuilder.AddSchemaField(this.Args.ValueFieldName, SobyFieldTypes.Text, null);
+                dataSourceBuilder.AddSchemaField(this.Args.TitleFieldName, SobyFieldTypes.Text, null);
+                if (this.Args.AdditionalReadFields != null)
+                {
+                    var fieldNames = this.Args.AdditionalReadFields.split(",");
+                    for (var i = 0; i < fieldNames.length; i++)
+                    {
+                        dataSourceBuilder.AddSchemaField(fieldNames[i], SobyFieldTypes.Text, null);
+                    }
+                }
+                dataSourceBuilder.RowLimit = 0;
+                var service = new soby_WebServiceService(dataSourceBuilder);
+                service.Transport.Read = new soby_TransportRequest(readTransport.Url, readTransport.DataType, readTransport.ContentType, readTransport.Type);
+                this.DataService = service;
+            }
+        }
+    }
+    DataService: soby_ServiceInterface = null;
+    ValueFieldName: string = null;
+    TitleFieldName: string = null;
+    ItemClassName: string;
+    ImagesFolderUrl: string;
+    SelectedValuesTempState: any;
+
+    ContainerClientId: string;
+    FieldType: number;
+    Args: any;
+    IsValid: boolean;
+    ShowSearchBox: boolean = false;
+    GetValue(): any
+    {
+        var values = new Array();
+        if (this.ShowSearchBox == true)
+        {
+            var searchBox = $("#" + this.ContainerClientId + " .sobycheckboxlist-searchbox");
+            var value = searchBox.val();
+            if (value != null && value != undefined && value != "")
+            {
+                values[values.length] = value;
+            }
+        }
+        var selectedInputs = $("#" + this.ContainerClientId + " ul.sobycheckboxlist input:checked");
+        for (var i = 0; i < selectedInputs.length; i++)
+        {
+            var itemIndex = parseInt($(selectedInputs[i]).attr("itemindex"));
+            values[values.length] = this.ListItems[itemIndex];
+        }
+
+        return values;
+    }
+    SetValue(value: string)
+    {
+        var values = value.split(soby_FilterValueSeperator);
+        this.SetArrayValue(values);
+    }
+    SetArrayValue(values: any)
+    {
+        $("#" + this.ContainerClientId + " ul.sobycheckboxlist input:checked").removeAttr("checked");
+        if (values == null)
+            return;
+        for (var i = 0; i < values.length; i++)
+        {
+            $("#" + this.ContainerClientId + " ul.sobycheckboxlist input[value='" + values[i] + "']").attr("checked", "checked");
+        }
+        this.SaveState();
+    }
+    ListItems: Array<SobyListItem>;
+    PopulateChoiceItems()
+    {
+        var ul = $("#" + this.ContainerClientId + " ul.sobycheckboxlist");
+        ul.find("li").remove();
+        var li = $("<li></li>");
+        li.append("<img src= '" + this.ImagesFolderUrl + "/loading16.gif' > Loading...")
+        ul.append(li);
+
+        this.ListItems = new Array<SobyListItem>();
+        var editControl = this;
+        this.DataService.ItemPopulated = function (items)
+        {
+            for (var i = 0; i < items.length; i++)
+            {
+                var listItem = new SobyListItem(items[i][editControl.ValueFieldName], items[i][editControl.TitleFieldName]);
+                listItem.Properties = items[i];
+                editControl.ListItems.push(listItem);
+            }
+            editControl.DrawChoiceItems();
+        }
+        this.DataService.PopulateItems(null);
+    }
+    DrawChoiceItems()
+    {
+        var ul = $("#" + this.ContainerClientId + " ul.sobycheckboxlist");
+        ul.find("li").remove();
+        for (var i = 0; i < this.ListItems.length; i++)
+        {
+            var li = $("<li></li>");
+            var inputid = soby_guid();
+            var input = $("<input type='checkbox' id='" + inputid + "' itemindex='" + i + "' onclick=\"soby_EditControls['" + this.ContainerClientId + "']._ValueChanged()\" />");
+            if (this.ItemClassName != null && this.ItemClassName != "")
+                input.addClass(this.ItemClassName);
+
+            if (this.SelectedValuesTempState != null && $.inArray(this.ListItems[i].Value, this.SelectedValuesTempState) > -1)
+            {
+                input.prop('checked', true);
+            }
+
+            var label = $("<label for='" + inputid + "'></label>");
+            input.attr("value", this.ListItems[i].Value);
+            label.text(this.ListItems[i].Text);
+            li.append(input);
+            li.append(label);
+            ul.append(li);
+        }
+
+        this.Initialized();
+        this.SaveState();
+    }
+    Initialize()
+    {
+        $("#" + this.ContainerClientId).html("<ul class='sobycheckboxlist'></ul>");
+        if (this.ShowSearchBox == true)
+            $("#" + this.ContainerClientId).prepend("<input type='text' class='sobycheckboxlist-searchbox'>");
+        this.PopulateChoiceItems();
+    }
+    SaveState()
+    {
+        this.SelectedValuesTempState = new Array();
+        var selectedItems = this.GetValue();
+        for (var i = 0; i < selectedItems.length; i++)
+        {
+            var value = selectedItems[i].Value;
+            this.SelectedValuesTempState[this.SelectedValuesTempState.length] = value;
+        }
+    }
+    Initialized() { }
+    ValueBeingChanged() { }
+    ValueChanged() { }
+    _ValueChanged()
+    {
+        this.SaveState();
+        this.ValueChanged();
+    }
+    Validate(): boolean
+    {
+        return true;
+    }
+}
+
+
+class SobySPViewFilterCheckBoxList extends SobyCheckBoxList
+{
+    constructor(containerClientId: string, fieldType: number, args: any, webUrl: string, listName: string, fieldName: string)
+    {
+        super(containerClientId, fieldType, args);
+        this.WebUrl = webUrl;
+        this.ListName = listName;
+        this.FieldName = fieldName;
+        this.ShowSearchBox = true;
+    }
+
+    PopulateChoiceItems()
+    {
+        this.ListItems = new Array<SobyListItem>();
+        var editControl = this;
+        soby.SPLibrary.Lists.GetListProperties(this.WebUrl, this.ListName, function (list)
+        {
+            editControl.ListId = list.ID;
+            soby.SPLibrary.Views.GetViews(editControl.WebUrl, editControl.ListName, function (views)
+            {
+                editControl.ViewId = views[0].ID;
+                var url = editControl.WebUrl + "/_layouts/15/filter.aspx?ListId=" + editControl.ListId + "&FieldInternalName=" + editControl.FieldName + "&ViewId=" + editControl.ViewId + "&FilterOnly=1&Filter=1";
+                var container = $("<div></div>");
+                container.load(url, null, function (data)
+                {
+                    var options = container.find("select option");
+                    for (var i = 0; i < options.length; i++)
+                    {
+                        var option = $(options[i]);
+                        if (option.text() == "(All)")
+                            continue;
+
+                        var listItem = new SobyListItem(option.val(), option.text());
+                        editControl.ListItems.push(listItem);
+                    }
+
+                    editControl.DrawChoiceItems();
+                });
+
+            });
+        });
+        editControl.DrawChoiceItems();
+    }
+
+    WebUrl: string;
+    ListName: string;
+    ListId: string;
+    ViewId: string;
+    FieldName: string;
+}
+
+
+class SobySelectBox
+{
+    constructor(containerClientId: string)
+    {
+        this.ContainerClientId = containerClientId;
+    }
+    ContainerClientId: string;
+    Items = null;
+    SelectedItemKeyValues = null;
+    EmptyText: string = "Please Select";
+    DataService: soby_ServiceInterface = null;
+    ValueFieldName: string = null;
+    TitleFieldName: string = null;
+    ImagesFolderUrl: string = null;
+    ThemeName: string = "classic";
+    ThemeClassName: string = this.ThemeName;
+    IsValid: boolean;
+    Width: string = '300px';
+    GetValue(): any
+    {
+        var value = $("#" + this.ContainerClientId + " select.sobyselectbox").val();
+        return value;
+    }
+    SetValue(value: string)
+    {
+        $("#" + this.ContainerClientId + " select.sobyselectbox").val(value);
+    }
+
+    /**
+     * Changes theme
+     *
+     * @themeName Name of the theme.
+     * @example
+     * // Hides header row menu icon
+     * grid.ChangeTheme('classic');
+     */
+    ChangeTheme(themeName: string)
+    {
+        $(".sobyselectbox").removeClass(this.ThemeClassName);
+        this.ThemeName = themeName;
+        this.ThemeClassName = themeName;
+        $(".sobyselectbox").addClass(this.ThemeClassName);
+    }
+
+    Initialize()
+    {
+        var selectbox = this;
+        this.SelectedItemKeyValues = new Array();
+        $("#" + this.ContainerClientId).addClass("sobyselectbox");
+        $("#" + this.ContainerClientId).css("width", this.Width);
+        $("#" + this.ContainerClientId).addClass(this.ThemeClassName);
+        $("#" + this.ContainerClientId).html("<div class='selectionfilterpanel' onclick=\"soby_EditControls['" + this.ContainerClientId + "'].ShowSelectBox()\">" +
+                                                "<div class='selecteditemsandsearchpanel'>" +
+                                                    "<div class='selecteditems'></div>" +
+                                                    "<div class='searchpanel'><input type='text' class='searchtextbox' onclick=\"soby_EditControls['" + this.ContainerClientId + "'].ShowSelectBox()\"><div class='emptytext'></div></div>" +
+                                                "</div>" +
+                                                "<div class='expanderpanel'><a href='javascript:void(0)'  onclick=\"soby_EditControls['" + this.ContainerClientId + "'].ShowHideSelectBox()\"><img src='" + this.ImagesFolderUrl + "/ecbarw.png' border='0' alt= 'Open Menu'></a></div>" +
+                                             "</div>" +
+                                             "<div class='selectbox hidden'></div>");
+        $("#" + this.ContainerClientId + " .emptytext").text(this.EmptyText);
+
+        $("#" + this.ContainerClientId + " .searchtextbox").keyup(function ()
+        {
+            $("#" + selectbox.ContainerClientId + " .soby_dataitem").addClass("hidden");
+            var keyword = $(this).val();
+            if (selectbox.SelectedItemKeyValues.length == 0 && keyword == "")
+            {
+                $("#" + selectbox.ContainerClientId + " .emptytext").show();
+            }
+            else
+            {
+                $("#" + selectbox.ContainerClientId + " .emptytext").hide();
+            }
+
+            if (keyword.length > 0)
+            {
+                $("#" + selectbox.ContainerClientId + " .soby_dataitem[title*=\"" + keyword + "\"]").removeClass("hidden");
+            }
+            else
+            {
+                $("#" + selectbox.ContainerClientId + " .soby_dataitem").removeClass("hidden");
+            }
+
+            $(this).css("width", (keyword.length * 30) + "px");
+        });
+
+        $('body').click(function (evt)
+        {
+            if ($(evt.target).parents('#' + selectbox.ContainerClientId).length == 0)
+            {
+                selectbox.HideSelectBox();
+            }
+        });
+
+        soby_EditControls[this.ContainerClientId] = this;
+
+        if (this.DataService != null)
+        {
+            var editControl = this;
+            this.DataService.ItemPopulated = function (items)
+            {
+                editControl.Items = items;
+                var selectbox = $("#" + editControl.ContainerClientId + " .selectbox");
+                selectbox.find("option").remove();
+                for (var i = 0; i < items.length; i++)
+                {
+                    var option = $("<div class='item soby_dataitem soby-itmHoverEnabled'></div>");
+                    option.attr("value", items[i][editControl.ValueFieldName]);
+                    option.attr("title", items[i][editControl.TitleFieldName]);
+                    option.attr("itemindex", i);
+                    option.text(items[i][editControl.TitleFieldName]);
+                    selectbox.append(option);
+                    option.attr("onclick", "soby_EditControls['" + editControl.ContainerClientId + "'].SelectItem(" + i + ")");
+                }
+                editControl.Initialized();
+            }
+            this.DataService.PopulateItems(null);
+        }
+    }
+
+    SelectItem(index)
+    {
+        var selectedItem = this.Items[index];
+        var keyValue = selectedItem[this.ValueFieldName];
+        if ($.inArray(keyValue, this.SelectedItemKeyValues) == -1)
+        {
+            this.SelectedItemKeyValues.push(keyValue);
+        }
+
+        this.PopulateSelectedItems();
+        $("#" + this.ContainerClientId + " .searchtextbox").focus();
+    }
+
+    PopulateSelectedItems()
+    {
+        $("#" + this.ContainerClientId + " .soby_dataitem").removeClass("selected");
+
+        var keyword = $("#" + this.ContainerClientId + " .searchtextbox").val();
+        var selectedItemsPanel = $("#" + this.ContainerClientId + " .selecteditems");
+        selectedItemsPanel.html("");
+        if (this.SelectedItemKeyValues.length == 0 && keyword == "")
+        {
+            $("#" + this.ContainerClientId + " .emptytext").show();
+        }
+        else
+        {
+            $("#" + this.ContainerClientId + " .emptytext").hide();
+        }
+        for (var i = 0; i < this.SelectedItemKeyValues.length; i++)
+        {
+            var keyValue = this.SelectedItemKeyValues[i];
+            var selectedItem = null;
+            for (var x = 0; x < this.Items.length; x++)
+            {
+                var item = this.Items[x];
+                if (item[this.ValueFieldName] == keyValue)
+                {
+                    selectedItem = item;
+                    $("#" + this.ContainerClientId + " .soby_dataitem[itemindex='" + x + "']").addClass("selected");
+                    break;
+                }
+            }
+
+            if (selectedItem != null)
+            {
+                var selectedItemContainer = $("<div class='selecteditem'></div>");
+                var removeselectedItemLink = $("<a href='javascript:void(0)' onclick=\"soby_EditControls['" + this.ContainerClientId + "'].RemoveItem(" + i + ")\" class='soby-itmHoverEnabled'><span class='soby-icon-imgSpan'><img class='soby-list-delete soby-icon-img' src='" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43'></span></a>");
+                selectedItemContainer.text(selectedItem[this.TitleFieldName] + " ");
+                selectedItemContainer.append(removeselectedItemLink);
+                selectedItemsPanel.append(selectedItemContainer);
+            }
+        }
+    }
+
+    GetSelectedItems()
+    {
+        var selectedItems = new Array();
+        var selectedItemsPanel = $("#" + this.ContainerClientId + " .selecteditems");
+        for (var i = 0; i < this.SelectedItemKeyValues.length; i++)
+        {
+            var keyValue = this.SelectedItemKeyValues[i];
+            var selectedItem = null;
+            for (var x = 0; x < this.Items.length; x++)
+            {
+                var item = this.Items[x];
+                if (item[this.ValueFieldName] == keyValue)
+                {
+                    selectedItem = item;
+                    break;
+                }
+            }
+
+            if (selectedItem != null)
+            {
+                selectedItems[selectedItems.length] = selectedItem;
+            }
+        }
+
+        return selectedItems;
+    }
+
+    RemoveItem(index)
+    {
+        this.SelectedItemKeyValues.splice(index, 1);
+        this.PopulateSelectedItems();
+        var selectbox = this;
+        setTimeout(function ()
+        {
+            selectbox.ShowSelectBox();
+        }, 500);
+    }
+
+    ShowHideSelectBox()
+    {
+        var selectbox = this;
+        if ($("#" + this.ContainerClientId + " .selectbox").hasClass("hidden") == true)
+        {
+            this.ShowSelectBox();
+        }
+        else
+        {
+            setTimeout(function ()
+            {
+                selectbox.HideSelectBox();
+            }, 500);
+        }
+    }
+
+    ShowSelectBox()
+    {
+        $("#" + this.ContainerClientId + " .selectbox").removeClass("hidden");
+        var position = $(".selectionfilterpanel").position();
+        var top = position.top - $(".selectbox").height();
+        $("#" + this.ContainerClientId + " .selectbox").css("top", top);
+        $("#" + this.ContainerClientId + " .searchtextbox").focus();
+    }
+
+    HideSelectBox()
+    {
+        $("#" + this.ContainerClientId + " .selectbox").addClass("hidden");
+    }
+
+    Initialized() { }
+    ValueBeingChanged() { }
+    ValueChanged() { }
+    Validate(): boolean
+    {
+        return true;
+    }
+
+    /************************************ EVENTS *************************************/
+    /**
+     * Item creation event.
+     *
+     * @event soby_WebGrid#ItemCreated
+     * @type {object}
+     * @property {object} rowID - Identifier of the row.
+     * @property {object} item - Data item related with the row.
+     */
+    ItemCreated = null;
+
+    /**
+     * Grid population event.
+     *
+     * @event soby_WebGrid#OnGridPopulated
+     * @type {object}
+     */
+    OnGridPopulated = null;
+
+    /**
+     * Row selection event.
+     *
+     * @event soby_WebGrid#OnRowSelected
+     * @type {object}
+     */
+    OnRowSelected = null;
+
+    /**
+     * Cell selection event.
+     *
+     * @event soby_WebGrid#OnCellSelected
+     * @type {object}
+     * @property {soby_WebGrid} grid - Current grid object.
+     * @property {object} rowID - Identifier of the row.
+     * @property {object} cellIndex - Index of the cell.
+     */
+    OnCellSelected = null;
+    /************************************ END EVENTS *********************************/
+
 }
 
 class SobyEditControlFactory {
@@ -148,10 +742,13 @@ class SobyShowFieldsOnObject {
 var SobyShowFieldsOn = new SobyShowFieldsOnObject();
 
 
-$("form").click(function () {
-    $(".sobygridmenu").hide();
-})
-
+if ($("form") != null)
+{
+    $("form").click(function ()
+    {
+        $(".sobygridmenu").hide();
+    })
+}
 function soby_RemoveNoneExistenceGrid() {
     var newArray = new Array();
     for (var x in soby_WebGrids) {
@@ -167,6 +764,14 @@ document.onkeydown = function (event) {
         soby_IsCtrlOnHold = true;
 }
 
+window.onresize = function (event)
+{
+    var grids = soby_GetAllGrids();
+    for (var i = 0; i < grids.length; i++)
+    {
+        grids[i].ApplyResponsiveElementsVisibility();
+    }
+};
 document.onkeyup = function (event) {
 //    soby_LogMessage(event.keyCode)
     if (event.keyCode == 17)
@@ -228,7 +833,14 @@ function soby_GetActiveDataGrid(): soby_WebGrid {
 
 function soby_GetAllGrids() {
     soby_RemoveNoneExistenceGrid();
-    return soby_WebGrids;
+    var keys = Object.keys(soby_WebGrids);
+    var grids = new Array();
+    for (var i = 0; i < keys.length; i++)
+    {
+        grids.push(soby_WebGrids[keys[i]]);
+    }
+
+    return grids;
 }
 
 function soby_RefreshAllGrids() {
@@ -307,6 +919,61 @@ class sobyActionPaneButton
     }
 }
 
+class sobyResponsiveCondition
+{
+    constructor(validateFunction: (width: number, height: number) => any)
+    {
+        this.ValidateFunction = validateFunction;
+        this.ID = soby_guid();
+    }
+    ValidateFunction: (width: number, height: number) => boolean = null;
+    Validate()
+    {
+        var width: number = $(window).width();
+        var height: number = $(window).height();
+        return this.ValidateFunction(width, height);
+    }
+    GetClassName(): string
+    {
+        return "responsivecondition_" + this.ID;
+    }
+    ID: string = null;
+}
+
+class SobyGridColumn
+{
+    constructor(fieldName: string, displayName: string, showFieldsOn: number, displayFunction: (item: any) => string, cellTemplate: any, sortable: boolean, filterable: boolean, editable: boolean, filterControl: ISobyEditControlInterface = null, cellCss: string, cellClassNames: string, responsiveConditionID: string)
+    {
+        this.FieldName = fieldName;
+        this.DisplayName = displayName;
+        this.ShowFieldsOn = showFieldsOn;
+        this.DisplayFunction= displayFunction;
+        this.CellTemplate= cellTemplate;
+        this.Sortable = sortable;
+        this.Filterable = filterable;
+        this.Editable = editable;
+        this.FilterControl = filterControl;
+        this.CellCss = cellCss;
+        this.CellClassNames = cellClassNames;
+        this.ResponsiveConditionID = responsiveConditionID;
+    }
+
+    FieldName: string;
+    DisplayName: string;
+    ShowFieldsOn: number;
+    DisplayFunction: (item: any) => string;
+    CellTemplate: any;
+    Sortable: boolean;
+    Filterable: boolean;
+    Editable: boolean;
+    FilterControl: ISobyEditControlInterface = null;
+    CellCss: string;
+    CellClassNames: string;
+    ResponsiveConditionID: string = null;
+    IsVisible: boolean = true;
+}
+
+
 class soby_WebGrid {
     /************************************ MEMBERS *************************************/
     /**
@@ -356,11 +1023,12 @@ class soby_WebGrid {
     FilterControls = new Array();
     GroupByFields: SobyGroupByFields = new SobyGroupByFields();
     AggregateFields: SobyAggregateFields = new SobyAggregateFields();
+    ResponsiveConditions: Array<sobyResponsiveCondition> = new Array<sobyResponsiveCondition>();
     KeyFields: Array<string> = new Array<string>(); 
     PageIndex:number = 0;
     CellCount: number = 0;
     DataRelations = new Array();
-    Columns = new Array();
+    Columns = new Array <SobyGridColumn>();
     InitializedActionPaneButtons: boolean = false;
     IsSelectable:boolean = true;
     IsEditable: boolean = true;
@@ -420,7 +1088,15 @@ class soby_WebGrid {
      * @property {object} cellIndex - Index of the cell.
      */
     OnCellSelected = null;
+
+
+    RowDetailDisplayFunction: (grid: soby_WebGrid, rowId: string, item: any) => string = null;
+    RowDetailDisplayViewResponsiveCondition: sobyResponsiveCondition = null;
     /************************************ END EVENTS *********************************/
+
+
+
+
 
     /************************************ CONSTRUCTORS *******************************/
     /**
@@ -471,6 +1147,17 @@ class soby_WebGrid {
     /************************************ END CONSTRUCTORS ***************************/
 
     /************************************ METHODS ************************************/
+    GetResponsiveConditionById(id: string): sobyResponsiveCondition
+    {
+        for (var i = 0; i < this.ResponsiveConditions.length; i++)
+        {
+            if (this.ResponsiveConditions[i].ID == id)
+                return this.ResponsiveConditions[i];
+        }
+
+        return null;
+    }
+
     InitializeActionPaneButtons()
     {
         if (this.InitializedActionPaneButtons == true)
@@ -478,32 +1165,32 @@ class soby_WebGrid {
 
         var buttons: sobyActionPaneButtons = new sobyActionPaneButtons();
 
-        buttons.Add("ExportToExcel", "export item(s)", 0, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-icon-excel", true, function (grid)
+        buttons.Add("ExportToExcel", "Export item(s)", 0, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-icon-excel", true, function (grid)
         {
             grid.ExportToExcel()
         }, function (grid) { return grid.AllowExportData; });
-        buttons.Add("Delete", "delete item(s)", 1, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-delete", true,
+        buttons.Add("Delete", "Delete item(s)", 1, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-delete", true,
             function (grid){
                 grid.DeleteSelectedRows();
             }
             , function (grid){
                 return (grid.IsEditable == true && grid.GetSelectedRowIDs().length > 0);
             });
-        buttons.Add("Edit", "edit item(s)", 2, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-edit", true
+        buttons.Add("Edit", "Edit item(s)", 2, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-edit", true
             , function (grid){
                 grid.EditSelectedRow();
             }
             , function (grid){
                 return (grid.IsEditable == true && grid.GetSelectedRowIDs().length == 1);
             });
-        buttons.Add("Refresh", "refresh", 3, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-refresh", true
+        buttons.Add("Refresh", "Refresh", 3, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-refresh", true
             , function (grid){
                 grid.Initialize(true);
             }
             , function (grid){
                 return (grid.ShowRefreshButton == true);
             });
-        buttons.Add("Create", "new item", 4, this.ImagesFolderUrl + "/spcommon.png?rev=43", "soby-list-addnew", true
+        buttons.Add("Create", "New item", 4, this.ImagesFolderUrl + "/spcommon.png?rev=43", "soby-list-addnew", true
             , function (grid){
                 grid.EditNewRow();
             }
@@ -698,7 +1385,7 @@ class soby_WebGrid {
             if (column.Editable == false)
                 continue;
 
-            var fieldType = column.FieldType;
+            //var fieldType = column.FieldType;
             var cellId = this.GridID + "_fieldeditcell_" + column.FieldName;
 
 //            var fieldOldValue = this.GetItemFieldValue(rowIndex, column.FieldName);
@@ -779,7 +1466,7 @@ class soby_WebGrid {
     EditCell(cellId) {
         $("#" + cellId).addClass("edited");
         var columnIndex = parseInt($("#" + cellId).attr("columnindex"));
-        var fieldType = this.Columns[columnIndex].FieldType;
+        //var fieldType = this.Columns[columnIndex].FieldType;
 //        var editControl = sobyEditControlFactory.GetEditControl(cellId, fieldType);
 //        editControl.Initialize();
 //        editControl.SetValue("Hasan");
@@ -854,8 +1541,29 @@ class soby_WebGrid {
      * // Adds Title as a column
      * grid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
      */
-    AddColumn(fieldName, displayName, showFieldsOn: number, displayFunction, cellTemplate, sortable, filterable, editable, filterControl, cellCss, cellClassNames) {
-        this.Columns[this.Columns.length] = { FieldName: fieldName, DisplayName: displayName, ShowFieldsOn: showFieldsOn, DisplayFunction: displayFunction, CellTemplate: cellTemplate, Sortable: sortable, Filterable: filterable, Editable: editable, FilterControl: filterControl, CellCss: cellCss, CellClassNames:cellClassNames };
+    AddColumn(fieldName, displayName, showFieldsOn: number, displayFunction, cellTemplate, sortable, filterable, editable, filterControl, cellCss, cellClassNames, responsiveCondition?: sobyResponsiveCondition)
+    {
+        var responsiveConditionID = null;
+        if (responsiveCondition != null)
+        {
+            responsiveConditionID = responsiveCondition.ID;
+            var exists = false;
+            for (var i = 0; i < this.ResponsiveConditions.length; i++)
+            {
+                if (this.ResponsiveConditions[i].ID = responsiveCondition.ID)
+                {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (exists == false)
+                this.ResponsiveConditions.push(responsiveCondition);
+        }
+
+        var gridColumn = new SobyGridColumn(fieldName, displayName, showFieldsOn, displayFunction, cellTemplate, sortable, filterable, editable, filterControl, cellCss, cellClassNames, responsiveConditionID);
+        this.Columns.push(gridColumn);
+        //[this.Columns.length] = { FieldName: fieldName, DisplayName: displayName, ShowFieldsOn: showFieldsOn, DisplayFunction: displayFunction, CellTemplate: cellTemplate, Sortable: sortable, Filterable: filterable, Editable: editable, FilterControl: filterControl, CellCss: cellCss, CellClassNames: cellClassNames, ResponsiveConditionID: responsiveConditionID };
     }
 
     /**
@@ -887,6 +1595,15 @@ class soby_WebGrid {
         }
 
         return rowIds;
+    }
+
+    GetRowIdByItemIndex(itemIndex)
+    {
+        var row = $(this.ContentDivSelector + " .soby_griddatarow[rowindex='" + itemIndex + "']");
+        if (row != null)
+            return row.attr("id");
+
+        return null;
     }
 
     /**
@@ -1050,7 +1767,8 @@ class soby_WebGrid {
         }
 
         this.GenerateActionPane();
-        this.SelectDetailGridTab(rowID, 0);
+        if ($(".soby_griddetailrow[mainrowid = '" + rowID + "'] .soby_gridtabheaderpanel").html() != "")
+            this.SelectDetailGridTab(rowID, 0);
         if (this.OnRowSelected != null)
             this.OnRowSelected(this, rowID);
         this.SetActionPaneButtonsVisibility();
@@ -1315,14 +2033,28 @@ class soby_WebGrid {
 
     SetActionPaneButtonsVisibility()
     {
+        var hasVisibleButton = false;
         for (var i = 0; i < this.ActionPaneButtons.length; i++)
         {
             var actionPaneButton = this.ActionPaneButtons[i];
             var isEnable = actionPaneButton.EnabilityFunction(this);
             if (isEnable == true)
+            {
                 actionPaneButton.Show();
+                hasVisibleButton = true;
+            }
             else
                 actionPaneButton.Hide();
+        }
+
+        var actionpanerow = $(this.ContentDivSelector + " .actionpanerow");
+        if (hasVisibleButton == true)
+        {
+            actionpanerow.show();
+        }
+        else
+        {
+            actionpanerow.hide();
         }
     }
 
@@ -1359,39 +2091,6 @@ class soby_WebGrid {
             });
             actionPaneContainer.append(link);
         }
-
-        /*
-        if (this.IsEditable == false && this.AllowExportData == false && this.ShowRefreshButton == false)
-        {
-            $(this.ContentDivSelector + " .actionpanerow").hide();
-            return;
-        }
-        if (this.AllowExportData == true) {
-            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].ExportToExcel()\"><span class='soby-icon-imgSpan'> <img class='soby-icon-excel soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>export items</span> </a>";
-            actionPaneContainer.append(html);
-        }
-        if (this.IsEditable == true && this.GetSelectedRowIDs().length > 0)
-        {
-            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].DeleteSelectedRows()\"><span class='soby-icon-imgSpan'> <img class='soby-list-delete soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>delete item</span> </a>";
-            actionPaneContainer.append(html);
-        }
-
-        if (this.IsEditable == true && this.GetSelectedRowIDs().length == 1)
-        {
-            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].EditSelectedRow()\"><span class='soby-icon-imgSpan'> <img class='soby-list-edit soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>edit item</span> </a>";
-            actionPaneContainer.append(html);
-        }
-        if (this.ShowRefreshButton == true)
-        {
-            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].Initialize(true);\"><span class='soby-icon-imgSpan'> <img class='soby-list-refresh soby-icon-img' src= '" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' > </span><span>refresh</span> </a>";
-            actionPaneContainer.append(html);
-        }
-        if (this.IsEditable == true)
-        {
-            var html = "<a href='javascript:void(0)' onclick=\"soby_WebGrids['" + this.GridID + "'].EditNewRow()\"><span class='soby-icon-imgSpan' > <img id='idHomePageNewItem-img' src= '" + this.ImagesFolderUrl + "/spcommon.png?rev=43' class='soby-list-addnew soby-icon-img' > </span><span>new item</span> </a>";
-            actionPaneContainer.append(html);
-        }
-        */
     }
 
     /**
@@ -1446,13 +2145,8 @@ class soby_WebGrid {
      * // Populates the detail grid
      * grid.PopulateDetailGrid('soby_grid_fc073155-7f8d-094a-4745-55acd12c4812','#soby_griddatarow_e63bc6df-9a42-a52e-86a5-3d6665cd0bc0_soby_grid_fc073155-7f8d-094a-4745-55acd12c4812', 'soby_griddatarow_e63bc6df-9a42-a52e-86a5-3d6665cd0bc0', 'AuthorId', '1');
      */
-    PopulateDetailGrid(detailGridIDs, contentDivSelectors, mainRowId, fieldNames, values) {
-        var detailGridIdArray = detailGridIDs.split(soby_FilterValueSeperator);
-        var detailGridContainerIdArray = contentDivSelectors.split(soby_FilterValueSeperator);
-        var detailFieldNameArray = fieldNames.split(soby_FilterValueSeperator);
-        var valuesForDetailGridArray = values.split(soby_FilterValueSeperator);
-
-
+    PopulateDetailGrid(detailGridIDs, contentDivSelectors, mainRowId, fieldNames, values)
+    {
         $(this.ContentDivSelector + " tr[id!='" + mainRowId + "'] .soby-list-hiderelateddata").removeClass("soby-list-hiderelateddata").addClass("soby-list-showrelateddata")
 
         if ($(".soby_griddetailrow[mainrowid='" + mainRowId + "'] .detailgridcell:visible").length > 0) {
@@ -1460,19 +2154,27 @@ class soby_WebGrid {
             $("#" + mainRowId + " .soby-list-hiderelateddata").removeClass("soby-list-hiderelateddata").addClass("soby-list-showrelateddata")
         }
         else {
-            for (var i = 0; i < detailGridIdArray.length; i++) {
+            var detailGridIdArray = detailGridIDs.split(soby_FilterValueSeperator);
+            var detailGridContainerIdArray = contentDivSelectors.split(soby_FilterValueSeperator);
+            var detailFieldNameArray = fieldNames.split(soby_FilterValueSeperator);
+            var valuesForDetailGridArray = values.split(soby_FilterValueSeperator);
+            $(this.ContentDivSelector + " .detailgridcell").hide();
+            $(".soby_griddetailrow[mainrowid='" + mainRowId + "'] .detailgridcell").show();
+            $("#" + mainRowId + " .soby-list-showrelateddata").removeClass("soby-list-showrelateddata").addClass("soby-list-hiderelateddata")
+            if (detailGridIDs == null || detailGridIDs == "")
+                return;
+
+            for (var i = 0; i < detailGridIdArray.length; i++)
+            {
                 var detailGridID = detailGridIdArray[i];
                 var contentDivSelector = detailGridContainerIdArray[i];
                 var fieldName = detailFieldNameArray[i];
                 var value = valuesForDetailGridArray[i];
                 soby_WebGrids[detailGridID].ContentDivSelector = contentDivSelector;
                 soby_WebGrids[detailGridID].Initialize(false);
-                $(this.ContentDivSelector + " .detailgridcell").hide();
-                $(".soby_griddetailrow[mainrowid='" + mainRowId + "'] .detailgridcell").show();
                 var viewField = soby_WebGrids[detailGridID].DataService.DataSourceBuilder.GetViewFieldByPropertyName(fieldName);
                 var fieldType = viewField.FieldType;
                 soby_WebGrids[detailGridID].FilterResult(fieldName, value, fieldType, SobyFilterTypes.Equal);
-                $("#" + mainRowId + " .soby-list-showrelateddata").removeClass("soby-list-showrelateddata").addClass("soby-list-hiderelateddata")
             }
         }
     }
@@ -1540,7 +2242,7 @@ class soby_WebGrid {
         var newFilters = new Array();
         for (var i = 0; i < this.Filters.Filters.length; i++) {
             if (this.Filters.Filters[i].FieldName != fieldName) {
-                newFilters[newFilters.length] = this.Filters[i];
+                newFilters[newFilters.length] = this.Filters.Filters[i];
             }
         }
         this.Filters.Filters = newFilters;
@@ -1548,8 +2250,9 @@ class soby_WebGrid {
         this.DataService.Filter(this.Filters, true);
     }
 
-    AddFilterField(fieldName: string, filterValue: string, fieldType: number, filterType: number) {
-        this.Filters.AddFilter(fieldName, filterValue, fieldType, filterType, false);
+    AddFilterField(fieldName: string, filterValue: string, fieldType: number, filterType: number, shouldBeClearedOnUIFilterAction: boolean)
+    {
+        this.Filters.AddFilter(fieldName, filterValue, fieldType, filterType, false, shouldBeClearedOnUIFilterAction);
     }
 
     /**
@@ -1563,10 +2266,11 @@ class soby_WebGrid {
      * // Filters the result with the given value
      * grid.FilterResult('Title', 'Moby', SobyFieldTypes.Text, SobyFilterTypes.Contains)
      */
-    FilterResult(fieldName, value, fieldType, filterType) {
+    FilterResult(fieldName, value, fieldType, filterType, shouldBeClearedOnUIFilterAction: boolean) {
         this.HideHeaderRowMenu(null);
-        this.Filters = new SobyFilters(false);
-        this.AddFilterField(fieldName, value, fieldType, filterType);
+        this.ClearUIFilters();
+        //this.Filters = new SobyFilters(false);
+        this.AddFilterField(fieldName, value, fieldType, filterType, shouldBeClearedOnUIFilterAction);
 //        this.Filters[this.Filters.length] = { FieldName: fieldName, Value: value, FieldType: SobyFieldTypes.Text, FilterType: SobyFilterTypes.Contains }
         this.DataService.Filter(this.Filters, true);
     }
@@ -1582,14 +2286,36 @@ class soby_WebGrid {
      * // Filters the result with the given values
      * grid.FilterResultWithMultipleValues('Title', ['Moby', 'Don'], SobyFieldTypes.Text, SobyFilterTypes.Contains)
      */
-    FilterResultWithMultipleValues(fieldName, values, fieldType, filterType) {
+    FilterResultWithMultipleValues(fieldName, values, fieldType, filterType, shouldBeClearedOnUIFilterAction: boolean)
+    {
+        soby_LogMessage(values)
         this.HideHeaderRowMenu(null);
-        this.Filters = new SobyFilters(true);
-        for (var i = 0; i < values.length; i++) {
-            if (values[i] != "")
-                this.Filters.AddFilter(fieldName, values[i], fieldType, filterType, false);
+        //this.Filters = new SobyFilters(true);
+        this.ClearUIFilters();
+        for (var i = 0; i < values.length; i++)
+        {
+            if (values[i] != "" && values[i] != null)
+            {
+                var filterValue = values[i].Value;
+                if (filterValue == null)
+                    filterValue = values[i];
+                this.Filters.AddFilter(fieldName, filterValue, fieldType, filterType, false, shouldBeClearedOnUIFilterAction);
+            }
         }
         this.DataService.Filter(this.Filters, true);
+    }
+
+    ClearUIFilters()
+    {
+        var newFilters = new Array();
+        for (var i = this.Filters.Filters.length - 1; i > -1; i--)
+        {
+            if (this.Filters.Filters[i].ShouldBeClearedOnUIFilterAction == false)
+            {
+                newFilters[newFilters.length] = this.Filters.Filters[i];
+            }
+        }
+        this.Filters.Filters = newFilters;
     }
 
     /**
@@ -1692,12 +2418,14 @@ class soby_WebGrid {
     AddHeaderCell(headerRow, column, dataRelation) {
         var fieldName = "";
         var displayName = "";
+        var responsiveConditionId = "";
         var sortable = false;
         var filterable = false;
 
         if (column != null) {
             fieldName = column.FieldName;
             displayName = column.DisplayName;
+            responsiveConditionId = column.ResponsiveConditionID;
             if (column.Sortable == null || column.Sortable == undefined) {
                 sortable = true;
             }
@@ -1724,6 +2452,13 @@ class soby_WebGrid {
             if (this.Filters.Filters[i].FieldName == fieldName)
                 hasFilterIconHtml = "<img src='" + this.ImagesFolderUrl + "/filter.gif' border='0'>";
         }
+
+        var headerCell = $("<th style='padding:5px;' nowrap='nowrap' scope='col' class='ms-vh2 soby_gridheadercell' fieldName='" + fieldName + "'></th>")
+        if (responsiveConditionId != null && responsiveConditionId != "")
+        {
+            headerCell.addClass(this.GetResponsiveConditionById(responsiveConditionId).GetClassName());
+        }
+
         var headerOnClick = "";
         var headerLink = null;
         var container = $("<div style='width:100%'></div>");
@@ -1737,19 +2472,28 @@ class soby_WebGrid {
             sortCell.attr("ondragstart", "soby_WebGrids['" + this.GridID + "'].DragColumn(event, '" + fieldName + "')");
         }
 
+        if (sortable == true || filterable == true)
+        {
+            headerCell.addClass("showmenu")
+        }
+        else
+        {
+            headerCell.addClass("hidemenu")
+        }
+
         if (sortable == false && filterable == false) {
             headerOnClick = "";
             sortCell.html(displayName);
         }
         else if (this.OrderByFields.ContainsField(fieldName) == true) {
             if (this.OrderByFields.ContainsFieldAsAsc(fieldName) == true) {
-                headerLink = $("<a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', false)\" class='soby_gridheaderlink'>" + displayName + hasFilterIconHtml + " <img border='0' alt='Sort Ascending' src='" + this.ImagesFolderUrl + "/sort.gif'></a>");
+                headerLink = $("<a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', true)\" class='soby_gridheaderlink'>" + displayName + hasFilterIconHtml + " <img border='0' alt='Sort Ascending' src='" + this.ImagesFolderUrl + "/sort.gif'></a>");
                 if (sortable == false)
                     headerLink = $("<span></span>").html(displayName + hasFilterIconHtml);
                 sortCell.html(headerLink);
             }
             else {
-                headerLink = $("<a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', true)\" class='soby_gridheaderlink'>" + displayName + hasFilterIconHtml + " <img border='0' alt='Sort Descending' src='" + this.ImagesFolderUrl + "/rsort.gif'></a>");
+                headerLink = $("<a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', false)\" class='soby_gridheaderlink'>" + displayName + hasFilterIconHtml + " <img border='0' alt='Sort Descending' src='" + this.ImagesFolderUrl + "/rsort.gif'></a>");
                 if (sortable == false)
                     headerLink = $("<span></span>").html(displayName + hasFilterIconHtml);
                 sortCell.html(headerLink);
@@ -1762,8 +2506,29 @@ class soby_WebGrid {
             sortCell.html(headerLink);
         }
 
-        var headerCell = $("<th style='padding:5px;' nowrap='nowrap' scope='col'  onmouseover=\"javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenuIcon('" + fieldName + "')\" onmouseout=\"javascript:soby_WebGrids['" + this.GridID + "'].HideHeaderRowMenuIcon('" + fieldName + "')\" class='ms-vh2 soby_gridheadercell' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenu('" + fieldName + "', '" + displayName + "', " + sortable + ", " + filterable + ")\" fieldName='" + fieldName + "'></th>").append(container);
+        headerCell.attr("onmouseover", "javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenuIcon('" + fieldName + "')")
+        headerCell.attr("onmouseout", "javascript:soby_WebGrids['" + this.GridID + "'].HideHeaderRowMenuIcon('" + fieldName + "')")
+        headerCell.attr("onclick", "javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenu('" + fieldName + "', '" + displayName + "', " + sortable + ", " + filterable + ")")
+
+        headerCell.append(container);
         headerRow.append(headerCell);
+    }
+
+    ApplyResponsiveElementsVisibility()
+    {
+        for (var i = 0; i < this.ResponsiveConditions.length; i++)
+        {
+            var responsiveCondition = this.ResponsiveConditions[i];
+            var isVisible = responsiveCondition.Validate();
+            if (isVisible == true)
+            {
+                $(this.ContentDivSelector + " ." + responsiveCondition.GetClassName()).show();
+            }
+            else
+            {
+                $(this.ContentDivSelector + " ." + responsiveCondition.GetClassName()).hide();
+            }
+        }
     }
 
     /**
@@ -1779,11 +2544,18 @@ class soby_WebGrid {
 
         headerRow.find("th").remove();
 
-        if (this.IsSelectable == true || this.DataRelations.length > 0 || this.GroupByFields.length > 0) {
+        if (this.IsSelectable == true || this.DataRelations.length > 0 || this.GroupByFields.length > 0 || this.RowDetailDisplayFunction != null)
+        {
             var headerCell = $("<th class='soby_gridheadercell soby_selectitemcell' width='20px' style='padding:5px;text-align:center'><a href='javascript:void (0)' class='soby-list-selectitem-a' onclick=\"soby_WebGrids['" + this.GridID + "'].SelectAllRows();\"><span class='soby-icon-imgSpan soby-list-selectitem-span'> <img class='soby-icon-img soby-list-selectitem' alt='' src='" + this.ImagesFolderUrl + "/spcommon.png?rev=43'> </span></a></th>");
             if (this.GroupByFields.length>0)
                 headerCell.attr("colspan", this.GroupByFields.length);
             headerRow.append(headerCell);
+
+            if (this.IsSelectable == false && this.DataRelations.length == 0 && this.GroupByFields.length == 0 && this.RowDetailDisplayFunction != null)
+            {
+                headerCell.addClass(this.RowDetailDisplayViewResponsiveCondition.GetClassName());
+            }
+
         }
 
         for (var i = 0; i < this.Columns.length; i++) {
@@ -1888,8 +2660,8 @@ class soby_WebGrid {
         menuUL.html("");
         if (sortable == true) {
             menuUL.append("<tr><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;font-size: 5px;'>&nbsp;</td><td style='padding-right:5px;padding-left:5px;font-size: 5px;'>&nbsp;</td></tr>");
-            menuUL.append("<tr onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', false)\" class='ms-vh2 soby_gridheadercell' style='cursor: pointer;'><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'><img src='" + this.ImagesFolderUrl + "/SORTAZLang.gif' border='0'></td><td style='padding-right:5px;padding-left:5px'>Ascending</td></tr>" +
-                "<tr onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', true)\" class='ms-vh2 soby_gridheadercell' style='cursor: pointer;'><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'><img src='" + this.ImagesFolderUrl + "/SORTZALang.gif' border='0'></td><td style='padding-right:5px;padding-left:5px'>Descending</td></tr>" +
+            menuUL.append("<tr onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', true)\" class='ms-vh2 soby_gridheadercell' style='cursor: pointer;'><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'><img src='" + this.ImagesFolderUrl + "/SORTAZLang.gif' border='0'></td><td style='padding-right:5px;padding-left:5px'>Ascending</td></tr>" +
+                "<tr onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', false)\" class='ms-vh2 soby_gridheadercell' style='cursor: pointer;'><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'><img src='" + this.ImagesFolderUrl + "/SORTZALang.gif' border='0'></td><td style='padding-right:5px;padding-left:5px'>Descending</td></tr>" +
                 "<tr><td style='padding-left:5px;border-right:1px solid;;padding-right:5px'>&nbsp;</td><td><hr style='margin-top:5px;margin-bottom:5px;border: 0;border-bottom: 1px dashed #ccc;'></td></tr>");
         }
 
@@ -1914,16 +2686,22 @@ class soby_WebGrid {
             menuUL.show();
         }, 1000);
 
-        var filterControl = null;
+        var filterControl: ISobyEditControlInterface = null;
         for (var i = 0; i < this.Columns.length; i++) {
             if (this.Columns[i].FieldName == fieldName)
                 filterControl = this.Columns[i].FilterControl;
         }
+        soby_LogMessage(fieldName);
+        soby_LogMessage(filterControl);
 
         var li = $("<tr></tr>")
-        if (filterControl != null) {
+        var cellId = soby_guid();
+        if (filterControl != null)
+        {
             var cell = $("<td style='padding-right:5px;padding-left:5px;'></td>");
-            cell.append(filterControl.FilterElement);
+            cell.attr("id", cellId);
+            filterControl.ContainerClientId = cellId;
+            //cell.append(filterControl.FilterElement);
             li.append("<td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'>&nbsp;</td>");
             li.append(cell);
         }
@@ -1935,6 +2713,7 @@ class soby_WebGrid {
             }
 
             var cell = $("<td style='padding-right:5px;padding-left:5px;text-align:right'></td>");
+            cell.attr("id", cellId);
             var textboxElement = $("<input type='text' class='filtertextbox' style='width:100px' fieldname='" + fieldName + "' />");
             textboxElement.val(currentFilterValue);
             cell.append(textboxElement);
@@ -1943,6 +2722,10 @@ class soby_WebGrid {
         }
         li.insertBefore("#" + menuID + " .filterloadingli");
         $("#" + menuID + " .filterloadingli").hide();
+        if (filterControl != null)
+        {
+            filterControl.Initialize();
+        }
     }
 
     /**
@@ -1956,7 +2739,7 @@ class soby_WebGrid {
      ApplyFilters(fieldName) {
         this.HideHeaderRowMenu(null);
         var fieldType, filterType;
-        var filterControl = null;
+        var filterControl: ISobyEditControlInterface = null;
         for (var i = 0; i < this.Columns.length; i++) {
             if (this.Columns[i].FieldName == fieldName)
                 filterControl = this.Columns[i].FilterControl;
@@ -1972,12 +2755,13 @@ class soby_WebGrid {
             }
         }
 
-        if (filterControl != null) {
-            this.FilterResultWithMultipleValues(fieldName, filterControl.GetSelectedValues(), fieldType, filterType)
+        if (filterControl != null)
+        {
+            this.FilterResultWithMultipleValues(fieldName, filterControl.GetValue(), fieldType, filterType, true)
         }
         else if ($("input.filtertextbox[fieldname='" + fieldName + "']").length > 0) {
             var filterValue = $("input.filtertextbox[fieldname='" + fieldName + "']").val();
-            this.FilterResult(fieldName, filterValue, fieldType, filterType);
+            this.FilterResult(fieldName, filterValue, fieldType, filterType, true);
         }
         else {
             var values = [];
@@ -1985,7 +2769,7 @@ class soby_WebGrid {
             for (var i = 0; i < filterValues.length; i++) {
                 values[values.length] = $(filterValues[i]).val();
             }
-            this.FilterResultWithMultipleValues(fieldName, values, fieldType, filterType)
+            this.FilterResultWithMultipleValues(fieldName, values, fieldType, filterType, true)
         }
     }
 
@@ -2048,7 +2832,8 @@ class soby_WebGrid {
         $(this.ContentDivSelector).append("<div style='display:none' class='tempdatadiv'></div>");
 
         var grid = this;
-        this.DataService.ItemPopulated = function (items) {
+        this.DataService.ItemPopulated = function (items)
+        {
             grid.PopulateGridData(items);
         }
 
@@ -2085,11 +2870,11 @@ class soby_WebGrid {
             {
                 this.DataService.SortAndFilter(this.OrderByFields, this.Filters, true);
             }
-            if (this.OrderByFields.length > 0)
+            else if (this.OrderByFields.length > 0)
             {
                 this.DataService.Sort(this.OrderByFields);
             }
-            if (this.Filters.Filters.length > 0)
+            else if (this.Filters.Filters.length > 0)
             {
                 this.DataService.Filter(this.Filters, true);
             }
@@ -2305,14 +3090,25 @@ class soby_WebGrid {
 
      PopulateDetailRow(rowID)
      {
-         if (this.DataRelations.length == 0)
+         if (this.DataRelations.length == 0 && this.RowDetailDisplayFunction == null)
              return;
 
          var detailRow = $("<tr class='soby_griddetailrow'></tr>");
          detailRow.attr("mainrowid", rowID);
          var cell = $("<td colspan='" + this.CellCount + "' class='detailgridcell' style='display:none'></td>");
 
+         if (this.RowDetailDisplayFunction != null)
+         {
+             var itemIndex = $("#" + rowID).attr("rowindex")
+             var dataItem = this.Items[itemIndex];
+
+             var rowMainDetailPanel = $("<div class='soby_gridrowmaindetail'></div>");
+             rowMainDetailPanel.html(this.RowDetailDisplayFunction(this, rowID, dataItem));
+             cell.append(rowMainDetailPanel);
+         }
+
          var tabHeaderPanel = $("<div class='soby_gridtabheaderpanel'></div>")
+         cell.append(tabHeaderPanel);
          for (var t = 0; t < this.DataRelations.length; t++)
          {
              var dataRelation = this.DataRelations[t];
@@ -2328,16 +3124,15 @@ class soby_WebGrid {
              tabHeaderPanel.append(tabHeaderPanelItem);
              cell.append(panel);
          }
-         cell.prepend(tabHeaderPanel);
          detailRow.append("<td></td>");
          detailRow.append(cell);
-         var navigationRow = $(this.ContentDivSelector + " .soby_gridnavigationrow");
-         navigationRow.append(detailRow);
+
+         $("#" + rowID).after(detailRow) ;
      }
 
      PopulateSelectionCell(item, row, rowID)
      {
-         if (this.IsSelectable == true || this.DataRelations.length > 0)
+         if (this.IsSelectable == true || this.DataRelations.length > 0 || this.RowDetailDisplayFunction != null)
          {
              var cell = $("<td valign='top' style='padding:5px;' width='20px' class='soby_selectitemcell'></td>");
              if (this.IsSelectable == true)
@@ -2373,6 +3168,23 @@ class soby_WebGrid {
                  var onClick = "soby_WebGrids['" + this.GridID + "'].PopulateDetailGrid('" + detailGridIds + "','" + detailGridContainerIds + "', '" + rowID + "', '" + detailFieldNames + "', '" + valuesForDetailGrids + "');";
                  var link = $("<a href='javascript:void(0)'><span class='soby-icon-imgSpan'> <img src='" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' class='soby-list-showrelateddata soby-icon-img'> </span></a>");
                  link.attr("onclick", onClick);
+
+                 cell.append(link);
+             }
+             else if (this.RowDetailDisplayFunction != null)
+             {
+                 var onClick = "soby_WebGrids['" + this.GridID + "'].PopulateDetailGrid('','', '" + rowID + "', '', '');";
+                 var link = $("<a href='javascript:void(0)'><span class='soby-icon-imgSpan'> <img src='" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43' class='soby-list-showrelateddata soby-icon-img'> </span></a>");
+                 link.attr("onclick", onClick);
+                 if (this.RowDetailDisplayViewResponsiveCondition != null)
+                 {
+                     if (this.IsSelectable == false)
+                         cell.addClass(this.RowDetailDisplayViewResponsiveCondition.GetClassName());
+                     else
+                         link.addClass(this.RowDetailDisplayViewResponsiveCondition.GetClassName());
+
+                 }
+
                  cell.append(link);
              }
 
@@ -2448,6 +3260,11 @@ class soby_WebGrid {
                  contentHtml = value;
              }
              var cell = $("<" + this.CellTagName + " class='soby_gridcell " + this.CellAdditionalClassNames + "' valign='top' style='padding:5px;'></" + this.CellTagName + ">").html(contentHtml);
+             if (this.Columns[x].ResponsiveConditionID != null && this.Columns[x].ResponsiveConditionID != "")
+             {
+                 cell.addClass(this.GetResponsiveConditionById(this.Columns[x].ResponsiveConditionID).GetClassName());
+             }
+
              cell.attr("id", cellID);
              cell.attr("cellindex", cellIndex);
              cell.attr("columnindex", x);
@@ -2482,7 +3299,8 @@ class soby_WebGrid {
      * // Populates the grid with the given items
      * grid.PopulateGridData(items);
      */
-    PopulateGridData(items) {
+     PopulateGridData(items)
+     {
         this.Items = items;
         this.InitializeActionPaneButtons();
         if (this.ShowHeader == true)
@@ -2512,7 +3330,11 @@ class soby_WebGrid {
             this.PopulateViewColumns(item, row, rowID);
             if (currentRowToAddDataRowsAfter == null)
             {
-                $(this.ContentDivSelector + " " + this.TBodyTagName).append(row);
+                if ($(this.ContentDivSelector + " .soby_gridnavigationrow").length > 0)
+                    $(this.ContentDivSelector + " .soby_gridnavigationrow").before(row);
+                else
+                    $(this.ContentDivSelector + " " + this.TBodyTagName).append(row);
+                
             }
             else
             {
@@ -2528,14 +3350,15 @@ class soby_WebGrid {
         $(this.ContentDivSelector + " .loadingrow").hide();
         if (items.length == 0)
         {
-            $(this.ContentDivSelector + ".emptydatarow " + this.CellTagName).html(this.EmptyDataHtml);
-            $(this.ContentDivSelector + ".emptydatarow").show();
+            $(this.ContentDivSelector + " .emptydatarow " + this.CellTagName).html(this.EmptyDataHtml);
+            $(this.ContentDivSelector + " .emptydatarow").show();
         }
         this.PopulateAggregateRows();
         this.GenerateGroupByPanePane();
         this.GenerateActionPane();
         this.GenerateFilterPane();
         this.DataService.PopulateNavigationInformation();
+        this.ApplyResponsiveElementsVisibility();
         if (this.OnGridPopulated != null)
             this.OnGridPopulated();
         this.SetActionPaneButtonsVisibility();
@@ -2663,9 +3486,13 @@ class soby_DataRepeater extends soby_WebGrid
         var currentRowIndex = -1;
         if (this.ShouldContainRowElement == true)
             currentRow = $(this.ContentDivSelector + " " + this.TBodyTagName);
-        for (var i = 0; i < items.length; i++)
+        var cellIndex = -1;
+        //var currentItemIndex = 0;
+        for (var i = 0;i<items.length;i++)
         {
-            var cellIndex = i;
+            cellIndex++;
+
+            console.log("cellindex:" + cellIndex)
             if (this.ShouldContainRowElement == true && cellIndex % this.MaxCellCount == 0)
             {
                 currentRowIndex++;
@@ -2697,7 +3524,10 @@ class soby_DataRepeater extends soby_WebGrid
 
             if (currentRowToAddDataRowsAfter == null)
             {
-                $(this.ContentDivSelector + " " + this.TBodyTagName).append(currentRow);
+                if ($(this.ContentDivSelector + " .soby_gridnavigationrow").length > 0)
+                    $(this.ContentDivSelector + " .soby_gridnavigationrow").before(currentRow);
+                else
+                    $(this.ContentDivSelector + " " + this.TBodyTagName).append(currentRow);
             }
             else
             {
@@ -2713,8 +3543,8 @@ class soby_DataRepeater extends soby_WebGrid
         $(this.ContentDivSelector + " .loadingrow").hide();
         if (items.length == 0)
         {
-            $(this.ContentDivSelector + ".emptydatarow td").html(this.EmptyDataHtml);
-            $(this.ContentDivSelector + ".emptydatarow").show();
+            $(this.ContentDivSelector + " .emptydatarow td").html(this.EmptyDataHtml);
+            $(this.ContentDivSelector + " .emptydatarow").show();
         }
         this.PopulateAggregateRows();
         this.GenerateGroupByPanePane();
@@ -2837,7 +3667,8 @@ class soby_Carousel{
         this.GoToItem(0)
     }
 
-    Initialize(populateItems) {
+    Initialize(populateItems)
+    {
         var carouselDivID = this.CarouselID;
         var carouselDiv = $("<div class='soby_carousel slide' data-ride='carousel' id='" + carouselDivID + "'></div>");
         if (this.MaxWidth != null && this.MaxWidth >0)
@@ -3280,7 +4111,7 @@ class soby_ItemSelection {
         $(this.ContentDivSelector + " .itemname").autocomplete({
             source: function (request, response) {
                 itemSelection.AutoCompleteDataService.DataSourceBuilder.Filters = new SobyFilters(false);
-                itemSelection.AutoCompleteDataService.DataSourceBuilder.Filters.AddFilter(itemSelection.TextFieldName, request.term, SobyFieldTypes.Text, SobyFilterTypes.Contains, false);
+                itemSelection.AutoCompleteDataService.DataSourceBuilder.Filters.AddFilter(itemSelection.TextFieldName, request.term, SobyFieldTypes.Text, SobyFilterTypes.Contains, false, true);
 
                 itemSelection.AutoCompleteDataService.PopulateItems([response]);
             },

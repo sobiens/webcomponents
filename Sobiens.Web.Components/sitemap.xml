@@ -4,138 +4,153 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
-  <url>
-    <loc>http://webcomponents.sobiens.com/</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Getting%20Started</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Getting%20Started</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Getting%20Started</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyTreeView/Getting%20Started</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyCalendarView/Getting%20Started</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/Setting%20Up</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/download/Versions</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyCarousel/General</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Grouping</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Aggregates</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/SetupWizard</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ModifyRecords</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Localization</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Sorting</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Filtering</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Paging</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Editing</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ActionBar</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/StaticDataBinding</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/WebAPIOData</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/SPDataBinding</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/CustomDataBinding</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/RefreshData</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ExportToExcel</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/MVCSample</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Columns</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Selection</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/DragDrop</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/CellTemplate</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/NestedGrids</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Master-Details</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ContextMenu</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/KeyboardNavigation</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Themes</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Customer%20Orders</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/Grid</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Single%20Selection</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Autocomplete%20watermark</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/Default</loc>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/soby.ui.components.js.html</loc>
-    <lastmod>2016-09-01T06:45:50+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/index.html</loc>
-    <lastmod>2016-09-01T06:45:50+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/soby_WebGrid.html</loc>
-    <lastmod>2016-09-01T06:45:50+00:00</lastmod>
-  </url>
+<url>
+  <loc>http://webcomponents.sobiens.com/</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Getting%20Started</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Getting%20Started</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Getting%20Started</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyTreeView/Getting%20Started</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyCalendarView/Getting%20Started</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyCarousel/Getting%20Started</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/Setting%20Up</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/download/Versions</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyScheduler/Getting%20Started</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Grouping</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Aggregates</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/SetupWizard</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ModifyRecords</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Localization</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Sorting</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Filtering</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Paging</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Editing</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ActionBar</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/StaticDataBinding</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/WebAPIOData</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/SPDataBinding</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/CustomDataBinding</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/RefreshData</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ExportToExcel</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/MVCSample</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Columns</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Selection</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/DragDrop</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/CellTemplate</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Cell%20Styles</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/NestedGrids</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Master-Details</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ContextMenu</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/KeyboardNavigation</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Themes</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Customer%20Orders</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/Grid</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Custom%20Format</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Paging</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Single%20Selection</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Autocomplete%20watermark</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Default</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/Tutorials/SobyScheduler/Custom%20Dates</loc>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/soby.ui.components.js.html</loc>
+  <lastmod>2016-09-01T06:45:50+00:00</lastmod>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/index.html</loc>
+  <lastmod>2016-09-01T06:45:50+00:00</lastmod>
+</url>
+<url>
+  <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/soby_WebGrid.html</loc>
+  <lastmod>2016-09-01T06:45:50+00:00</lastmod>
+</url>
 </urlset>

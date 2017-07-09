@@ -22,7 +22,7 @@
         }
     </script>
 
-    <div class="article" style="float: left;width: 74%;">
+    <div class="article col-md-9">
         <p style="color:orange;font-size: 18px;">
             <div class="row">
                 <div class="col-md-2"><div style="background-color:#0072c6;width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('classic')">&nbsp;</div></div>
@@ -86,7 +86,7 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
 
-    <aside>
+    <div class="col-md-3">
         <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

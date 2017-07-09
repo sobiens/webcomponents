@@ -14,8 +14,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-
-    <div class="article" style="float: left;width: 74%;">
+    <div class="article col-md-9">
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
@@ -35,7 +34,7 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
 
-    <aside>
+    <div class="col-md-3">
         <uc1:SobyDataRepeaterSideMenuControl runat="server" ID="SobyDataRepeaterSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

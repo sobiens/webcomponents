@@ -47,7 +47,7 @@ function soby_PopulateNestedGrid() {
             authorIds[authorIds.length] = selectedDataItems[i]["Id"];
         }
 
-        authorBooksGrid.FilterResultWithMultipleValues("AuthorId", authorIds, SobyFieldTypes.Number, SobyFilterTypes.Equal);
+        authorBooksGrid.FilterResultWithMultipleValues("AuthorId", authorIds, SobyFieldTypes.Number, SobyFilterTypes.Equal, false);
 
     }
     authorGrid.Initialize(true);

@@ -65,7 +65,7 @@ class soby_TreeView {
             var treeview = this;
             var value = itemData[this.ValueFieldName];
             this.ChildNodesDataService.DataSourceBuilder.Filters.Clear();
-            this.ChildNodesDataService.DataSourceBuilder.Filters.AddFilter(this.ParentFieldName, value, SobyFieldTypes.Number, SobyFilterTypes.Equal, false); 
+            this.ChildNodesDataService.DataSourceBuilder.Filters.AddFilter(this.ParentFieldName, value, SobyFieldTypes.Number, SobyFilterTypes.Equal, false, false); 
             this.ChildNodesDataService.ItemPopulated = function (items) {
                 treeview.PopulateNodes("#" + treeviewItemId, items);
                 $("#" + treeviewItemId + " > ul").show();

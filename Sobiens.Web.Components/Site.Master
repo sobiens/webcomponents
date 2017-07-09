@@ -59,7 +59,7 @@
   </div><!-- /.container-fluid -->
 </nav>
     </header>
-    <div id="body">
+    <div id="body" class="row">
         <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
         <section class="content-wrapper main-content clear-fix">
             <asp:ContentPlaceHolder runat="server" ID="MainContent" />

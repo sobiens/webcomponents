@@ -46,7 +46,7 @@ function soby_PopulateWebNews() {
 }
 
 function soby_PopulateWebNewsImages(itemID) {
-    soby.SPLibrary.Lists.GetSPListItemAttachments("News", itemID, function (itemID, attachments) {
+    soby.SPLibrary.Lists.GetListItemAttachments("News", itemID, function (itemID, attachments) {
         soby_LogMessage(attachments)
         if (attachments.length == 0)
             return;
@@ -72,6 +72,6 @@ function soby_PopulateWebNewsImages(itemID) {
         var carousel = new soby_Carousel("#soby_newsImageDiv_" + itemID, "Carousel", staticDataService, "There is no record found.", "Image", "Title", "Body", false);
         carousel.MaxWidth = 600;
         carousel.Initialize(true);
-    });
+    }, "");
 }
 

@@ -15,7 +15,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
 
-    <article>
+    <div class="article col-md-9">
         <script src="../../Scripts/soby.service.js"></script>
         <script src="../../Scripts/soby.ui.components.js"></script>
         <script src="../../Scripts/Tutorials/WebAPI/soby.customers.js"></script>
@@ -69,9 +69,9 @@
             <li>Typing in a cell when the Grid is "editable" will put the cell in edit mode.
             </li>
         </ul>
-    </article>
+    </div>
 
-    <aside>
+    <div class="col-md-3">
         <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

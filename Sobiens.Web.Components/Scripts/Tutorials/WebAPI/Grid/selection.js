@@ -33,3 +33,4 @@ function soby_PopulateSelectionGrid() {
     };
     bookGrid.Initialize(true);
 }
+//# sourceMappingURL=selection.js.map

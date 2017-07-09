@@ -1,21 +1,6 @@
 ﻿/*********************** SOBY GRID *****************************/
-/*
-    .datagrid table td, .datagrid table th { padding: 3px 10px; }
-    .datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; color:#FFFFFF; font-size: 15px; font-weight: bold; border-left: 1px solid #0070A8; }
-     .datagrid table thead th:first-child { border: none; }
-    .datagrid table tbody td { color: #00496B; border-left: 1px solid #E1EEF4;font-size: 12px;font-weight: normal; }
-    .datagrid table tbody .alt td { background: #E1EEF4; color: #00496B; }
-    .datagrid table tbody td:first-child { border-left: none; }
-    .datagrid table tbody tr:last-child td { border-bottom: none; }
-    .datagrid table tfoot td div { border-top: 1px solid #006699;background: #E1EEF4;} 
-    .datagrid table tfoot td { padding: 0; font-size: 12px }
-     .datagrid table tfoot td div{ padding: 2px; }
-    .datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }
-    .datagrid table tfoot  li { display: inline; }
-    .datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #006699;-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; }
-    .datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #006699; color: #FFFFFF; background: none; background-color:#00557F;}div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
-    */
     /**************** Classic Theme **************/
+
     .soby_grid.classic.active{border:solid 1px blue } 
     .soby_grid.classic .soby_griddatarow.alt {  } 
     .soby_grid.classic .soby_griddatarow.selected { background-color: rgba( 123,179,211,0.5 ); color:white;}
@@ -25,7 +10,7 @@
         , .soby_grid.classic .soby_selectitemcell {
             overflow: hidden;    border-bottom: 1px solid rgba( 156,206,240,0.5 );    border-right: 1px solid rgba( 156,206,240,0.5 );    border-top-width: 0;    border-left-width: 0;    padding: 3px 6px;
     }
-    .soby_grid.classic .soby_gridcell.selected { background-color: #0072c6; color:white;} 
+    .soby_grid.classic .soby_gridcell.selected, .soby_grid.classic .soby_dataitem.selected { background-color: #0072c6; color:white;} 
     .soby_grid.classic .soby_tabletitle { color:#0072C6; } 
     .soby_grid.classic .soby_tabheader { background-color:#e6e6e6;border:1px solid #aaaaaa } 
     .soby_grid.classic .soby_tabheader.active {background-color:white;} 
@@ -148,8 +133,15 @@
 .soby_tabheader.active {border-bottom:0px solid} 
 .soby_griddatarow.selected .soby-list-selectitem.soby-list-selectitem, .soby-itmHoverEnabled:hover .soby-list-selectitem.soby-list-selectitem  {
 }
+.soby_gridnavigationrow{
+    clear:both;
+}
 .soby-icon-img{
     position: absolute;
+}
+.soby-info {
+    left: -124px;
+    top: -215px;
 }
 .soby-list-showrelateddata {
     left: -252px;
@@ -212,6 +204,22 @@
     top: -70.2px;
     left: -179px;
 }
+.soby-list-approve
+{
+    top: -312px;
+    left: 0px;
+}
+.soby-list-reset
+{
+    top: -142.2px;
+    left: -288px;
+}
+.soby-list-share
+{
+    top: -268px;
+    left: -107px;
+}
+
 .soby-groupby-heading{
  border:1px solid;
  max-width:100px;
@@ -247,7 +255,7 @@
     width: 15px;
 }
 .soby-list-selectitem-span {
-    visibility: hidden;
+    /* visibility: hidden; */
     height: 10px;
     width: 10px;
 }
@@ -268,6 +276,22 @@
     font-weight:bold;
 }
 
+.sobycheckboxlist li {
+    list-style:none;
+}
+
+.sobycheckboxlist li label {
+    font-weight:normal;
+    padding-left:3px;
+    font-size: 14px;
+}
+
+.sobycheckboxlist {
+    padding-left: 5px !important;
+    max-height: 200px;
+    overflow: auto;
+    width:200px;
+}
 /***************************************************************/
 
 /*********************** SOBY CAROUSEL *****************************/
@@ -336,3 +360,32 @@
 /*********************** SOBY TREE VIEW *****************************/
 .soby_treeviewnode { list-style:none; }
 /***************************************************************/
+
+
+/*********************** SOBY SELECTBOX *****************************/
+.sobyselectbox { position:relative;display: inline-block; border: solid 1px;    border-radius: 5px; padding-left: 0px;}
+.sobyselectbox .selectionfilterpanel { }
+.sobyselectbox .hidden { display:none}
+.sobyselectbox .selectbox { position: absolute; background-color:white;border:solid 1px;max-height: 100px;overflow-x: hidden;overflow-y: auto;min-width: calc(100% + 2px);
+    width: calc(100% + 2px);left: -1px;}
+.sobyselectbox .selectbox .item{ cursor:pointer; }
+.sobyselectbox .selectbox .item:hover{ background-color:aqua }
+.sobyselectbox .selecteditems { padding: 5px;display: inline-block !important;float:left }
+.sobyselectbox .selecteditems .selecteditem{ border:solid 1px;float: left;border-radius: 5px;padding: 2px;margin-left: 5px;float:left }
+.sobyselectbox .searchtextbox {max-width: 100%;padding: 5px;border: none !important; outline: none;min-width: 2.2em;}
+.sobyselectbox .emptytext{    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: inherit;
+    margin: .45238095em 0 .45238095em 1em;
+    line-height: 1.21428571em;
+    color: rgba(191,191,191,.87);}
+.sobyselectbox .searchpanel {float:left;}
+.sobyselectbox .selecteditemsandsearchpanel {float:left;}
+.sobyselectbox .expanderpanel {width:10px; float:right; right: 5px; position: absolute;top:2px;}
+.sobyselectbox .soby_dataitem.selected { display: none; }
+/***************************************************************/
+
+.sobyerrormessage{color:red !important;clear:both;}
+input.haserror {border:1px solid red}

@@ -58,10 +58,11 @@ interface ISobyFilter {
 }
 declare class SobyFilters implements ISobyFilter {
     IsOr: boolean;
+    ShouldBeClearedOnUIFilterAction: boolean;
     constructor(isOr: boolean);
     Filters: any[];
     Clear(): void;
-    AddFilter(fieldName: string, filterValue: string, fieldType: number, filterType: number, lookupID: boolean): void;
+    AddFilter(fieldName: string, filterValue: string, fieldType: number, filterType: number, lookupID: boolean, shouldBeClearedOnUIFilterAction: boolean): void;
     AddFilterObject(filter: SobyFilter): void;
     AddFilterCollection(sobyFilters: SobyFilters): void;
     ToCaml(): string;
@@ -76,6 +77,7 @@ declare class SobyFilter implements ISobyFilter {
     FieldType: number;
     FilterType: number;
     LookupID: boolean;
+    ShouldBeClearedOnUIFilterAction: boolean;
     constructor(fieldName: string, filterValue: string, fieldType: number, filterType: number, lookupID: boolean);
     ToCaml(): string;
     ToQueryString(_type: number): string;

@@ -299,7 +299,7 @@ class soby_CalendarView
             calendarDataSourceBuilder.Filters = new SobyFilters(false);
             calendarDataSourceBuilder.AddSchemaField("Id", SobyFieldTypes.Number, null);
             calendarDataSourceBuilder.AddSchemaField("Title", SobyFieldTypes.Text, null);
-            calendarDataSourceBuilder.Filters.AddFilter("ParentId", "0", SobyFieldTypes.Number, SobyFilterTypes.Equal, false);
+            calendarDataSourceBuilder.Filters.AddFilter("ParentId", "0", SobyFieldTypes.Number, SobyFilterTypes.Equal, false, false);
             var calendarDataService = new soby_WebServiceService(calendarDataSourceBuilder);
             calendarDataService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Premises", "json", "application/json; charset=utf-8", "GET");
 

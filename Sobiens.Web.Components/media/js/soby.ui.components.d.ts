@@ -1,8 +1,13 @@
+declare var testObj: any;
 declare var soby_EditControls: any[];
 interface ISobyEditControlInterface {
     ContainerClientId: string;
     FieldType: number;
     Args: any;
+    ItemClassName: string;
+    ImagesFolderUrl: string;
+    ListItems: Array<SobyListItem>;
+    PopulateChoiceItems(): any;
     IsValid: boolean;
     GetValue(): any;
     SetValue(value: string): any;
@@ -12,12 +17,22 @@ interface ISobyEditControlInterface {
     ValueChanged(): any;
     Validate(): boolean;
 }
+declare class SobyListItem {
+    constructor(value: string, text: string);
+    Value: string;
+    Text: string;
+    Properties: any;
+}
 declare class SobyTextBox implements ISobyEditControlInterface {
     constructor(containerClientId: string, fieldType: number, args: any);
+    ImagesFolderUrl: string;
+    ItemClassName: string;
     ContainerClientId: string;
     FieldType: number;
     Args: any;
     IsValid: boolean;
+    ListItems: Array<SobyListItem>;
+    PopulateChoiceItems(): void;
     GetValue(): any;
     SetValue(value: string): void;
     Initialize(): void;
@@ -28,17 +43,135 @@ declare class SobyTextBox implements ISobyEditControlInterface {
 }
 declare class SobyLookupSelectBox implements ISobyEditControlInterface {
     constructor(containerClientId: string, fieldType: number, args: any);
+    DataService: soby_ServiceInterface;
+    ValueFieldName: string;
+    TitleFieldName: string;
+    ItemClassName: string;
+    ImagesFolderUrl: string;
     ContainerClientId: string;
     FieldType: number;
     Args: any;
     IsValid: boolean;
+    ListItems: Array<SobyListItem>;
+    EmptyText: string;
+    ShowEmptyOption: boolean;
     GetValue(): any;
     SetValue(value: string): void;
+    PopulateChoiceItems(): void;
+    DrawChoiceItems(): void;
     Initialize(): void;
     Initialized(): void;
     ValueBeingChanged(): void;
     ValueChanged(): void;
     Validate(): boolean;
+}
+declare class SobyCheckBoxList implements ISobyEditControlInterface {
+    constructor(containerClientId: string, fieldType: number, args: any);
+    DataService: soby_ServiceInterface;
+    ValueFieldName: string;
+    TitleFieldName: string;
+    ItemClassName: string;
+    ImagesFolderUrl: string;
+    SelectedValuesTempState: any;
+    ContainerClientId: string;
+    FieldType: number;
+    Args: any;
+    IsValid: boolean;
+    ShowSearchBox: boolean;
+    GetValue(): any;
+    SetValue(value: string): void;
+    SetArrayValue(values: any): void;
+    ListItems: Array<SobyListItem>;
+    PopulateChoiceItems(): void;
+    DrawChoiceItems(): void;
+    Initialize(): void;
+    SaveState(): void;
+    Initialized(): void;
+    ValueBeingChanged(): void;
+    ValueChanged(): void;
+    _ValueChanged(): void;
+    Validate(): boolean;
+}
+declare class SobySPViewFilterCheckBoxList extends SobyCheckBoxList {
+    constructor(containerClientId: string, fieldType: number, args: any, webUrl: string, listName: string, fieldName: string);
+    PopulateChoiceItems(): void;
+    WebUrl: string;
+    ListName: string;
+    ListId: string;
+    ViewId: string;
+    FieldName: string;
+}
+declare class SobySelectBox {
+    constructor(containerClientId: string);
+    ContainerClientId: string;
+    Items: any;
+    SelectedItemKeyValues: any;
+    EmptyText: string;
+    DataService: soby_ServiceInterface;
+    ValueFieldName: string;
+    TitleFieldName: string;
+    ImagesFolderUrl: string;
+    ThemeName: string;
+    ThemeClassName: string;
+    IsValid: boolean;
+    Width: string;
+    GetValue(): any;
+    SetValue(value: string): void;
+    /**
+     * Changes theme
+     *
+     * @themeName Name of the theme.
+     * @example
+     * // Hides header row menu icon
+     * grid.ChangeTheme('classic');
+     */
+    ChangeTheme(themeName: string): void;
+    Initialize(): void;
+    SelectItem(index: any): void;
+    PopulateSelectedItems(): void;
+    GetSelectedItems(): any[];
+    RemoveItem(index: any): void;
+    ShowHideSelectBox(): void;
+    ShowSelectBox(): void;
+    HideSelectBox(): void;
+    Initialized(): void;
+    ValueBeingChanged(): void;
+    ValueChanged(): void;
+    Validate(): boolean;
+    /************************************ EVENTS *************************************/
+    /**
+     * Item creation event.
+     *
+     * @event soby_WebGrid#ItemCreated
+     * @type {object}
+     * @property {object} rowID - Identifier of the row.
+     * @property {object} item - Data item related with the row.
+     */
+    ItemCreated: any;
+    /**
+     * Grid population event.
+     *
+     * @event soby_WebGrid#OnGridPopulated
+     * @type {object}
+     */
+    OnGridPopulated: any;
+    /**
+     * Row selection event.
+     *
+     * @event soby_WebGrid#OnRowSelected
+     * @type {object}
+     */
+    OnRowSelected: any;
+    /**
+     * Cell selection event.
+     *
+     * @event soby_WebGrid#OnCellSelected
+     * @type {object}
+     * @property {soby_WebGrid} grid - Current grid object.
+     * @property {object} rowID - Identifier of the row.
+     * @property {object} cellIndex - Index of the cell.
+     */
+    OnCellSelected: any;
 }
 declare class SobyEditControlFactory {
     CreateEditControl(containerClientId: string, fieldType: number, args: any): ISobyEditControlInterface;
@@ -82,6 +215,29 @@ declare class sobyActionPaneButton {
     EnabilityFunction: any;
     Hide(): void;
     Show(): void;
+}
+declare class sobyResponsiveCondition {
+    constructor(validateFunction: (width: number, height: number) => any);
+    ValidateFunction: (width: number, height: number) => boolean;
+    Validate(): boolean;
+    GetClassName(): string;
+    ID: string;
+}
+declare class SobyGridColumn {
+    constructor(fieldName: string, displayName: string, showFieldsOn: number, displayFunction: (item: any) => string, cellTemplate: any, sortable: boolean, filterable: boolean, editable: boolean, filterControl: ISobyEditControlInterface, cellCss: string, cellClassNames: string, responsiveConditionID: string);
+    FieldName: string;
+    DisplayName: string;
+    ShowFieldsOn: number;
+    DisplayFunction: (item: any) => string;
+    CellTemplate: any;
+    Sortable: boolean;
+    Filterable: boolean;
+    Editable: boolean;
+    FilterControl: ISobyEditControlInterface;
+    CellCss: string;
+    CellClassNames: string;
+    ResponsiveConditionID: string;
+    IsVisible: boolean;
 }
 declare class soby_WebGrid {
     /************************************ MEMBERS *************************************/
@@ -132,11 +288,12 @@ declare class soby_WebGrid {
     FilterControls: any[];
     GroupByFields: SobyGroupByFields;
     AggregateFields: SobyAggregateFields;
+    ResponsiveConditions: Array<sobyResponsiveCondition>;
     KeyFields: Array<string>;
     PageIndex: number;
     CellCount: number;
     DataRelations: any[];
-    Columns: any[];
+    Columns: SobyGridColumn[];
     InitializedActionPaneButtons: boolean;
     IsSelectable: boolean;
     IsEditable: boolean;
@@ -190,6 +347,8 @@ declare class soby_WebGrid {
      * @property {object} cellIndex - Index of the cell.
      */
     OnCellSelected: any;
+    RowDetailDisplayFunction: (grid: soby_WebGrid, rowId: string, item: any) => string;
+    RowDetailDisplayViewResponsiveCondition: sobyResponsiveCondition;
     /************************************ END EVENTS *********************************/
     /************************************ CONSTRUCTORS *******************************/
     /**
@@ -231,6 +390,7 @@ declare class soby_WebGrid {
     constructor(contentDivSelector: string, title: string, dataService: any, emptyDataHtml: string);
     /************************************ END CONSTRUCTORS ***************************/
     /************************************ METHODS ************************************/
+    GetResponsiveConditionById(id: string): sobyResponsiveCondition;
     InitializeActionPaneButtons(): void;
     /**
      * Ensures grid is in the global grid array.
@@ -376,7 +536,7 @@ declare class soby_WebGrid {
      * // Adds Title as a column
      * grid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
      */
-    AddColumn(fieldName: any, displayName: any, showFieldsOn: number, displayFunction: any, cellTemplate: any, sortable: any, filterable: any, editable: any, filterControl: any, cellCss: any, cellClassNames: any): void;
+    AddColumn(fieldName: any, displayName: any, showFieldsOn: number, displayFunction: any, cellTemplate: any, sortable: any, filterable: any, editable: any, filterControl: any, cellCss: any, cellClassNames: any, responsiveCondition?: sobyResponsiveCondition): void;
     /**
      * Adds a data relation
      *
@@ -396,6 +556,7 @@ declare class soby_WebGrid {
      * grid.GetRowIds()
      */
     GetRowIds(): any[];
+    GetRowIdByItemIndex(itemIndex: any): string;
     /**
      * Gets selected row identifier
      * @example
@@ -430,7 +591,7 @@ declare class soby_WebGrid {
      * // returns Column object for given fieldname
      * grid.GetColumn('Title');
      */
-    GetColumn(fieldName: any): any;
+    GetColumn(fieldName: any): SobyGridColumn;
     /**
      * Gets selected row identifiers
      * @example
@@ -599,7 +760,7 @@ declare class soby_WebGrid {
      * grid.ClearFiltersOn('Title')
      */
     ClearFiltersOn(fieldName: any): void;
-    AddFilterField(fieldName: string, filterValue: string, fieldType: number, filterType: number): void;
+    AddFilterField(fieldName: string, filterValue: string, fieldType: number, filterType: number, shouldBeClearedOnUIFilterAction: boolean): void;
     /**
      * Filters result based on given field name with single value
      *
@@ -611,7 +772,7 @@ declare class soby_WebGrid {
      * // Filters the result with the given value
      * grid.FilterResult('Title', 'Moby', SobyFieldTypes.Text, SobyFilterTypes.Contains)
      */
-    FilterResult(fieldName: any, value: any, fieldType: any, filterType: any): void;
+    FilterResult(fieldName: any, value: any, fieldType: any, filterType: any, shouldBeClearedOnUIFilterAction: boolean): void;
     /**
      * Filters result based on given field name with multiple value
      *
@@ -623,7 +784,8 @@ declare class soby_WebGrid {
      * // Filters the result with the given values
      * grid.FilterResultWithMultipleValues('Title', ['Moby', 'Don'], SobyFieldTypes.Text, SobyFilterTypes.Contains)
      */
-    FilterResultWithMultipleValues(fieldName: any, values: any, fieldType: any, filterType: any): void;
+    FilterResultWithMultipleValues(fieldName: any, values: any, fieldType: any, filterType: any, shouldBeClearedOnUIFilterAction: boolean): void;
+    ClearUIFilters(): void;
     /**
      * Sorts result based on given group by field name
      *
@@ -674,6 +836,7 @@ declare class soby_WebGrid {
      * @dataRelation Data relation of the column.
      */
     AddHeaderCell(headerRow: any, column: any, dataRelation: any): void;
+    ApplyResponsiveElementsVisibility(): void;
     /**
      * Populates header cells
      * @example

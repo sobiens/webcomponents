@@ -28,6 +28,7 @@ function soby_PopulateDataRepeaterRefreshData()
     bookGrid.MaxCellCount = 3;
     bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddKeyField("Id");
+    bookGrid.AddOrderByField("Title", true);
 //    bookGrid.AddGroupByField("Genre", true);
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);

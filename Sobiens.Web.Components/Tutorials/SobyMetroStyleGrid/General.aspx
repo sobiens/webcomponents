@@ -8,7 +8,7 @@
         <h2>General Example</h2>
             <p>We have just started to develop, so there will be lots of features soon.</p>
     </hgroup>
-    <div class="article" style="float: left;width: 74%;">
+    <div class="article col-md-9">
             <link href="/Css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/Scripts/soby.service.js"></script>
             <script src="/Scripts/soby.ui.components.js"></script>
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <aside>
+    <div class="col-md-3">
         <uc1:SobyCarouselSideMenuControl runat="server" id="SobyCarouselSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

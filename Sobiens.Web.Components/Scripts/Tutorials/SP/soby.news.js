@@ -5,9 +5,9 @@ $(function () {
         $("#soby_BOEDiv").remove();
         return;
     }
-    soby_PopulateSPNews();
+    soby_PopulateNews();
 });
-function soby_PopulateSPNews() {
+function soby_PopulateNews() {
     var dataSourceBuilder = new soby_CamlBuilder("News", "", 5, null);
     dataSourceBuilder.Filters = new SobyFilters(false);
     dataSourceBuilder.AddViewField("ID", "ID", SobyFieldTypes.Text);
@@ -36,7 +36,7 @@ function soby_PopulateSPNews() {
     newsGrid.Initialize(true);
 }
 function soby_PopulateSPNewsImages(itemID) {
-    soby.SPLibrary.Lists.GetSPListItemAttachments("News", itemID, function (itemID, attachments) {
+    soby.SPLibrary.Lists.GetListItemAttachments("News", itemID, function (itemID, attachments) {
         soby_LogMessage(attachments);
         if (attachments.length == 0)
             return;
@@ -57,5 +57,6 @@ function soby_PopulateSPNewsImages(itemID) {
         var carousel = new soby_Carousel("#soby_newsImageDiv_" + itemID, "Carousel", staticDataService, "There is no record found.", "Image", "Title", "Body", false);
         carousel.MaxWidth = 600;
         carousel.Initialize(true);
-    });
+    }, "");
 }
+//# sourceMappingURL=soby.news.js.map

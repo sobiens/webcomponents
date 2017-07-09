@@ -5,10 +5,10 @@ $(function () {
         $("#soby_BOEDiv").remove();
         return;
     }
-    soby_PopulateSPNews();
+    soby_PopulateNews();
 });
 
-function soby_PopulateSPNews() {
+function soby_PopulateNews() {
     var dataSourceBuilder = new soby_CamlBuilder("News", "", 5, null);
     dataSourceBuilder.Filters = new SobyFilters(false);
     dataSourceBuilder.AddViewField("ID", "ID", SobyFieldTypes.Text);
@@ -45,19 +45,23 @@ function soby_PopulateSPNews() {
     newsGrid.Initialize(true);
 }
 
-function soby_PopulateSPNewsImages(itemID) {
-    soby.SPLibrary.Lists.GetSPListItemAttachments("News", itemID, function (itemID, attachments) {
+function soby_PopulateSPNewsImages(itemID)
+{
+    soby.SPLibrary.Lists.GetListItemAttachments("News", itemID, function (itemID, attachments)
+    {
         soby_LogMessage(attachments)
         if (attachments.length == 0)
             return;
 
-        if (attachments.length == 1) {
+        if (attachments.length == 1)
+        {
             $("#soby_newsImageDiv_" + itemID).html("<img src='" + attachments[0] + "' alt='' style='width:320px;height:202px'>");
             return;
         }
 
         var items = new Array();
-        for (var i = 0; i < attachments.length; i++) {
+        for (var i = 0; i < attachments.length; i++)
+        {
             items[items.length] = { Image: attachments[i], Title: "", Body: "" };
         }
 
@@ -73,6 +77,6 @@ function soby_PopulateSPNewsImages(itemID) {
         var carousel = new soby_Carousel("#soby_newsImageDiv_" + itemID, "Carousel", staticDataService, "There is no record found.", "Image", "Title", "Body", false);
         carousel.MaxWidth = 600;
         carousel.Initialize(true);
-    });
+    }, "");
 }
 

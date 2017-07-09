@@ -14,7 +14,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-<br />
+    <div class="article col-md-9">
     <p>This example demonstrates how to use action bar panel in the Soby Data Grid. <br />
         "ActionPaneButtons.Add" method takes the following parameters. <br />
         <strong>1. key:</strong> Key string<br />
@@ -66,8 +66,8 @@
         </pre>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
-
-    <aside>
+        </div>
+    <div class="col-md-3">
         <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

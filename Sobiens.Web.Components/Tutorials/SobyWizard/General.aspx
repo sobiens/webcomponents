@@ -6,13 +6,13 @@
         <h2>Your app description page.</h2>
     </hgroup>
 
-    <article>
+    <div class="article col-md-9">
         <script src="../../Scripts/soby.service.js"></script>
         <script src="../../Scripts/soby.ui.components.js"></script>
         <script src="../../Scripts/Tutorials/WebAPI/soby.customers.js"></script>
-    </article>
+    </div>
 
-    <aside>
+    <div class="col-md-3">
         <h3>Aside Title</h3>
         <p>        
             Use this area to provide additional information.
@@ -22,5 +22,5 @@
             <li><a runat="server" href="~/About">About</a></li>
             <li><a runat="server" href="~/Contact">Contact</a></li>
         </ul>
-    </aside>
+    </div>
 </asp:Content>

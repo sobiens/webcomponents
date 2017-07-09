@@ -56,7 +56,7 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     customerAddressesGrid.AddColumn("Town", "Town", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     customerAddressesGrid.AddColumn("PostCode", "PostCode", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     customerAddressesGrid.AddColumn("Address1", "Address1", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
-    customerAddressesGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal);
+    customerAddressesGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal, false);
     customerAddressesGrid.Initialize(true);
 
     var customerPhonesDataSourceBuilder = new soby_WSBuilder();
@@ -75,7 +75,7 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     customerPhonesGrid.IsEditable = false;
     customerPhonesGrid.AddColumn("Number", "Number", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     customerPhonesGrid.AddColumn("PhoneType", "PhoneType", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
-    customerPhonesGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal);
+    customerPhonesGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal, false);
     customerPhonesGrid.Initialize(true);
 
 
@@ -117,7 +117,7 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     }, null, true, true, true, null, null, null);
     orderItemsGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     orderGrid.AddDataRelation("Price", "Id", orderItemsGrid.GridID, "OrderId")
-    orderGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal);
+    orderGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal, false);
 
     orderGrid.Initialize(true);
 

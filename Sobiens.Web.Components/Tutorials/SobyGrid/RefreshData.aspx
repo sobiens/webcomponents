@@ -22,7 +22,8 @@
             bookGrid.FilterResult(filterFieldName, filterValue, SobyFieldTypes.Text, SobyFilterTypes.Contains);
 
         }
-    </script><br />
+    </script>    <div class="article col-md-9">
+
     <p>This example demonstrates how to use refresh button in the Soby Data Grid. <br />
         "ShowRefreshButton" property states whether refresh button should be visible or not.
         <pre class="js">bookGrid.ShowRefreshButton = true; </pre>
@@ -47,8 +48,8 @@
         </pre>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
-
-    <aside>
+</div>
+    <div class="col-md-3">
         <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

@@ -64,7 +64,7 @@ var soby_TreeView = (function () {
             var treeview = this;
             var value = itemData[this.ValueFieldName];
             this.ChildNodesDataService.DataSourceBuilder.Filters.Clear();
-            this.ChildNodesDataService.DataSourceBuilder.Filters.AddFilter(this.ParentFieldName, value, SobyFieldTypes.Number, SobyFilterTypes.Equal, false);
+            this.ChildNodesDataService.DataSourceBuilder.Filters.AddFilter(this.ParentFieldName, value, SobyFieldTypes.Number, SobyFilterTypes.Equal, false, false);
             this.ChildNodesDataService.ItemPopulated = function (items) {
                 treeview.PopulateNodes("#" + treeviewItemId, items);
                 $("#" + treeviewItemId + " > ul").show();
@@ -125,5 +125,6 @@ var soby_TreeView = (function () {
         soby_TreeViews[this.TreeViewID] = this;
     };
     return soby_TreeView;
-}());
+})();
 // ************************************************************
+//# sourceMappingURL=soby.ui.components.treeview.js.map

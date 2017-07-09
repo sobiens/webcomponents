@@ -15,11 +15,11 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
-    <div class="article" style="float: left;width: 74%;">
+    <div class="article col-md-9">
         <p style="color:orange;font-size: 18px;">This is not documented yet</p>
     </div>
 
-    <aside>
+    <div class="col-md-3">
         <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

@@ -2,13 +2,7 @@
 <%@ Register Src="~/Controls/SobyCarouselSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyCarouselSideMenuControl" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-        <hgroup class="title">
-        <h1><%: Title %></h1>
-        <br />
-        <h2>General Example</h2>
-            <p>We have just started to develop, so there will be lots of features soon.</p>
-    </hgroup>
-    <div class="article" style="float: left;width: 74%;">
+    <div class="article col-md-9">
             <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
@@ -26,7 +20,7 @@
         </div>
     </div>
 
-    <aside>
+    <div class="col-md-3">
         <uc1:SobyCarouselSideMenuControl runat="server" id="SobyCarouselSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

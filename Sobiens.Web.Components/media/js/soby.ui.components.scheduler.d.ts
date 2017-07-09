@@ -48,13 +48,17 @@ declare class soby_Scheduler {
     ImagesFolderUrl: string;
     MinuteWidthWeight: number;
     CellHeight: number;
-    SingleCellLengthAsMinute: number;
+    SingleTimeHeadingDurationAsMinute: number;
+    SingleScheduleItemDurationAsMinute: number;
     Year: number;
     Month: number;
     Day: number;
     Width: number;
     Height: number;
     ShowNavigation: boolean;
+    IsDateChangeAllowed: boolean;
+    IsCategoryChangeAllowed: boolean;
+    IsInDragState: boolean;
     Initialize(): void;
     /**
  * Activates the grid.
@@ -96,6 +100,9 @@ declare class soby_Scheduler {
     OnSelectionChanged: any;
     OnClick: any;
 }
+declare class soby_ScheduleCategories extends Array<soby_ScheduleCategory> {
+    GetCategoryById(categoryId: any): any;
+}
 declare class soby_ScheduleItems extends Array<soby_ScheduleItem> {
     Clone(): soby_ScheduleItems;
     GetItemById(id: any): soby_ScheduleItem;
@@ -112,12 +119,11 @@ declare class soby_ScheduleItem {
     DataItemStatus: number;
     Clone(): soby_ScheduleItem;
 }
-declare class soby_ScheduleCategories extends Array<soby_ScheduleCategory> {
-}
 declare class soby_ScheduleCategory {
     constructor(id: string, title: string);
     Id: string;
     Title: string;
+    CanContainScheduleItems: boolean;
     SubCategories: soby_ScheduleCategories;
     AddCategory(id: string, title: string): void;
 }

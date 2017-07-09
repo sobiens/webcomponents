@@ -13,12 +13,12 @@ namespace Sobiens.Web.Components.Tutorials.SobyGrid {
     public partial class CustomDates {
         
         /// <summary>
-        /// SobyCalendarViewSideMenuControl control.
+        /// SobySchedulerSideMenuControl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Sobiens.Web.Components.Controls.SobyCalendarViewSideMenuControl SobyCalendarViewSideMenuControl;
+        protected global::Sobiens.Web.Components.Controls.SobySchedulerSideMenuControl SobySchedulerSideMenuControl;
     }
 }

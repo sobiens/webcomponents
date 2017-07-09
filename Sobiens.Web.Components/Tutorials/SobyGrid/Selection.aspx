@@ -20,7 +20,8 @@
 
             bookGrid.SelectRowByIndex(rowIndex);
         }
-    </script><br />
+    </script>    <div class="article col-md-9">
+
     <p>This example demonstrates how to use aggregation in the Soby Data Grid. <br />
         "SelectRowByIndex" method takes two parameters. First one is the name of the field. Second one is type of the aggregation. This method does not trigger data population, it just adds the orderbyfield which will be used on population.
         <pre class="js">bookGrid.SelectRowByIndex(1); </pre>
@@ -52,8 +53,8 @@
         </pre>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
-
-    <aside>
+        </div>
+    <div class="col-md-3">
         <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

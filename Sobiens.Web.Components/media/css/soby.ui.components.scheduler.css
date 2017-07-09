@@ -3,6 +3,18 @@
     COLOR: #000000;FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px;margin:0px;
     width:100%;
 }
+
+.soby_scheduler .scheduler-rows-drageffect{
+    height: 30px;
+    background-color: lightblue;
+    border:1px solid blue;
+    position: absolute;
+    z-index:0;
+    display:none;
+}
+.soby_scheduler .schedulitemlink{
+    z-index:1;
+}
 .soby_scheduler .schedulercategoriespanel{
     width: 20%;
     float: left;
