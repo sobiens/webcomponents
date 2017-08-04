@@ -20,4 +20,3 @@ function soby_PopulateGridCellStyles() {
     bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, "width:20px", null);
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=cellstyles.js.map

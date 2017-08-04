@@ -68,8 +68,13 @@ var soby_SharePointService = (function () {
             service.NavigationInformationPopulated();
         }, function (XMLHttpRequest, textStatus, errorThrown) {
             var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
+            var errorTypeName = "";
+            try {
+                errorTypeName = textStatus.get_errorTypeName();
+            }
+            catch (ex) { }
             if (service.ErrorThrown != null)
-                service.ErrorThrown(errorMessage);
+                service.ErrorThrown(errorMessage, errorTypeName);
             soby_LogMessage(errorMessage);
         }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
     };
@@ -179,8 +184,16 @@ var soby_SharePointService = (function () {
             service.ItemPopulated(items);
         }, function (XMLHttpRequest, textStatus, errorThrown) {
             var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
+            var errorTypeName = "";
+            try {
+                errorTypeName = textStatus.get_errorTypeName();
+                if (errorTypeName == "Microsoft.SharePoint.SPQueryThrottledException") {
+                    errorMessage = "Your query returned number of items which is higher than threshold. Please apply some filters and try again.";
+                }
+            }
+            catch (ex) { }
             if (service.ErrorThrown != null)
-                service.ErrorThrown(errorMessage);
+                service.ErrorThrown(errorMessage, errorTypeName);
             soby_LogMessage(errorMessage);
         }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
     };
@@ -195,7 +208,7 @@ var soby_SharePointService = (function () {
     };
     soby_SharePointService.prototype.ItemPopulated = function (items) { };
     soby_SharePointService.prototype.ItemBeingPopulated = function () { };
-    soby_SharePointService.prototype.ErrorThrown = function (errorMessage) { };
+    soby_SharePointService.prototype.ErrorThrown = function (errorMessage, errorTypeName) { };
     soby_SharePointService.prototype.UpdateItem = function (key, objectInstance) {
         var updateUrl = this.Transport.Update.Url.replace(/#key/gi, key);
         ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, key], function (item, args) {
@@ -223,7 +236,7 @@ var soby_SharePointService = (function () {
     soby_SharePointService.prototype.ItemAdded = function (args) { };
     soby_SharePointService.prototype.ItemDeleted = function (args) { };
     return soby_SharePointService;
-})();
+}());
 var soby_SPRestBuilder = (function (_super) {
     __extends(soby_SPRestBuilder, _super);
     function soby_SPRestBuilder() {
@@ -262,7 +275,7 @@ var soby_SPRestBuilder = (function (_super) {
         return query;
     };
     return soby_SPRestBuilder;
-})(soby_WSBuilder);
+}(soby_WSBuilder));
 var soby_SPCSOMBuilder = (function (_super) {
     __extends(soby_SPCSOMBuilder, _super);
     function soby_SPCSOMBuilder() {
@@ -358,7 +371,7 @@ var soby_SPCSOMBuilder = (function (_super) {
         }));
     };
     return soby_SPCSOMBuilder;
-})(soby_SPRestBuilder);
+}(soby_SPRestBuilder));
 // ********************* CAML BUILDER *****************************
 function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     this.WebUrl = webUrl;
@@ -1116,7 +1129,7 @@ var sobySPListsObject = (function () {
         }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, webUrl, null);
     };
     return sobySPListsObject;
-})();
+}());
 var sobySPUserGroupObject = (function () {
     function sobySPUserGroupObject() {
     }
@@ -1249,7 +1262,7 @@ var sobySPUserGroupObject = (function () {
         });
     };
     return sobySPUserGroupObject;
-})();
+}());
 var sobySPWebsObject = (function () {
     function sobySPWebsObject() {
     }
@@ -1286,7 +1299,7 @@ var sobySPWebsObject = (function () {
         });
     };
     return sobySPWebsObject;
-})();
+}());
 var sobySPSitesObject = (function () {
     function sobySPSitesObject() {
     }
@@ -1322,7 +1335,7 @@ var sobySPSitesObject = (function () {
         });
     };
     return sobySPSitesObject;
-})();
+}());
 var sobySPViewsObject = (function () {
     function sobySPViewsObject() {
     }
@@ -1366,7 +1379,7 @@ var sobySPViewsObject = (function () {
         });
     };
     return sobySPViewsObject;
-})();
+}());
 var sobySPWebPartPagesObject = (function () {
     function sobySPWebPartPagesObject() {
     }
@@ -1403,7 +1416,7 @@ var sobySPWebPartPagesObject = (function () {
         });
     };
     return sobySPWebPartPagesObject;
-})();
+}());
 var sobySPVersionsObject = (function () {
     function sobySPVersionsObject() {
     }
@@ -1464,7 +1477,7 @@ var sobySPVersionsObject = (function () {
         });
     };
     return sobySPVersionsObject;
-})();
+}());
 var sobySPLibraryObject = (function () {
     function sobySPLibraryObject() {
         this.GetData = function (soapEnv, callback, errorcallback, completecallback, async, siteUrl, argsx) {
@@ -1503,12 +1516,11 @@ var sobySPLibraryObject = (function () {
         this.Versions = new sobySPVersionsObject();
     }
     return sobySPLibraryObject;
-})();
+}());
 var sobyObject = (function () {
     function sobyObject() {
         this.SPLibrary = new sobySPLibraryObject();
     }
     return sobyObject;
-})();
+}());
 var soby = new sobyObject();
-//# sourceMappingURL=soby.spservice.js.map

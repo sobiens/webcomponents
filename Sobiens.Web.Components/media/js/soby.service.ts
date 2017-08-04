@@ -427,6 +427,17 @@ class SobySchemaField {
         this.Args = args;
     }
 }
+class SobyNavigationInformation
+{
+    ViewType: SobyPaginationViewTypes;
+    VerticalAlign:SobyPaginationVerticalAlign
+    PageIndex: number = 0;
+    constructor()
+    {
+        this.ViewType = SobyPaginationViewTypes.BasicButtons;
+        this.VerticalAlign = SobyPaginationVerticalAlign.Center;
+    }
+}
 class SobyOrderByFields extends Array<SobyOrderByField> {
     GetOrderFieldByName(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
@@ -551,7 +562,7 @@ interface soby_ServiceInterface {
     GetFieldNames();
     ItemPopulated(items: Array<soby_Item>);
     ItemBeingPopulated();
-    ErrorThrown(errorMessage: string);
+    ErrorThrown(errorMessage: string, errorTypeName: string);
     UpdateItem(key:string, objectInstance);
     DeleteItem(keyNames:Array<string>, keyValues: Array<string>);
     AddItem(objectInstance);
@@ -688,6 +699,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
 
         var data = "";
         var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read, false);
+
         if (mainQuery != null && mainQuery != "")
         {
             if (requestMethod.toLowerCase() == "post")
@@ -735,7 +747,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
             function (XMLHttpRequest, textStatus, errorThrown) {
                 var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
                 if (service.ErrorThrown != null)
-                    service.ErrorThrown(errorMessage);
+                    service.ErrorThrown(errorMessage, null);
                 soby_LogMessage(errorMessage);
             },
             function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
@@ -865,7 +877,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
             function (XMLHttpRequest, textStatus, errorThrown) {
                 var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
                 if (service.ErrorThrown != null)
-                    service.ErrorThrown(errorMessage);
+                    service.ErrorThrown(errorMessage, null);
                 soby_LogMessage(errorMessage);
             },
             function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
@@ -885,7 +897,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
     }
     ItemPopulated(items: Array<soby_Item>) { }
     ItemBeingPopulated() { }
-    ErrorThrown(errorMessage: string) { }
+    ErrorThrown(errorMessage: string, errorTypeName: string) { }
     UpdateItem(key: string, objectInstance) {
         var updateUrl = this.Transport.Update.Url.replace(/#key/gi, key)
         ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, key], function (item, args) {
@@ -1348,7 +1360,6 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
             if (envelope != "" && selectFieldsEnvelope != "")
                 envelope += "&";
             envelope += selectFieldsEnvelope;
-            
             if (envelope != "" && orderByFieldsQuery != "")
                 envelope += "&";
             envelope += orderByFieldsQuery;
@@ -1360,7 +1371,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
     }
     GetCountQuery(transport: soby_TransportRequest) {
         var mainQuery = this.GetMainQuery(transport, true);
-        var countServiceUrl = transport.Url + "/$count?" + mainQuery;
+        var countServiceUrl = transport.Url + "/$count?";// + mainQuery;
         if (transport.Type == "POST") {
             return "{" + mainQuery + "}";
         }

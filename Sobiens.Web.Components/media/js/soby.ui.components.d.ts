@@ -17,6 +17,19 @@ interface ISobyEditControlInterface {
     ValueChanged(): any;
     Validate(): boolean;
 }
+declare enum SobyPaginationViewTypes {
+    PageNumbers = 0,
+    BasicButtons = 1,
+    BasicButtons_PageNumbers = 2,
+    AdvancedButtons = 3,
+    AdvancedButtons_PageNumbers = 4,
+    QuickButtons_PageNumbers = 5,
+}
+declare enum SobyPaginationVerticalAlign {
+    Left = 0,
+    Center = 1,
+    Right = 2,
+}
 declare class SobyListItem {
     constructor(value: string, text: string);
     Value: string;
@@ -134,6 +147,7 @@ declare class SobySelectBox {
     ShowHideSelectBox(): void;
     ShowSelectBox(): void;
     HideSelectBox(): void;
+    SearchTextBoxFocused(): void;
     Initialized(): void;
     ValueBeingChanged(): void;
     ValueChanged(): void;
@@ -178,7 +192,7 @@ declare class SobyEditControlFactory {
     GetEditControl(containerClientId: string): ISobyEditControlInterface;
 }
 declare var sobyEditControlFactory: SobyEditControlFactory;
-declare var soby_WebGrids: any[];
+declare var soby_WebGrids: soby_WebGrid[];
 declare var soby_IsCtrlOnHold: boolean;
 declare class SobyShowFieldsOnObject {
     All: number;
@@ -270,7 +284,8 @@ declare class soby_WebGrid {
      * @property {string}                   ThemeName                   - Theme name of the grid.
      * @property {string}                   ThemeClassName              - Theme  class name of the grid.
      */
-    ActionInProgress: boolean;
+    private ActionInProgress;
+    private NavigationActionInProgress;
     Active: boolean;
     AllowExportData: boolean;
     AllowMultipleSelections: boolean;
@@ -283,6 +298,7 @@ declare class soby_WebGrid {
     DisplayTitle: boolean;
     DataService: soby_ServiceInterface;
     EmptyDataHtml: string;
+    NavigationInformation: SobyNavigationInformation;
     OrderByFields: SobyOrderByFields;
     Filters: SobyFilters;
     FilterControls: any[];
@@ -290,7 +306,6 @@ declare class soby_WebGrid {
     AggregateFields: SobyAggregateFields;
     ResponsiveConditions: Array<sobyResponsiveCondition>;
     KeyFields: Array<string>;
-    PageIndex: number;
     CellCount: number;
     DataRelations: any[];
     Columns: SobyGridColumn[];
@@ -919,6 +934,23 @@ declare class soby_WebGrid {
     PopulateDetailRow(rowID: any): void;
     PopulateSelectionCell(item: any, row: any, rowID: any): void;
     PopulateViewColumns(item: any, row: any, rowID: any): void;
+    /**
+    * Focuses to the first item
+    *
+    * @example
+    * // Focuses to the first item
+    * grid.FocusToFirstItem();
+    */
+    FocusToFirstItem(): void;
+    /**
+ * Displays error message
+ *
+ * @errorMessage Error message which returned from the service.
+ * @example
+ * // Displays error message
+ * grid.DisplayErrorMessage(errorMessage);
+ */
+    DisplayErrorMessage(errorMessage: string): void;
     /**
      * Populates the grid data
      *

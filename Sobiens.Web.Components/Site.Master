@@ -48,6 +48,7 @@
             <li><a href="/Tutorials/SobyTreeView/Getting Started.aspx">Tree View</a></li>
             <li><a href="/Tutorials/SobyCalendarView/Getting Started.aspx">Calendar View</a></li>
             <li><a href="/Tutorials/SobyCarousel/Getting Started.aspx">Carousel</a></li>
+            <li><a href="/Tutorials/SobyValidator/Getting Started.aspx">Validation</a></li>
           </ul>
         </li>
         <li class="hidden-md"><a href="#">|</a></li>

@@ -23,4 +23,3 @@ function soby_PopulateSelectBoxGeneral() {
     bookGrid.ValueFieldName = "Id";
     bookGrid.Initialize();
 }
-//# sourceMappingURL=general.js.map

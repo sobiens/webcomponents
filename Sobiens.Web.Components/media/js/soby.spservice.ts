@@ -81,8 +81,13 @@ class soby_SharePointService implements soby_ServiceInterface
             },
             function (XMLHttpRequest, textStatus, errorThrown) {
                 var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
+                var errorTypeName = "";
+                try
+                {
+                    errorTypeName = textStatus.get_errorTypeName()
+                } catch (ex){ }
                 if (service.ErrorThrown != null)
-                    service.ErrorThrown(errorMessage);
+                    service.ErrorThrown(errorMessage, errorTypeName);
                 soby_LogMessage(errorMessage);
             },
             function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
@@ -206,8 +211,17 @@ class soby_SharePointService implements soby_ServiceInterface
             },
             function (XMLHttpRequest, textStatus, errorThrown) {
                 var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
+                var errorTypeName = "";
+                try
+                {
+                    errorTypeName = textStatus.get_errorTypeName()
+                    if (errorTypeName == "Microsoft.SharePoint.SPQueryThrottledException")
+                    {
+                        errorMessage = "Your query returned number of items which is higher than threshold. Please apply some filters and try again.";
+                    }
+                } catch (ex) { }
                 if (service.ErrorThrown != null)
-                    service.ErrorThrown(errorMessage);
+                    service.ErrorThrown(errorMessage, errorTypeName);
                 soby_LogMessage(errorMessage);
             },
             function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
@@ -227,7 +241,7 @@ class soby_SharePointService implements soby_ServiceInterface
     }
     ItemPopulated(items: Array<soby_Item>) { }
     ItemBeingPopulated() { }
-    ErrorThrown(errorMessage: string) { }
+    ErrorThrown(errorMessage: string, errorTypeName: string) { }
     UpdateItem(key: string, objectInstance) {
         var updateUrl = this.Transport.Update.Url.replace(/#key/gi, key)
         ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, key], function (item, args) {

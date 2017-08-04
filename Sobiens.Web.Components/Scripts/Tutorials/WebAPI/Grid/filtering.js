@@ -22,4 +22,3 @@ function soby_PopulateGridSFiltering() {
     bookGrid.AddFilterField("Genre", "Picaresque", SobyFieldTypes.Text, SobyFilterTypes.Equal, false);
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=filtering.js.map

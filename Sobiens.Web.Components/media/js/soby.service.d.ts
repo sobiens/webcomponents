@@ -91,6 +91,12 @@ declare class SobySchemaField {
     Args: any;
     constructor(fieldName: string, fieldType: number, args: any);
 }
+declare class SobyNavigationInformation {
+    ViewType: SobyPaginationViewTypes;
+    VerticalAlign: SobyPaginationVerticalAlign;
+    PageIndex: number;
+    constructor();
+}
 declare class SobyOrderByFields extends Array<SobyOrderByField> {
     GetOrderFieldByName(fieldName: string): SobyOrderByField;
     ContainsField(fieldName: string): boolean;
@@ -155,7 +161,7 @@ interface soby_ServiceInterface {
     GetFieldNames(): any;
     ItemPopulated(items: Array<soby_Item>): any;
     ItemBeingPopulated(): any;
-    ErrorThrown(errorMessage: string): any;
+    ErrorThrown(errorMessage: string, errorTypeName: string): any;
     UpdateItem(key: string, objectInstance: any): any;
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>): any;
     AddItem(objectInstance: any): any;
@@ -233,7 +239,7 @@ declare class soby_WebServiceService implements soby_ServiceInterface {
     GetFieldNames(): any[];
     ItemPopulated(items: Array<soby_Item>): void;
     ItemBeingPopulated(): void;
-    ErrorThrown(errorMessage: string): void;
+    ErrorThrown(errorMessage: string, errorTypeName: string): void;
     UpdateItem(key: string, objectInstance: any): void;
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>): void;
     AddItem(objectInstance: any): void;

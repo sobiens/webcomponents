@@ -27,5 +27,8 @@ namespace Sobiens.Web.Components.TutorialServices.Models
 
         [DataMember]
         public bool NextPageExist { get; set; }
+
+        [DataMember]
+        public int TotalItemCount { get; set; }
     }
 }

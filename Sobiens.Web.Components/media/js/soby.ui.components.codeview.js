@@ -8,7 +8,7 @@ var SobyCodeViewTypesObject = (function () {
         this.Xml = 2;
     }
     return SobyCodeViewTypesObject;
-})();
+}());
 var SobyCodeViewTypes = new SobyCodeViewTypesObject();
 var soby_CodeView = (function () {
     function soby_CodeView(contentDivSelector, title, codeViewType) {
@@ -55,6 +55,5 @@ var soby_CodeView = (function () {
         soby_CodeViews[this.CodeViewID] = this;
     };
     return soby_CodeView;
-})();
+}());
 // ************************************************************
-//# sourceMappingURL=soby.ui.components.codeview.js.map

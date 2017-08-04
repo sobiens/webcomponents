@@ -1,26 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="FormValidation.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyValidator.FormValidation" Title="Soby Validator" %>
-
-<%@ Register Src="~/Controls/SobyValidatorViewSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyValidatorViewSideMenuControl" %>
-
-<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
-    <section class="featured">
-        <div class="content-wrapper">
-    <hgroup class="title">
-        <h1><%: Title %></h1>
-        <br />
-        <h2>Validator Example</h2>
-    </hgroup>
-        </div>
-    </section>
-</asp:Content>
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
-            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
+﻿            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <link href="/media/css/soby.ui.components.validator.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
             <script src="/media/js/soby.validator.js"></script>
 <div id="sobyTestForm">
+    <legend>Please provide your name, email address (won't be published) and a comment</legend>
     <table width="100%">
     <tr>
         <td>
@@ -71,15 +55,3 @@
         }
     }
 </script>
-        <a href="javascript:void(0)" onclick="soby_ShowHideViewSource()">
-            <img src="/Images/viewsource.png" border="0" width="20px" /> View source
-        </a>
-        <pre id="ViewSourceDiv" class="viewsource html" codefile="/Scripts/Tutorials/Validator/formvalidator.txt" style="display:none;background-color:ivory">
-            <div class="viewsourcecodefileoutput"></div>
-        </pre>
-    </div>
-
-    <div class="col-md-3">
-        <uc1:SobyValidatorViewSideMenuControl runat="server" ID="SobyValidatorViewSideMenuControl" />
-    </div>
-</asp:Content>

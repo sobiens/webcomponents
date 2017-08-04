@@ -149,7 +149,6 @@ class soby_NumericValidator extends soby_ExistenceValidator
 
     Validate(value: any): boolean
     {
-        console.log(value)
         var isValid = super.Validate(value);
         if (isValid == false)
             return false;
@@ -357,12 +356,15 @@ class soby_UrlValidator extends soby_PatternValidator
         super();
         this.Name = "UrlValidator ";
         this.Type = soby_ValidatorTypes.URL;
+        /*
         this.Pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
             '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
             '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
             '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
             '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
             '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+        */
+        this.Pattern = new RegExp('(http|ftp|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?', 'i');
     }
 
     SetDefaultErrorMessages()
@@ -421,13 +423,13 @@ class soby_FormValidator
         $(this.ContentDivSelector + " .sobyerrormessage").hide();
         var isValid: boolean = true;
         var hasInValidData: boolean = false;
-        var textBoxes = $(this.ContentDivSelector).find("input[type='text'], input[type='number'], input[type='email'], input[type='url']");
+        var textBoxes = $(this.ContentDivSelector).find("textarea, input[type='text'], input[type='number'], input[type='email'], input[type='url']");
         textBoxes.removeClass("haserror");
         for (var i = 0; i < textBoxes.length; i++)
         {
             var textBox = $(textBoxes[i]);
             var textValidator: soby_ExistenceValidator = null;
-            if (textBox.attr("type") == "text")
+            if (textBox.prop("tagName").toLowerCase() == "textarea" || textBox.attr("type") == "text")
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Text) as soby_TextValidator;
             else if (textBox.attr("type") == "number")
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Numeric) as soby_NumericValidator;
@@ -435,7 +437,6 @@ class soby_FormValidator
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Email) as soby_EmailValidator;
             else if (textBox.attr("type") == "url")
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.URL) as soby_UrlValidator;
-            console.log(textValidator)
             var texBoxId = textBox.attr("id");
             var texBoxErrorMessageId = texBoxId + "_soby_errormessage";
             if ($("#" + texBoxErrorMessageId).length == 0)
@@ -468,10 +469,10 @@ class soby_FormValidator
                 (textValidator as soby_NumericValidator).MaxValue = parseInt(textBox.attr("max"));
             }
 
-            console.log(textValidator)
-            var isValid = textValidator.Validate(value);
-            if (isValid == false)
+            var _isValid = textValidator.Validate(value);
+            if (_isValid == false)
             {
+                isValid = false;
                 textBox.addClass("haserror");
                 $("#" + texBoxErrorMessageId).text(textValidator.ErrorMessage);
                 $("#" + texBoxErrorMessageId).show();

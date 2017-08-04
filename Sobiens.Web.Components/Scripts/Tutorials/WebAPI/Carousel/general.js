@@ -31,4 +31,3 @@ function soby_PopulateWebCarousel() {
     };
     carousel.Initialize(true);
 }
-//# sourceMappingURL=general.js.map

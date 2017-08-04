@@ -19,6 +19,7 @@ namespace Sobiens.Web.Components.TutorialServices.Controllers
 
             List<Address> addresses = db.Addresses.ToList();
             result.Data = addresses;
+            result.TotalItemCount = addresses.Count();
             result.Succeed = true;
             return result;
         }

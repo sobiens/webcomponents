@@ -19,6 +19,6 @@ function soby_PopulateGridPaging() {
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.NavigationInformation.VerticalAlign = SobyPaginationVerticalAlign.Right;
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=paging.js.map

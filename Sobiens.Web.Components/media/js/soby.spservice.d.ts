@@ -28,7 +28,7 @@ declare class soby_SharePointService implements soby_ServiceInterface {
     GetFieldNames(): any[];
     ItemPopulated(items: Array<soby_Item>): void;
     ItemBeingPopulated(): void;
-    ErrorThrown(errorMessage: string): void;
+    ErrorThrown(errorMessage: string, errorTypeName: string): void;
     UpdateItem(key: string, objectInstance: any): void;
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>): void;
     AddItem(objectInstance: any): void;

@@ -55,7 +55,7 @@ var soby_Validate = (function () {
         return formValidator.Validate();
     };
     return soby_Validate;
-})();
+}());
 var soby_ExistenceValidator = (function () {
     function soby_ExistenceValidator() {
         this.Required = false;
@@ -86,7 +86,7 @@ var soby_ExistenceValidator = (function () {
         return validator;
     };
     return soby_ExistenceValidator;
-})();
+}());
 var soby_NumericValidator = (function (_super) {
     __extends(soby_NumericValidator, _super);
     function soby_NumericValidator() {
@@ -110,7 +110,6 @@ var soby_NumericValidator = (function (_super) {
         this.ErrorMessages.LessThanMin = sobyValidate.ErrorMessages.Numeric.LessThanMin;
     };
     soby_NumericValidator.prototype.Validate = function (value) {
-        console.log(value);
         var isValid = _super.prototype.Validate.call(this, value);
         if (isValid == false)
             return false;
@@ -137,7 +136,7 @@ var soby_NumericValidator = (function (_super) {
         return validator;
     };
     return soby_NumericValidator;
-})(soby_ExistenceValidator);
+}(soby_ExistenceValidator));
 var soby_TextValidator = (function (_super) {
     __extends(soby_TextValidator, _super);
     function soby_TextValidator() {
@@ -181,7 +180,7 @@ var soby_TextValidator = (function (_super) {
         return validator;
     };
     return soby_TextValidator;
-})(soby_ExistenceValidator);
+}(soby_ExistenceValidator));
 var soby_PatternValidator = (function (_super) {
     __extends(soby_PatternValidator, _super);
     function soby_PatternValidator() {
@@ -231,7 +230,7 @@ var soby_PatternValidator = (function (_super) {
         return validator;
     };
     return soby_PatternValidator;
-})(soby_ExistenceValidator);
+}(soby_ExistenceValidator));
 var soby_EmailValidator = (function (_super) {
     __extends(soby_EmailValidator, _super);
     function soby_EmailValidator() {
@@ -259,19 +258,22 @@ var soby_EmailValidator = (function (_super) {
         return validator;
     };
     return soby_EmailValidator;
-})(soby_PatternValidator);
+}(soby_PatternValidator));
 var soby_UrlValidator = (function (_super) {
     __extends(soby_UrlValidator, _super);
     function soby_UrlValidator() {
         _super.call(this);
         this.Name = "UrlValidator ";
         this.Type = soby_ValidatorTypes.URL;
-        this.Pattern = new RegExp('^(https?:\\/\\/)?' +
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' +
-            '((\\d{1,3}\\.){3}\\d{1,3}))' +
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-            '(\\?[;&a-z\\d%_.~+=-]*)?' +
+        /*
+        this.Pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
             '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+        */
+        this.Pattern = new RegExp('(http|ftp|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?', 'i');
     }
     soby_UrlValidator.prototype.SetDefaultErrorMessages = function () {
         _super.prototype.SetDefaultErrorMessages.call(this);
@@ -292,7 +294,7 @@ var soby_UrlValidator = (function (_super) {
         return validator;
     };
     return soby_UrlValidator;
-})(soby_PatternValidator);
+}(soby_PatternValidator));
 var soby_ValidatorTypes;
 (function (soby_ValidatorTypes) {
     soby_ValidatorTypes[soby_ValidatorTypes["Date"] = 1] = "Date";
@@ -316,12 +318,12 @@ var soby_FormValidator = (function () {
         $(this.ContentDivSelector + " .sobyerrormessage").hide();
         var isValid = true;
         var hasInValidData = false;
-        var textBoxes = $(this.ContentDivSelector).find("input[type='text'], input[type='number'], input[type='email'], input[type='url']");
+        var textBoxes = $(this.ContentDivSelector).find("textarea, input[type='text'], input[type='number'], input[type='email'], input[type='url']");
         textBoxes.removeClass("haserror");
         for (var i = 0; i < textBoxes.length; i++) {
             var textBox = $(textBoxes[i]);
             var textValidator = null;
-            if (textBox.attr("type") == "text")
+            if (textBox.prop("tagName").toLowerCase() == "textarea" || textBox.attr("type") == "text")
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Text);
             else if (textBox.attr("type") == "number")
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Numeric);
@@ -329,7 +331,6 @@ var soby_FormValidator = (function () {
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Email);
             else if (textBox.attr("type") == "url")
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.URL);
-            console.log(textValidator);
             var texBoxId = textBox.attr("id");
             var texBoxErrorMessageId = texBoxId + "_soby_errormessage";
             if ($("#" + texBoxErrorMessageId).length == 0) {
@@ -352,9 +353,9 @@ var soby_FormValidator = (function () {
             if (textBox.attr("max") != null && textBox.attr("max") != undefined && isNaN(parseInt(textBox.attr("max"))) == false) {
                 textValidator.MaxValue = parseInt(textBox.attr("max"));
             }
-            console.log(textValidator);
-            var isValid = textValidator.Validate(value);
-            if (isValid == false) {
+            var _isValid = textValidator.Validate(value);
+            if (_isValid == false) {
+                isValid = false;
                 textBox.addClass("haserror");
                 $("#" + texBoxErrorMessageId).text(textValidator.ErrorMessage);
                 $("#" + texBoxErrorMessageId).show();
@@ -368,6 +369,5 @@ var soby_FormValidator = (function () {
         return isValid;
     };
     return soby_FormValidator;
-})();
+}());
 var sobyValidate = new soby_Validate();
-//# sourceMappingURL=soby.validator.js.map

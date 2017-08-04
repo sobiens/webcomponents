@@ -50,4 +50,3 @@ function soby_PopulateGridResponsiveDesign() {
     bookGrid.IsEditable = false;
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=responsivedesign.js.map

@@ -15,7 +15,7 @@ var SobyCalendarViewTypesObject = (function () {
         this.TaskList = 5;
     }
     return SobyCalendarViewTypesObject;
-})();
+}());
 var SobyCalendarViewTypes = new SobyCalendarViewTypesObject();
 var soby_CalendarView = (function () {
     function soby_CalendarView(contentDivSelector, title, dataService, year, month, day, emptyDataHtml, idFieldName, titleFieldName, descriptionFieldName, startDateFieldName, endDateFieldName, linkFieldName, imageFieldName, width, height) {
@@ -481,14 +481,14 @@ var soby_CalendarView = (function () {
         soby_CalendarViews[this.CalendarViewID] = this;
     };
     return soby_CalendarView;
-})();
+}());
 var soby_CalendarViewItems = (function (_super) {
     __extends(soby_CalendarViewItems, _super);
     function soby_CalendarViewItems() {
         _super.apply(this, arguments);
     }
     return soby_CalendarViewItems;
-})(Array);
+}(Array));
 var soby_CalendarViewItem = (function () {
     function soby_CalendarViewItem(id, title, description, startDate, endDate) {
         this.Id = "";
@@ -503,6 +503,5 @@ var soby_CalendarViewItem = (function () {
         this.EndDate = endDate;
     }
     return soby_CalendarViewItem;
-})();
+}());
 // ************************************************************
-//# sourceMappingURL=soby.ui.components.calendar.js.map

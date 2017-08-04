@@ -25,4 +25,3 @@ function soby_PopulateItemSelectionAutoCompleteWatermark() {
     itemSelection.ImagesFolderUrl = "/media/images";
     itemSelection.Initialize();
 }
-//# sourceMappingURL=autocompletewatermark.js.map
