@@ -291,9 +291,13 @@
     <Content Include="media\js\jquery-3.1.0.js" />
     <Content Include="media\js\jquery-ui-1.12.0.min.js" />
     <Content Include="media\js\soby.service.js" />
+    <Content Include="media\js\soby.spservice.js" />
     <Content Include="media\js\soby.ui.components.calendar.js" />
     <Content Include="media\js\soby.ui.components.codeview.js" />
+    <Content Include="media\js\soby.ui.components.js" />
+    <Content Include="media\js\soby.ui.components.scheduler.js" />
     <Content Include="media\js\soby.ui.components.treeview.js" />
+    <Content Include="media\js\soby.validator.js" />
     <Content Include="packages.config" />
     <Content Include="Css\bootstrap-theme.css.map" />
     <Content Include="Css\bootstrap-theme.min.css.map" />
@@ -329,10 +333,14 @@
     <Content Include="Scripts\jquery-3.1.0.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.min.js" />
-    <TypeScriptCompile Include="media\js\soby.validator.ts" />
-    <TypeScriptCompile Include="media\js\soby.ui.components.scheduler.ts" />
-    <TypeScriptCompile Include="media\js\soby.ui.components.codeview.ts" />
+    <TypeScriptCompile Include="media\js\soby.service.ts" />
+    <TypeScriptCompile Include="media\js\soby.spservice.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.calendar.ts" />
+    <TypeScriptCompile Include="media\js\soby.ui.components.codeview.ts" />
+    <TypeScriptCompile Include="media\js\soby.ui.components.scheduler.ts" />
+    <TypeScriptCompile Include="media\js\soby.ui.components.treeview.ts" />
+    <TypeScriptCompile Include="media\js\soby.ui.components.ts" />
+    <TypeScriptCompile Include="media\js\soby.validator.ts" />
     <TypeScriptCompile Include="Scripts\SPContext.d.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\codeview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.customdates.ts" />
@@ -378,13 +386,9 @@
     <Content Include="Tutorials\SobyValidator\FormValidation.aspx" />
     <Content Include="Tutorials\SobyValidator\Getting Started.aspx" />
     <Content Include="Web.sitemap" />
-    <TypeScriptCompile Include="media\js\soby.spservice.ts" />
-    <TypeScriptCompile Include="media\js\soby.ui.components.treeview.ts" />
     <TypeScriptCompile Include="Scripts\main.ts" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="media\js\soby.spservice.js" />
-    <Content Include="media\js\soby.ui.components.js" />
     <Content Include="Scripts\test.js" />
     <Content Include="Scripts\Tutorials\SP\soby.carousel.js" />
     <Content Include="Scripts\Tutorials\SP\soby.customers.js" />
@@ -1033,8 +1037,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\jqueryui.d.ts" />
     <TypeScriptCompile Include="Scripts\jquery.d.ts" />
-    <TypeScriptCompile Include="media\js\soby.service.ts" />
-    <TypeScriptCompile Include="media\js\soby.ui.components.ts" />
     <TypeScriptCompile Include="Scripts\test.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.carousel.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.customers.ts" />

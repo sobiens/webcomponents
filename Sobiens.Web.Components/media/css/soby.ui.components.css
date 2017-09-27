@@ -219,6 +219,11 @@
     left: -107px;
 }
 
+.soby-list-attachment {
+    top: -184.2px;
+    left: -17.13px;
+}
+
 .soby-groupby-heading{
  border:1px solid;
  max-width:100px;
@@ -388,6 +393,9 @@
 .sobyselectbox .selecteditemsandsearchpanel {float:left;}
 .sobyselectbox .expanderpanel {width:10px; float:right; right: 5px; position: absolute;top:2px;}
 .sobyselectbox .soby_dataitem.selected { display: none; }
+.sobyselectbox .soby-selectboxitem-delete-link:focus {
+    background-color: white;
+}
 /***************************************************************/
 
 .sobyerrormessage{color:red !important;clear:both;}

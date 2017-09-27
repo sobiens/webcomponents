@@ -127,6 +127,7 @@ declare class SobySelectBox {
     ThemeName: string;
     ThemeClassName: string;
     IsValid: boolean;
+    FocusToNextItemAfterItemSelection: boolean;
     Width: string;
     GetValue(): any;
     SetValue(value: string): void;
@@ -207,6 +208,7 @@ declare var SobyShowFieldsOn: SobyShowFieldsOnObject;
 declare function soby_RemoveNoneExistenceGrid(): void;
 declare function soby_GetActiveDataGrid(): soby_WebGrid;
 declare function soby_GetAllGrids(): any[];
+declare function soby_GetAllVisibleGrids(): any[];
 declare function soby_RefreshAllGrids(): void;
 declare class sobyActionPaneButtons extends Array<sobyActionPaneButton> {
     AddButton(button: sobyActionPaneButton): void;
@@ -756,7 +758,7 @@ declare class soby_WebGrid {
      * // Shows cell poup content
      * grid.ShowCellPopupContent('soby_gridcell_2e7e2471-cd48-85ac-45ab-5f2db8162cbc')
      */
-    ShowCellPopupContent(cellID: any): void;
+    ShowCellPopupContent(cellID: string, columnIndex: number, dataItemIndex: number): void;
     /**
      * Hides cell poup content
      *
@@ -933,7 +935,8 @@ declare class soby_WebGrid {
     PopulateGroupByRow(itemIndex: number, item: any, row: any): any;
     PopulateDetailRow(rowID: any): void;
     PopulateSelectionCell(item: any, row: any, rowID: any): void;
-    PopulateViewColumns(item: any, row: any, rowID: any): void;
+    PopulateCellTemplateContent(cellId: string, columnIndex: number, dataItemIndex: number): void;
+    PopulateViewColumns(item: any, row: any, rowID: any, itemIndex: number): void;
     /**
     * Focuses to the first item
     *

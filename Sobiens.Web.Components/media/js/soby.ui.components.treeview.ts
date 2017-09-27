@@ -3,7 +3,15 @@
 var soby_TreeViews = new Array();
 var soby_TreeViewItems = new Array();
 
-class soby_TreeView {
+interface soby_TreeViewInterface
+{
+    RootDataBeingParsed(data: any): Array<soby_Item>;
+    ChildDataBeingParsed(data: any): Array<soby_Item>;
+    RootNodesDataServiceBeingQueried();
+    ChildNodesDataServiceBeingQueried(node: soby_Item);
+}
+
+class soby_TreeView implements soby_TreeViewInterface {
     constructor(contentDivSelector, title, rootNodesDataService, childNodesDataService, emptyDataHtml, parentFieldName, valueFieldName, textFieldName) {
         this.TreeViewID = "soby_itemselection_" + soby_guid();
         this.ContentDivSelector = contentDivSelector;
@@ -18,8 +26,27 @@ class soby_TreeView {
         var treeview = this;
         this.RootNodesDataService.ItemPopulated = function (items) {
             soby_TreeViewItems = new Array();
+            items = treeview.RootDataBeingParsed(items);
             treeview.PopulateNodes(treeview.ContentDivSelector, items);
         }
+    }
+
+    RootDataBeingParsed(data: any): Array<soby_Item>
+    {
+        return data;
+    }
+
+    ChildDataBeingParsed(data: any): Array<soby_Item>
+    {
+        return data;
+    }
+
+    RootNodesDataServiceBeingQueried()
+    {
+    }
+
+    ChildNodesDataServiceBeingQueried(node: soby_Item)
+    {
     }
 
     TreeViewID: string = "";
@@ -36,6 +63,7 @@ class soby_TreeView {
     ImagesFolderUrl: string = "/_layouts/1033/images";
     Initialize() {
         $(this.ContentDivSelector).addClass("soby_treeview");
+        this.RootNodesDataServiceBeingQueried();
         this.RootNodesDataService.PopulateItems(null);
     }
     GetItemData(treeviewItemId) {
@@ -45,6 +73,44 @@ class soby_TreeView {
         }
 
         return null;
+    }
+
+    GetRootNodeId(treeviewItemId)
+    {
+        var rootNodeId = treeviewItemId;
+        var currentParentNodeId = treeviewItemId;
+        while (currentParentNodeId != null)
+        {
+            currentParentNodeId = this.GetParentNodeId(currentParentNodeId)
+            if (currentParentNodeId != null)
+                rootNodeId = currentParentNodeId;
+        }
+
+        return rootNodeId; 
+    }
+
+    GetParentNodeId(treeviewItemId)
+    {
+        var parentNode = $("#" + treeviewItemId).parent().parent();
+        if (parentNode.hasClass("soby_treeviewnode") == true)
+            return parentNode.attr("id");
+
+        return;
+    }
+
+    GetRootNodeItemData(treeviewItemId)
+    {
+        var rootNodeId = this.GetRootNodeId(treeviewItemId);
+        return this.GetItemData(rootNodeId);
+    }
+
+    GetParentNodeItemData(treeviewItemId)
+    {
+        var parentNodeId = this.GetParentNodeId(treeviewItemId);
+        if (parentNodeId != null)
+            return this.GetItemData(parentNodeId);
+
+        return;
     }
     ExpandNode(treeviewItemId) {
         var isExpanded = $("#" + treeviewItemId).attr("isexpanded");
@@ -66,11 +132,14 @@ class soby_TreeView {
             var value = itemData[this.ValueFieldName];
             this.ChildNodesDataService.DataSourceBuilder.Filters.Clear();
             this.ChildNodesDataService.DataSourceBuilder.Filters.AddFilter(this.ParentFieldName, value, SobyFieldTypes.Number, SobyFilterTypes.Equal, false, false); 
-            this.ChildNodesDataService.ItemPopulated = function (items) {
+            this.ChildNodesDataService.ItemPopulated = function (items)
+            {
+                items = treeview.ChildDataBeingParsed(items);
                 treeview.PopulateNodes("#" + treeviewItemId, items);
                 $("#" + treeviewItemId + " > ul").show();
                 $("#" + treeviewItemId).attr("isexpanded", "1");
             }
+            this.ChildNodesDataServiceBeingQueried(itemData);
             this.ChildNodesDataService.PopulateItems([treeviewItemId]);
 
         }
@@ -90,8 +159,8 @@ class soby_TreeView {
             var checkBox = $("<input type='checkbox' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].CheckNode('" + treeViewItemId + "')\">");
             checkBox.val(treeViewItemId);
             checkBox.attr("name", "checkbox_" + this.TreeViewID);
-                
-            var expandLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ExpandNode('" + treeViewItemId + "')\"><span class='soby-icon-imgSpan15' > <img class='soby-list-expand soby-icon-img' alt= '' src= '/media/images/spcommon.png?rev=43' > </span></a>");
+
+            var expandLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ExpandNode('" + treeViewItemId + "')\"><span class='soby-icon-imgSpan15' > <img class='soby-list-expand soby-icon-img' alt= '' src= '" + this.ImagesFolderUrl + "/spcommon.png?rev=43' > </span></a>");
             var selectLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ClickNode('" + treeViewItemId + "')\"></a>");
             selectLink.text(text);
 

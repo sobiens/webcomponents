@@ -22,3 +22,4 @@ function soby_PopulateCheckBoxList() {
     financialYearCheckBoxList.Initialize();
     financialYearCheckBoxList.ValueChanged();
 }
+//# sourceMappingURL=general.js.map

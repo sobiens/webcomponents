@@ -31,3 +31,4 @@ function soby_PopulateGridAggregates() {
     //    bookGrid.AddAggregateField("Year", SobyAggregateTypes.Max);
     bookGrid.Initialize(true);
 }
+//# sourceMappingURL=aggregates.js.map

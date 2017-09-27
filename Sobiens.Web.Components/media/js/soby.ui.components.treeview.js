@@ -31,11 +31,23 @@ var soby_TreeView = (function () {
         var treeview = this;
         this.RootNodesDataService.ItemPopulated = function (items) {
             soby_TreeViewItems = new Array();
+            items = treeview.RootDataBeingParsed(items);
             treeview.PopulateNodes(treeview.ContentDivSelector, items);
         };
     }
+    soby_TreeView.prototype.RootDataBeingParsed = function (data) {
+        return data;
+    };
+    soby_TreeView.prototype.ChildDataBeingParsed = function (data) {
+        return data;
+    };
+    soby_TreeView.prototype.RootNodesDataServiceBeingQueried = function () {
+    };
+    soby_TreeView.prototype.ChildNodesDataServiceBeingQueried = function (node) {
+    };
     soby_TreeView.prototype.Initialize = function () {
         $(this.ContentDivSelector).addClass("soby_treeview");
+        this.RootNodesDataServiceBeingQueried();
         this.RootNodesDataService.PopulateItems(null);
     };
     soby_TreeView.prototype.GetItemData = function (treeviewItemId) {
@@ -44,6 +56,32 @@ var soby_TreeView = (function () {
                 return soby_TreeViewItems[i];
         }
         return null;
+    };
+    soby_TreeView.prototype.GetRootNodeId = function (treeviewItemId) {
+        var rootNodeId = treeviewItemId;
+        var currentParentNodeId = treeviewItemId;
+        while (currentParentNodeId != null) {
+            currentParentNodeId = this.GetParentNodeId(currentParentNodeId);
+            if (currentParentNodeId != null)
+                rootNodeId = currentParentNodeId;
+        }
+        return rootNodeId;
+    };
+    soby_TreeView.prototype.GetParentNodeId = function (treeviewItemId) {
+        var parentNode = $("#" + treeviewItemId).parent().parent();
+        if (parentNode.hasClass("soby_treeviewnode") == true)
+            return parentNode.attr("id");
+        return;
+    };
+    soby_TreeView.prototype.GetRootNodeItemData = function (treeviewItemId) {
+        var rootNodeId = this.GetRootNodeId(treeviewItemId);
+        return this.GetItemData(rootNodeId);
+    };
+    soby_TreeView.prototype.GetParentNodeItemData = function (treeviewItemId) {
+        var parentNodeId = this.GetParentNodeId(treeviewItemId);
+        if (parentNodeId != null)
+            return this.GetItemData(parentNodeId);
+        return;
     };
     soby_TreeView.prototype.ExpandNode = function (treeviewItemId) {
         var isExpanded = $("#" + treeviewItemId).attr("isexpanded");
@@ -66,10 +104,12 @@ var soby_TreeView = (function () {
             this.ChildNodesDataService.DataSourceBuilder.Filters.Clear();
             this.ChildNodesDataService.DataSourceBuilder.Filters.AddFilter(this.ParentFieldName, value, SobyFieldTypes.Number, SobyFilterTypes.Equal, false, false);
             this.ChildNodesDataService.ItemPopulated = function (items) {
+                items = treeview.ChildDataBeingParsed(items);
                 treeview.PopulateNodes("#" + treeviewItemId, items);
                 $("#" + treeviewItemId + " > ul").show();
                 $("#" + treeviewItemId).attr("isexpanded", "1");
             };
+            this.ChildNodesDataServiceBeingQueried(itemData);
             this.ChildNodesDataService.PopulateItems([treeviewItemId]);
         }
     };
@@ -88,7 +128,7 @@ var soby_TreeView = (function () {
             var checkBox = $("<input type='checkbox' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].CheckNode('" + treeViewItemId + "')\">");
             checkBox.val(treeViewItemId);
             checkBox.attr("name", "checkbox_" + this.TreeViewID);
-            var expandLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ExpandNode('" + treeViewItemId + "')\"><span class='soby-icon-imgSpan15' > <img class='soby-list-expand soby-icon-img' alt= '' src= '/media/images/spcommon.png?rev=43' > </span></a>");
+            var expandLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ExpandNode('" + treeViewItemId + "')\"><span class='soby-icon-imgSpan15' > <img class='soby-list-expand soby-icon-img' alt= '' src= '" + this.ImagesFolderUrl + "/spcommon.png?rev=43' > </span></a>");
             var selectLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ClickNode('" + treeViewItemId + "')\"></a>");
             selectLink.text(text);
             li.append(expandLink);
@@ -125,5 +165,6 @@ var soby_TreeView = (function () {
         soby_TreeViews[this.TreeViewID] = this;
     };
     return soby_TreeView;
-}());
+})();
 // ************************************************************
+//# sourceMappingURL=soby.ui.components.treeview.js.map

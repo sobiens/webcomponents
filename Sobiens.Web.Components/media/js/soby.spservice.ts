@@ -139,6 +139,7 @@ class soby_SharePointService implements soby_ServiceInterface
     GoToPage(pageIndex: number) {
         this.DataSourceBuilderTemp.PageIndex = pageIndex;
         this.PageIndex = pageIndex;
+        this.NextPageString = this.NextPageStrings[pageIndex]
 
         this.PopulateItems(null);
     };
@@ -688,6 +689,32 @@ class sobySPListsObject
                 "content-type": "application/json;odata=verbose",
                 "X-RequestDigest": $("#__REQUESTDIGEST").val(),
                 "X-HTTP-Method": "DELETE",
+                "IF-MATCH": "*"
+            },
+            success: function ()
+            {
+                if (successCallbackFunction != null)
+                    successCallbackFunction(args);
+            },
+            error: function ()
+            {
+                if (errorCallbackFunction != null)
+                    errorCallbackFunction(args);
+            }
+        });
+
+    }
+    RecycleFile(siteUrl, fileSiteRelativeUrl, args, successCallbackFunction, errorCallbackFunction)
+    {
+        var fullUrl = siteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileSiteRelativeUrl + "')/recycle()";
+        $.ajax({
+            url: fullUrl,
+            type: "POST",
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "content-type": "application/json;odata=verbose",
+                "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                //"X-HTTP-Method": "RECYCLE",
                 "IF-MATCH": "*"
             },
             success: function ()

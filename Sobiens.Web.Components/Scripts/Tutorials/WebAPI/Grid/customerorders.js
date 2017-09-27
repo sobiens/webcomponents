@@ -104,3 +104,4 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     orderGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal, false);
     orderGrid.Initialize(true);
 }
+//# sourceMappingURL=customerorders.js.map

@@ -21,5 +21,7 @@ function soby_PopulateSelectBoxGeneral() {
     bookGrid.DataService = bookService;
     bookGrid.TitleFieldName = "Title";
     bookGrid.ValueFieldName = "Id";
+    bookGrid.FocusToNextItemAfterItemSelection = false;
     bookGrid.Initialize();
 }
+//# sourceMappingURL=general.js.map

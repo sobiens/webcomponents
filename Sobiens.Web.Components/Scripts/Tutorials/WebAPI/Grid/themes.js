@@ -20,3 +20,4 @@ function soby_PopulateGridThemes() {
     bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.Initialize(true);
 }
+//# sourceMappingURL=themes.js.map
