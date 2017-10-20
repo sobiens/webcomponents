@@ -43,6 +43,7 @@ declare class soby_SPRestBuilder extends soby_WSBuilder {
 declare class soby_SPCSOMBuilder extends soby_SPRestBuilder {
     ListTitle: string;
     SiteUrl: string;
+    UseViewFields: boolean;
     Clone(): soby_SPCSOMBuilder;
     GetCountQuery(request: soby_TransportRequest): any;
     GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any): void;

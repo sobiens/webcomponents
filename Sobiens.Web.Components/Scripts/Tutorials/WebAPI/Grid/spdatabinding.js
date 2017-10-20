@@ -21,4 +21,3 @@ function soby_PopulateSPDataBindingGrid() {
     bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=spdatabinding.js.map

@@ -165,6 +165,5 @@ var soby_TreeView = (function () {
         soby_TreeViews[this.TreeViewID] = this;
     };
     return soby_TreeView;
-})();
+}());
 // ************************************************************
-//# sourceMappingURL=soby.ui.components.treeview.js.map

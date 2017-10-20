@@ -39,4 +39,3 @@ function soby_PopulateDataRepeaterCustomFormatRefreshData() {
     };
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=customformat.js.map

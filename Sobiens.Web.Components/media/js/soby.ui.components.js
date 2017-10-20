@@ -28,7 +28,7 @@ var SobyListItem = (function () {
         this.Text = text;
     }
     return SobyListItem;
-})();
+}());
 var SobyTextBox = (function () {
     function SobyTextBox(containerClientId, fieldType, args) {
         this.ContainerClientId = containerClientId;
@@ -67,7 +67,7 @@ var SobyTextBox = (function () {
         return true;
     };
     return SobyTextBox;
-})();
+}());
 var SobyLookupSelectBox = (function () {
     function SobyLookupSelectBox(containerClientId, fieldType, args) {
         this.DataService = null;
@@ -152,7 +152,7 @@ var SobyLookupSelectBox = (function () {
         return true;
     };
     return SobyLookupSelectBox;
-})();
+}());
 var SobyCheckBoxList = (function () {
     function SobyCheckBoxList(containerClientId, fieldType, args) {
         this.DataService = null;
@@ -279,7 +279,7 @@ var SobyCheckBoxList = (function () {
         return true;
     };
     return SobyCheckBoxList;
-})();
+}());
 var SobySPViewFilterCheckBoxList = (function (_super) {
     __extends(SobySPViewFilterCheckBoxList, _super);
     function SobySPViewFilterCheckBoxList(containerClientId, fieldType, args, webUrl, listName, fieldName) {
@@ -314,7 +314,7 @@ var SobySPViewFilterCheckBoxList = (function (_super) {
         editControl.DrawChoiceItems();
     };
     return SobySPViewFilterCheckBoxList;
-})(SobyCheckBoxList);
+}(SobyCheckBoxList));
 var SobySelectBox = (function () {
     function SobySelectBox(containerClientId) {
         this.Items = null;
@@ -632,7 +632,7 @@ var SobySelectBox = (function () {
         return true;
     };
     return SobySelectBox;
-})();
+}());
 var SobyEditControlFactory = (function () {
     function SobyEditControlFactory() {
     }
@@ -653,7 +653,7 @@ var SobyEditControlFactory = (function () {
         return soby_EditControls[containerClientId];
     };
     return SobyEditControlFactory;
-})();
+}());
 var sobyEditControlFactory = new SobyEditControlFactory();
 // **********************************************************************
 // ********************* SOBY GRID *****************************
@@ -670,7 +670,7 @@ var SobyShowFieldsOnObject = (function () {
         this.EditNew = 6;
     }
     return SobyShowFieldsOnObject;
-})();
+}());
 var SobyShowFieldsOn = new SobyShowFieldsOnObject();
 if ($("form") != null) {
     $("form").click(function () {
@@ -800,7 +800,7 @@ var sobyActionPaneButtons = (function (_super) {
         this.Get(key).Show();
     };
     return sobyActionPaneButtons;
-})(Array);
+}(Array));
 var sobyActionPaneButton = (function () {
     function sobyActionPaneButton(key, text, index, imageUrl, className, visible, onClick, enabilityFunction) {
         this.ID = "actionpanebutton_" + soby_guid();
@@ -828,7 +828,7 @@ var sobyActionPaneButton = (function () {
         $("#" + this.ID).show();
     };
     return sobyActionPaneButton;
-})();
+}());
 var sobyResponsiveCondition = (function () {
     function sobyResponsiveCondition(validateFunction) {
         this.ValidateFunction = null;
@@ -845,7 +845,7 @@ var sobyResponsiveCondition = (function () {
         return "responsivecondition_" + this.ID;
     };
     return sobyResponsiveCondition;
-})();
+}());
 var SobyGridColumn = (function () {
     function SobyGridColumn(fieldName, displayName, showFieldsOn, displayFunction, cellTemplate, sortable, filterable, editable, filterControl, cellCss, cellClassNames, responsiveConditionID) {
         if (filterControl === void 0) { filterControl = null; }
@@ -866,7 +866,7 @@ var SobyGridColumn = (function () {
         this.ResponsiveConditionID = responsiveConditionID;
     }
     return SobyGridColumn;
-})();
+}());
 var soby_WebGrid = (function () {
     /************************************ END EVENTS *********************************/
     /************************************ CONSTRUCTORS *******************************/
@@ -2198,7 +2198,7 @@ var soby_WebGrid = (function () {
         var headerLink = null;
         var container = $("<div style='width:100%'></div>");
         var sortCell = $("<div style='float:left;'></div>");
-        var filterCell = $("<div style='width:10px;float:right;display:none' class='headerrowmenuiconcontainer'><img src='" + this.ImagesFolderUrl + "/ecbarw.png' alt='Open Menu'></div>");
+        var filterCell = $("<div style='width:10px;float:right;display:none' class='headerrowmenuiconcontainer'><a href='javascript:void(0)' class='openmenulink'><img src='" + this.ImagesFolderUrl + "/ecbarw.png' alt='Open Menu'></a></div>");
         container.append(sortCell);
         container.append(filterCell);
         if (this.IsGroupable == true) {
@@ -2235,9 +2235,16 @@ var soby_WebGrid = (function () {
                 headerLink = $("<span></span>").html(displayName + hasFilterIconHtml);
             sortCell.html(headerLink);
         }
+        var grid = this;
+        if (headerLink != null) {
+            headerLink.focus(function () {
+                grid.ShowHeaderRowMenuIcon(fieldName);
+            });
+        }
         headerCell.attr("onmouseover", "javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenuIcon('" + fieldName + "')");
         headerCell.attr("onmouseout", "javascript:soby_WebGrids['" + this.GridID + "'].HideHeaderRowMenuIcon('" + fieldName + "')");
         headerCell.attr("onclick", "javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenu('" + fieldName + "', '" + displayName + "', " + sortable + ", " + filterable + ")");
+        filterCell.find("a.openmenulink").attr("onclick", "javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenu('" + fieldName + "', '" + displayName + "', " + sortable + ", " + filterable + ")");
         headerCell.append(container);
         headerRow.append(headerCell);
     };
@@ -2306,6 +2313,7 @@ var soby_WebGrid = (function () {
      * grid.ShowHeaderRowMenuIcon('Title');
      */
     soby_WebGrid.prototype.ShowHeaderRowMenuIcon = function (fieldName) {
+        $(this.ContentDivSelector + " th .headerrowmenuiconcontainer").hide();
         $(this.ContentDivSelector + " th[fieldName='" + fieldName + "'] .headerrowmenuiconcontainer").show();
     };
     /**
@@ -2355,36 +2363,30 @@ var soby_WebGrid = (function () {
             return;
         var menuID = this.GridID + "_Menu";
         var menuUL = $("#" + menuID);
-        if (menuUL.length == 0) {
-            menuUL = $("<table id='" + menuID + "' class='sobygridmenu " + this.ThemeClassName + "'></table>");
-            $(".sobygridmenu").remove();
-            $("body").append(menuUL);
+        if (menuUL.length > 0) {
+            $("#" + menuID).remove();
         }
-        else {
-            menuUL.html("");
-        }
+        menuUL = $("<table id='" + menuID + "' class='sobygridmenu " + this.ThemeClassName + "' style='margin-top: 30px;margin-left: 30px;'></table>");
+        $("#" + this.GridID + " .soby_gridheadercell[fieldname='" + fieldName + "']").append(menuUL);
         menuUL.html("");
         if (sortable == true) {
             menuUL.append("<tr><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;font-size: 5px;'>&nbsp;</td><td style='padding-right:5px;padding-left:5px;font-size: 5px;'>&nbsp;</td></tr>");
-            menuUL.append("<tr onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', true)\" class='ms-vh2 soby_gridheadercell' style='cursor: pointer;'><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'><img src='" + this.ImagesFolderUrl + "/SORTAZLang.gif' border='0'></td><td style='padding-right:5px;padding-left:5px'>Ascending</td></tr>" +
-                "<tr onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', false)\" class='ms-vh2 soby_gridheadercell' style='cursor: pointer;'><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'><img src='" + this.ImagesFolderUrl + "/SORTZALang.gif' border='0'></td><td style='padding-right:5px;padding-left:5px'>Descending</td></tr>" +
+            menuUL.append("<tr onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', true)\" class='ms-vh2' style='cursor: pointer;'><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'><a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', true)\"><img src='" + this.ImagesFolderUrl + "/SORTAZLang.gif' border='0'></a></td><td style='padding-right:5px;padding-left:5px'>Ascending</td></tr>" +
+                "<tr onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', false)\" class='ms-vh2' style='cursor: pointer;'><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'><a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].SortResult('" + fieldName + "', false)\"><img src='" + this.ImagesFolderUrl + "/SORTZALang.gif' border='0'></a></td><td style='padding-right:5px;padding-left:5px'>Descending</td></tr>" +
                 "<tr><td style='padding-left:5px;border-right:1px solid;;padding-right:5px'>&nbsp;</td><td><hr style='margin-top:5px;margin-bottom:5px;border: 0;border-bottom: 1px dashed #ccc;'></td></tr>");
         }
         if (filterable == true) {
             for (var i = 0; i < this.Filters.Filters.length; i++) {
                 if (this.Filters.Filters[i].ShouldBeClearedOnUIFilterAction == true && this.Filters.Filters[i].FieldName == fieldName) {
-                    menuUL.append("<tr onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].ClearFiltersOn('" + fieldName + "')\" class='ms-vh2 soby_gridheadercell' style='cursor: pointer;'><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'><img src='" + this.ImagesFolderUrl + "/FILTEROFF.gif' border='0'></td><td style='padding-right:5px;padding-left:5px'>Clear filter from " + displayName + "</td></tr>");
+                    menuUL.append("<tr onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].ClearFiltersOn('" + fieldName + "')\" class='ms-vh2' style='cursor: pointer;'><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'><a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].ClearFiltersOn('" + fieldName + "')\"><img src='" + this.ImagesFolderUrl + "/FILTEROFF.gif' border='0'></a></td><td style='padding-right:5px;padding-left:5px'>Clear filter from " + displayName + "</td></tr>");
                     break;
                 }
             }
             menuUL.append("<tr class='filterloadingli'  style='width: 30px;padding-left:5px;padding-right:5px;border-right:1px solid;'>&nbsp;<td></td><td style='padding-right:5px;padding-left:5px''>Loading...</td></tr>" +
-                "<tr><td  style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'>&nbsp;</td><td style='text-align:right;padding-right:5px;padding-left:5px;padding-top:5px'><button class='btn btn-primary next' type='button' style='width: 70px;padding-top: 5px;' onclick=\"soby_WebGrids['" + this.GridID + "'].ApplyFilters('" + fieldName + "')\">Apply</button></td></tr>");
+                "<tr><td  style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'>&nbsp;</td><td style='text-align:right;padding-right:5px;padding-left:5px;padding-top:5px'><button class='btn btn-primary next applyfilters' type='button' style='width: 70px;padding-top: 5px;' onclick=\"soby_WebGrids['" + this.GridID + "'].ApplyFilters('" + fieldName + "')\">Apply</button></td></tr>");
         }
         menuUL.append("<tr><td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;font-size: 5px;'>&nbsp;</td><td style='padding-right:5px;padding-left:5px;font-size: 5px;'>&nbsp;</td></tr>");
         var header = $(this.ContentDivSelector + " th[fieldName='" + fieldName + "']");
-        var position = header.offset();
-        menuUL.css("top", position.top + 35);
-        menuUL.css("left", position.left + header.width() - menuUL.width() - 20);
         setTimeout(function () {
             menuUL.show();
         }, 1000);
@@ -2393,8 +2395,6 @@ var soby_WebGrid = (function () {
             if (this.Columns[i].FieldName == fieldName)
                 filterControl = this.Columns[i].FilterControl;
         }
-        soby_LogMessage(fieldName);
-        soby_LogMessage(filterControl);
         var li = $("<tr></tr>");
         var cellId = soby_guid();
         if (filterControl != null) {
@@ -2414,6 +2414,14 @@ var soby_WebGrid = (function () {
             var cell = $("<td style='padding-right:5px;padding-left:5px;text-align:right'></td>");
             cell.attr("id", cellId);
             var textboxElement = $("<input type='text' class='filtertextbox' style='width:100px' fieldname='" + fieldName + "' />");
+            textboxElement.keydown(function (event) {
+                switch (event.which) {
+                    case 13:
+                        event.preventDefault();
+                        $("#" + menuID + " .applyfilters").click();
+                        break;
+                }
+            });
             textboxElement.val(currentFilterValue);
             cell.append(textboxElement);
             li.append("<td style='width: 30px;text-align: center;padding-left:5px;padding-right:5px;border-right:1px solid;'>&nbsp;</td>");
@@ -3014,7 +3022,7 @@ var soby_WebGrid = (function () {
         }
     };
     return soby_WebGrid;
-})();
+}());
 $.fn.sobywebgrid = function () {
     var id = this.attr("id");
     for (var key in soby_WebGrids) {
@@ -3181,7 +3189,7 @@ var soby_DataRepeater = (function (_super) {
         this.SetActionPaneButtonsVisibility();
     };
     return soby_DataRepeater;
-})(soby_WebGrid);
+}(soby_WebGrid));
 // ************************************************************
 // ********************* CAML BUILDER CAROUSEL *****************************
 var soby_Carousels = new Array();
@@ -3288,7 +3296,7 @@ var soby_Carousel = (function () {
             this.DataService.PopulateItems();
     };
     return soby_Carousel;
-})();
+}());
 // ************************************************************
 // ********************* CAML BUILDER METRO TILES *****************************
 var soby_MetroTileGrids = new Array();
@@ -3390,7 +3398,7 @@ var soby_MetroTilesGrid = (function () {
     };
     soby_MetroTilesGrid.prototype.ItemPopulated = function (items) { };
     return soby_MetroTilesGrid;
-})();
+}());
 // ************************************************************
 // ********************* CAML BUILDER WIZARD TEMPLATE *****************************
 var soby_Wizards = new Array();
@@ -3490,7 +3498,7 @@ var soby_Wizard = (function () {
         this.EnsureWizardsExistency();
     }
     return soby_Wizard;
-})();
+}());
 // ************************************************************
 // ********************* CAML BUILDER MENU TEMPLATE *****************************
 var soby_Menus = new Array();
@@ -3558,7 +3566,7 @@ var soby_Menu = (function () {
         this.EnsureMenusExistency();
     }
     return soby_Menu;
-})();
+}());
 // ************************************************************
 // ********************* ITEM SELECTION *****************************
 var soby_ItemSelections = new Array();
@@ -3569,7 +3577,7 @@ var SobyItemSelectorTypeObject = (function () {
         this.CardView = 2;
     }
     return SobyItemSelectorTypeObject;
-})();
+}());
 var SobyItemSelectorTypes = new SobyItemSelectorTypeObject();
 var soby_ItemSelection = (function () {
     function soby_ItemSelection(contentDivSelector, title, itemSelectorType, autoCompleteDataService, advancedSearchDataService, emptyDataHtml, dialogID, selectorUrl, valueFieldName, textFieldName) {
@@ -3785,7 +3793,7 @@ var soby_ItemSelection = (function () {
         soby_ItemSelections[this.ItemSelectionID] = this;
     };
     return soby_ItemSelection;
-})();
+}());
 // ************************************************************
 // ********************* COMMON FUNCTIONS *****************************
 function ShowCommonDialog(url, title, dialogID, onCloseCallback) {
@@ -3856,4 +3864,3 @@ function SetCommonDialogArgument(dialogID, argument) {
     $("#" + dialogID).dialog().data("argument", argument);
 }
 // ************************************************************
-//# sourceMappingURL=soby.ui.components.js.map

@@ -24,4 +24,3 @@ function soby_PopulateSelectBoxGeneral() {
     bookGrid.FocusToNextItemAfterItemSelection = false;
     bookGrid.Initialize();
 }
-//# sourceMappingURL=general.js.map

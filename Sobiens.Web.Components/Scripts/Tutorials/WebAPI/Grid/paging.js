@@ -22,4 +22,3 @@ function soby_PopulateGridPaging() {
     bookGrid.NavigationInformation.VerticalAlign = SobyPaginationVerticalAlign.Right;
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=paging.js.map

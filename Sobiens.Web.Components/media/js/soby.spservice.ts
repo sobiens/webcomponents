@@ -315,12 +315,14 @@ class soby_SPCSOMBuilder extends soby_SPRestBuilder
 {
     ListTitle: string = "";
     SiteUrl: string = "";
+    UseViewFields: boolean = false;
     Clone()
     {
         var builder = new soby_SPCSOMBuilder();
         builder.ListTitle = this.ListTitle;
         builder.SiteUrl = this.SiteUrl;
         builder.RowLimit = this.RowLimit;
+        builder.UseViewFields = this.UseViewFields;
         builder.NextPageExist = this.NextPageExist;
         builder.NextPageString = this.NextPageString;
         for (var i = 0; i < this.SchemaFields.length; i++)
@@ -356,6 +358,7 @@ class soby_SPCSOMBuilder extends soby_SPRestBuilder
         var camlBuilder = new soby_CamlBuilder(this.ListTitle, "", 10, "");
         camlBuilder.Filters = this.Filters; //new SobyFilters(false);
         camlBuilder.OrderByFields = this.OrderByFields; //new SobyFilters(false);
+        camlBuilder.SchemaFields = this.SchemaFields; //new SobyFilters(false);
 
         var clientContext = null;
         if (this.SiteUrl != null && this.SiteUrl != "")
@@ -380,7 +383,9 @@ class soby_SPCSOMBuilder extends soby_SPRestBuilder
                     camlQuery.set_listItemCollectionPosition(position);
                 }
 
-                var viewXml = "<View><Query>" + camlBuilder.GetOrderByFieldsQuery() + camlBuilder.GetWhereQuery() + "</Query><RowLimit>" + this.RowLimit + "</RowLimit></View>";
+                var viewXml = "<View>" +
+                    (this.UseViewFields == true ? camlBuilder.GetViewFieldsQuery() : "")
+                    + "<Query>" + camlBuilder.GetOrderByFieldsQuery() + camlBuilder.GetWhereQuery() + "</Query><RowLimit>" + this.RowLimit + "</RowLimit></View>";
                 soby_LogMessage(viewXml);
                 camlQuery.set_viewXml(viewXml);
                 //            < Where > <Contains><FieldRef Name=\'Subject_x0020_Area\'/><Value Type=\'TaxonomyFieldType\'>Assets</Value></Contains></Where>

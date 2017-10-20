@@ -237,7 +237,7 @@ var soby_SharePointService = (function () {
     soby_SharePointService.prototype.ItemAdded = function (args) { };
     soby_SharePointService.prototype.ItemDeleted = function (args) { };
     return soby_SharePointService;
-})();
+}());
 var soby_SPRestBuilder = (function (_super) {
     __extends(soby_SPRestBuilder, _super);
     function soby_SPRestBuilder() {
@@ -276,19 +276,21 @@ var soby_SPRestBuilder = (function (_super) {
         return query;
     };
     return soby_SPRestBuilder;
-})(soby_WSBuilder);
+}(soby_WSBuilder));
 var soby_SPCSOMBuilder = (function (_super) {
     __extends(soby_SPCSOMBuilder, _super);
     function soby_SPCSOMBuilder() {
         _super.apply(this, arguments);
         this.ListTitle = "";
         this.SiteUrl = "";
+        this.UseViewFields = false;
     }
     soby_SPCSOMBuilder.prototype.Clone = function () {
         var builder = new soby_SPCSOMBuilder();
         builder.ListTitle = this.ListTitle;
         builder.SiteUrl = this.SiteUrl;
         builder.RowLimit = this.RowLimit;
+        builder.UseViewFields = this.UseViewFields;
         builder.NextPageExist = this.NextPageExist;
         builder.NextPageString = this.NextPageString;
         for (var i = 0; i < this.SchemaFields.length; i++) {
@@ -314,6 +316,7 @@ var soby_SPCSOMBuilder = (function (_super) {
         var camlBuilder = new soby_CamlBuilder(this.ListTitle, "", 10, "");
         camlBuilder.Filters = this.Filters; //new SobyFilters(false);
         camlBuilder.OrderByFields = this.OrderByFields; //new SobyFilters(false);
+        camlBuilder.SchemaFields = this.SchemaFields; //new SobyFilters(false);
         var clientContext = null;
         if (this.SiteUrl != null && this.SiteUrl != "") {
             clientContext = new SP.ClientContext(this.SiteUrl);
@@ -330,7 +333,9 @@ var soby_SPCSOMBuilder = (function (_super) {
                 position.set_pagingInfo(this.NextPageString);
                 camlQuery.set_listItemCollectionPosition(position);
             }
-            var viewXml = "<View><Query>" + camlBuilder.GetOrderByFieldsQuery() + camlBuilder.GetWhereQuery() + "</Query><RowLimit>" + this.RowLimit + "</RowLimit></View>";
+            var viewXml = "<View>" +
+                (this.UseViewFields == true ? camlBuilder.GetViewFieldsQuery() : "")
+                + "<Query>" + camlBuilder.GetOrderByFieldsQuery() + camlBuilder.GetWhereQuery() + "</Query><RowLimit>" + this.RowLimit + "</RowLimit></View>";
             soby_LogMessage(viewXml);
             camlQuery.set_viewXml(viewXml);
             //            < Where > <Contains><FieldRef Name=\'Subject_x0020_Area\'/><Value Type=\'TaxonomyFieldType\'>Assets</Value></Contains></Where>
@@ -372,7 +377,7 @@ var soby_SPCSOMBuilder = (function (_super) {
         }));
     };
     return soby_SPCSOMBuilder;
-})(soby_SPRestBuilder);
+}(soby_SPRestBuilder));
 // ********************* CAML BUILDER *****************************
 function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     this.WebUrl = webUrl;
@@ -1152,7 +1157,7 @@ var sobySPListsObject = (function () {
         }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, webUrl, null);
     };
     return sobySPListsObject;
-})();
+}());
 var sobySPUserGroupObject = (function () {
     function sobySPUserGroupObject() {
     }
@@ -1285,7 +1290,7 @@ var sobySPUserGroupObject = (function () {
         });
     };
     return sobySPUserGroupObject;
-})();
+}());
 var sobySPWebsObject = (function () {
     function sobySPWebsObject() {
     }
@@ -1322,7 +1327,7 @@ var sobySPWebsObject = (function () {
         });
     };
     return sobySPWebsObject;
-})();
+}());
 var sobySPSitesObject = (function () {
     function sobySPSitesObject() {
     }
@@ -1358,7 +1363,7 @@ var sobySPSitesObject = (function () {
         });
     };
     return sobySPSitesObject;
-})();
+}());
 var sobySPViewsObject = (function () {
     function sobySPViewsObject() {
     }
@@ -1402,7 +1407,7 @@ var sobySPViewsObject = (function () {
         });
     };
     return sobySPViewsObject;
-})();
+}());
 var sobySPWebPartPagesObject = (function () {
     function sobySPWebPartPagesObject() {
     }
@@ -1439,7 +1444,7 @@ var sobySPWebPartPagesObject = (function () {
         });
     };
     return sobySPWebPartPagesObject;
-})();
+}());
 var sobySPVersionsObject = (function () {
     function sobySPVersionsObject() {
     }
@@ -1500,7 +1505,7 @@ var sobySPVersionsObject = (function () {
         });
     };
     return sobySPVersionsObject;
-})();
+}());
 var sobySPLibraryObject = (function () {
     function sobySPLibraryObject() {
         this.GetData = function (soapEnv, callback, errorcallback, completecallback, async, siteUrl, argsx) {
@@ -1539,12 +1544,11 @@ var sobySPLibraryObject = (function () {
         this.Versions = new sobySPVersionsObject();
     }
     return sobySPLibraryObject;
-})();
+}());
 var sobyObject = (function () {
     function sobyObject() {
         this.SPLibrary = new sobySPLibraryObject();
     }
     return sobyObject;
-})();
+}());
 var soby = new sobyObject();
-//# sourceMappingURL=soby.spservice.js.map

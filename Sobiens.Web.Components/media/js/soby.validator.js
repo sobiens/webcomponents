@@ -55,7 +55,7 @@ var soby_Validate = (function () {
         return formValidator.Validate();
     };
     return soby_Validate;
-})();
+}());
 var soby_ExistenceValidator = (function () {
     function soby_ExistenceValidator() {
         this.Required = false;
@@ -86,7 +86,7 @@ var soby_ExistenceValidator = (function () {
         return validator;
     };
     return soby_ExistenceValidator;
-})();
+}());
 var soby_NumericValidator = (function (_super) {
     __extends(soby_NumericValidator, _super);
     function soby_NumericValidator() {
@@ -136,7 +136,7 @@ var soby_NumericValidator = (function (_super) {
         return validator;
     };
     return soby_NumericValidator;
-})(soby_ExistenceValidator);
+}(soby_ExistenceValidator));
 var soby_TextValidator = (function (_super) {
     __extends(soby_TextValidator, _super);
     function soby_TextValidator() {
@@ -180,7 +180,7 @@ var soby_TextValidator = (function (_super) {
         return validator;
     };
     return soby_TextValidator;
-})(soby_ExistenceValidator);
+}(soby_ExistenceValidator));
 var soby_PatternValidator = (function (_super) {
     __extends(soby_PatternValidator, _super);
     function soby_PatternValidator() {
@@ -230,7 +230,7 @@ var soby_PatternValidator = (function (_super) {
         return validator;
     };
     return soby_PatternValidator;
-})(soby_ExistenceValidator);
+}(soby_ExistenceValidator));
 var soby_EmailValidator = (function (_super) {
     __extends(soby_EmailValidator, _super);
     function soby_EmailValidator() {
@@ -258,7 +258,7 @@ var soby_EmailValidator = (function (_super) {
         return validator;
     };
     return soby_EmailValidator;
-})(soby_PatternValidator);
+}(soby_PatternValidator));
 var soby_UrlValidator = (function (_super) {
     __extends(soby_UrlValidator, _super);
     function soby_UrlValidator() {
@@ -294,7 +294,7 @@ var soby_UrlValidator = (function (_super) {
         return validator;
     };
     return soby_UrlValidator;
-})(soby_PatternValidator);
+}(soby_PatternValidator));
 var soby_ValidatorTypes;
 (function (soby_ValidatorTypes) {
     soby_ValidatorTypes[soby_ValidatorTypes["Date"] = 1] = "Date";
@@ -369,6 +369,5 @@ var soby_FormValidator = (function () {
         return isValid;
     };
     return soby_FormValidator;
-})();
+}());
 var sobyValidate = new soby_Validate();
-//# sourceMappingURL=soby.validator.js.map

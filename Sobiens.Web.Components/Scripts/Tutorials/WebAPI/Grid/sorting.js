@@ -23,4 +23,3 @@ function soby_PopulateGridSorting() {
     bookGrid.AddOrderByField("Title", true);
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=sorting.js.map
