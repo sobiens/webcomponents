@@ -21,7 +21,7 @@ function soby_PopulateItemSelection() {
     var advancedSearchBookDataService = new soby_WebServiceService(advancedSearchBookDataSourceBuilder);
     advancedSearchBookDataService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
 
-    itemSelection = new soby_ItemSelection("#soby_BooksDiv", "Meters", SobyItemSelectorTypes.GridView, autoCompleteBookDataService, advancedSearchBookDataService, "No record", "BookSelectionDialog", "/Management/CustomerSelection.html", "Id", "Title");
+    itemSelection = new soby_ItemSelection("#soby_BooksDiv", "Meters", SobyItemSelectorTypes.GridView, autoCompleteBookDataService, advancedSearchBookDataService, null, "No record", "BookSelectionDialog", "/Management/CustomerSelection.html", "Id", "Title", "");
     itemSelection.ImagesFolderUrl = "/media/images";
     itemSelection.Initialize();
 

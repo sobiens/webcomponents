@@ -1,4 +1,5 @@
 ﻿// VERSION 1.0.7.2
+var sobyLastReturnData = null;
 function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
     return $.ajax({
         type: method,
@@ -183,6 +184,29 @@ class SobyFilters implements ISobyFilter {
         return json;
     }
 
+    ToSearch2010Xml()
+    {
+        if (this.Filters.length == 0)
+            return "";
+
+        var json = "(";
+        for (var i = 0; i < this.Filters.length; i++)
+        {
+            var argument = this.Filters[i];
+            if (i > 0) 
+            {
+                if (this.IsOr)
+                    json += " OR "
+                else
+                    json += " AND "
+            }
+            json += argument.ToSearch2010Xml();
+        }
+        json += ")";
+
+        return json;
+    }
+
     Clone(): SobyFilters {
         var sobyFilters = new SobyFilters(this.IsOr);
         for (var i = 0; i < this.Filters.length; i++) {
@@ -233,6 +257,9 @@ class SobyFilter implements ISobyFilter {
             case SobyFieldTypes.Number:
                 valueTypeString = "Number";
                 break;
+            case SobyFieldTypes.DateTime:
+                valueTypeString = "DateTime";
+                break;
             case SobyFieldTypes.Integer:
                 valueTypeString = "Integer";
                 break;
@@ -266,6 +293,8 @@ class SobyFilter implements ISobyFilter {
         var value = this.FilterValue;
         if (value == "[*ME*]")
             valueString = "<Value Type='" + valueTypeString + "'><UserID /></Value>";
+        else if (this.FieldType == SobyFieldTypes.DateTime || this.FieldType == SobyFieldTypes.Number)
+            valueString = "<Value Type='" + valueTypeString + "'>" + this.FilterValue + "</Value>";
         else
             valueString = "<Value Type='" + valueTypeString + "'><![CDATA[" + this.FilterValue + "]]></Value>";
         switch (this.FilterType) {
@@ -310,12 +339,36 @@ class SobyFilter implements ISobyFilter {
                 var values = this.FilterValue.split(soby_FilterValueSeperator);
                 valueString = "<Values>";
                 for (var i = 0; i < values.length; i++) {
-                    valueString += "<Value Type='" + valueTypeString + "'><![CDATA[" + values[i] + "]]></Value>";
+                    valueString += "<Value Type='" + valueTypeString + "'>";
+                    if (this.FieldType != SobyFieldTypes.DateTime && this.FieldType != SobyFieldTypes.Number)
+                        valueString += "<![CDATA[" + values[i] + "]]></Value>";
+                    else
+                        valueString += values[i] + "</Value>";
                 }
                 valueString += "</Values>";
                 break;
         }
         return "<" + equvialentString + (this.FilterType == SobyFilterTypes.Membership ? " Type='" + valueTypeString + "'" : "") + "><FieldRef Name='" + this.FieldName + "' " + additionalFieldRefAttributes + " />" + valueString + "</" + equvialentString + ">";
+    }
+
+    ToSearch2010Xml(): string
+    {
+        // () AND ANY(*) (IsDocument=True) (scope:SPPortalCAS)
+        var equvialentString = "";
+        var value = this.FilterValue;
+        switch (this.FilterType)
+        {
+            case SobyFilterTypes.Equal:
+                equvialentString = "=";
+                break;
+            case SobyFilterTypes.NotEqual:
+                equvialentString = "!=";
+                break;
+            case SobyFilterTypes.Contains:
+                equvialentString = ":";
+                break;
+        }
+        return this.FieldName + equvialentString + value;
     }
 
     ToQueryString(_type:number /* 0 - Normal, 1 - SP Rest */) {
@@ -558,7 +611,7 @@ interface soby_ServiceInterface {
     PopulateNavigationInformation();
     NavigationInformationBeingPopulated();
     NavigationInformationPopulated();
-    PopulateItems(args:Array<any>);
+    PopulateItems(args: Array<any>);
     GetFieldNames();
     ItemPopulated(items: Array<soby_Item>);
     ItemBeingPopulated();
@@ -640,10 +693,15 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
         return null;
     }
 
+    DataBeingParsed(data: any): Array<soby_Item>
+    {
+        return data;
+    }
+
     ParseData(value: string): Array<soby_Item> {
         return null;
     }
-    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType) { }
+    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType) { }
 }
 // ******************************************************************
 
@@ -683,6 +741,8 @@ class soby_WebServiceService implements soby_ServiceInterface {
     NextPageExist:boolean = false;
     Transport: soby_Transport;
 
+    ItemBeingPopulated = function () { }
+
     PopulateNavigationInformation() {
         if (this.NavigationInformationBeingPopulated != null)
             this.NavigationInformationBeingPopulated();
@@ -690,6 +750,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
         var service = this;
         var requestMethod = this.Transport.Read.Type;
         var dataType = this.Transport.Read.DataType;
+        var contentType = this.Transport.Read.ContentType;
 
         var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
         if (countServiceUrl == null || countServiceUrl == "") {
@@ -750,7 +811,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
                     service.ErrorThrown(errorMessage, null);
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
     }
     NavigationInformationBeingPopulated() { }
     NavigationInformationPopulated() { }
@@ -812,7 +873,8 @@ class soby_WebServiceService implements soby_ServiceInterface {
         return true;
     };
 
-    PopulateItems(args: Array<any>) {
+    PopulateItems(args: Array<any>)
+    {
         this.Args = args;
         if (this.ItemBeingPopulated != null)
             this.ItemBeingPopulated();
@@ -835,6 +897,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
         var serviceUrl = this.Transport.Read.Url;
         var requestMethod = this.Transport.Read.Type;
         var dataType = this.Transport.Read.DataType;
+        var contentType = this.Transport.Read.ContentType;
         var data = "";
         var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read, false);
         if (mainQuery != null && mainQuery != "")
@@ -880,7 +943,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
                     service.ErrorThrown(errorMessage, null);
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
     }
 
     Parse() {
@@ -896,7 +959,6 @@ class soby_WebServiceService implements soby_ServiceInterface {
         return fieldNames;
     }
     ItemPopulated(items: Array<soby_Item>) { }
-    ItemBeingPopulated() { }
     ErrorThrown(errorMessage: string, errorTypeName: string) { }
     UpdateItem(key: string, objectInstance) {
         var updateUrl = this.Transport.Update.Url.replace(/#key/gi, key)
@@ -1288,7 +1350,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
         }
 
         builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
-
+        builder.DataBeingParsed = this.DataBeingParsed;
         return builder;
     }
 
@@ -1379,8 +1441,10 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
             return countServiceUrl;
         }
     }
-    ParseData(result) {
-        var result = (result.value != null ? result.value : result);
+    ParseData(result1)
+    {
+        var result = (result1.value != null ? result1.value : result1);
+        result = this.DataBeingParsed(result);
         for (var i = 0; i < result.length; i++) {
             for (var x = 0; x < this.SchemaFields.length; x++) {
                 if (this.SchemaFields[x].FieldType == SobyFieldTypes.DateTime) {
@@ -1403,9 +1467,11 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
         }
         return result;
     }
-    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType) {
+    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType) {
         if (requestMethod == null || requestMethod == "")
             requestMethod = "POST";
+        if (contentType == null || contentType == "")
+            contentType = "application/json; charset=utf-8";
         $.ajax({
             async: (async != null ? async : true),
             url: wsUrl,
@@ -1413,14 +1479,16 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
             dataType: dataType,
             data: data,
             processData: false,
-            contentType: "application/json; charset=utf-8",
+            contentType: contentType,
             complete: function (XMLHttpRequest) {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if (errorcallback)
                     errorcallback(XMLHttpRequest, textStatus, errorThrown);
             },
-            success: function (data) {
+            success: function (data)
+            {
+                sobyLastReturnData = data;
                 var data = data;
                 if (data.d != null)
                     data = data.d;

@@ -11,7 +11,7 @@ interface soby_TreeViewInterface
     ChildNodesDataServiceBeingQueried(node: soby_Item);
 }
 
-class soby_TreeView implements soby_TreeViewInterface {
+class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInterface {
     constructor(contentDivSelector, title, rootNodesDataService, childNodesDataService, emptyDataHtml, parentFieldName, valueFieldName, textFieldName) {
         this.TreeViewID = "soby_itemselection_" + soby_guid();
         this.ContentDivSelector = contentDivSelector;
@@ -140,7 +140,7 @@ class soby_TreeView implements soby_TreeViewInterface {
                 $("#" + treeviewItemId).attr("isexpanded", "1");
             }
             this.ChildNodesDataServiceBeingQueried(itemData);
-            this.ChildNodesDataService.PopulateItems([treeviewItemId]);
+            this.ChildNodesDataService.PopulateItems([treeviewItemId, value]);
 
         }
     }
@@ -174,7 +174,7 @@ class soby_TreeView implements soby_TreeViewInterface {
 
         $(contentDivSelector).append(ul);
     }
-    GetSelectedItems() {
+    GetSelectedDataItems() {
         var selectedItems = new Array();
         var selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");
         if(this.AllowCheckBoxes == false)

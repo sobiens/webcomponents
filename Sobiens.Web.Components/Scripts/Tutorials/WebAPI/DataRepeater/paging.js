@@ -36,3 +36,4 @@ function soby_PopulateDataRepeaterRefreshData() {
     };
     bookGrid.Initialize(true);
 }
+//# sourceMappingURL=paging.js.map

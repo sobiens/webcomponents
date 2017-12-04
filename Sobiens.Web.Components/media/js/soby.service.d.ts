@@ -1,3 +1,4 @@
+declare var sobyLastReturnData: any;
 declare function ajaxHelper(uri: any, method: any, data: any, args: any, successCallback: any, errorCallback: any): JQueryPromise<any>;
 declare class soby_Transport {
     Read: soby_TransportRequest;
@@ -69,6 +70,7 @@ declare class SobyFilters implements ISobyFilter {
     ToXml(): string;
     ToJson(): string;
     ToQueryString(_type: number): string;
+    ToSearch2010Xml(): string;
     Clone(): SobyFilters;
 }
 declare class SobyFilter implements ISobyFilter {
@@ -80,6 +82,7 @@ declare class SobyFilter implements ISobyFilter {
     ShouldBeClearedOnUIFilterAction: boolean;
     constructor(fieldName: string, filterValue: string, fieldType: number, filterType: number, lookupID: boolean);
     ToCaml(): string;
+    ToSearch2010Xml(): string;
     ToQueryString(_type: number): string;
 }
 declare class SobySchemaFields extends Array<SobySchemaField> {
@@ -197,8 +200,9 @@ declare abstract class soby_DataSourceBuilderAbstract implements soby_DataSource
     GetCountQuery(transport: soby_TransportRequest): string;
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: any): string;
     Clone(): soby_DataSourceBuilderAbstract;
+    DataBeingParsed(data: any): Array<soby_Item>;
     ParseData(value: string): Array<soby_Item>;
-    GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any): void;
+    GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any, contentType: any): void;
 }
 declare class soby_Filter {
     FieldName: string;
@@ -224,6 +228,7 @@ declare class soby_WebServiceService implements soby_ServiceInterface {
     OrderByFields: SobyOrderByFields;
     NextPageExist: boolean;
     Transport: soby_Transport;
+    ItemBeingPopulated: () => void;
     PopulateNavigationInformation(): void;
     NavigationInformationBeingPopulated(): void;
     NavigationInformationPopulated(): void;
@@ -238,7 +243,6 @@ declare class soby_WebServiceService implements soby_ServiceInterface {
     Parse(): void;
     GetFieldNames(): any[];
     ItemPopulated(items: Array<soby_Item>): void;
-    ItemBeingPopulated(): void;
     ErrorThrown(errorMessage: string, errorTypeName: string): void;
     UpdateItem(key: string, objectInstance: any): void;
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>): void;
@@ -308,8 +312,8 @@ declare class soby_WSBuilder extends soby_DataSourceBuilderAbstract {
     GetWhereQuery(transport: soby_TransportRequest): string;
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: boolean): string;
     GetCountQuery(transport: soby_TransportRequest): string;
-    ParseData(result: any): any;
-    GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any): void;
+    ParseData(result1: any): any;
+    GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any, contentType: any): void;
 }
 declare var soby_guid: () => string;
 declare function soby_LogMessage(message: any): void;

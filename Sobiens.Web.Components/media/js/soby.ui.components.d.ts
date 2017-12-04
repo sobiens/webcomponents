@@ -17,6 +17,10 @@ interface ISobyEditControlInterface {
     ValueChanged(): any;
     Validate(): boolean;
 }
+interface ISobySelectorControlInterface {
+    ImagesFolderUrl: string;
+    GetSelectedDataItems(): any[];
+}
 declare enum SobyPaginationViewTypes {
     PageNumbers = 0,
     BasicButtons = 1,
@@ -255,7 +259,7 @@ declare class SobyGridColumn {
     ResponsiveConditionID: string;
     IsVisible: boolean;
 }
-declare class soby_WebGrid {
+declare class soby_WebGrid implements ISobySelectorControlInterface {
     /************************************ MEMBERS *************************************/
     /**
      * @property {SobyAggregateFields}      AggregateFields             - Aggregate fields.
@@ -1120,19 +1124,21 @@ declare class SobyItemSelectorTypeObject {
 }
 declare var SobyItemSelectorTypes: SobyItemSelectorTypeObject;
 declare class soby_ItemSelection {
-    constructor(contentDivSelector: any, title: any, itemSelectorType: number, autoCompleteDataService: any, advancedSearchDataService: any, emptyDataHtml: any, dialogID: any, selectorUrl: any, valueFieldName: any, textFieldName: any);
+    constructor(contentDivSelector: any, title: any, itemSelectorType: number, autoCompleteDataService: any, advancedSearchDataService: any, advancedSearchChildrenDataService: any, emptyDataHtml: any, dialogID: any, selectorUrl: any, valueFieldName: any, textFieldName: any, parentFieldName: any);
     ItemSelectorType: number;
-    AdvancedSearchAsGrid: soby_WebGrid;
+    AdvancedSearchAsGrid: ISobySelectorControlInterface;
     ItemSelectionID: string;
     ContentDivSelector: string;
     Title: string;
     AutoCompleteDataService: soby_ServiceInterface;
     AdvancedSearchDataService: soby_ServiceInterface;
+    AdvancedSearchChildrenDataService: soby_ServiceInterface;
     AllowMultipleSelections: boolean;
     EmptyDataHtml: string;
     WaterMark: string;
     DialogID: string;
     SelectorUrl: string;
+    ParentFieldName: string;
     ValueFieldName: string;
     TextFieldName: string;
     ImagesFolderUrl: string;

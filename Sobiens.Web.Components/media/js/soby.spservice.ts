@@ -30,6 +30,7 @@ class soby_SharePointService implements soby_ServiceInterface
         var service = this;
         var requestMethod = this.Transport.Read.Type;
         var dataType = this.Transport.Read.DataType;
+        var contentType = this.Transport.Read.ContentType;
 
         var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
         soby_LogMessage("countServiceUrl");
@@ -90,7 +91,7 @@ class soby_SharePointService implements soby_ServiceInterface
                     service.ErrorThrown(errorMessage, errorTypeName);
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
     }
     NavigationInformationBeingPopulated() { }
     NavigationInformationPopulated() { }
@@ -182,6 +183,7 @@ class soby_SharePointService implements soby_ServiceInterface
         var serviceUrl = this.Transport.Read.Url;
         var requestMethod = this.Transport.Read.Type;
         var dataType = this.Transport.Read.DataType;
+        var contentType = this.Transport.Read.ContentType;
         var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read, false);
         if (mainQuery != null && mainQuery != "") {
             if (serviceUrl.indexOf("?") == -1) {
@@ -225,7 +227,7 @@ class soby_SharePointService implements soby_ServiceInterface
                     service.ErrorThrown(errorMessage, errorTypeName);
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
     }
 
     Parse() {
@@ -269,6 +271,215 @@ class soby_SharePointService implements soby_ServiceInterface
     ItemUpdated(args) { }
     ItemAdded(args) { }
     ItemDeleted(args) { }
+}
+
+class soby_SPSearchBuilder extends soby_WSBuilder
+{
+    SourceId: string = "";
+    Clone()
+    {
+        var builder = new soby_SPSearchBuilder();
+        builder.RowLimit = this.RowLimit;
+        builder.PageIndex = this.PageIndex;
+        builder.SourceId = this.SourceId;
+        for (var i = 0; i < this.SchemaFields.length; i++)
+        {
+            var viewField = this.SchemaFields[i];
+            builder.AddSchemaField(viewField.FieldName, viewField.FieldType, viewField.Args);
+        }
+
+        builder.Filters = this.Filters.Clone();
+
+        for (var i = 0; i < this.Headers.length; i++)
+        {
+            var header = this.Headers[i];
+            builder.AddHeader(header.Key, header.Value);
+        }
+
+        for (var i = 0; i < this.OrderByFields.length; i++)
+        {
+            var orderByField = this.OrderByFields[i];
+            builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
+        }
+
+        builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
+
+        return builder;
+    }
+    GetWhereQuery(transport: soby_TransportRequest)
+    {
+        var query = "";
+        if (transport.Type == "POST")
+        {
+            query = this.Filters.ToJson();
+        }
+        else
+        {
+            query = this.Filters.ToQueryString(1);
+            query = "querytext=" + query;
+            if (this.SourceId != "")
+                query += "&sourceId='" + this.SourceId + "'";
+                
+        }
+        return query;
+    }
+    GetViewFieldsQuery(transport: soby_TransportRequest)
+    {
+        var query = "";
+        for (var i = 0; i < this.SchemaFields.length; i++)
+        {
+            if (i > 0)
+                query += ",";
+
+            query += this.SchemaFields[i].FieldName;
+        }
+        if (query != "")
+            query = "&selectproperties='" + query + "'";
+
+        return query;
+    }
+    GetPagingQuery(transport: soby_TransportRequest)
+    {
+        if (this.RowLimit > 0)
+            return "startrow=" + (this.PageIndex * this.RowLimit) + "&rowlimit=" + this.RowLimit;
+        else
+            return "";
+    }
+    ParseData(result1)
+    {
+        var result = new Array();
+        var items = result1.PrimaryQueryResult.RelevantResults.Table.Rows;
+
+        for (var i = 0; i < items.length; i++)
+        {
+            var dataItem = new Object();
+            var item = items[0];
+            for (var x = 0; x < this.SchemaFields.length; x++)
+            {
+                dataItem[this.SchemaFields[x].FieldName] = "";
+                for (var y = 0; y < item.Cells.length; y++)
+                {
+                    if (this.SchemaFields[x].FieldName == item.Cells[y].Key)
+                    {
+                        dataItem[this.SchemaFields[x].FieldName] = item.Cells[y].Value;
+                    }
+                }
+            }
+
+            result.push(dataItem);
+        }
+        return result;
+    }
+    GetCountQuery(request: soby_TransportRequest)
+    {
+        return null;
+    }
+}
+
+class soby_SPSearch2010Builder extends soby_WSBuilder
+{
+    Scope: string = "";
+    IsDocument: boolean = false;
+    Clone()
+    {
+        var builder = new soby_SPSearch2010Builder();
+        builder.RowLimit = this.RowLimit;
+        builder.PageIndex = this.PageIndex;
+        builder.Scope = this.Scope;
+        for (var i = 0; i < this.SchemaFields.length; i++)
+        {
+            var viewField = this.SchemaFields[i];
+            builder.AddSchemaField(viewField.FieldName, viewField.FieldType, viewField.Args);
+        }
+
+        builder.Filters = this.Filters.Clone();
+
+        for (var i = 0; i < this.Headers.length; i++)
+        {
+            var header = this.Headers[i];
+            builder.AddHeader(header.Key, header.Value);
+        }
+
+        for (var i = 0; i < this.OrderByFields.length; i++)
+        {
+            var orderByField = this.OrderByFields[i];
+            builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
+        }
+
+        builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
+
+        return builder;
+    }
+    GetWhereQuery(transport: soby_TransportRequest)
+    {
+        var query = "";
+        query = this.Filters.ToSearch2010Xml();
+        if (this.Scope != "")
+        {
+            if (query != "")
+                query+= " AND "
+            query += "(scope:" + this.Scope + ")";
+        }
+        query += "<Context><QueryText language='en-US' type='STRING'>" + query + "</QueryText></Context>";
+        return query;
+    }
+    GetViewFieldsQuery(transport: soby_TransportRequest)
+    {
+        var query = "<Properties>";
+        for (var i = 0; i < this.SchemaFields.length; i++)
+        {
+            query += "<Property name='" + this.SchemaFields[i].FieldName + "'></Property>"; 
+        }
+
+        query += "</Properties>";
+
+        return query;
+    }
+    GetPagingQuery(transport: soby_TransportRequest)
+    {
+        if (this.RowLimit > 0)
+            return "<Range><Count>" + this.RowLimit + "</Count></Range>";
+        else
+            return "";
+    }
+    GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: boolean)
+    {
+        var selectFieldsEnvelope = this.GetViewFieldsQuery(transport);
+        var whereQuery = this.GetWhereQuery(transport);
+        var pagingQuery = "";
+        if (excludePagingQuery == false)
+            pagingQuery = this.GetPagingQuery(transport);
+        var body = "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'><soap:Body><QueryEx xmlns='http://microsoft.com/webservices/OfficeServer/QueryService'><queryXml><![CDATA[<QueryPacket xmlns='urn:Microsoft.Search.Query'><Query><TrimDuplicates>false</TrimDuplicates>" + whereQuery + pagingQuery + selectFieldsEnvelope + "</Query></QueryPacket>]]></queryXml></QueryEx></soap:Body></soap:Envelope>";
+        return body;
+    }
+    ParseData(result1)
+    {
+        var xmlString = $(result1.children[0]).html();
+        var result = new Array();
+        var xml = $(xmlString.replace(/<soap:/gi, "<").replace(/<\/soap:/gi, "<\/").replace(/<xsi:/gi, "<").replace(/<\/xsi:/gi, "<\/").replace(/<xsd:/gi, "<").replace(/<\/xsd:/gi, "<\/").replace(/<xs:/gi, "<").replace(/<\/xs:/gi, "<\/"));
+        var items = xml.find("Results RelevantResults");
+
+        for (var i = 0; i < items.length; i++)
+        {
+            var dataItem = new Object();
+            var item = $(items[i]);
+            for (var x = 0; x < this.SchemaFields.length; x++)
+            {
+                var cell = item.find(this.SchemaFields[x].FieldName);
+                if (cell.length > 0)
+                    dataItem[this.SchemaFields[x].FieldName] = cell.text();
+                else
+                    dataItem[this.SchemaFields[x].FieldName] = "";
+            }
+
+            result.push(dataItem);
+        }
+        return result;
+    }
+    GetCountQuery(request: soby_TransportRequest)
+    {
+        return null;
+    }
 }
 
 class soby_SPRestBuilder extends soby_WSBuilder {

@@ -110,7 +110,7 @@ var soby_TreeView = (function () {
                 $("#" + treeviewItemId).attr("isexpanded", "1");
             };
             this.ChildNodesDataServiceBeingQueried(itemData);
-            this.ChildNodesDataService.PopulateItems([treeviewItemId]);
+            this.ChildNodesDataService.PopulateItems([treeviewItemId, value]);
         }
     };
     soby_TreeView.prototype.PopulateNodes = function (contentDivSelector, items) {
@@ -139,7 +139,7 @@ var soby_TreeView = (function () {
         }
         $(contentDivSelector).append(ul);
     };
-    soby_TreeView.prototype.GetSelectedItems = function () {
+    soby_TreeView.prototype.GetSelectedDataItems = function () {
         var selectedItems = new Array();
         var selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");
         if (this.AllowCheckBoxes == false)
@@ -165,5 +165,6 @@ var soby_TreeView = (function () {
         soby_TreeViews[this.TreeViewID] = this;
     };
     return soby_TreeView;
-}());
+})();
 // ************************************************************
+//# sourceMappingURL=soby.ui.components.treeview.js.map

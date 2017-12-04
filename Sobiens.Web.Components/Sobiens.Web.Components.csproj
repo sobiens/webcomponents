@@ -234,6 +234,12 @@
     <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_CreateProjectStep2.png" />
     <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_CreateSobyWebComponentsFolder.png" />
     <Content Include="Images\Tutorials\Soby_WebGrid_WebAPIOData_TaskApplication.png" />
+    <Content Include="media\css\images\ui-icons_444444_256x240.png" />
+    <Content Include="media\css\images\ui-icons_555555_256x240.png" />
+    <Content Include="media\css\images\ui-icons_777620_256x240.png" />
+    <Content Include="media\css\images\ui-icons_777777_256x240.png" />
+    <Content Include="media\css\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="media\css\images\ui-icons_ffffff_256x240.png" />
     <Content Include="media\css\jquery-ui.min.css" />
     <Content Include="media\css\soby.ui.components.scheduler.css" />
     <Content Include="media\css\soby.ui.components.css" />
@@ -377,7 +383,9 @@
     <Content Include="Tutorials\SobyGrid\ResponsiveDesign.aspx" />
     <Content Include="Tutorials\SobyGrid\ExportToExcel.aspx" />
     <Content Include="Tutorials\SobyGrid\RefreshData.aspx" />
+    <Content Include="Tutorials\SobyGrid\SPSearch2010DataBinding.aspx" />
     <Content Include="Tutorials\SobyGrid\SPDataBinding.aspx" />
+    <Content Include="Tutorials\SobyItemSelection\Treeview Selection.aspx" />
     <Content Include="Tutorials\SobyItemSelection\Autocomplete watermark.aspx" />
     <Content Include="Tutorials\SobyItemSelection\Single Selection.aspx" />
     <Content Include="Tutorials\SobyScheduler\Custom Dates.aspx" />
@@ -456,6 +464,7 @@
     <Content Include="Web.config" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\staticdatabinding.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Grid\cellstyles.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\treeviewselection.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\autocompletewatermark.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\singleselection.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\SelectBox\general.ts" />
@@ -753,6 +762,13 @@
     <Compile Include="Tutorials\SobyGrid\ExportToExcel.aspx.designer.cs">
       <DependentUpon>ExportToExcel.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\SobyGrid\SPSearch2010DataBinding.aspx.cs">
+      <DependentUpon>SPSearch2010DataBinding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\SPSearch2010DataBinding.aspx.designer.cs">
+      <DependentUpon>SPSearch2010DataBinding.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyGrid\StaticDataBinding.aspx.cs">
       <DependentUpon>StaticDataBinding.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -927,6 +943,13 @@
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\Task.cs.txt" />
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\TaskServiceContext.cs.txt" />
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\Configuration.cs.txt" />
+    <Compile Include="Tutorials\SobyItemSelection\Treeview Selection.aspx.cs">
+      <DependentUpon>Treeview Selection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyItemSelection\Treeview Selection.aspx.designer.cs">
+      <DependentUpon>Treeview Selection.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyItemSelection\Autocomplete watermark.aspx.cs">
       <DependentUpon>Autocomplete watermark.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

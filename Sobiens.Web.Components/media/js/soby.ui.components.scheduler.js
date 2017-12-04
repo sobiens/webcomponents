@@ -17,7 +17,7 @@ var SobySchedulerViewTypesObject = (function () {
         this.AllData = 6;
     }
     return SobySchedulerViewTypesObject;
-}());
+})();
 var SobySchedulerTypes = new SobySchedulerViewTypesObject();
 var SobySchedulerDataItemStatusObject = (function () {
     function SobySchedulerDataItemStatusObject() {
@@ -27,7 +27,7 @@ var SobySchedulerDataItemStatusObject = (function () {
         this.Deleted = 4;
     }
     return SobySchedulerDataItemStatusObject;
-}());
+})();
 var SobySchedulerDataItemStatuses = new SobySchedulerDataItemStatusObject();
 function soby_RemoveNoneExistenceScheduler() {
     var newArray = new Array();
@@ -660,7 +660,7 @@ var soby_Scheduler = (function () {
         soby_Schedulers[this.SchedulerID] = this;
     };
     return soby_Scheduler;
-}());
+})();
 var soby_ScheduleCategories = (function (_super) {
     __extends(soby_ScheduleCategories, _super);
     function soby_ScheduleCategories() {
@@ -677,7 +677,7 @@ var soby_ScheduleCategories = (function (_super) {
         return null;
     };
     return soby_ScheduleCategories;
-}(Array));
+})(Array);
 var soby_ScheduleItems = (function (_super) {
     __extends(soby_ScheduleItems, _super);
     function soby_ScheduleItems() {
@@ -706,7 +706,7 @@ var soby_ScheduleItems = (function (_super) {
         return newItems;
     };
     return soby_ScheduleItems;
-}(Array));
+})(Array);
 var soby_ScheduleItem = (function () {
     function soby_ScheduleItem(id, title, description, categoryId, startDate, endDate) {
         this.Id = "";
@@ -727,7 +727,7 @@ var soby_ScheduleItem = (function () {
         return new soby_ScheduleItem(this.Id, this.Title, this.Description, this.CategoryId, this.StartDate, this.EndDate);
     };
     return soby_ScheduleItem;
-}());
+})();
 var soby_ScheduleCategory = (function () {
     function soby_ScheduleCategory(id, title) {
         this.Id = "";
@@ -743,5 +743,6 @@ var soby_ScheduleCategory = (function () {
         this.SubCategories.push(category);
     };
     return soby_ScheduleCategory;
-}());
+})();
 // ************************************************************
+//# sourceMappingURL=soby.ui.components.scheduler.js.map

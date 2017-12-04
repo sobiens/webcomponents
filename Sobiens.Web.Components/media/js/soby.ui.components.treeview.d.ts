@@ -6,7 +6,7 @@ interface soby_TreeViewInterface {
     RootNodesDataServiceBeingQueried(): any;
     ChildNodesDataServiceBeingQueried(node: soby_Item): any;
 }
-declare class soby_TreeView implements soby_TreeViewInterface {
+declare class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInterface {
     constructor(contentDivSelector: any, title: any, rootNodesDataService: any, childNodesDataService: any, emptyDataHtml: any, parentFieldName: any, valueFieldName: any, textFieldName: any);
     RootDataBeingParsed(data: any): Array<soby_Item>;
     ChildDataBeingParsed(data: any): Array<soby_Item>;
@@ -32,7 +32,7 @@ declare class soby_TreeView implements soby_TreeViewInterface {
     GetParentNodeItemData(treeviewItemId: any): any;
     ExpandNode(treeviewItemId: any): void;
     PopulateNodes(contentDivSelector: any, items: any): void;
-    GetSelectedItems(): any[];
+    GetSelectedDataItems(): any[];
     ClickNode(treeViewItemId: any): void;
     CheckNode(treeViewItemId: any): void;
     EnsureItemSelectionExistency(): void;

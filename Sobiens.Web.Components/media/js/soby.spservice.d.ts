@@ -36,6 +36,26 @@ declare class soby_SharePointService implements soby_ServiceInterface {
     ItemAdded(args: any): void;
     ItemDeleted(args: any): void;
 }
+declare class soby_SPSearchBuilder extends soby_WSBuilder {
+    SourceId: string;
+    Clone(): soby_SPSearchBuilder;
+    GetWhereQuery(transport: soby_TransportRequest): string;
+    GetViewFieldsQuery(transport: soby_TransportRequest): string;
+    GetPagingQuery(transport: soby_TransportRequest): string;
+    ParseData(result1: any): any[];
+    GetCountQuery(request: soby_TransportRequest): any;
+}
+declare class soby_SPSearch2010Builder extends soby_WSBuilder {
+    Scope: string;
+    IsDocument: boolean;
+    Clone(): soby_SPSearch2010Builder;
+    GetWhereQuery(transport: soby_TransportRequest): string;
+    GetViewFieldsQuery(transport: soby_TransportRequest): string;
+    GetPagingQuery(transport: soby_TransportRequest): string;
+    GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: boolean): string;
+    ParseData(result1: any): any[];
+    GetCountQuery(request: soby_TransportRequest): any;
+}
 declare class soby_SPRestBuilder extends soby_WSBuilder {
     Clone(): soby_SPRestBuilder;
     GetWhereQuery(transport: soby_TransportRequest): string;

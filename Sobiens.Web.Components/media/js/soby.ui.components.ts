@@ -20,6 +20,28 @@ interface ISobyEditControlInterface {
     Validate():boolean;
 }
 
+interface ISobySelectorControlInterface
+{
+    ImagesFolderUrl: string;
+    GetSelectedDataItems(): any[];
+    /*
+    ContainerClientId: string;
+    FieldType: number;
+    Args: any;
+    ItemClassName: string;
+    ListItems: Array<SobyListItem>;
+    PopulateChoiceItems();
+    IsValid: boolean;
+    GetValue(): any;
+    SetValue(value: string);
+    Initialize();
+    Initialized();
+    ValueBeingChanged();
+    ValueChanged();
+    Validate(): boolean;
+    */
+}
+
 enum SobyPaginationViewTypes
 {
     PageNumbers = 0,
@@ -289,7 +311,7 @@ class SobyCheckBoxList implements ISobyEditControlInterface
             return;
         for (var i = 0; i < values.length; i++)
         {
-            $("#" + this.ContainerClientId + " ul.sobycheckboxlist input[value='" + values[i] + "']").attr("checked", "checked");
+            $("#" + this.ContainerClientId + " ul.sobycheckboxlist input[value='" + values[i] + "']").prop("checked", "checked");
         }
         this.SaveState();
     }
@@ -887,9 +909,10 @@ var SobyShowFieldsOn = new SobyShowFieldsOnObject();
 
 if ($("form") != null)
 {
-    $("form").click(function ()
+    $("form").click(function (args)
     {
-        $(".sobygridmenu").hide();
+        if ($(args.target).parents().hasClass("sobygridmenu") == false)
+            $(".sobygridmenu").hide();
     })
 }
 function soby_RemoveNoneExistenceGrid() {
@@ -1132,7 +1155,8 @@ class SobyGridColumn
 }
 
 
-class soby_WebGrid {
+class soby_WebGrid implements ISobySelectorControlInterface
+{
     /************************************ MEMBERS *************************************/
     /**
      * @property {SobyAggregateFields}      AggregateFields             - Aggregate fields.
@@ -2695,7 +2719,7 @@ class soby_WebGrid {
 
         headerCell.attr("onmouseover", "javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenuIcon('" + fieldName + "')");
         headerCell.attr("onmouseout", "javascript:soby_WebGrids['" + this.GridID + "'].HideHeaderRowMenuIcon('" + fieldName + "')");
-        headerCell.attr("onclick", "javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenu('" + fieldName + "', '" + displayName + "', " + sortable + ", " + filterable + ")");
+        //headerCell.attr("onclick", "javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenu('" + fieldName + "', '" + displayName + "', " + sortable + ", " + filterable + ")");
         filterCell.find("a.openmenulink").attr("onclick", "javascript:soby_WebGrids['" + this.GridID + "'].ShowHeaderRowMenu('" + fieldName + "', '" + displayName + "', " + sortable + ", " + filterable + ")");
 
         headerCell.append(container);
@@ -2807,11 +2831,14 @@ class soby_WebGrid {
      * // Hides header row menu icon
      * grid.HideHeaderRowMenu('Title');
      */
-    HideHeaderRowMenu(fieldName) {
+    HideHeaderRowMenu(fieldName)
+    {
+        /*
         if (this.ActionInProgress == true)
             return;
 
         $("#" + this.GridID + "_Menu").hide();
+        */
     }
 
     /**
@@ -3812,7 +3839,8 @@ class soby_DataRepeater extends soby_WebGrid
             cell.attr("id", cellID);
             cell.attr("cellindex", cellIndex);
             cell.attr("columnindex", cellIndex % this.MaxCellCount);
-            cell.attr("onclick", "soby_WebGrids['" + this.GridID + "'].SelectCell('" + currentRowID + "', " + cellIndex + ")")
+            if (this.IsSelectable == true)
+                cell.attr("onclick", "soby_WebGrids['" + this.GridID + "'].SelectCell('" + currentRowID + "', " + cellIndex + ")")
             currentRow.append(cell);
 
             if (currentRowToAddDataRowsAfter == null)
@@ -4318,48 +4346,57 @@ class SobyItemSelectorTypeObject {
 var SobyItemSelectorTypes = new SobyItemSelectorTypeObject();
 
 class soby_ItemSelection {
-    constructor(contentDivSelector, title, itemSelectorType:number, autoCompleteDataService, advancedSearchDataService, emptyDataHtml, dialogID, selectorUrl, valueFieldName, textFieldName) {
+    constructor(contentDivSelector, title, itemSelectorType: number, autoCompleteDataService, advancedSearchDataService, advancedSearchChildrenDataService, emptyDataHtml, dialogID, selectorUrl, valueFieldName, textFieldName, parentFieldName) {
         this.ItemSelectionID= "soby_itemselection_" + soby_guid();
         this.ContentDivSelector= contentDivSelector;
         this.Title = title;
         this.ItemSelectorType = itemSelectorType;
         this.AutoCompleteDataService = autoCompleteDataService;
         this.AdvancedSearchDataService = advancedSearchDataService;
+        this.AdvancedSearchChildrenDataService = advancedSearchChildrenDataService;
         this.EmptyDataHtml= emptyDataHtml;
         this.DialogID= dialogID;
         this.SelectorUrl= selectorUrl;
         this.ValueFieldName= valueFieldName;
         this.TextFieldName = textFieldName;
+        this.ParentFieldName = parentFieldName;
         this.EnsureItemSelectionExistency();
         this.InitializeAdvancedSearchControl();
     }
 
     ItemSelectorType: number = null;
-    AdvancedSearchAsGrid: soby_WebGrid = null;
+    AdvancedSearchAsGrid: ISobySelectorControlInterface = null;
     ItemSelectionID:string = "";
     ContentDivSelector: string = "";
     Title: string = "";
     AutoCompleteDataService: soby_ServiceInterface = null;
     AdvancedSearchDataService: soby_ServiceInterface = null;
+    AdvancedSearchChildrenDataService: soby_ServiceInterface = null;
     AllowMultipleSelections: boolean = true;
     EmptyDataHtml: string = "";
     WaterMark: string = "";
     DialogID: string = "";
     SelectorUrl: string = "";
+    ParentFieldName: string = "";
     ValueFieldName: string = "";
     TextFieldName: string = "";
     ImagesFolderUrl: string = "/_layouts/1033/images";
     InitializeAdvancedSearchControl() {
         if (this.ItemSelectorType == SobyItemSelectorTypes.GridView) {
-            this.AdvancedSearchAsGrid = new soby_WebGrid("#" + this.DialogID + " .itemselectionadvancedsearchgridview", this.Title, this.AdvancedSearchDataService, this.EmptyDataHtml);
-
-            this.AdvancedSearchAsGrid.IsEditable = false;
+            var advancedSearchAsGrid = new soby_WebGrid("#" + this.DialogID + " .itemselectionadvancedsearchgridview", this.Title, this.AdvancedSearchDataService, this.EmptyDataHtml);
+            advancedSearchAsGrid.IsEditable = false;
             for (var i = 0; i < this.AdvancedSearchDataService.DataSourceBuilder.SchemaFields.length; i++) {
                 var schemaField = this.AdvancedSearchDataService.DataSourceBuilder.SchemaFields[i];
-                this.AdvancedSearchAsGrid.AddColumn(schemaField.FieldName, schemaField.FieldName, SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+                advancedSearchAsGrid.AddColumn(schemaField.FieldName, schemaField.FieldName, SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
             }
-
-//            this.AdvancedSearchAsGrid.
+            this.AdvancedSearchAsGrid = advancedSearchAsGrid;
+        }
+        else if (this.ItemSelectorType == SobyItemSelectorTypes.TreeView)
+        {
+            var treeView = new soby_TreeView("#" + this.DialogID + " .itemselectionadvancedsearchgridview", this.Title, this.AdvancedSearchDataService, this.AdvancedSearchChildrenDataService, this.EmptyDataHtml, this.ParentFieldName, this.ValueFieldName, this.TextFieldName);
+            treeView.ImagesFolderUrl = "/media/images";
+            treeView.Initialize();
+            this.AdvancedSearchAsGrid = treeView;
         }
     }
     Initialize() {
@@ -4443,7 +4480,11 @@ class soby_ItemSelection {
     OpenItemPicker(event) {
 //        var selectorUrl = event.data.SelectorUrl;
         var mainControlID = event.data.MainControlID;
-        var dialogObject = ShowCommonHtmlDialog("testtt", event.data.DialogID, function (args) {
+        var dialogObject = ShowCommonHtmlDialog("testtt", event.data.DialogID, function (args)
+        {
+            if (args == null)
+                return;
+
             var values = args.split(soby_FilterValueSeperator);
             for (var i = 0; i < values.length; i = i + 2) {
                 soby_ItemSelections[mainControlID].AddItem(values[i + 1], values[i]);
@@ -4596,9 +4637,11 @@ function ShowCommonHtmlDialog(title, dialogID, onCloseCallback) {
 
 function ShowHtmlDialog(title, dialogID, onCloseCallback) {
     var dialogObject = $("#" + dialogID);
-    if (dialogObject.length == 0) {
-        dialogObject = $('<div id=\"' + dialogID + '\"></div>')
+    if (dialogObject.length > 0)
+    {
+        dialogObject.remove();
     }
+    dialogObject = $('<div id=\"' + dialogID + '\"></div>')
     var obj = dialogObject.dialog({
             autoOpen: false,
             modal: true,

@@ -35,3 +35,4 @@ function soby_PopulateGridMasterDetails() {
     authorGrid.AddDataRelation("Title", "Id", authorBooksGrid.GridID, "AuthorId");
     authorGrid.Initialize(true);
 }
+//# sourceMappingURL=masterdetails.js.map
