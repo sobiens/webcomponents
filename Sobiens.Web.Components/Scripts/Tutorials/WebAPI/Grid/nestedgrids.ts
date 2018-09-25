@@ -28,7 +28,8 @@ function soby_PopulateNestedGrid() {
     authorBooksDataSourceBuilder.AddSchemaField("AuthorId", SobyFieldTypes.Number, null);
     var authorBooksService = new soby_WebServiceService(authorBooksDataSourceBuilder);
     authorBooksService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
-    authorGrid.OnRowSelected = function (grid, rowID) {
+    authorGrid.OnRowSelected = function (grid, rowID)
+    {
         var authorBooksGrid = new soby_WebGrid("#soby_BooksDiv", "Books", authorBooksService, "There is no record found.");
         authorBooksGrid.ImagesFolderUrl = "/media/images";
         authorBooksGrid.DisplayTitle = false;
@@ -43,13 +44,14 @@ function soby_PopulateNestedGrid() {
 
         var selectedDataItems = grid.GetSelectedDataItems();
         var authorIds = new Array();
-        for (var i = 0; i < selectedDataItems.length; i++) {
+        for (var i = 0; i < selectedDataItems.length; i++)
+        {
             authorIds[authorIds.length] = selectedDataItems[i]["Id"];
         }
 
         authorBooksGrid.FilterResultWithMultipleValues("AuthorId", authorIds, SobyFieldTypes.Number, SobyFilterTypes.Equal, false);
 
-    }
+    };
     authorGrid.Initialize(true);
 }
 

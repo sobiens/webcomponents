@@ -21,7 +21,9 @@
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
             <script src="/Scripts/Tutorials/WebAPI/CheckBoxList/general.js"></script>
-            <div id='soby_BooksDiv'></div>
+        <table width="100%">
+            <tr><td id='soby_BooksDiv' width="33%"></td><td valign="top" id='soby_ActionDiv' width="33%"></td><td valign="top" id='soby_SelectionsDiv' width="33%"></td></tr>
+        </table>
         <br /><br /><p>
         <a href="javascript:void(0)" onclick="soby_ShowHideViewSource()">
             <img src="/Images/viewsource.png" border="0" width="20px" /> View source

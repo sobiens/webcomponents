@@ -50,8 +50,14 @@ declare class SobyAggregateTypesObject {
     Max: number;
     Min: number;
     Sum: number;
-    GetAggregateTypeName(aggregateType: number): string;
+    GetAggregateTypeName(aggregateType: number): "Average" | "Count" | "Max" | "Min" | "Sum";
 }
+declare class SobyWebServiceDataTypesObject {
+    QueryString: number;
+    Json: number;
+    Soap: number;
+}
+declare var SobyWebServiceDataTypes: SobyWebServiceDataTypesObject;
 declare var SobyFieldTypes: SobyFieldTypesObject;
 declare var SobyFilterTypes: SobyFilterTypesObject;
 declare var SobyAggregateTypes: SobyAggregateTypesObject;
@@ -304,6 +310,9 @@ declare class soby_StaticDataService implements soby_ServiceInterface {
 declare function WSArgument(fieldName: any, filterValue: any): void;
 declare function WSHeader(key: any, value: any): void;
 declare class soby_WSBuilder extends soby_DataSourceBuilderAbstract {
+    WebServiceDataTypes: number;
+    MethodName: string;
+    CountQuerySupported: boolean;
     constructor();
     Clone(): soby_WSBuilder;
     GetPagingQuery(transport: soby_TransportRequest): string;

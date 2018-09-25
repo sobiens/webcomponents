@@ -1,4 +1,5 @@
-﻿class soby_Validate
+﻿// VERSION 1.0.8.1
+class soby_Validate
 {
     ErrorMessages = {
         Url: {
@@ -54,7 +55,9 @@
     CheckIfEmpty(value: any): boolean
     {
         if (value == null || value == undefined || value.trim() == "" || value == [] || value == {})
+        {
             return true;
+        }
 
         return false;
     }
@@ -151,22 +154,32 @@ class soby_NumericValidator extends soby_ExistenceValidator
     {
         var isValid = super.Validate(value);
         if (isValid == false)
+        {
             return false;
+        }
 
         if (isNaN(value) == true)
+        {
             this.ErrorMessage = this.ErrorMessages.NotNumeric;
+        }
         else
         {
             if (this.MinValue != null && parseInt(value) < this.MinValue)
+            {
                 this.ErrorMessage = this.ErrorMessages.LessThanMin;
+            }
 
             if (this.MaxValue != null && parseInt(value) > this.MaxValue)
+            {
                 this.ErrorMessage = this.ErrorMessages.GreaterThanMax;
+            }
 
         }
 
         if (this.ErrorMessage != "")
+        {
             return false;
+        }
 
         return true;
     }
@@ -216,16 +229,24 @@ class soby_TextValidator extends soby_ExistenceValidator
     {
         var isValid = super.Validate(value);
         if (isValid == false)
+        {
             return false;
+        }
 
         if (this.MinLength != null && value.length < this.MinLength)
+        {
             this.ErrorMessage = this.ErrorMessages.LessThanMinLength;
+        }
 
         if (this.MaxLength != null && value.length > this.MaxLength)
+        {
             this.ErrorMessage = this.ErrorMessages.GreaterThanMaxLength;
+        }
 
         if (this.ErrorMessage != "")
+        {
             return false;
+        }
 
         return true;
     }
@@ -278,20 +299,30 @@ class soby_PatternValidator extends soby_ExistenceValidator
     {
         var isValid = super.Validate(value);
         if (isValid == false)
+        {
             return false;
+        }
 
         if (this.MinLength != null && value.length < this.MinLength)
+        {
             this.ErrorMessage = this.ErrorMessages.LessThanMinLength;
+        }
 
         if (this.MaxLength != null && value.length > this.MaxLength)
+        {
             this.ErrorMessage = this.ErrorMessages.GreaterThanMaxLength;
+        }
 
         if (this.Pattern.test(value.toString()) == false)
+        {
             this.ErrorMessage = this.ErrorMessages.NotMatchingPattern;
+        }
 
 
         if (this.ErrorMessage != "")
+        {
             return false;
+        }
 
         return true;
     }
@@ -430,13 +461,21 @@ class soby_FormValidator
             var textBox = $(textBoxes[i]);
             var textValidator: soby_ExistenceValidator = null;
             if (textBox.prop("tagName").toLowerCase() == "textarea" || textBox.attr("type") == "text")
+            {
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Text) as soby_TextValidator;
+            }
             else if (textBox.attr("type") == "number")
+            {
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Numeric) as soby_NumericValidator;
+            }
             else if (textBox.attr("type") == "email")
+            {
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Email) as soby_EmailValidator;
+            }
             else if (textBox.attr("type") == "url")
+            {
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.URL) as soby_UrlValidator;
+            }
             var texBoxId = textBox.attr("id");
             var texBoxErrorMessageId = texBoxId + "_soby_errormessage";
             if ($("#" + texBoxErrorMessageId).length == 0)
@@ -447,7 +486,9 @@ class soby_FormValidator
             }
             var value = textBox.val();
             if (textBox.attr("required") != null && textBox.attr("required") != undefined)
+            {
                 textValidator.Required = true;
+            }
 
             if (textBox.attr("minlength") != null && textBox.attr("minlength") != undefined && isNaN(parseInt(textBox.attr("minlength"))) == false)
             {

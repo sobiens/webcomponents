@@ -20,7 +20,7 @@ function soby_PopulateGridSFiltering() {
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
-    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, false, true, true, null, null, null);
     bookGrid.AddFilterField("Genre", "Picaresque", SobyFieldTypes.Text, SobyFilterTypes.Equal, false);
     bookGrid.Initialize(true);}
 

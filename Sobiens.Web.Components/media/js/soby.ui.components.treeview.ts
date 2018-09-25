@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.7.2
+﻿// VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_TreeViews = new Array();
 var soby_TreeViewItems = new Array();
@@ -24,11 +24,12 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
         this.TextFieldName = textFieldName;
         this.EnsureItemSelectionExistency();
         var treeview = this;
-        this.RootNodesDataService.ItemPopulated = function (items) {
+        this.RootNodesDataService.ItemPopulated = function (items)
+        {
             soby_TreeViewItems = new Array();
             items = treeview.RootDataBeingParsed(items);
             treeview.PopulateNodes(treeview.ContentDivSelector, items);
-        }
+        };
     }
 
     RootDataBeingParsed(data: any): Array<soby_Item>
@@ -69,7 +70,9 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
     GetItemData(treeviewItemId) {
         for (var i = 0; i < soby_TreeViewItems.length; i++) {
             if (soby_TreeViewItems[i]["SobyTreeViewItemId"] == treeviewItemId)
+            {
                 return soby_TreeViewItems[i];
+            }
         }
 
         return null;
@@ -83,7 +86,9 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
         {
             currentParentNodeId = this.GetParentNodeId(currentParentNodeId)
             if (currentParentNodeId != null)
+            {
                 rootNodeId = currentParentNodeId;
+            }
         }
 
         return rootNodeId; 
@@ -93,7 +98,9 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
     {
         var parentNode = $("#" + treeviewItemId).parent().parent();
         if (parentNode.hasClass("soby_treeviewnode") == true)
+        {
             return parentNode.attr("id");
+        }
 
         return;
     }
@@ -108,7 +115,9 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
     {
         var parentNodeId = this.GetParentNodeId(treeviewItemId);
         if (parentNodeId != null)
+        {
             return this.GetItemData(parentNodeId);
+        }
 
         return;
     }
@@ -138,7 +147,8 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
                 treeview.PopulateNodes("#" + treeviewItemId, items);
                 $("#" + treeviewItemId + " > ul").show();
                 $("#" + treeviewItemId).attr("isexpanded", "1");
-            }
+            };
+
             this.ChildNodesDataServiceBeingQueried(itemData);
             this.ChildNodesDataService.PopulateItems([treeviewItemId, value]);
 
@@ -166,7 +176,9 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
 
             li.append(expandLink);
             if (this.AllowCheckBoxes == true)
+            {
                 li.append(checkBox);
+            }
 
             li.append(selectLink);
             ul.append(li);
@@ -177,8 +189,11 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
     GetSelectedDataItems() {
         var selectedItems = new Array();
         var selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");
-        if(this.AllowCheckBoxes == false)
+        if (this.AllowCheckBoxes == false)
+        {
             selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");
+        }
+
         for (var i = 0; i < selectedInputs.length; i++) {
             selectedItems[selectedItems.length] = this.GetItemData($(selectedInputs[i]).val());
         }
@@ -187,16 +202,22 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
     }
     ClickNode(treeViewItemId) {
         if (this.OnClick != null)
+        {
             this.OnClick(this.TreeViewID, treeViewItemId);
+        }
     }
     CheckNode(treeViewItemId) {
         if (this.OnSelectionChanged != null)
+        {
             this.OnSelectionChanged(this.TreeViewID);
+        }
     }
     EnsureItemSelectionExistency() {
         for (var key in soby_TreeViews) {
             if (key == this.TreeViewID)
+            {
                 return;
+            }
         }
 
         soby_TreeViews[this.TreeViewID] = this;

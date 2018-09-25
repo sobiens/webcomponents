@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.7.2
+﻿// VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_CodeViews = new Array();
 class SobyCodeViewTypesObject
@@ -55,7 +55,9 @@ class soby_CodeView
     EnsureItemSelectionExistency() {
         for (var key in soby_CodeViews) {
             if (key == this.CodeViewID)
+            {
                 return;
+            }
         }
 
         soby_CodeViews[this.CodeViewID] = this;

@@ -41,7 +41,7 @@ function soby_PopulateDataRepeaterRefreshData()
     bookGrid.ItemDataBound = function (cellId, dataItem)
     {
         return "<strong>" + dataItem.Title + "</strong><br>" + dataItem.Genre + "<br>" + dataItem.Year + " by " + dataItem.Author.Name;
-    }
+    };
 
     bookGrid.Initialize(true);
 }

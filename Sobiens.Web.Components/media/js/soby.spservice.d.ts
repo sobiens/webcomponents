@@ -72,6 +72,7 @@ declare function soby_CamlBuilder(listName: any, viewName: any, rowLimit: any, w
 declare class sobySPListsObject {
     ApproveListItem(siteUrl: any, listName: any, id: any, callbackFunction: any): void;
     DeleteFile(siteUrl: any, fileSiteRelativeUrl: any, args: any, successCallbackFunction: any, errorCallbackFunction: any): void;
+    DeleteItem(siteUrl: any, libraryName: any, itemId: any, successCallbackFunction: any, errorCallbackFunction: any, args: any): void;
     RecycleFile(siteUrl: any, fileSiteRelativeUrl: any, args: any, successCallbackFunction: any, errorCallbackFunction: any): void;
     GetListProperties(webUrl: any, listName: any, callbackFunction: any): void;
     GetListItem(siteUrl: any, listName: any, listItemId: any, callBackFunction: any, _arguments: any): void;

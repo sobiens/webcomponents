@@ -1,9 +1,15 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var soby_Validate = (function () {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+// VERSION 1.0.8.1
+var soby_Validate = /** @class */ (function () {
     function soby_Validate() {
         this.ErrorMessages = {
             Url: {
@@ -46,8 +52,9 @@ var soby_Validate = (function () {
         return null;
     };
     soby_Validate.prototype.CheckIfEmpty = function (value) {
-        if (value == null || value == undefined || value.trim() == "" || value == [] || value == {})
+        if (value == null || value == undefined || value.trim() == "" || value == [] || value == {}) {
             return true;
+        }
         return false;
     };
     soby_Validate.prototype.ValidateForm = function (contentDivSelector) {
@@ -55,8 +62,8 @@ var soby_Validate = (function () {
         return formValidator.Validate();
     };
     return soby_Validate;
-})();
-var soby_ExistenceValidator = (function () {
+}());
+var soby_ExistenceValidator = /** @class */ (function () {
     function soby_ExistenceValidator() {
         this.Required = false;
         this.ErrorMessage = "";
@@ -86,22 +93,23 @@ var soby_ExistenceValidator = (function () {
         return validator;
     };
     return soby_ExistenceValidator;
-})();
-var soby_NumericValidator = (function (_super) {
+}());
+var soby_NumericValidator = /** @class */ (function (_super) {
     __extends(soby_NumericValidator, _super);
     function soby_NumericValidator() {
-        _super.call(this);
-        this.MinValue = null;
-        this.MaxValue = null;
-        this.ErrorMessage = "";
-        this.ErrorMessages = {
+        var _this = _super.call(this) || this;
+        _this.MinValue = null;
+        _this.MaxValue = null;
+        _this.ErrorMessage = "";
+        _this.ErrorMessages = {
             NotNumeric: "",
             Required: "",
             GreaterThanMax: "",
             LessThanMin: ""
         };
-        this.Name = "NumericValidator";
-        this.Type = soby_ValidatorTypes.Numeric;
+        _this.Name = "NumericValidator";
+        _this.Type = soby_ValidatorTypes.Numeric;
+        return _this;
     }
     soby_NumericValidator.prototype.SetDefaultErrorMessages = function () {
         _super.prototype.SetDefaultErrorMessages.call(this);
@@ -111,18 +119,23 @@ var soby_NumericValidator = (function (_super) {
     };
     soby_NumericValidator.prototype.Validate = function (value) {
         var isValid = _super.prototype.Validate.call(this, value);
-        if (isValid == false)
+        if (isValid == false) {
             return false;
-        if (isNaN(value) == true)
-            this.ErrorMessage = this.ErrorMessages.NotNumeric;
-        else {
-            if (this.MinValue != null && parseInt(value) < this.MinValue)
-                this.ErrorMessage = this.ErrorMessages.LessThanMin;
-            if (this.MaxValue != null && parseInt(value) > this.MaxValue)
-                this.ErrorMessage = this.ErrorMessages.GreaterThanMax;
         }
-        if (this.ErrorMessage != "")
+        if (isNaN(value) == true) {
+            this.ErrorMessage = this.ErrorMessages.NotNumeric;
+        }
+        else {
+            if (this.MinValue != null && parseInt(value) < this.MinValue) {
+                this.ErrorMessage = this.ErrorMessages.LessThanMin;
+            }
+            if (this.MaxValue != null && parseInt(value) > this.MaxValue) {
+                this.ErrorMessage = this.ErrorMessages.GreaterThanMax;
+            }
+        }
+        if (this.ErrorMessage != "") {
             return false;
+        }
         return true;
     };
     soby_NumericValidator.prototype.Clone = function () {
@@ -136,21 +149,22 @@ var soby_NumericValidator = (function (_super) {
         return validator;
     };
     return soby_NumericValidator;
-})(soby_ExistenceValidator);
-var soby_TextValidator = (function (_super) {
+}(soby_ExistenceValidator));
+var soby_TextValidator = /** @class */ (function (_super) {
     __extends(soby_TextValidator, _super);
     function soby_TextValidator() {
-        _super.call(this);
-        this.MinLength = null;
-        this.MaxLength = null;
-        this.ErrorMessage = "";
-        this.ErrorMessages = {
+        var _this = _super.call(this) || this;
+        _this.MinLength = null;
+        _this.MaxLength = null;
+        _this.ErrorMessage = "";
+        _this.ErrorMessages = {
             Required: "",
             GreaterThanMaxLength: "",
             LessThanMinLength: ""
         };
-        this.Name = "TextValidator";
-        this.Type = soby_ValidatorTypes.Text;
+        _this.Name = "TextValidator";
+        _this.Type = soby_ValidatorTypes.Text;
+        return _this;
     }
     soby_TextValidator.prototype.SetDefaultErrorMessages = function () {
         _super.prototype.SetDefaultErrorMessages.call(this);
@@ -159,14 +173,18 @@ var soby_TextValidator = (function (_super) {
     };
     soby_TextValidator.prototype.Validate = function (value) {
         var isValid = _super.prototype.Validate.call(this, value);
-        if (isValid == false)
+        if (isValid == false) {
             return false;
-        if (this.MinLength != null && value.length < this.MinLength)
+        }
+        if (this.MinLength != null && value.length < this.MinLength) {
             this.ErrorMessage = this.ErrorMessages.LessThanMinLength;
-        if (this.MaxLength != null && value.length > this.MaxLength)
+        }
+        if (this.MaxLength != null && value.length > this.MaxLength) {
             this.ErrorMessage = this.ErrorMessages.GreaterThanMaxLength;
-        if (this.ErrorMessage != "")
+        }
+        if (this.ErrorMessage != "") {
             return false;
+        }
         return true;
     };
     soby_TextValidator.prototype.Clone = function () {
@@ -180,23 +198,24 @@ var soby_TextValidator = (function (_super) {
         return validator;
     };
     return soby_TextValidator;
-})(soby_ExistenceValidator);
-var soby_PatternValidator = (function (_super) {
+}(soby_ExistenceValidator));
+var soby_PatternValidator = /** @class */ (function (_super) {
     __extends(soby_PatternValidator, _super);
     function soby_PatternValidator() {
-        _super.call(this);
-        this.MinLength = null;
-        this.MaxLength = null;
-        this.Pattern = null;
-        this.ErrorMessage = "";
-        this.ErrorMessages = {
+        var _this = _super.call(this) || this;
+        _this.MinLength = null;
+        _this.MaxLength = null;
+        _this.Pattern = null;
+        _this.ErrorMessage = "";
+        _this.ErrorMessages = {
             Required: "",
             GreaterThanMaxLength: "",
             LessThanMinLength: "",
             NotMatchingPattern: ""
         };
-        this.Name = "PatternValidator";
-        this.Type = soby_ValidatorTypes.Pattern;
+        _this.Name = "PatternValidator";
+        _this.Type = soby_ValidatorTypes.Pattern;
+        return _this;
     }
     soby_PatternValidator.prototype.SetDefaultErrorMessages = function () {
         _super.prototype.SetDefaultErrorMessages.call(this);
@@ -206,16 +225,21 @@ var soby_PatternValidator = (function (_super) {
     };
     soby_PatternValidator.prototype.Validate = function (value) {
         var isValid = _super.prototype.Validate.call(this, value);
-        if (isValid == false)
+        if (isValid == false) {
             return false;
-        if (this.MinLength != null && value.length < this.MinLength)
+        }
+        if (this.MinLength != null && value.length < this.MinLength) {
             this.ErrorMessage = this.ErrorMessages.LessThanMinLength;
-        if (this.MaxLength != null && value.length > this.MaxLength)
+        }
+        if (this.MaxLength != null && value.length > this.MaxLength) {
             this.ErrorMessage = this.ErrorMessages.GreaterThanMaxLength;
-        if (this.Pattern.test(value.toString()) == false)
+        }
+        if (this.Pattern.test(value.toString()) == false) {
             this.ErrorMessage = this.ErrorMessages.NotMatchingPattern;
-        if (this.ErrorMessage != "")
+        }
+        if (this.ErrorMessage != "") {
             return false;
+        }
         return true;
     };
     soby_PatternValidator.prototype.Clone = function () {
@@ -230,14 +254,15 @@ var soby_PatternValidator = (function (_super) {
         return validator;
     };
     return soby_PatternValidator;
-})(soby_ExistenceValidator);
-var soby_EmailValidator = (function (_super) {
+}(soby_ExistenceValidator));
+var soby_EmailValidator = /** @class */ (function (_super) {
     __extends(soby_EmailValidator, _super);
     function soby_EmailValidator() {
-        _super.call(this);
-        this.Name = "EmailValidator ";
-        this.Type = soby_ValidatorTypes.Email;
-        this.Pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var _this = _super.call(this) || this;
+        _this.Name = "EmailValidator ";
+        _this.Type = soby_ValidatorTypes.Email;
+        _this.Pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return _this;
     }
     soby_EmailValidator.prototype.SetDefaultErrorMessages = function () {
         _super.prototype.SetDefaultErrorMessages.call(this);
@@ -258,13 +283,13 @@ var soby_EmailValidator = (function (_super) {
         return validator;
     };
     return soby_EmailValidator;
-})(soby_PatternValidator);
-var soby_UrlValidator = (function (_super) {
+}(soby_PatternValidator));
+var soby_UrlValidator = /** @class */ (function (_super) {
     __extends(soby_UrlValidator, _super);
     function soby_UrlValidator() {
-        _super.call(this);
-        this.Name = "UrlValidator ";
-        this.Type = soby_ValidatorTypes.URL;
+        var _this = _super.call(this) || this;
+        _this.Name = "UrlValidator ";
+        _this.Type = soby_ValidatorTypes.URL;
         /*
         this.Pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
             '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
@@ -273,7 +298,8 @@ var soby_UrlValidator = (function (_super) {
             '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
             '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
         */
-        this.Pattern = new RegExp('(http|ftp|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?', 'i');
+        _this.Pattern = new RegExp('(http|ftp|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?', 'i');
+        return _this;
     }
     soby_UrlValidator.prototype.SetDefaultErrorMessages = function () {
         _super.prototype.SetDefaultErrorMessages.call(this);
@@ -294,7 +320,7 @@ var soby_UrlValidator = (function (_super) {
         return validator;
     };
     return soby_UrlValidator;
-})(soby_PatternValidator);
+}(soby_PatternValidator));
 var soby_ValidatorTypes;
 (function (soby_ValidatorTypes) {
     soby_ValidatorTypes[soby_ValidatorTypes["Date"] = 1] = "Date";
@@ -309,7 +335,7 @@ var soby_ValidatorTypes;
     soby_ValidatorTypes[soby_ValidatorTypes["Text"] = 10] = "Text";
     soby_ValidatorTypes[soby_ValidatorTypes["URL"] = 11] = "URL";
 })(soby_ValidatorTypes || (soby_ValidatorTypes = {}));
-var soby_FormValidator = (function () {
+var soby_FormValidator = /** @class */ (function () {
     function soby_FormValidator(contentDivSelector) {
         this.ContentDivSelector = "";
         this.ContentDivSelector = contentDivSelector;
@@ -323,14 +349,18 @@ var soby_FormValidator = (function () {
         for (var i = 0; i < textBoxes.length; i++) {
             var textBox = $(textBoxes[i]);
             var textValidator = null;
-            if (textBox.prop("tagName").toLowerCase() == "textarea" || textBox.attr("type") == "text")
+            if (textBox.prop("tagName").toLowerCase() == "textarea" || textBox.attr("type") == "text") {
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Text);
-            else if (textBox.attr("type") == "number")
+            }
+            else if (textBox.attr("type") == "number") {
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Numeric);
-            else if (textBox.attr("type") == "email")
+            }
+            else if (textBox.attr("type") == "email") {
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Email);
-            else if (textBox.attr("type") == "url")
+            }
+            else if (textBox.attr("type") == "url") {
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.URL);
+            }
             var texBoxId = textBox.attr("id");
             var texBoxErrorMessageId = texBoxId + "_soby_errormessage";
             if ($("#" + texBoxErrorMessageId).length == 0) {
@@ -339,8 +369,9 @@ var soby_FormValidator = (function () {
                 errorMessageSpan.insertAfter(textBox);
             }
             var value = textBox.val();
-            if (textBox.attr("required") != null && textBox.attr("required") != undefined)
+            if (textBox.attr("required") != null && textBox.attr("required") != undefined) {
                 textValidator.Required = true;
+            }
             if (textBox.attr("minlength") != null && textBox.attr("minlength") != undefined && isNaN(parseInt(textBox.attr("minlength"))) == false) {
                 textValidator.MinLength = parseInt(textBox.attr("minlength"));
             }
@@ -369,6 +400,6 @@ var soby_FormValidator = (function () {
         return isValid;
     };
     return soby_FormValidator;
-})();
+}());
 var sobyValidate = new soby_Validate();
 //# sourceMappingURL=soby.validator.js.map

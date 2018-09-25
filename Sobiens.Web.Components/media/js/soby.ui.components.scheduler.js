@@ -1,12 +1,17 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-// VERSION 1.0.7.2
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+// VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_Schedulers = new Array();
-var SobySchedulerViewTypesObject = (function () {
+var SobySchedulerViewTypesObject = /** @class */ (function () {
     function SobySchedulerViewTypesObject() {
         this.Daily = 1;
         this.Weekly = 2;
@@ -17,9 +22,9 @@ var SobySchedulerViewTypesObject = (function () {
         this.AllData = 6;
     }
     return SobySchedulerViewTypesObject;
-})();
+}());
 var SobySchedulerTypes = new SobySchedulerViewTypesObject();
-var SobySchedulerDataItemStatusObject = (function () {
+var SobySchedulerDataItemStatusObject = /** @class */ (function () {
     function SobySchedulerDataItemStatusObject() {
         this.None = 1;
         this.Added = 2;
@@ -27,13 +32,14 @@ var SobySchedulerDataItemStatusObject = (function () {
         this.Deleted = 4;
     }
     return SobySchedulerDataItemStatusObject;
-})();
+}());
 var SobySchedulerDataItemStatuses = new SobySchedulerDataItemStatusObject();
 function soby_RemoveNoneExistenceScheduler() {
     var newArray = new Array();
     for (var x in soby_Schedulers) {
-        if ($(soby_Schedulers[x].ContentDivSelector + "[schedulerid='" + soby_Schedulers[x].SchedulerID + "']").length > 0)
+        if ($(soby_Schedulers[x].ContentDivSelector + "[schedulerid='" + soby_Schedulers[x].SchedulerID + "']").length > 0) {
             newArray[soby_Schedulers[x].SchedulerID] = soby_Schedulers[x];
+        }
     }
     soby_WebGrids = newArray;
 }
@@ -46,7 +52,7 @@ function soby_GetAllSchedulers() {
     soby_RemoveNoneExistenceScheduler();
     return soby_Schedulers;
 }
-var soby_Scheduler = (function () {
+var soby_Scheduler = /** @class */ (function () {
     function soby_Scheduler(contentDivSelector, title, categoriesTitle, year, month, day, emptyDataHtml, idFieldName, titleFieldName, descriptionFieldName, startDateFieldName, endDateFieldName, linkFieldName, imageFieldName, width, height) {
         this.SchedulerID = "";
         this.ContentDivSelector = "";
@@ -151,9 +157,11 @@ var soby_Scheduler = (function () {
                 sublink.text(subCategory.Title);
                 subli.append(sublink);
                 subCategoriesContainer.append(subli);
+                //"<td class='viewtypeheader daily'><a href='javascript:void(0)' onclick=\"soby_Schedulers['" + this.SchedulerID + "'].ChangeView(SobySchedulerTypes.Daily)\">&nbsp;&nbsp;&nbsp;Daily&nbsp;&nbsp;&nbsp;</a></td>" +
             }
             li.append(subCategoriesContainer);
             ul.append(li);
+            //"<td class='viewtypeheader daily'><a href='javascript:void(0)' onclick=\"soby_Schedulers['" + this.SchedulerID + "'].ChangeView(SobySchedulerTypes.Daily)\">&nbsp;&nbsp;&nbsp;Daily&nbsp;&nbsp;&nbsp;</a></td>" +
         }
         container.append(ul);
         $(this.ContentDivSelector + " .schedulercategoriespanel").html("");
@@ -171,8 +179,9 @@ var soby_Scheduler = (function () {
     };
     soby_Scheduler.prototype.GetItemData = function (calendarViewItemId) {
         for (var i = 0; i < this.ScheduleItems.length; i++) {
-            if (this.ScheduleItems[i]["SobyCalendarViewItemId"] == calendarViewItemId)
+            if (this.ScheduleItems[i]["SobyCalendarViewItemId"] == calendarViewItemId) {
                 return this.ScheduleItems[i];
+            }
         }
         return null;
     };
@@ -181,14 +190,16 @@ var soby_Scheduler = (function () {
         for (var i = 0; i < this.ScheduleItems.length; i++) {
             var item = this.ScheduleItems[i];
             if (item.EndDate == null) {
-                if (item.StartDate >= startDate && item.StartDate <= endDate)
+                if (item.StartDate >= startDate && item.StartDate <= endDate) {
                     items.push(item);
+                }
             }
             else {
                 if ((item.StartDate >= startDate && item.StartDate <= endDate)
                     ||
-                        (item.EndDate >= startDate && item.EndDate <= endDate))
+                        (item.EndDate >= startDate && item.EndDate <= endDate)) {
                     items.push(item);
+                }
             }
         }
         return items;
@@ -197,8 +208,9 @@ var soby_Scheduler = (function () {
         var sTable = "";
         var sClass = "";
         var startNo = startDate.getDay();
-        if (startNo == 0)
+        if (startNo == 0) {
             startNo = 7;
+        }
         var sClass = "weekday";
         var dNow = new Date();
         if (dNow.getDate() == startDate.getDate() && dNow.getMonth() == startDate.getMonth() && dNow.getFullYear() == startDate.getFullYear()) {
@@ -269,23 +281,23 @@ var soby_Scheduler = (function () {
     };
     soby_Scheduler.prototype.GenerateScheduler = function () {
         switch (this.ViewType) {
-            case SobySchedulerTypes.Yearly:
+            case SobySchedulerTypes.Yearly: // YEARLY SHOWING
                 //this.ShowYearlyView();
                 break;
-            case SobySchedulerTypes.Monthly:
+            case SobySchedulerTypes.Monthly: // MONTHLY SHOWING
                 //this.ShowMonthlyView();
                 break;
             // 1 DAILY  --  2 WEEKLY  --  3 ONE MONTHLY  --  4 YEARLY  --  5 EVENTLY(YEARLY)
-            case SobySchedulerTypes.Daily:
+            case SobySchedulerTypes.Daily: // DAILY SHOWING
                 this.ShowFifteenMinutesView();
                 break;
-            case SobySchedulerTypes.Weekly:
+            case SobySchedulerTypes.Weekly: // WEEKLY SHOWING
                 this.ShowFifteenMinutesView();
                 break;
-            case SobySchedulerTypes.TaskList:
+            case SobySchedulerTypes.TaskList: // ALL EVENT(YEARLY) SHOWING
                 this.ShowTasklistView();
                 break;
-            case SobySchedulerTypes.CustomDates:
+            case SobySchedulerTypes.CustomDates: // ALL EVENT(YEARLY) SHOWING
                 this.ShowFifteenMinutesView();
                 break;
         }
@@ -299,8 +311,9 @@ var soby_Scheduler = (function () {
     };
     soby_Scheduler.prototype.GetDayHeaderClass = function (date) {
         var startNo = date.getDay();
-        if (startNo == 0)
+        if (startNo == 0) {
             startNo = 7;
+        }
         var className = "weekday";
         var dNow = new Date();
         if (dNow.getDate() == date.getDate() && dNow.getMonth() == date.getMonth() && dNow.getFullYear() == date.getFullYear()) {
@@ -566,8 +579,9 @@ var soby_Scheduler = (function () {
                 }
                 var categoryScheduleItems = scheduler.ScheduleItems.GetItemsByCategoryId(categoryId);
                 for (var i = 0; i < categoryScheduleItems.length; i++) {
-                    if (categoryScheduleItems[i].Id == scheduleItemId)
+                    if (categoryScheduleItems[i].Id == scheduleItemId) {
                         continue;
+                    }
                     if ((categoryScheduleItems[i].StartDate >= startDate && categoryScheduleItems[i].StartDate <= endDate)
                         ||
                             (startDate >= categoryScheduleItems[i].StartDate && startDate <= categoryScheduleItems[i].EndDate)) {
@@ -592,10 +606,12 @@ var soby_Scheduler = (function () {
         }
         else {
             var changedItem = this.ChangedScheduleItems.GetItemById(dataItem.Id);
-            if (changedItem == null)
+            if (changedItem == null) {
                 this.ChangedScheduleItems.push(dataItem);
-            else
+            }
+            else {
                 changedItem.DataItemStatus = status;
+            }
         }
     };
     soby_Scheduler.prototype.GetCategoryTimeRow = function (categoryId) {
@@ -637,51 +653,57 @@ var soby_Scheduler = (function () {
     soby_Scheduler.prototype.GetSelectedItems = function () {
         var selectedItems = new Array();
         var selectedInputs = $("input[name='checkbox_" + this.SchedulerID + "']:checked");
-        if (this.AllowCheckBoxes == false)
+        if (this.AllowCheckBoxes == false) {
             selectedInputs = $("input[name='checkbox_" + this.SchedulerID + "']:checked");
+        }
         for (var i = 0; i < selectedInputs.length; i++) {
             selectedItems[selectedItems.length] = this.GetItemData($(selectedInputs[i]).val());
         }
         return selectedItems;
     };
     soby_Scheduler.prototype.ClickNode = function (calendarViewItemId) {
-        if (this.OnClick != null)
+        if (this.OnClick != null) {
             this.OnClick(this.SchedulerID, calendarViewItemId);
+        }
     };
     soby_Scheduler.prototype.CheckNode = function (calendarViewItemId) {
-        if (this.OnSelectionChanged != null)
+        if (this.OnSelectionChanged != null) {
             this.OnSelectionChanged(this.SchedulerID);
+        }
     };
     soby_Scheduler.prototype.EnsureItemSelectionExistency = function () {
         for (var key in soby_Schedulers) {
-            if (key == this.SchedulerID)
+            if (key == this.SchedulerID) {
                 return;
+            }
         }
         soby_Schedulers[this.SchedulerID] = this;
     };
     return soby_Scheduler;
-})();
-var soby_ScheduleCategories = (function (_super) {
+}());
+var soby_ScheduleCategories = /** @class */ (function (_super) {
     __extends(soby_ScheduleCategories, _super);
     function soby_ScheduleCategories() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     soby_ScheduleCategories.prototype.GetCategoryById = function (categoryId) {
         for (var i = 0; i < this.length; i++) {
-            if (this[i].Id == categoryId)
+            if (this[i].Id == categoryId) {
                 return this[i];
+            }
             var category = this[i].SubCategories.GetCategoryById(categoryId);
-            if (category != null)
+            if (category != null) {
                 return category;
+            }
         }
         return null;
     };
     return soby_ScheduleCategories;
-})(Array);
-var soby_ScheduleItems = (function (_super) {
+}(Array));
+var soby_ScheduleItems = /** @class */ (function (_super) {
     __extends(soby_ScheduleItems, _super);
     function soby_ScheduleItems() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     soby_ScheduleItems.prototype.Clone = function () {
         var newItems = new soby_ScheduleItems();
@@ -692,22 +714,24 @@ var soby_ScheduleItems = (function (_super) {
     };
     soby_ScheduleItems.prototype.GetItemById = function (id) {
         for (var i = 0; i < this.length; i++) {
-            if (this[i].Id == id)
+            if (this[i].Id == id) {
                 return this[i];
+            }
         }
         return null;
     };
     soby_ScheduleItems.prototype.GetItemsByCategoryId = function (categoryId) {
         var newItems = new soby_ScheduleItems();
         for (var i = 0; i < this.length; i++) {
-            if (this[i].CategoryId == categoryId)
+            if (this[i].CategoryId == categoryId) {
                 newItems.push(this[i]);
+            }
         }
         return newItems;
     };
     return soby_ScheduleItems;
-})(Array);
-var soby_ScheduleItem = (function () {
+}(Array));
+var soby_ScheduleItem = /** @class */ (function () {
     function soby_ScheduleItem(id, title, description, categoryId, startDate, endDate) {
         this.Id = "";
         this.Title = "";
@@ -727,8 +751,8 @@ var soby_ScheduleItem = (function () {
         return new soby_ScheduleItem(this.Id, this.Title, this.Description, this.CategoryId, this.StartDate, this.EndDate);
     };
     return soby_ScheduleItem;
-})();
-var soby_ScheduleCategory = (function () {
+}());
+var soby_ScheduleCategory = /** @class */ (function () {
     function soby_ScheduleCategory(id, title) {
         this.Id = "";
         this.Title = "";
@@ -743,6 +767,6 @@ var soby_ScheduleCategory = (function () {
         this.SubCategories.push(category);
     };
     return soby_ScheduleCategory;
-})();
+}());
 // ************************************************************
 //# sourceMappingURL=soby.ui.components.scheduler.js.map

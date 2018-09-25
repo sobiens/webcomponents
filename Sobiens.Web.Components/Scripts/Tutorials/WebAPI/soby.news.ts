@@ -1,10 +1,5 @@
 ﻿document.write("<div id='soby_BOEDiv' style='margin:auto;max-width:980px'></div>");
 $(function () {
-    var inDesignMode = eval("document.forms[MSOWebPartPageFormName].MSOLayout_InDesignMode.value");
-    if (inDesignMode == "1") {
-        $("#soby_BOEDiv").remove();
-        return;
-    }
     soby_PopulateWebNews();
 });
 
@@ -38,9 +33,10 @@ function soby_PopulateWebNews() {
         return content.html();
     }, null, true, true, false, null, null, null);
 
-    newsGrid.ItemCreated = function (rowID, item) {
+    newsGrid.ItemCreated = function (rowID, item)
+    {
         soby_PopulateWebNewsImages(item.ID);
-    }
+    };
 
     newsGrid.Initialize(true);
 }

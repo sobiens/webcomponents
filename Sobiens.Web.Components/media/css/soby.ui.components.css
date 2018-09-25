@@ -334,17 +334,17 @@
 /*********************** SOBY WIZARD *****************************/
 .sobywizard {} 
 .sobywizard > ul > li:not(:first-child) {padding-left: 30px;} 
-.sobywizard > ul {padding-left: 0px;} 
+.sobywizard > ul {padding-left: 0px;display:inline-block} 
 .sobywizard > ul > li {list-style:none;float:left;padding: 5px;} 
-.sobywizardtablink {background-color:#4B92D8 !important;padding: 10px;color:white !important} 
-.sobywizardtablink.active {background-color:orange !important;} 
-.sobywizardtablink:before {     width: 0;    height: 0;    border-top: 30px inset transparent;    border-bottom: 30px inset transparent;    border-left: 30px solid #FFFFFF;    position: absolute;    content: \"\";    top: 0;    left: 0;} 
-.sobywizardtablink:after {    width: 0;height: 0;    border-top: 29px inset transparent;    border-bottom: 28px inset transparent;    border-left: 30px solid #4B92D8;    position: absolute;    content: \"\";    top: 0;    right: -30px;    z-index: 2;} 
-.sobywizardtablink {    padding: 20px 12px 20px;    position: relative;    display: inline-block;    text-decoration: none;    min-width: 24.75%;    margin-left: 0.25%;    text-align: center;    text-decoration: none;    font-size: 14px;    color: #707070;    background: #EBEBEB;    text-transform: uppercase;    cursor: pointer;} 
-.sobywizardtablink:hover {text-decoration: none;    } 
-.sobywizardtablink:first-child {        margin-left: 0;    }
-.sobywizard > ul > li:first-child .sobywizardtablink:before, .sobywizard > li:last-child .sobywizardtablink:after {    border: none; }
-.sobywizardtablink.active:after {border-left: 30px solid orange;}
+.sobywizardsteplink {background-color:#4B92D8 !important;padding: 10px;color:white !important} 
+.sobywizardsteplink.active {background-color:orange !important;} 
+.sobywizardsteplink:before {     width: 0;    height: 0;    border-top: 30px inset transparent;    border-bottom: 30px inset transparent;    border-left: 30px solid #FFFFFF;    position: absolute;    content: \"\";    top: 0;    left: 0;} 
+.sobywizardsteplink:after {    width: 0;height: 0;    border-top: 29px inset transparent;    border-bottom: 28px inset transparent;    border-left: 30px solid #4B92D8;    position: absolute;    content: \"\";    top: 0;    right: -30px;    z-index: 2;} 
+.sobywizardsteplink {    padding: 20px 12px 20px;    position: relative;    display: inline-block;    text-decoration: none;    min-width: 24.75%;    margin-left: 0.25%;    text-align: center;    text-decoration: none;    font-size: 14px;    color: #707070;    background: #EBEBEB;    text-transform: uppercase;    cursor: pointer;} 
+.sobywizardsteplink:hover {text-decoration: none;    } 
+.sobywizardsteplink:first-child {        margin-left: 0;    }
+.sobywizard > ul > li:first-child .sobywizardsteplink:before, .sobywizard > li:last-child .sobywizardsteplink:after {    border: none; }
+.sobywizardsteplink.active:after {border-left: 30px solid orange;}
 .sobywizardnavigationbar { clear: both; text-align: center; }
 /***************************************************************/
 

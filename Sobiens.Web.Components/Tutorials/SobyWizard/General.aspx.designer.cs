@@ -11,5 +11,14 @@ namespace Sobiens.Web.Components.Tutorials.SobyWizard {
     
     
     public partial class General {
+        
+        /// <summary>
+        /// SobyWizardSideMenuControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Sobiens.Web.Components.Controls.SobyWizardSideMenuControl SobyWizardSideMenuControl;
     }
 }

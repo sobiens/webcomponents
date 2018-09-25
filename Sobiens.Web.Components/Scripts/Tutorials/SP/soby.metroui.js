@@ -1,10 +1,5 @@
 document.write("<div id='soby_MetroTilesDiv'></div>");
 $(function () {
-    var inDesignMode = eval("document.forms[MSOWebPartPageFormName].MSOLayout_InDesignMode.value");
-    if (inDesignMode == "1") {
-        $("#soby_MetroTilesDiv").remove();
-        return;
-    }
     soby_PopulateSPMetroTiles();
 });
 function soby_PopulateSPMetroTiles() {

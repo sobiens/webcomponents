@@ -15,18 +15,21 @@ function soby_PopulateCalendarView() {
     calendarView = new soby_CalendarView("#soby_CalendarDiv", "Premises", calendarDataService, 2016, 12, 6, "No record", "Id", "Title", "Description", "DueDate", "", "Title", "Title", "500px", "500px");
     calendarView.ImagesFolderUrl = "/media/images";
     calendarView.Initialize();
-    calendarView.OnClick = function (calendarViewID, calendarViewItemId) {
+    calendarView.OnClick = function (calendarViewID, calendarViewItemId)
+    {
         var itemData = soby_CalendarViews[calendarViewID].GetItemData(calendarViewItemId);
         $("#soby_ResultDiv").html("Clicked node '" + itemData.Title + "'");
-    }
-    calendarView.OnSelectionChanged = function (calendarViewID) {
+    };
+
+    calendarView.OnSelectionChanged = function (calendarViewID)
+    {
         var selectedItems = soby_CalendarViews[calendarViewID].GetSelectedItems();
         $("#soby_ResultDiv").html("Selected nodes:");
-        for (var i = 0; i < selectedItems.length; i++) {
+        for (var i = 0; i < selectedItems.length; i++)
+        {
             $("#soby_ResultDiv").append(selectedItems[i].Title + ",");
         }
-
-    }
+    };
 }
 
  

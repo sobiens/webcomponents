@@ -1,8 +1,8 @@
-// VERSION 1.0.7.2
+// VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_TreeViews = new Array();
 var soby_TreeViewItems = new Array();
-var soby_TreeView = (function () {
+var soby_TreeView = /** @class */ (function () {
     function soby_TreeView(contentDivSelector, title, rootNodesDataService, childNodesDataService, emptyDataHtml, parentFieldName, valueFieldName, textFieldName) {
         this.TreeViewID = "";
         this.ContentDivSelector = "";
@@ -52,8 +52,9 @@ var soby_TreeView = (function () {
     };
     soby_TreeView.prototype.GetItemData = function (treeviewItemId) {
         for (var i = 0; i < soby_TreeViewItems.length; i++) {
-            if (soby_TreeViewItems[i]["SobyTreeViewItemId"] == treeviewItemId)
+            if (soby_TreeViewItems[i]["SobyTreeViewItemId"] == treeviewItemId) {
                 return soby_TreeViewItems[i];
+            }
         }
         return null;
     };
@@ -62,15 +63,17 @@ var soby_TreeView = (function () {
         var currentParentNodeId = treeviewItemId;
         while (currentParentNodeId != null) {
             currentParentNodeId = this.GetParentNodeId(currentParentNodeId);
-            if (currentParentNodeId != null)
+            if (currentParentNodeId != null) {
                 rootNodeId = currentParentNodeId;
+            }
         }
         return rootNodeId;
     };
     soby_TreeView.prototype.GetParentNodeId = function (treeviewItemId) {
         var parentNode = $("#" + treeviewItemId).parent().parent();
-        if (parentNode.hasClass("soby_treeviewnode") == true)
+        if (parentNode.hasClass("soby_treeviewnode") == true) {
             return parentNode.attr("id");
+        }
         return;
     };
     soby_TreeView.prototype.GetRootNodeItemData = function (treeviewItemId) {
@@ -79,8 +82,9 @@ var soby_TreeView = (function () {
     };
     soby_TreeView.prototype.GetParentNodeItemData = function (treeviewItemId) {
         var parentNodeId = this.GetParentNodeId(treeviewItemId);
-        if (parentNodeId != null)
+        if (parentNodeId != null) {
             return this.GetItemData(parentNodeId);
+        }
         return;
     };
     soby_TreeView.prototype.ExpandNode = function (treeviewItemId) {
@@ -132,8 +136,9 @@ var soby_TreeView = (function () {
             var selectLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ClickNode('" + treeViewItemId + "')\"></a>");
             selectLink.text(text);
             li.append(expandLink);
-            if (this.AllowCheckBoxes == true)
+            if (this.AllowCheckBoxes == true) {
                 li.append(checkBox);
+            }
             li.append(selectLink);
             ul.append(li);
         }
@@ -142,29 +147,33 @@ var soby_TreeView = (function () {
     soby_TreeView.prototype.GetSelectedDataItems = function () {
         var selectedItems = new Array();
         var selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");
-        if (this.AllowCheckBoxes == false)
+        if (this.AllowCheckBoxes == false) {
             selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");
+        }
         for (var i = 0; i < selectedInputs.length; i++) {
             selectedItems[selectedItems.length] = this.GetItemData($(selectedInputs[i]).val());
         }
         return selectedItems;
     };
     soby_TreeView.prototype.ClickNode = function (treeViewItemId) {
-        if (this.OnClick != null)
+        if (this.OnClick != null) {
             this.OnClick(this.TreeViewID, treeViewItemId);
+        }
     };
     soby_TreeView.prototype.CheckNode = function (treeViewItemId) {
-        if (this.OnSelectionChanged != null)
+        if (this.OnSelectionChanged != null) {
             this.OnSelectionChanged(this.TreeViewID);
+        }
     };
     soby_TreeView.prototype.EnsureItemSelectionExistency = function () {
         for (var key in soby_TreeViews) {
-            if (key == this.TreeViewID)
+            if (key == this.TreeViewID) {
                 return;
+            }
         }
         soby_TreeViews[this.TreeViewID] = this;
     };
     return soby_TreeView;
-})();
+}());
 // ************************************************************
 //# sourceMappingURL=soby.ui.components.treeview.js.map

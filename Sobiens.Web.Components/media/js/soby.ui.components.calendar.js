@@ -1,12 +1,17 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-// VERSION 1.0.7.2
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+// VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_CalendarViews = new Array();
-var SobyCalendarViewTypesObject = (function () {
+var SobyCalendarViewTypesObject = /** @class */ (function () {
     function SobyCalendarViewTypesObject() {
         this.Daily = 1;
         this.Weekly = 2;
@@ -15,9 +20,9 @@ var SobyCalendarViewTypesObject = (function () {
         this.TaskList = 5;
     }
     return SobyCalendarViewTypesObject;
-})();
+}());
 var SobyCalendarViewTypes = new SobyCalendarViewTypesObject();
-var soby_CalendarView = (function () {
+var soby_CalendarView = /** @class */ (function () {
     function soby_CalendarView(contentDivSelector, title, dataService, year, month, day, emptyDataHtml, idFieldName, titleFieldName, descriptionFieldName, startDateFieldName, endDateFieldName, linkFieldName, imageFieldName, width, height) {
         this.CalendarViewID = "";
         this.ContentDivSelector = "";
@@ -69,8 +74,9 @@ var soby_CalendarView = (function () {
                     var description = items[i][calendarView.TitleFieldName];
                     var startDate = items[i][calendarView.StartDateFieldName];
                     var endDate = null;
-                    if (calendarView.EndDateFieldName != null && calendarView.EndDateFieldName != "")
+                    if (calendarView.EndDateFieldName != null && calendarView.EndDateFieldName != "") {
                         endDate = items[i][calendarView.EndDateFieldName];
+                    }
                     var calendarItem = new soby_CalendarViewItem(id, title, description, startDate, endDate);
                     calendarItems.push(calendarItem);
                 }
@@ -94,8 +100,9 @@ var soby_CalendarView = (function () {
     };
     soby_CalendarView.prototype.GetItemData = function (calendarViewItemId) {
         for (var i = 0; i < soby_CalendarViewItems.length; i++) {
-            if (soby_CalendarViewItems[i]["SobyCalendarViewItemId"] == calendarViewItemId)
+            if (soby_CalendarViewItems[i]["SobyCalendarViewItemId"] == calendarViewItemId) {
                 return soby_CalendarViewItems[i];
+            }
         }
         return null;
     };
@@ -104,14 +111,16 @@ var soby_CalendarView = (function () {
         for (var i = 0; i < this.Items.length; i++) {
             var item = this.Items[i];
             if (item.EndDate == null) {
-                if (item.StartDate >= startDate && item.StartDate <= endDate)
+                if (item.StartDate >= startDate && item.StartDate <= endDate) {
                     items.push(item);
+                }
             }
             else {
                 if ((item.StartDate >= startDate && item.StartDate <= endDate)
                     ||
-                        (item.EndDate >= startDate && item.EndDate <= endDate))
+                        (item.EndDate >= startDate && item.EndDate <= endDate)) {
                     items.push(item);
+                }
             }
         }
         return items;
@@ -120,8 +129,9 @@ var soby_CalendarView = (function () {
         var sTable = "";
         var sClass = "";
         var startNo = startDate.getDay();
-        if (startNo == 0)
+        if (startNo == 0) {
             startNo = 7;
+        }
         var sClass = "weekday";
         var dNow = new Date();
         if (dNow.getDate() == startDate.getDate() && dNow.getMonth() == startDate.getMonth() && dNow.getFullYear() == startDate.getFullYear()) {
@@ -191,20 +201,20 @@ var soby_CalendarView = (function () {
     };
     soby_CalendarView.prototype.GenerateCalendar = function () {
         switch (this.ViewType) {
-            case 4:
+            case 4: // YEARLY SHOWING
                 this.ShowYearlyView();
                 break;
-            case 3:
+            case 3: // MONTHLY SHOWING
                 this.ShowMonthlyView();
                 break;
             // 1 DAILY  --  2 WEEKLY  --  3 ONE MONTHLY  --  4 YEARLY  --  5 EVENTLY(YEARLY)
-            case 1:
+            case 1: // DAILY SHOWING
                 this.ShowDailyView();
                 break;
-            case 2:
+            case 2: // WEEKLY SHOWING
                 this.ShowWeeklyView();
                 break;
-            case 5:
+            case 5: // ALL EVENT(YEARLY) SHOWING
                 this.ShowTasklistView();
                 break;
         }
@@ -256,6 +266,25 @@ var soby_CalendarView = (function () {
             calendarView.ImagesFolderUrl = this.ImagesFolderUrl;
             calendarView.ShowNavigation = false;
             calendarView.Initialize();
+            //calendarView.fnSetDayName("Pzt", "Sl", "Çrş", "Prş", "Cm", "Cmt", "Pzr");
+            //calendarView.GenerateCalendar();
+            /*
+            calendarView.OnClick = function (calendarViewID, calendarViewItemId)
+            {
+                var itemData = soby_CalendarViews[calendarViewID].GetItemData(calendarViewItemId);
+                $("#soby_ResultDiv").html("Clicked node '" + itemData.Title + "'");
+            }
+            calendarView.OnSelectionChanged = function (calendarViewID)
+            {
+                var selectedItems = soby_CalendarViews[calendarViewID].GetSelectedItems();
+                $("#soby_ResultDiv").html("Selected nodes:");
+                for (var i = 0; i < selectedItems.length; i++)
+                {
+                    $("#soby_ResultDiv").append(selectedItems[i].Title + ",");
+                }
+
+            }
+            */
         }
     };
     soby_CalendarView.prototype.GetMonthlyViewDayCell = function (currentStartDate) {
@@ -286,8 +315,9 @@ var soby_CalendarView = (function () {
         table.append("<tr><td class='weekdayheader' align='center'><b>" + this.DayNames[0] + "</b></td><td class='weekdayheader' align='center'><b>" + this.DayNames[1] + "</b></td><td class='weekdayheader' align='center'><b>" + this.DayNames[2] + "</b></td><td class='weekdayheader' align='center'><b>" + this.DayNames[3] + "</b></td><td class='weekdayheader' align='center'><b>" + this.DayNames[4] + "</b></td><td class='saturdayheader' align='center'><b>" + this.DayNames[5] + "</b></td><td class='sundayheader' align='center'><b>" + this.DayNames[6] + "</b></td></tr>");
         // 0 SUNDAY TO 6 SATURDAY
         var startNo = currentStartDate.getDay();
-        if (startNo == 0)
+        if (startNo == 0) {
             startNo = 7;
+        }
         var row = $("<tr>");
         for (var nX = 0; nX < startNo - 1; nX++) {
             row.append("<td class='prevmonthday'>&nbsp;</td>");
@@ -299,8 +329,9 @@ var soby_CalendarView = (function () {
         }
         table.append(row);
         for (var nY = 0; nY < 6; nY++) {
-            if (currentStartDate > lastDate)
+            if (currentStartDate > lastDate) {
                 break;
+            }
             row = $("<tr>");
             if (nLastDay - currentStartDate.getDate() > 6) {
                 for (nX = 0; nX < 7; nX++) {
@@ -330,8 +361,9 @@ var soby_CalendarView = (function () {
     };
     soby_CalendarView.prototype.GetDayHeaderClass = function (date) {
         var startNo = date.getDay();
-        if (startNo == 0)
+        if (startNo == 0) {
             startNo = 7;
+        }
         var className = "weekday";
         var dNow = new Date();
         if (dNow.getDate() == date.getDate() && dNow.getMonth() == date.getMonth() && dNow.getFullYear() == date.getFullYear()) {
@@ -380,8 +412,9 @@ var soby_CalendarView = (function () {
         for (var i = 0; i < 24; i++) {
             var row = $("<tr></tr>");
             var timeLabel = "0" + i;
-            if (i > 9)
+            if (i > 9) {
                 timeLabel = i.toString();
+            }
             currentDate = this.GetDayOfTheWeek(today, 0);
             row.append("<td class='hourlabel'>" + timeLabel + "</td>");
             for (var x = 0; x < 7; x++) {
@@ -410,8 +443,9 @@ var soby_CalendarView = (function () {
             var cell1 = $("<td class='hourlabel' width='10%'></td>");
             var cell2 = $("<td class='hourdata' width='90%' valign='top' colspan='4'></td>");
             var timeLabel = "0" + i;
-            if (i > 9)
+            if (i > 9) {
                 timeLabel = i.toString();
+            }
             cell1.text(timeLabel);
             var taskContainer = this.GetDateTasks(currentStartDate, currentEndDate);
             cell2.append(taskContainer);
@@ -458,38 +492,42 @@ var soby_CalendarView = (function () {
     soby_CalendarView.prototype.GetSelectedItems = function () {
         var selectedItems = new Array();
         var selectedInputs = $("input[name='checkbox_" + this.CalendarViewID + "']:checked");
-        if (this.AllowCheckBoxes == false)
+        if (this.AllowCheckBoxes == false) {
             selectedInputs = $("input[name='checkbox_" + this.CalendarViewID + "']:checked");
+        }
         for (var i = 0; i < selectedInputs.length; i++) {
             selectedItems[selectedItems.length] = this.GetItemData($(selectedInputs[i]).val());
         }
         return selectedItems;
     };
     soby_CalendarView.prototype.ClickNode = function (calendarViewItemId) {
-        if (this.OnClick != null)
+        if (this.OnClick != null) {
             this.OnClick(this.CalendarViewID, calendarViewItemId);
+        }
     };
     soby_CalendarView.prototype.CheckNode = function (calendarViewItemId) {
-        if (this.OnSelectionChanged != null)
+        if (this.OnSelectionChanged != null) {
             this.OnSelectionChanged(this.CalendarViewID);
+        }
     };
     soby_CalendarView.prototype.EnsureItemSelectionExistency = function () {
         for (var key in soby_CalendarViews) {
-            if (key == this.CalendarViewID)
+            if (key == this.CalendarViewID) {
                 return;
+            }
         }
         soby_CalendarViews[this.CalendarViewID] = this;
     };
     return soby_CalendarView;
-})();
-var soby_CalendarViewItems = (function (_super) {
+}());
+var soby_CalendarViewItems = /** @class */ (function (_super) {
     __extends(soby_CalendarViewItems, _super);
     function soby_CalendarViewItems() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return soby_CalendarViewItems;
-})(Array);
-var soby_CalendarViewItem = (function () {
+}(Array));
+var soby_CalendarViewItem = /** @class */ (function () {
     function soby_CalendarViewItem(id, title, description, startDate, endDate) {
         this.Id = "";
         this.StartDate = null;
@@ -503,6 +541,6 @@ var soby_CalendarViewItem = (function () {
         this.EndDate = endDate;
     }
     return soby_CalendarViewItem;
-})();
+}());
 // ************************************************************
 //# sourceMappingURL=soby.ui.components.calendar.js.map

@@ -22,18 +22,20 @@ function soby_PopulateTreeView() {
     treeView = new soby_TreeView("#soby_PremisesDiv", "Premises", premisesRootDataService, premisesChildrenDataService, "No record", "ParentId", "Id", "Title");
     treeView.ImagesFolderUrl = "/media/images";
     treeView.Initialize();
-    treeView.OnClick = function (treeViewID, treeViewItemId) {
+    treeView.OnClick = function (treeViewID, treeViewItemId)
+    {
         var itemData = soby_TreeViews[treeViewID].GetItemData(treeViewItemId);
         $("#soby_ResultDiv").html("Clicked node '" + itemData.Title + "'");
-    }
-    treeView.OnSelectionChanged = function (treeViewID) {
+    };
+    treeView.OnSelectionChanged = function (treeViewID)
+    {
         var selectedItems = soby_TreeViews[treeViewID].GetSelectedItems();
         $("#soby_ResultDiv").html("Selected nodes:");
-        for (var i = 0; i < selectedItems.length; i++) {
+        for (var i = 0; i < selectedItems.length; i++)
+        {
             $("#soby_ResultDiv").append(selectedItems[i].Title + ",");
         }
-
-    }
+    };
 }
 
  

@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.7.2
+﻿// VERSION 1.0.8.1
 var sobyLastReturnData = null;
 function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
     return $.ajax({
@@ -76,19 +76,35 @@ class SobyAggregateTypesObject {
     Sum: number = 4;
     GetAggregateTypeName(aggregateType: number) {
         if (aggregateType == 0)
+        {
             return "Average";
+        }
         else if (aggregateType == 1)
+        {
             return "Count";
+        }
         else if (aggregateType == 2)
+        {
             return "Max";
+        }
         else if (aggregateType == 3)
+        {
             return "Min";
+        }
         else if (aggregateType == 4)
+        {
             return "Sum";
+        }
 
     }
 }
-
+class SobyWebServiceDataTypesObject
+{
+    QueryString: number = 0;
+    Json: number = 1;
+    Soap: number = 2;
+}
+var SobyWebServiceDataTypes = new SobyWebServiceDataTypesObject();
 var SobyFieldTypes = new SobyFieldTypesObject();
 var SobyFilterTypes = new SobyFilterTypesObject();
 var SobyAggregateTypes = new SobyAggregateTypesObject();
@@ -158,14 +174,18 @@ class SobyFilters implements ISobyFilter {
         }
 
         if (json != "")
+        {
             return json.substr(0, json.length - 1);
+        }
 
         return json;
     }
 
     ToQueryString(_type: number /* 0 - Normal, 1 - SP Rest */) {
         if (this.Filters.length == 0)
+        {
             return "";
+        }
 
         var json = "(";
         for (var i = 0; i < this.Filters.length; i++) {
@@ -174,9 +194,13 @@ class SobyFilters implements ISobyFilter {
             if (i < this.Filters.length-1) // Only if it is not last item
             {
                 if (this.IsOr)
+                {
                     json += " or "
+                }
                 else
+                {
                     json += " and "
+                }
             }
         }
         json += ")";
@@ -187,7 +211,9 @@ class SobyFilters implements ISobyFilter {
     ToSearch2010Xml()
     {
         if (this.Filters.length == 0)
+        {
             return "";
+        }
 
         var json = "(";
         for (var i = 0; i < this.Filters.length; i++)
@@ -196,9 +222,13 @@ class SobyFilters implements ISobyFilter {
             if (i > 0) 
             {
                 if (this.IsOr)
+                {
                     json += " OR "
+                }
                 else
+                {
                     json += " AND "
+                }
             }
             json += argument.ToSearch2010Xml();
         }
@@ -292,11 +322,17 @@ class SobyFilter implements ISobyFilter {
 
         var value = this.FilterValue;
         if (value == "[*ME*]")
+        {
             valueString = "<Value Type='" + valueTypeString + "'><UserID /></Value>";
+        }
         else if (this.FieldType == SobyFieldTypes.DateTime || this.FieldType == SobyFieldTypes.Number)
+        {
             valueString = "<Value Type='" + valueTypeString + "'>" + this.FilterValue + "</Value>";
+        }
         else
+        {
             valueString = "<Value Type='" + valueTypeString + "'><![CDATA[" + this.FilterValue + "]]></Value>";
+        }
         switch (this.FilterType) {
             case SobyFilterTypes.Equal:
                 equvialentString = "Eq";
@@ -341,9 +377,13 @@ class SobyFilter implements ISobyFilter {
                 for (var i = 0; i < values.length; i++) {
                     valueString += "<Value Type='" + valueTypeString + "'>";
                     if (this.FieldType != SobyFieldTypes.DateTime && this.FieldType != SobyFieldTypes.Number)
+                    {
                         valueString += "<![CDATA[" + values[i] + "]]></Value>";
+                    }
                     else
+                    {
                         valueString += values[i] + "</Value>";
+                    }
                 }
                 valueString += "</Values>";
                 break;
@@ -378,46 +418,82 @@ class SobyFilter implements ISobyFilter {
         switch (this.FilterType) {
             case SobyFilterTypes.Equal:
                 if (this.FieldType == SobyFieldTypes.Text)
+                {
                     valueFilterString = this.FieldName + " eq '" + value + "'";
+                }
                 else if (this.FieldType == SobyFieldTypes.DateTime)
+                {
                     valueFilterString = this.FieldName + " eq datetime'" + value + "'";
+                }
                 else
+                {
                     valueFilterString = this.FieldName + " eq " + value;
+                }
                 break;
             case SobyFilterTypes.NotEqual:
                 var comparisionText = "neq";
                 if (_type == 1)
+                {
                     comparisionText = "ne"
+                }
+
                 if (this.FieldType == SobyFieldTypes.Text)
+                {
                     valueFilterString = this.FieldName + " " + comparisionText + " '" + value + "'";
+                }
                 else if (this.FieldType == SobyFieldTypes.DateTime)
+                {
                     valueFilterString = this.FieldName + " " + comparisionText + " datetime'" + value + "'";
+                }
                 else
+                {
                     valueFilterString = this.FieldName + " " + comparisionText + " " + value;
+                }
+
                 break;
             case SobyFilterTypes.Greater:
                 if (this.FieldType == SobyFieldTypes.DateTime)
+                {
                     valueFilterString = this.FieldName + " gt datetime'" + value + "'";
+                }
                 else
+                {
                     valueFilterString = this.FieldName + " gt " + value;
+                }
+
                 break;
             case SobyFilterTypes.Lower:
                 if (this.FieldType == SobyFieldTypes.DateTime)
+                {
                     valueFilterString = this.FieldName + " lt datetime'" + value + "'";
+                }
                 else
+                {
                     valueFilterString = this.FieldName + " lt " + value;
+                }
+
                 break;
             case SobyFilterTypes.GreaterEqual:
                 if (this.FieldType == SobyFieldTypes.DateTime)
+                {
                     valueFilterString = this.FieldName + " geq datetime'" + value + "'";
+                }
                 else
+                {
                     valueFilterString = this.FieldName + " geq " + value;
+                }
+
                 break;
             case SobyFilterTypes.LowerEqual:
                 if (this.FieldType == SobyFieldTypes.DateTime)
+                {
                     valueFilterString = this.FieldName + " leq datetime'" + value + "'";
+                }
                 else
+                {
                     valueFilterString = this.FieldName + " leq " + value;
+                }
+
                 break;
             case SobyFilterTypes.IsNull:
                     valueFilterString = this.FieldName + " eq null ";
@@ -425,20 +501,33 @@ class SobyFilter implements ISobyFilter {
             case SobyFilterTypes.IsNotNull:
                 var comparisionText = "neq";
                 if (_type == 1)
+                {
                     comparisionText = "ne"
+                }
+
                 valueFilterString = this.FieldName + " " + comparisionText + " null ";
                 break;
             case SobyFilterTypes.Contains:
                 if (_type == 0)
+                {
                     valueFilterString = "contains(" + this.FieldName + ", '" + value + "')";
+                }
                 else
+                {
                     valueFilterString = "substringof('" + value + "', " + this.FieldName + ")";
+                }
+
                 break;
             case SobyFilterTypes.BeginsWith:
                 if (_type == 0)
+                {
                     valueFilterString = "beginswith";
+                }
                 else
+                {
                     valueFilterString = "startsWith";
+                }
+
                 break;
         }
 
@@ -465,7 +554,9 @@ class SobySchemaFields extends Array<SobySchemaField> {
         }
 
         if (expandString != "")
+        {
             expandString = "$expand=" + expandString.substr(1) + "&";
+        }
 
         return expandString + "$select=" + webAPIString.substr(1);
     }
@@ -495,7 +586,9 @@ class SobyOrderByFields extends Array<SobyOrderByField> {
     GetOrderFieldByName(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
             if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+            {
                 return this[i];
+            }
         }
 
         return null;
@@ -503,7 +596,9 @@ class SobyOrderByFields extends Array<SobyOrderByField> {
     ContainsField(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
             if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+            {
                 return true;
+            }
         }
 
         return false;
@@ -532,7 +627,9 @@ class SobyAggregateFields extends Array<SobyAggregateField> {
     ContainsField(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
             if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+            {
                 return true;
+            }
         }
 
         return false;
@@ -543,7 +640,9 @@ class SobyGroupByFields extends Array<SobyGroupByField> {
     ContainsField(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
             if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+            {
                 return true;
+            }
         }
 
         return false;
@@ -649,31 +748,31 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
     GetViewField(fieldName: string) {
         for (var i = 0; i < this.SchemaFields.length; i++) {
             if (this.SchemaFields[i].FieldName == fieldName)
+            {
                 return this.SchemaFields[i];
+            }
         }
 
         return null;
     }
-
     GetViewFieldByPropertyName(propertyName: string) {
         for (var i = 0; i < this.SchemaFields.length; i++) {
             if (this.SchemaFields[i].FieldName == propertyName)
+            {
                 return this.SchemaFields[i];
+            }
         }
 
         return null;
     }
-
     AddHeader(key: string, value: string) {
         var header: SobyHeader = new SobyHeader(key, value);
         this.Headers.push(header);
     }
-
     AddSchemaField(fieldName: string, fieldType: number, args) {
         var schemaField: SobySchemaField = new SobySchemaField(fieldName, fieldType, args);
         this.SchemaFields.push(schemaField);
     }
-
     AddOrderField(fieldName: string, isAsc: boolean) {
         this.OrderByFields.push(new SobyOrderByField(fieldName, isAsc));
     }
@@ -682,7 +781,6 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
             this.OrderByFields.push(orderFields[i]);
         }
     }
-
     GetCountQuery(transport: soby_TransportRequest): string {
         return null;
     }
@@ -692,12 +790,10 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
     Clone(): soby_DataSourceBuilderAbstract {
         return null;
     }
-
     DataBeingParsed(data: any): Array<soby_Item>
     {
         return data;
     }
-
     ParseData(value: string): Array<soby_Item> {
         return null;
     }
@@ -741,11 +837,13 @@ class soby_WebServiceService implements soby_ServiceInterface {
     NextPageExist:boolean = false;
     Transport: soby_Transport;
 
-    ItemBeingPopulated = function () { }
+    ItemBeingPopulated = function () { };
 
     PopulateNavigationInformation() {
         if (this.NavigationInformationBeingPopulated != null)
+        {
             this.NavigationInformationBeingPopulated();
+        }
 
         var service = this;
         var requestMethod = this.Transport.Read.Type;
@@ -808,7 +906,10 @@ class soby_WebServiceService implements soby_ServiceInterface {
             function (XMLHttpRequest, textStatus, errorThrown) {
                 var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
                 if (service.ErrorThrown != null)
+                {
                     service.ErrorThrown(errorMessage, null);
+                }
+
                 soby_LogMessage(errorMessage);
             },
             function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
@@ -834,10 +935,15 @@ class soby_WebServiceService implements soby_ServiceInterface {
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
         if (clearOtherFilters == true)
+        {
             this.Filters = new SobyFilters(filters.IsOr);
+        }
 
         if (filters.Filters.length > 0)
+        {
             this.Filters.AddFilterCollection(filters);
+        }
+
         this.PopulateItems(null);
     };
     SortAndFilter(orderByFields: SobyOrderByFields, filters: SobyFilters, clearOtherFilters: boolean)
@@ -848,10 +954,15 @@ class soby_WebServiceService implements soby_ServiceInterface {
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
         if (clearOtherFilters == true)
+        {
             this.Filters = new SobyFilters(filters.IsOr);
+        }
 
         if (filters.Filters.length > 0)
+        {
             this.Filters.AddFilterCollection(filters);
+        }
+
         this.PopulateItems(null);
     }
     GoToPage(pageIndex:number) {
@@ -862,13 +973,17 @@ class soby_WebServiceService implements soby_ServiceInterface {
     };
     CanNavigateToNextPage() {
         if (this.NextPageExist == false)
+        {
             return false;
+        }
 
         return true;
     };
     CanNavigateToPreviousPage() {
         if (this.DataSourceBuilderTemp.PageIndex == 0)
+        {
             return false;
+        }
 
         return true;
     };
@@ -877,7 +992,9 @@ class soby_WebServiceService implements soby_ServiceInterface {
     {
         this.Args = args;
         if (this.ItemBeingPopulated != null)
+        {
             this.ItemBeingPopulated();
+        }
 
         this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
         for (var i = 0; i < this.GroupByFields.length; i++) {
@@ -885,7 +1002,10 @@ class soby_WebServiceService implements soby_ServiceInterface {
 
         }
         if (this.OrderByFields.length > 0)
+        {
             this.DataSourceBuilderTemp.AddOrderFields(this.OrderByFields);
+        }
+
         if (this.Filters.Filters.length > 0) {
             this.DataSourceBuilderTemp.Filters.AddFilterCollection(this.Filters);
         }
@@ -940,7 +1060,10 @@ class soby_WebServiceService implements soby_ServiceInterface {
             function (XMLHttpRequest, textStatus, errorThrown) {
                 var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
                 if (service.ErrorThrown != null)
+                {
                     service.ErrorThrown(errorMessage, null);
+                }
+
                 soby_LogMessage(errorMessage);
             },
             function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
@@ -1024,17 +1147,22 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
 
     GetPagingQuery(transport: soby_TransportRequest) {
         if (transport.Type == "POST")
-            return "'pageIndex': " + this.PageIndex + ","
-                + "'pageItemCount': " + this.RowLimit;
+        {
+            return "'pageIndex': " + this.PageIndex + "," + "'pageItemCount': " + this.RowLimit;
+        }
         else {
             return "$skip=" + (this.PageIndex * this.RowLimit) + "&$top=" + this.RowLimit;
         }
     }
     GetViewFieldsQuery(transport: soby_TransportRequest) {
         if (transport.Type == "POST")
+        {
             return this.SchemaFields.toWebAPIString();
+        }
         else
+        {
             return this.SchemaFields.toWebAPIString();
+        }
     }
     GetOrderByFieldsQuery(transport: soby_TransportRequest) {
         var jsonString = "";
@@ -1043,15 +1171,23 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         }
 
         if (jsonString != "")
+        {
             jsonString = jsonString.substr(0, jsonString.length - 1);
+        }
 
-        if (transport.Type == "POST") {
+        if (transport.Type == "POST")
+        {
             if (jsonString == "")
+            {
                 jsonString = "null";
+            }
+
             jsonString = "'orderByString': \"" + jsonString + "\"";
         }
         else if (jsonString != "")
+        {
             jsonString = "$orderby=" + jsonString;
+        }
 
         return jsonString;
     }
@@ -1063,7 +1199,9 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         else {
             query = this.Filters.ToQueryString(0);
             if (query != "")
+            {
                 query = "$filter=" + query;
+            }
         }
         return query;
     }
@@ -1074,25 +1212,39 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         var orderByFieldsQuery = this.GetOrderByFieldsQuery(transport);
         var pagingQuery = "";
         if (excludePagingQuery == false)
+        {
             pagingQuery = this.GetPagingQuery(transport);
+        }
 
         if (transport.Type == "POST")
         {
             if (excludePagingQuery == true)
+            {
                 pagingQuery = "''";
+            }
+
             return "{" + (whereQuery != "" ? whereQuery + ", " : "") + (orderByFieldsQuery != "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
         }
         else {
             var envelope = whereQuery;
             if (envelope != "" && selectFieldsEnvelope != "")
+            {
                 envelope += "&";
+            }
+
             envelope += selectFieldsEnvelope;
 
             if (envelope != "" && orderByFieldsQuery != "")
+            {
                 envelope += "&";
+            }
+
             envelope += orderByFieldsQuery;
             if (envelope != "" && pagingQuery != "")
+            {
                 envelope += "&";
+            }
+
             envelope += pagingQuery;
             return envelope;
         }
@@ -1116,7 +1268,9 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
                     var propertyName = this.SchemaFields[x].FieldName;
                     var value = result[i][propertyName];
                     if (value != null && value != "")
+                    {
                         result[i][propertyName] = new Date(value.match(/\d+/)[0] * 1);
+                    }
                 }
             }
         }
@@ -1124,7 +1278,10 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
     }
     GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType) {
         if (requestMethod == null || requestMethod == "")
+        {
             requestMethod = "POST";
+        }
+
         $.ajax({
             async: (async != null ? async : true),
             url: wsUrl,
@@ -1137,18 +1294,28 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if (errorcallback)
+                {
                     errorcallback(XMLHttpRequest, textStatus, errorThrown);
+                }
             },
             success: function (data) {
                 var data = data;
                 if (data.d != null)
+                {
                     data = data.d;
+                }
+
                 if (callback)
+                {
                     callback(data);
+                }
             },
             beforeSend: function (xhr) {
                 if (headers == null)
+                {
                     return;
+                }
+
                 for (var i = 0; i < headers.length; i++) {
                     xhr.setRequestHeader(headers[i].Key, headers[i].Value);
                 }
@@ -1196,7 +1363,9 @@ class soby_StaticDataService implements soby_ServiceInterface {
 
     PopulateNavigationInformation() {
         if (this.NavigationInformationBeingPopulated != null)
+        {
             this.NavigationInformationBeingPopulated();
+        }
     }
 
     Sort(orderByFields: SobyOrderByFields) {
@@ -1214,7 +1383,9 @@ class soby_StaticDataService implements soby_ServiceInterface {
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
         if (clearOtherFilters == true)
+        {
             this.Filters = new SobyFilters(filters.IsOr);
+        }
 
         this.Filters.AddFilterCollection(filters);
         this.PopulateItems(null);
@@ -1227,10 +1398,15 @@ class soby_StaticDataService implements soby_ServiceInterface {
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
         if (clearOtherFilters == true)
+        {
             this.Filters = new SobyFilters(filters.IsOr);
+        }
 
         if (filters.Filters.length > 0)
+        {
             this.Filters.AddFilterCollection(filters);
+        }
+
         this.PopulateItems(null);
     }
 
@@ -1246,7 +1422,9 @@ class soby_StaticDataService implements soby_ServiceInterface {
     PopulateItems(args: Array<any>) {
         this.Args = args;
         if (this.ItemBeingPopulated != null)
+        {
             this.ItemBeingPopulated();
+        }
 
         if (this.OrderByFields.length > 0) {
             var orderByFields = this.OrderByFields;
@@ -1271,6 +1449,7 @@ class soby_StaticDataService implements soby_ServiceInterface {
                             }
                         }
                     }
+
                     return result;
                 }
             );
@@ -1285,7 +1464,9 @@ class soby_StaticDataService implements soby_ServiceInterface {
     UpdateItem(key: string, objectInstance) {
         for (var i = 0; i < this.Items.length; i++) {
             if (this.Items[i]["ID"] == key)
+            {
                 this.Items[i] = objectInstance;
+            }
         }
         this.ItemPopulated(this.Items);
     }
@@ -1295,11 +1476,15 @@ class soby_StaticDataService implements soby_ServiceInterface {
             var isAllEqual = true;
             for (var t = 0; t < keyNames.length; t++) {
                 if (this.Items[i][keyNames[t]] != keyValues[t])
+                {
                     isAllEqual = false;
+                }
             }
 
-            if(isAllEqual == false)
+            if (isAllEqual == false)
+            {
                 newArray[newArray.length] = this.Items[i];
+            }
         }
         this.Items = newArray;
         this.ItemPopulated(this.Items);
@@ -1310,7 +1495,6 @@ class soby_StaticDataService implements soby_ServiceInterface {
     }
 }
 // ******************************************************************
-
 function WSArgument(fieldName, filterValue) {
     this.FieldName = fieldName;
     this.FilterValue = filterValue;
@@ -1321,7 +1505,11 @@ function WSHeader(key, value) {
     this.Value = value;
 }
 
-class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
+class soby_WSBuilder extends soby_DataSourceBuilderAbstract
+{
+    WebServiceDataTypes: number = SobyWebServiceDataTypes.Json;
+    MethodName: string = "";
+    CountQuerySupported: boolean = true;
     constructor() {
         super();
         this.RowLimit = 100;
@@ -1351,26 +1539,43 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
 
         builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
         builder.DataBeingParsed = this.DataBeingParsed;
+        builder.WebServiceDataTypes = this.WebServiceDataTypes;
+        builder.MethodName = this.MethodName;
+        builder.CountQuerySupported = this.CountQuerySupported;
+
         return builder;
     }
 
-    GetPagingQuery(transport: soby_TransportRequest) {
-        if (transport.Type == "POST")
-            return "'pageIndex': " + this.PageIndex + ","
-                + "'pageItemCount': " + this.RowLimit;
+    GetPagingQuery(transport: soby_TransportRequest)
+    {
+        if (this.WebServiceDataTypes == SobyWebServiceDataTypes.Soap)
+        {
+        }
+        else if (transport.Type == "POST")
+        {
+            return "'pageIndex': " + this.PageIndex + "," + "'pageItemCount': " + this.RowLimit;
+        }
         else
         {
             if (this.RowLimit > 0)
+            {
                 return "$skip=" + (this.PageIndex * this.RowLimit) + "&$top=" + this.RowLimit;
+            }
             else
+            {
                 return "";
+            }
         }
     }
     GetViewFieldsQuery(transport: soby_TransportRequest) {
         if (transport.Type == "POST")
+        {
             return this.SchemaFields.toWebAPIString();
+        }
         else
+        {
             return this.SchemaFields.toWebAPIString();
+        }
     }
     GetOrderByFieldsQuery(transport: soby_TransportRequest) {
         var jsonString = "";
@@ -1378,60 +1583,108 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
             jsonString += this.OrderByFields[i].FieldName + " " + (this.OrderByFields[i].IsAsc == true ? "asc" : "desc") + ",";
         }
 
-        if (jsonString != "") 
+        if (jsonString != "")
+        {
             jsonString = jsonString.substr(0, jsonString.length - 1);
+        }
 
-        if (transport.Type == "POST") {
+        if (transport.Type == "POST")
+        {
             if (jsonString == "")
+            {
                 jsonString = "null";
+            }
+
             jsonString = "'orderByString': \"" + jsonString + "\"";
         }
         else if (jsonString != "")
+        {
             jsonString = "$orderby=" + jsonString;
+        }
 
         return jsonString;
     }
     GetWhereQuery(transport: soby_TransportRequest) {
         var query = "";
+        if (this.WebServiceDataTypes == SobyWebServiceDataTypes.Soap)
+        {
+            query = this.Filters.ToXml();
+        }
         if (transport.Type == "POST") {
             query = this.Filters.ToJson();
         }
         else {
             query = this.Filters.ToQueryString(0);
             if (query != "")
+            {
                 query = "$filter=" + query;
+            }
         }
         return query;
     }
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: boolean)
     {
+        if (this.WebServiceDataTypes == SobyWebServiceDataTypes.Soap)
+        {
+            var envelope = "<?xml version= '1.0' encoding= 'utf-8' ?>" +
+                "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>" +
+                "<soap:Body>" +
+                "<" + this.MethodName + " xmlns= 'http://tempuri.org/'> " +
+                this.Filters.ToXml() +
+                //this.OrderByFields.ToXml() +
+                "</" + this.MethodName + ">" +
+                "</soap:Body>" +
+                "</soap:Envelope>";
+
+            return envelope;
+        }
+
         var selectFieldsEnvelope = this.GetViewFieldsQuery(transport);
         var whereQuery = this.GetWhereQuery(transport);
         var orderByFieldsQuery = this.GetOrderByFieldsQuery(transport);
         var pagingQuery = "";
         if (excludePagingQuery == false)
+        {
             pagingQuery = this.GetPagingQuery(transport);
+        }
+
         if (transport.Type == "POST")
         {
             if (excludePagingQuery == true)
+            {
                 pagingQuery = "''";
+            }
+
             return "{" + (whereQuery != "" ? whereQuery + ", " : "") + (orderByFieldsQuery != "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
         }
         else {
             var envelope = whereQuery;
             if (envelope != "" && selectFieldsEnvelope != "")
+            {
                 envelope += "&";
+            }
+
             envelope += selectFieldsEnvelope;
             if (envelope != "" && orderByFieldsQuery != "")
+            {
                 envelope += "&";
+            }
+
             envelope += orderByFieldsQuery;
             if (envelope != "" && pagingQuery != "")
+            {
                 envelope += "&";
+            }
+
             envelope += pagingQuery;
             return envelope;
         }
     }
-    GetCountQuery(transport: soby_TransportRequest) {
+    GetCountQuery(transport: soby_TransportRequest)
+    {
+        if (this.CountQuerySupported == false)
+            return "";
+
         var mainQuery = this.GetMainQuery(transport, true);
         var countServiceUrl = transport.Url + "/$count?";// + mainQuery;
         if (transport.Type == "POST") {
@@ -1453,13 +1706,19 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
                     if (value != null)
                     {
                         if (value instanceof Date == true)
+                        {
                             result[i][propertyName] = value;
+                        }
                         else if (value != "")
                         {
                             if (value.indexOf("20") == 0 || value.indexOf("19") == 0)
+                            {
                                 result[i][propertyName] = new Date(value);
+                            }
                             else
+                            {
                                 result[i][propertyName] = new Date(value.match(/\d+/)[0] * 1);
+                            }
                         }
                     }
                 }
@@ -1469,9 +1728,14 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
     }
     GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType) {
         if (requestMethod == null || requestMethod == "")
+        {
             requestMethod = "POST";
+        }
         if (contentType == null || contentType == "")
+        {
             contentType = "application/json; charset=utf-8";
+        }
+
         $.ajax({
             async: (async != null ? async : true),
             url: wsUrl,
@@ -1484,22 +1748,35 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if (errorcallback)
+                {
                     errorcallback(XMLHttpRequest, textStatus, errorThrown);
+                }
             },
             success: function (data)
             {
                 sobyLastReturnData = data;
                 var data = data;
                 if (data.d != null)
+                {
                     data = data.d;
+                }
+
                 if (data.results != null)
+                {
                     data = data.results;
+                }
+
                 if (callback)
+                {
                     callback(data);
+                }
             },
             beforeSend: function (xhr) {
                 if (headers == null)
+                {
                     return;
+                }
+
                 for (var i = 0; i < headers.length; i++) {
                     xhr.setRequestHeader(headers[i].Key, headers[i].Value);
                 }
@@ -1510,6 +1787,33 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract{
 
 
 // ********************* HELPER METHODS *****************************
+if (!Date.prototype.toISOString)
+{
+    (function ()
+    {
+        function pad(number)
+        {
+            var r = String(number);
+            if (r.length === 1)
+            {
+                r = '0' + r;
+            }
+            return r;
+        }
+        Date.prototype.toISOString = function ()
+        {
+            return this.getUTCFullYear()
+                + '-' + pad(this.getUTCMonth() + 1)
+                + '-' + pad(this.getUTCDate())
+                + 'T' + pad(this.getUTCHours())
+                + ':' + pad(this.getUTCMinutes())
+                + ':' + pad(this.getUTCSeconds())
+                + '.' + String((this.getUTCMilliseconds() / 1000).toFixed(3)).slice(2, 5)
+                + 'Z';
+        };
+    } ());
+}
+
 var soby_guid = (function () {
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000)

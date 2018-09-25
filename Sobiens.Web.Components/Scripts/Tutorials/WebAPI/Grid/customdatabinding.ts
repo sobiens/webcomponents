@@ -22,7 +22,7 @@
             builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
         }
 
-        builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
+        //builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
 
         return builder;
     }
@@ -160,6 +160,7 @@ function soby_PopulateGridWCFDataBinding() {
     customerDataSourceBuilder.AddSchemaField("LastName", SobyFieldTypes.Number, null);
     customerDataSourceBuilder.AddSchemaField("Age", SobyFieldTypes.Number, null);
     customerDataSourceBuilder.AddSchemaField("Sex", SobyFieldTypes.Text, null);
+    customerDataSourceBuilder.RowLimit = 3;
 //    customerDataSourceBuilder.AddSchemaField("AuthorId", SobyFieldTypes.Lookup, { ModelName: "Author", ValueFieldType: SobyFieldTypes.Number, ValueFieldName: "Id", TitleFieldName: "Name", ReadTransport: new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Authors", "json", "application/json; charset=utf-8", "GET") });
     var customerService = new soby_WebServiceService(customerDataSourceBuilder);
     customerService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWCFUrl() + "/Customers", "json", "application/json; charset=utf-8", "GET");

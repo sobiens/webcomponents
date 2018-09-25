@@ -106,8 +106,10 @@ declare class SobyCheckBoxList implements ISobyEditControlInterface {
     Initialized(): void;
     ValueBeingChanged(): void;
     ValueChanged(): void;
-    _ValueChanged(): void;
+    _ValueChanged(itemIndex: number): void;
     Validate(): boolean;
+    ListItemStateBeingChanged(affectedItem: SobyListItem, isChecked: boolean): void;
+    ListItemStateChanged(affectedItem: SobyListItem, isChecked: boolean): void;
 }
 declare class SobySPViewFilterCheckBoxList extends SobyCheckBoxList {
     constructor(containerClientId: string, fieldType: number, args: any, webUrl: string, listName: string, fieldName: string);
@@ -248,7 +250,7 @@ declare class SobyGridColumn {
     FieldName: string;
     DisplayName: string;
     ShowFieldsOn: number;
-    DisplayFunction: (item: any) => string;
+    DisplayFunction: (item: any, rowID: string, cellID: string) => string;
     CellTemplate: any;
     Sortable: boolean;
     Filterable: boolean;
@@ -352,6 +354,13 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
      */
     OnGridPopulated: any;
     /**
+     * Grid population event.
+     *
+     * @event soby_WebGrid#OnGridDataBeingParsed
+     * @type {object}
+     */
+    OnGridDataBeingParsed: any;
+    /**
      * Row selection event.
      *
      * @event soby_WebGrid#OnRowSelected
@@ -368,6 +377,13 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
      * @property {object} cellIndex - Index of the cell.
      */
     OnCellSelected: any;
+    /**
+     * Grid population event.
+     *
+     * @event soby_WebGrid#OnGridPopulated
+     * @type {object}
+     */
+    OnCellTemplateContentPopulated: any;
     RowDetailDisplayFunction: (grid: soby_WebGrid, rowId: string, item: any) => string;
     RowDetailDisplayViewResponsiveCondition: sobyResponsiveCondition;
     /************************************ END EVENTS *********************************/
@@ -1076,9 +1092,11 @@ declare class soby_MetroTilesGrid {
 declare var soby_Wizards: any[];
 declare class soby_Wizard {
     constructor(contentDivSelector: string);
+    AutoPopulateStepNumbersOnHeaders: boolean;
     WizardID: string;
     ContentDivSelector: string;
-    CurrentTabIndex: number;
+    CurrentStepIndex: number;
+    TempStepIndex: number;
     MaxWidth: any;
     TileWidth: string;
     TileHeight: string;
@@ -1086,13 +1104,18 @@ declare class soby_Wizard {
     Items: any;
     EnsureWizardsExistency: () => void;
     GetItemById: (id: any) => any;
-    ActivateWizardTab: (linkId: any) => void;
-    GoToNextTab: () => void;
-    GoToPreviousTab: () => void;
-    EventBeforeTabChange: any;
-    EventAfterTabChange: any;
-    GoToTab: (tabIndex: any) => void;
+    ActivateWizardStep: (linkId: any) => void;
+    GoToNextStep: () => void;
+    GoToPreviousStep: () => void;
+    EventBeforeStepChange: any;
+    EventAfterStepChange: any;
+    GoToStep: (stepIndex: any) => void;
+    CommitToStep: () => void;
     Initialize: () => void;
+    HideNavigationBar: () => void;
+    ShowNavigationBar: () => void;
+    HideStepPanels: () => void;
+    ShowStepPanels: () => void;
 }
 declare var soby_Menus: any[];
 declare class soby_Menu {
@@ -1123,6 +1146,8 @@ declare class SobyItemSelectorTypeObject {
     CardView: number;
 }
 declare var SobyItemSelectorTypes: SobyItemSelectorTypeObject;
+declare function soby_GetItemSelectionByContentDivSelector(contentDivSelector: any): soby_ItemSelection;
+declare function soby_GetAllItemSelections(): any[];
 declare class soby_ItemSelection {
     constructor(contentDivSelector: any, title: any, itemSelectorType: number, autoCompleteDataService: any, advancedSearchDataService: any, advancedSearchChildrenDataService: any, emptyDataHtml: any, dialogID: any, selectorUrl: any, valueFieldName: any, textFieldName: any, parentFieldName: any);
     ItemSelectorType: number;
@@ -1153,6 +1178,7 @@ declare class soby_ItemSelection {
     GenerateItemTable(): void;
     EnsureItemSelectionExistency(): void;
     OnSelectionChanged: any;
+    EventBeforeAutoCompleteQuery: any;
 }
 declare function ShowCommonDialog(url: any, title: any, dialogID: any, onCloseCallback: any): void;
 declare function ShowDialog(url: any, title: any, dialogID: any, onCloseCallback: any): void;

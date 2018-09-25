@@ -33,15 +33,17 @@ function soby_PopulateWebMetroTiles() {
 */
     var carousel = new soby_MetroTilesGrid("#soby_MetroStyleGridDiv", "Metro Tiles", bookService, "There is no record found.", "ImageUrl", "Title", "WebSiteUrl", "OpenInNewWindow", "StartColor", "EndColor", "Colspan", "Rowspan");
     carousel.MaxWidth = 1000;
-    carousel.ItemPopulated = function (items) {
-        for (var i = 0; i < items.length; i++) {
+    carousel.ItemPopulated = function (items)
+    {
+        for (var i = 0; i < items.length; i++)
+        {
             items[i]["OpenInNewWindow"] = 1;
             items[i]["StartColor"] = "red";
             items[i]["EndColor"] = "green";
             items[i]["Colspan"] = "1";
             items[i]["Rowspan"] = "1";
         }
-    }
+    };
     carousel.Initialize(true);
 }
 

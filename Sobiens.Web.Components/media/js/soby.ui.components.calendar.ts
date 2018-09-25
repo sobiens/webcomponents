@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.7.2
+﻿// VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_CalendarViews = new Array();
 class SobyCalendarViewTypesObject
@@ -50,7 +50,9 @@ class soby_CalendarView
                     var startDate: Date = items[i][calendarView.StartDateFieldName];
                     var endDate: Date = null;
                     if (calendarView.EndDateFieldName != null && calendarView.EndDateFieldName != "")
+                    {
                         endDate = items[i][calendarView.EndDateFieldName];
+                    }
 
                     var calendarItem: soby_CalendarViewItem = new soby_CalendarViewItem(id, title, description, startDate, endDate);
                     calendarItems.push(calendarItem);
@@ -58,7 +60,7 @@ class soby_CalendarView
                 calendarView.Items = calendarItems;
 
                 calendarView.GenerateCalendar();
-            }
+            };
         }
     }
 
@@ -106,7 +108,9 @@ class soby_CalendarView
     GetItemData(calendarViewItemId) {
         for (var i = 0; i < soby_CalendarViewItems.length; i++) {
             if (soby_CalendarViewItems[i]["SobyCalendarViewItemId"] == calendarViewItemId)
+            {
                 return soby_CalendarViewItems[i];
+            }
         }
 
         return null;
@@ -121,7 +125,9 @@ class soby_CalendarView
             if (item.EndDate == null)
             {
                 if (item.StartDate >= startDate && item.StartDate <= endDate)
+                {
                     items.push(item);
+                }
             }
             else
             {
@@ -129,8 +135,10 @@ class soby_CalendarView
                     (item.StartDate >= startDate && item.StartDate <= endDate)
                     ||
                     (item.EndDate >= startDate && item.EndDate <= endDate)
-                   )
+                )
+                {
                     items.push(item);
+                }
             }
         }
 
@@ -144,7 +152,10 @@ class soby_CalendarView
 
         var startNo = startDate.getDay()
         if (startNo == 0)
-            startNo = 7
+        {
+            startNo = 7;
+        }
+
         var sClass = "weekday";
         var dNow = new Date()
         if (dNow.getDate() == startDate.getDate() && dNow.getMonth() == startDate.getMonth() && dNow.getFullYear() == startDate.getFullYear())
@@ -370,7 +381,11 @@ class soby_CalendarView
 
         // 0 SUNDAY TO 6 SATURDAY
         var startNo = currentStartDate.getDay()
-        if (startNo == 0) startNo = 7
+        if (startNo == 0)
+        {
+            startNo = 7;
+        }
+
         var row = $("<tr>");
         for (var nX = 0; nX < startNo - 1; nX++)
         {
@@ -386,7 +401,9 @@ class soby_CalendarView
         for (var nY = 0; nY < 6; nY++)
         {
             if (currentStartDate > lastDate)
+            {
                 break;
+            }
 
             row = $("<tr>");
             if (nLastDay - currentStartDate.getDate() > 6)
@@ -428,7 +445,9 @@ class soby_CalendarView
     {
         var startNo = date.getDay();
         if (startNo == 0)
-            startNo = 7
+        {
+            startNo = 7;
+        }
 
         var className = "weekday";
         var dNow = new Date()
@@ -492,7 +511,10 @@ class soby_CalendarView
             var row = $("<tr></tr>");
             var timeLabel = "0" + i;
             if (i > 9)
+            {
                 timeLabel = i.toString();
+            }
+
             currentDate = this.GetDayOfTheWeek(today, 0);
             row.append("<td class='hourlabel'>" + timeLabel + "</td>");
             for (var x = 0; x < 7; x++)
@@ -530,7 +552,10 @@ class soby_CalendarView
             var cell2 = $("<td class='hourdata' width='90%' valign='top' colspan='4'></td>");
             var timeLabel = "0" + i;
             if (i > 9)
+            {
                 timeLabel = i.toString();
+            }
+
             cell1.text(timeLabel);
             var taskContainer = this.GetDateTasks(currentStartDate, currentEndDate);
             cell2.append(taskContainer);
@@ -583,8 +608,11 @@ class soby_CalendarView
     GetSelectedItems() {
         var selectedItems = new Array();
         var selectedInputs = $("input[name='checkbox_" + this.CalendarViewID + "']:checked");
-        if(this.AllowCheckBoxes == false)
+        if (this.AllowCheckBoxes == false)
+        {
             selectedInputs = $("input[name='checkbox_" + this.CalendarViewID + "']:checked");
+        }
+
         for (var i = 0; i < selectedInputs.length; i++) {
             selectedItems[selectedItems.length] = this.GetItemData($(selectedInputs[i]).val());
         }
@@ -593,16 +621,22 @@ class soby_CalendarView
     }
     ClickNode(calendarViewItemId) {
         if (this.OnClick != null)
+        {
             this.OnClick(this.CalendarViewID, calendarViewItemId);
+        }
     }
     CheckNode(calendarViewItemId) {
         if (this.OnSelectionChanged != null)
+        {
             this.OnSelectionChanged(this.CalendarViewID);
+        }
     }
     EnsureItemSelectionExistency() {
         for (var key in soby_CalendarViews) {
             if (key == this.CalendarViewID)
+            {
                 return;
+            }
         }
 
         soby_CalendarViews[this.CalendarViewID] = this;

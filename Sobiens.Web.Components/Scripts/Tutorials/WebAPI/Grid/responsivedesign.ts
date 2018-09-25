@@ -46,7 +46,7 @@ function soby_PopulateGridResponsiveDesign() {
         container.append("<strong>Year:</strong>" + item.Year + "<br>");
         container.append("<strong>Genre:</strong>" + item.Genre);
         return container.html();
-    }
+    };
     bookGrid.ResponsiveConditions.push(responsiveCondition2);
     bookGrid.RowDetailDisplayViewResponsiveCondition = responsiveCondition2;
 

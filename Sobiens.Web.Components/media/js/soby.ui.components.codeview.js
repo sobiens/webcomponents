@@ -1,16 +1,16 @@
-// VERSION 1.0.7.2
+// VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_CodeViews = new Array();
-var SobyCodeViewTypesObject = (function () {
+var SobyCodeViewTypesObject = /** @class */ (function () {
     function SobyCodeViewTypesObject() {
         this.Html = 0;
         this.Js = 1;
         this.Xml = 2;
     }
     return SobyCodeViewTypesObject;
-})();
+}());
 var SobyCodeViewTypes = new SobyCodeViewTypesObject();
-var soby_CodeView = (function () {
+var soby_CodeView = /** @class */ (function () {
     function soby_CodeView(contentDivSelector, title, codeViewType) {
         this.CodeViewID = "";
         this.ContentDivSelector = "";
@@ -49,12 +49,13 @@ var soby_CodeView = (function () {
     };
     soby_CodeView.prototype.EnsureItemSelectionExistency = function () {
         for (var key in soby_CodeViews) {
-            if (key == this.CodeViewID)
+            if (key == this.CodeViewID) {
                 return;
+            }
         }
         soby_CodeViews[this.CodeViewID] = this;
     };
     return soby_CodeView;
-})();
+}());
 // ************************************************************
 //# sourceMappingURL=soby.ui.components.codeview.js.map

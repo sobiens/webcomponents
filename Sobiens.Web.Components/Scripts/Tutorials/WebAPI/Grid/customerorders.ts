@@ -24,14 +24,16 @@ function soby_PopulateGridCustomerOrders() {
     customerGrid.IsSelectable = true;
     customerGrid.IsEditable = false;
     customerGrid.IsGroupable = true;
-    customerGrid.OnRowSelected = function (grid, rowID) {
+    customerGrid.OnRowSelected = function (grid, rowID)
+    {
         var selectedDataItems = grid.GetSelectedDataItems();
         var customerIds = new Array();
-        for (var i = 0; i < selectedDataItems.length; i++) {
+        for (var i = 0; i < selectedDataItems.length; i++)
+        {
             customerIds[customerIds.length] = selectedDataItems[i]["Id"];
         }
         soby_PopulateCustomerAndOrderDetails(customerIds);
-    }
+    };
     customerGrid.Initialize(true);
 }
 

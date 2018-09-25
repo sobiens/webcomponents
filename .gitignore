@@ -154,3 +154,8 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/.vs/Sobiens.Web.Components/v15/Server/sqlite3/db.lock
+/.vs/Sobiens.Web.Components/v15/Server/sqlite3/storage.ide
+/.vs/Sobiens.Web.Components/v15/Server/sqlite3/storage.ide-shm
+/.vs/Sobiens.Web.Components/v15/Server/sqlite3/storage.ide-wal
+/.vs/Sobiens.Web.Components/DesignTimeBuild/.dtbcache

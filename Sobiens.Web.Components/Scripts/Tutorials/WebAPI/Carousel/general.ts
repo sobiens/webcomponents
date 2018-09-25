@@ -30,7 +30,8 @@ function soby_PopulateWebCarousel() {
         captionDiv.append(h3);
         container.append(captionDiv);
         return container.html();
-    }
+    };
+
     carousel.Initialize(true);
 }
 

@@ -23,17 +23,19 @@ function soby_PopulateSelectionGrid() {
     bookGrid.IsSelectable = true;
     bookGrid.IsEditable = false;
 
-    bookGrid.OnRowSelected = function (grid, rowID) {
+    bookGrid.OnRowSelected = function (grid, rowID)
+    {
         var selectedDataItems = grid.GetSelectedDataItems();
         var selectedBooksHtml = "";
-        for (var i = 0; i < selectedDataItems.length; i++) {
+        for (var i = 0; i < selectedDataItems.length; i++)
+        {
             selectedBooksHtml += ", " + selectedDataItems[i]["Title"];
         }
         if (selectedBooksHtml != "")
             selectedBooksHtml = selectedBooksHtml.substr(1);
         selectedBooksHtml = "Selected books: <strong>" + selectedBooksHtml + "</strong>";
         $("#soby_SelectedItemsDiv").html(selectedBooksHtml);
-    }
+    };
     bookGrid.Initialize(true);
 }
 

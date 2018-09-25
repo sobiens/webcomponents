@@ -1,10 +1,5 @@
 document.write("<div id='soby_CarouselDiv'></div>");
 $(function () {
-    var inDesignMode = eval("document.forms[MSOWebPartPageFormName].MSOLayout_InDesignMode.value");
-    if (inDesignMode == "1") {
-        $("#soby_CarouselDiv").remove();
-        return;
-    }
     soby_PopulateSPCarousel();
 });
 function soby_PopulateSPCarousel() {

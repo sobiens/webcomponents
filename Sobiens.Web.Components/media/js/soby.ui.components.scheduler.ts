@@ -1,4 +1,4 @@
-﻿// VERSION 1.0.7.2
+﻿// VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_Schedulers = new Array();
 class SobySchedulerViewTypesObject
@@ -28,7 +28,9 @@ function soby_RemoveNoneExistenceScheduler()
     for (var x in soby_Schedulers)
     {
         if ($(soby_Schedulers[x].ContentDivSelector + "[schedulerid='" + soby_Schedulers[x].SchedulerID + "']").length > 0)
+        {
             newArray[soby_Schedulers[x].SchedulerID] = soby_Schedulers[x];
+        }
     }
 
     soby_WebGrids = newArray;
@@ -205,7 +207,9 @@ class soby_Scheduler
         for (var i = 0; i < this.ScheduleItems.length; i++)
         {
             if (this.ScheduleItems[i]["SobyCalendarViewItemId"] == calendarViewItemId)
+            {
                 return this.ScheduleItems[i];
+            }
         }
 
         return null;
@@ -220,7 +224,9 @@ class soby_Scheduler
             if (item.EndDate == null)
             {
                 if (item.StartDate >= startDate && item.StartDate <= endDate)
+                {
                     items.push(item);
+                }
             }
             else
             {
@@ -228,8 +234,10 @@ class soby_Scheduler
                     (item.StartDate >= startDate && item.StartDate <= endDate)
                     ||
                     (item.EndDate >= startDate && item.EndDate <= endDate)
-                   )
+                )
+                {
                     items.push(item);
+                }
             }
         }
 
@@ -243,7 +251,9 @@ class soby_Scheduler
 
         var startNo = startDate.getDay()
         if (startNo == 0)
-            startNo = 7
+        {
+            startNo = 7;
+        }
         var sClass = "weekday";
         var dNow = new Date()
         if (dNow.getDate() == startDate.getDate() && dNow.getMonth() == startDate.getMonth() && dNow.getFullYear() == startDate.getFullYear())
@@ -370,7 +380,9 @@ class soby_Scheduler
     {
         var startNo = date.getDay();
         if (startNo == 0)
-            startNo = 7
+        {
+            startNo = 7;
+        }
 
         var className = "weekday";
         var dNow = new Date()
@@ -714,7 +726,10 @@ class soby_Scheduler
                 for (var i = 0; i < categoryScheduleItems.length; i++)
                 {
                     if (categoryScheduleItems[i].Id == scheduleItemId)
+                    {
                         continue;
+                    }
+
                     if (
                         (categoryScheduleItems[i].StartDate >= startDate && categoryScheduleItems[i].StartDate <= endDate)
                         ||
@@ -748,9 +763,13 @@ class soby_Scheduler
         {
             var changedItem = this.ChangedScheduleItems.GetItemById(dataItem.Id);
             if (changedItem == null)
+            {
                 this.ChangedScheduleItems.push(dataItem);
+            }
             else
+            {
                 changedItem.DataItemStatus = status;
+            }
         }
     }
 
@@ -800,8 +819,10 @@ class soby_Scheduler
     GetSelectedItems() {
         var selectedItems = new Array();
         var selectedInputs = $("input[name='checkbox_" + this.SchedulerID + "']:checked");
-        if(this.AllowCheckBoxes == false)
+        if (this.AllowCheckBoxes == false)
+        {
             selectedInputs = $("input[name='checkbox_" + this.SchedulerID + "']:checked");
+        }
         for (var i = 0; i < selectedInputs.length; i++) {
             selectedItems[selectedItems.length] = this.GetItemData($(selectedInputs[i]).val());
         }
@@ -810,16 +831,22 @@ class soby_Scheduler
     }
     ClickNode(calendarViewItemId) {
         if (this.OnClick != null)
+        {
             this.OnClick(this.SchedulerID, calendarViewItemId);
+        }
     }
     CheckNode(calendarViewItemId) {
         if (this.OnSelectionChanged != null)
+        {
             this.OnSelectionChanged(this.SchedulerID);
+        }
     }
     EnsureItemSelectionExistency() {
         for (var key in soby_Schedulers) {
             if (key == this.SchedulerID)
+            {
                 return;
+            }
         }
 
         soby_Schedulers[this.SchedulerID] = this;
@@ -835,11 +862,15 @@ class soby_ScheduleCategories extends Array<soby_ScheduleCategory>
         for (var i = 0; i < this.length; i++)
         {
             if (this[i].Id == categoryId)
+            {
                 return this[i];
+            }
 
             var category = this[i].SubCategories.GetCategoryById(categoryId);
             if (category != null)
+            {
                 return category;
+            }
         }
 
         return null;
@@ -863,7 +894,9 @@ class soby_ScheduleItems extends Array<soby_ScheduleItem>
         for (var i = 0; i < this.length; i++)
         {
             if (this[i].Id == id)
+            {
                 return this[i];
+            }
         }
 
         return null;
@@ -875,7 +908,9 @@ class soby_ScheduleItems extends Array<soby_ScheduleItem>
         for (var i = 0; i < this.length; i++)
         {
             if (this[i].CategoryId == categoryId)
+            {
                 newItems.push(this[i]);
+            }
         }
 
         return newItems;

@@ -16,6 +16,7 @@
             <li><a href="Sobiens.Web.Components 1.0.5.2.zip">Sobiens.Web.Components 1.0.5.2</a></li>
             <li><a href="Sobiens.Web.Components 1.0.6.1.zip">Sobiens.Web.Components 1.0.6.1</a></li>
             <li><a href="Sobiens.Web.Components 1.0.7.2.zip">Sobiens.Web.Components 1.0.7.2</a></li>
+            <li><a href="Sobiens.Web.Components 1.0.8.1.zip">Sobiens.Web.Components 1.0.8.1</a></li>
         </ul>
     </div>
 

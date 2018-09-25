@@ -1,13 +1,19 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var soby_CustomWCFBuilder = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var soby_CustomWCFBuilder = /** @class */ (function (_super) {
     __extends(soby_CustomWCFBuilder, _super);
     function soby_CustomWCFBuilder() {
-        _super.call(this);
-        this.RowLimit = 100;
+        var _this = _super.call(this) || this;
+        _this.RowLimit = 100;
+        return _this;
     }
     soby_CustomWCFBuilder.prototype.Clone = function () {
         var builder = new soby_CustomWCFBuilder();
@@ -24,7 +30,7 @@ var soby_CustomWCFBuilder = (function (_super) {
             var orderByField = this.OrderByFields[i];
             builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
         }
-        builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
+        //builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
         return builder;
     };
     soby_CustomWCFBuilder.prototype.GetPagingQuery = function (transport) {
@@ -143,7 +149,7 @@ var soby_CustomWCFBuilder = (function (_super) {
     };
     ;
     return soby_CustomWCFBuilder;
-})(soby_WSBuilder);
+}(soby_WSBuilder));
 $(function () {
     soby_PopulateGridWCFDataBinding();
 });
@@ -155,6 +161,7 @@ function soby_PopulateGridWCFDataBinding() {
     customerDataSourceBuilder.AddSchemaField("LastName", SobyFieldTypes.Number, null);
     customerDataSourceBuilder.AddSchemaField("Age", SobyFieldTypes.Number, null);
     customerDataSourceBuilder.AddSchemaField("Sex", SobyFieldTypes.Text, null);
+    customerDataSourceBuilder.RowLimit = 3;
     //    customerDataSourceBuilder.AddSchemaField("AuthorId", SobyFieldTypes.Lookup, { ModelName: "Author", ValueFieldType: SobyFieldTypes.Number, ValueFieldName: "Id", TitleFieldName: "Name", ReadTransport: new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Authors", "json", "application/json; charset=utf-8", "GET") });
     var customerService = new soby_WebServiceService(customerDataSourceBuilder);
     customerService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWCFUrl() + "/Customers", "json", "application/json; charset=utf-8", "GET");

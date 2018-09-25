@@ -20,7 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -32,6 +32,7 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>5f13ab17</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -203,6 +204,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Controls\SobyWizardSideMenuControl.ascx" />
     <Content Include="Controls\SobyValidatorViewSideMenuControl.ascx" />
     <Content Include="Controls\SobyCheckBoxListSideMenuControl.ascx" />
     <Content Include="Controls\SobySelectBoxSideMenuControl.ascx" />
@@ -331,6 +333,9 @@
     <Content Include="download\Sobiens.Web.Components 1.0.4.8.zip" />
     <Content Include="download\Sobiens.Web.Components 1.0.4.10.zip" />
     <Content Include="download\Sobiens.Web.Components 1.0.5.2.zip" />
+    <Content Include="download\Sobiens.Web.Components 1.0.8.1.zip" />
+    <Content Include="download\Sobiens.Web.Components 1.0.6.1.zip" />
+    <Content Include="download\Sobiens.Web.Components 1.0.7.2.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-3.1.0.js" />
@@ -339,6 +344,7 @@
     <Content Include="Scripts\jquery-3.1.0.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.js" />
     <Content Include="Scripts\jquery-ui-1.12.0.min.js" />
+    <TypeScriptCompile Include="media\jsdoc\test.ts" />
     <TypeScriptCompile Include="media\js\soby.service.ts" />
     <TypeScriptCompile Include="media\js\soby.spservice.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.calendar.ts" />
@@ -469,6 +475,7 @@
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\singleselection.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\SelectBox\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\TreeView\treeview.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Wizard\general.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -540,6 +547,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobyWizardSideMenuControl.ascx.cs">
+      <DependentUpon>SobyWizardSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyWizardSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyWizardSideMenuControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\SobyValidatorViewSideMenuControl.ascx.cs">
       <DependentUpon>SobyValidatorViewSideMenuControl.ascx</DependentUpon>
@@ -1051,7 +1065,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\Tutorials\WebAPI\Wizard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />

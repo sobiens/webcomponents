@@ -1,11 +1,5 @@
 ﻿document.write("<div id='soby_CustomerDiv'></div>");
 $(function () {
-    var inDesignMode = eval("document.forms[MSOWebPartPageFormName].MSOLayout_InDesignMode.value");
-    if (inDesignMode == "1") {
-        $("#soby_CustomerDiv").remove();
-        return;
-    }
-
     soby_PopulateSPHeader();
 });
 
