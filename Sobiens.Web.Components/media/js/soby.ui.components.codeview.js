@@ -17,8 +17,13 @@ var soby_CodeView = /** @class */ (function () {
         this.Title = "";
         this.ImagesFolderUrl = "/_layouts/1033/images";
         this.CodeViewType = null;
-        this.OnSelectionChanged = null;
-        this.OnClick = null;
+        this.TemplateHtml = "<div style='border: 1px solid lightgray;padding: 5px;'>" +
+            "<div class='codeeditor'></div>" +
+            "<div class='actionbuttons'></div>" +
+            "<p class='codedescription'></p>" +
+            "<div class='result'> </div><br><p class='resultdescription'></p>" +
+            "</div>";
+        this.OnTemplateRendered = null;
         this.CodeViewID = "soby_codeview_" + soby_guid();
         this.ContentDivSelector = contentDivSelector;
         this.Title = title;
@@ -30,20 +35,43 @@ var soby_CodeView = /** @class */ (function () {
         var codeContent = $(this.ContentDivSelector).find(".code").html();
         var codeDescription = $(this.ContentDivSelector).find(".codedescription").html();
         var resultDescription = $(this.ContentDivSelector).find(".resultdescription").html();
-        $(this.ContentDivSelector).html("<h3>Example</h3><div style='border: 1px solid lightgray;padding: 5px;'><h3>Code:</h3><table width='100%'><tr><td><textarea class='code' rows='6' cols='70'></textarea></td><td valign='bottom' align='right'><input type='button' value='Run' onclick=\"soby_CodeViews['" + this.CodeViewID + "'].RunCode();\"></td></tr></table><h3>Description:</h3><p class='codedescription'></p></div><br><div style='border: 1px solid lightgray;padding: 5px;'><h3>Result:</h3><div class='result'><iframe class='resultiframe' width='500px'></iframe></div><br><h3>Description:</h3><p class='resultdescription'></p></div>");
+        $(this.ContentDivSelector).html(this.TemplateHtml);
+        $(this.ContentDivSelector).prepend("<textarea class='copytoclipboardtextarea' style='height: 0px;width: 0px;overflow: hidden;border: 0px;resize: none;' > </textarea>" +
+            "<textarea class='defaultcodecontainer' style='height: 0px;width: 0px;overflow: hidden;border: 0px;resize: none;'></textarea>");
+        $(this.ContentDivSelector).find(".codeeditor").html("<textarea class='code' rows = '6' cols = '70' style='width:100%;height: 200px;'></textarea>");
         $(this.ContentDivSelector).find(".code").html(codeContent.replace(/<br \/ >/gi, "\n").replace(/<br>/gi, "\n"));
+        $(this.ContentDivSelector).find(".defaultcodecontainer").html(codeContent);
         $(this.ContentDivSelector).find(".codedescription").html(codeDescription);
         $(this.ContentDivSelector).find(".resultdescription").html(resultDescription);
+        $(this.ContentDivSelector).find(".result").html("<iframe class='resultiframe' style='width:100%;height:200px;' > </iframe>");
+        $(this.ContentDivSelector).find(".actionbuttons").html("<a href='javascript:void(0)' class='runcodebutton' onclick=\"soby_CodeViews['" + this.CodeViewID + "'].RunCode();\">Run</a>&nbsp;" +
+            "<a href='javascript:void(0)' class='resetexercisebutton' onclick=\"soby_CodeViews['" + this.CodeViewID + "'].ResetExercise();\">Reset exercise</a>&nbsp;" +
+            "<a href='javascript:void(0)' class='copyyoclipboardbutton' onclick=\"soby_CodeViews['" + this.CodeViewID + "'].CopyToClipboard();\">Copy to clipboard</a>");
+        if (this.OnTemplateRendered != null) {
+            this.OnTemplateRendered();
+        }
         var codeview = this;
         $(function () {
             codeview.RunCode();
         });
     };
     soby_CodeView.prototype.RunCode = function () {
-        $(this.ContentDivSelector).find(".result").html("<iframe class='resultiframe' width= '500px' > </iframe>");
-        var html = "<script language='javascript'>" + $(this.ContentDivSelector).find(".code").val() + "</script>";
+        $(this.ContentDivSelector).find(".result").html("<iframe class='resultiframe' style= 'width:100%;height:200px;' > </iframe>");
+        var html = $(this.ContentDivSelector).find(".code").val();
         var iframe = $(this.ContentDivSelector).find(".resultiframe")[0];
         iframe.contentWindow.document.write(html);
+    };
+    soby_CodeView.prototype.ResetExercise = function () {
+        var code = $(this.ContentDivSelector).find(".defaultcodecontainer").val();
+        $(this.ContentDivSelector).find(".code").val(code);
+    };
+    soby_CodeView.prototype.CopyToClipboard = function () {
+        var html = $(this.ContentDivSelector).find(".code").val();
+        var copyToClipboardTextarea = $(this.ContentDivSelector).find(".copytoclipboardtextarea");
+        copyToClipboardTextarea.text(html);
+        var copyText = copyToClipboardTextarea[0];
+        eval("copyText.select();");
+        document.execCommand("copy");
     };
     soby_CodeView.prototype.Populate = function () {
     };

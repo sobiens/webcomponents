@@ -27,12 +27,12 @@ declare enum SobyPaginationViewTypes {
     BasicButtons_PageNumbers = 2,
     AdvancedButtons = 3,
     AdvancedButtons_PageNumbers = 4,
-    QuickButtons_PageNumbers = 5,
+    QuickButtons_PageNumbers = 5
 }
 declare enum SobyPaginationVerticalAlign {
     Left = 0,
     Center = 1,
-    Right = 2,
+    Right = 2
 }
 declare class SobyListItem {
     constructor(value: string, text: string);
@@ -217,6 +217,7 @@ declare function soby_GetAllGrids(): any[];
 declare function soby_GetAllVisibleGrids(): any[];
 declare function soby_RefreshAllGrids(): void;
 declare class sobyActionPaneButtons extends Array<sobyActionPaneButton> {
+    constructor(items?: Array<sobyActionPaneButton>);
     AddButton(button: sobyActionPaneButton): void;
     Add(key: string, text: string, index: number, imageUrl: string, className: string, visible: boolean, onClick: any, enabilityFunction: any): void;
     AddCollection(buttons: sobyActionPaneButtons): void;

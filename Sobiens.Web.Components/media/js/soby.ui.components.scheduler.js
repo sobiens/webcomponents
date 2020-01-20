@@ -1,7 +1,10 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -683,8 +686,10 @@ var soby_Scheduler = /** @class */ (function () {
 }());
 var soby_ScheduleCategories = /** @class */ (function (_super) {
     __extends(soby_ScheduleCategories, _super);
-    function soby_ScheduleCategories() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function soby_ScheduleCategories(items) {
+        var _this = _super.apply(this, items) || this;
+        Object.setPrototypeOf(_this, Object.create(soby_ScheduleCategories.prototype));
+        return _this;
     }
     soby_ScheduleCategories.prototype.GetCategoryById = function (categoryId) {
         for (var i = 0; i < this.length; i++) {
@@ -702,8 +707,10 @@ var soby_ScheduleCategories = /** @class */ (function (_super) {
 }(Array));
 var soby_ScheduleItems = /** @class */ (function (_super) {
     __extends(soby_ScheduleItems, _super);
-    function soby_ScheduleItems() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function soby_ScheduleItems(items) {
+        var _this = _super.apply(this, items) || this;
+        Object.setPrototypeOf(_this, Object.create(soby_ScheduleItems.prototype));
+        return _this;
     }
     soby_ScheduleItems.prototype.Clone = function () {
         var newItems = new soby_ScheduleItems();

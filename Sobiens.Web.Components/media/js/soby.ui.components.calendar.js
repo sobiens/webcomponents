@@ -1,7 +1,10 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -522,8 +525,10 @@ var soby_CalendarView = /** @class */ (function () {
 }());
 var soby_CalendarViewItems = /** @class */ (function (_super) {
     __extends(soby_CalendarViewItems, _super);
-    function soby_CalendarViewItems() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function soby_CalendarViewItems(items) {
+        var _this = _super.apply(this, items) || this;
+        Object.setPrototypeOf(_this, Object.create(soby_CalendarViewItems.prototype));
+        return _this;
     }
     return soby_CalendarViewItems;
 }(Array));

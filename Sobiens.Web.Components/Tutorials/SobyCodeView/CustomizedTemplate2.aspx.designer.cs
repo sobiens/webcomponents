@@ -7,18 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sobiens.Web.Components.Tutorials.SobyGrid {
-    
-    
-    public partial class CodeView {
-        
+namespace Sobiens.Web.Components.Tutorials.SobyGrid
+{
+
+
+    public partial class CustomizedTemplate2
+    {
+
         /// <summary>
-        /// SobyGridSideMenuControl control.
+        /// SobyCodeViewSideMenuControl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Sobiens.Web.Components.Controls.SobyGridSideMenuControl SobyGridSideMenuControl;
+        protected global::Sobiens.Web.Components.Controls.SobyCodeViewSideMenuControl SobyCodeViewSideMenuControl;
     }
 }

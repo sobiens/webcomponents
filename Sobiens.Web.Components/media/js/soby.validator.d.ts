@@ -118,7 +118,7 @@ declare enum soby_ValidatorTypes {
     Numeric = 8,
     Pattern = 9,
     Text = 10,
-    URL = 11,
+    URL = 11
 }
 declare class soby_FormValidator {
     ContentDivSelector: string;

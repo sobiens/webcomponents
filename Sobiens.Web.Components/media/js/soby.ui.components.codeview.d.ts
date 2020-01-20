@@ -12,10 +12,12 @@ declare class soby_CodeView {
     Title: string;
     ImagesFolderUrl: string;
     CodeViewType: number;
+    TemplateHtml: string;
     Initialize(): void;
     RunCode(): void;
+    ResetExercise(): void;
+    CopyToClipboard(): void;
     Populate(): void;
     EnsureItemSelectionExistency(): void;
-    OnSelectionChanged: any;
-    OnClick: any;
+    OnTemplateRendered: any;
 }

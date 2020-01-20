@@ -92,6 +92,7 @@ declare class SobyFilter implements ISobyFilter {
     ToQueryString(_type: number): string;
 }
 declare class SobySchemaFields extends Array<SobySchemaField> {
+    constructor(items?: Array<SobySchemaField>);
     toWebAPIString(): string;
 }
 declare class SobySchemaField {
@@ -107,6 +108,7 @@ declare class SobyNavigationInformation {
     constructor();
 }
 declare class SobyOrderByFields extends Array<SobyOrderByField> {
+    constructor(items?: Array<SobyOrderByField>);
     GetOrderFieldByName(fieldName: string): SobyOrderByField;
     ContainsField(fieldName: string): boolean;
     ContainsFieldAsAsc(fieldName: string): boolean;
@@ -117,9 +119,11 @@ declare class SobyOrderByField {
     IsAsc: boolean;
 }
 declare class SobyAggregateFields extends Array<SobyAggregateField> {
+    constructor(items?: Array<SobyAggregateField>);
     ContainsField(fieldName: string): boolean;
 }
 declare class SobyGroupByFields extends Array<SobyGroupByField> {
+    constructor(items?: Array<SobyGroupByField>);
     ContainsField(fieldName: string): boolean;
 }
 declare class SobyAggregateField {
@@ -134,6 +138,7 @@ declare class SobyGroupByField {
     DisplayFunction: any;
 }
 declare class SobyHeaders extends Array<SobyHeader> {
+    constructor(items?: Array<SobyHeader>);
 }
 declare class SobyHeader {
     constructor(key: string, value: string);
@@ -141,6 +146,7 @@ declare class SobyHeader {
     Value: string;
 }
 declare class SobyArguments extends Array<SobyArgument> {
+    constructor(items?: Array<SobyArgument>);
     ToJson(): string;
     ToQueryString(): string;
     Clone(): any;
@@ -206,7 +212,7 @@ declare abstract class soby_DataSourceBuilderAbstract implements soby_DataSource
     GetCountQuery(transport: soby_TransportRequest): string;
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: any): string;
     Clone(): soby_DataSourceBuilderAbstract;
-    DataBeingParsed(data: any): Array<soby_Item>;
+    DataBeingParsed(data: any, parseCompleted: boolean): Array<soby_Item>;
     ParseData(value: string): Array<soby_Item>;
     GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any, contentType: any): void;
 }

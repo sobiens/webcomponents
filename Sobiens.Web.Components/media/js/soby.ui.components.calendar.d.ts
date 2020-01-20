@@ -66,6 +66,7 @@ declare class soby_CalendarView {
     OnClick: any;
 }
 declare class soby_CalendarViewItems extends Array<soby_CalendarViewItem> {
+    constructor(items?: Array<soby_CalendarViewItem>);
 }
 declare class soby_CalendarViewItem {
     constructor(id: string, title: string, description: string, startDate: Date, endDate: Date);

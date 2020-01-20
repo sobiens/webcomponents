@@ -1,4 +1,25 @@
 ﻿// VERSION 1.0.8.1
+if (!Object.setPrototypeOf) {
+    // Only works in Chrome and FireFox, does not work in IE:
+    Object.prototype.setPrototypeOf = function (obj, proto) {
+        if (obj.__proto__) {
+            obj.__proto__ = proto;
+            return obj;
+        } else {
+            // If you want to return prototype of Object.create(null):
+            var Fn = function () {
+                for (var key in obj) {
+                    Object.defineProperty(this, key, {
+                        value: obj[key],
+                    });
+                }
+            };
+            Fn.prototype = proto;
+            return new Fn();
+        }
+    }
+}
+
 var sobyLastReturnData = null;
 function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
     return $.ajax({
@@ -539,6 +560,11 @@ class SobyFilter implements ISobyFilter {
 
 }
 class SobySchemaFields extends Array<SobySchemaField> {
+    constructor(items?: Array<SobySchemaField>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(SobySchemaFields.prototype));
+    }
+
     toWebAPIString() {
         var webAPIString = "";
         var expandString = "";
@@ -583,6 +609,11 @@ class SobyNavigationInformation
     }
 }
 class SobyOrderByFields extends Array<SobyOrderByField> {
+    constructor(items?: Array<SobyOrderByField>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(SobyOrderByFields.prototype));
+    }
+
     GetOrderFieldByName(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
             if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
@@ -624,6 +655,11 @@ class SobyOrderByField
     IsAsc: boolean = false;
 }
 class SobyAggregateFields extends Array<SobyAggregateField> {
+    constructor(items?: Array<SobyAggregateField>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(SobyAggregateFields.prototype));
+    }
+
     ContainsField(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
             if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
@@ -637,6 +673,11 @@ class SobyAggregateFields extends Array<SobyAggregateField> {
 }
 
 class SobyGroupByFields extends Array<SobyGroupByField> {
+    constructor(items?: Array<SobyGroupByField>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(SobyGroupByFields.prototype));
+    }
+
     ContainsField(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
             if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
@@ -668,6 +709,11 @@ class SobyGroupByField {
     DisplayFunction = null;
 }
 class SobyHeaders extends Array<SobyHeader> {
+    constructor(items?: Array<SobyHeader>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(SobyHeaders.prototype));
+    }
+
 }
 class SobyHeader {
     constructor(key: string, value: string) {
@@ -678,6 +724,11 @@ class SobyHeader {
     Value: string;
 }
 class SobyArguments extends Array<SobyArgument> {
+    constructor(items?: Array<SobyArgument>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(SobyArguments.prototype));
+    }
+
     ToJson() {
         return "";
     }
@@ -790,7 +841,7 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
     Clone(): soby_DataSourceBuilderAbstract {
         return null;
     }
-    DataBeingParsed(data: any): Array<soby_Item>
+    DataBeingParsed(data: any, parseCompleted: boolean  ): Array<soby_Item>
     {
         return data;
     }
@@ -852,6 +903,8 @@ class soby_WebServiceService implements soby_ServiceInterface {
 
         var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
         if (countServiceUrl == null || countServiceUrl == "") {
+            service.NextPageExist = this.DataSourceBuilderTemp.NextPageExist;
+            service.EndIndex = service.StartIndex + this.DataSourceBuilderTemp.ItemCount;
             service.NavigationInformationPopulated();
             return;
         }
@@ -1697,33 +1750,33 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
     ParseData(result1)
     {
         var result = (result1.value != null ? result1.value : result1);
-        result = this.DataBeingParsed(result);
-        for (var i = 0; i < result.length; i++) {
-            for (var x = 0; x < this.SchemaFields.length; x++) {
-                if (this.SchemaFields[x].FieldType == SobyFieldTypes.DateTime) {
-                    var propertyName = this.SchemaFields[x].FieldName;
-                    var value = result[i][propertyName];
-                    if (value != null)
-                    {
-                        if (value instanceof Date == true)
-                        {
-                            result[i][propertyName] = value;
-                        }
-                        else if (value != "")
-                        {
-                            if (value.indexOf("20") == 0 || value.indexOf("19") == 0)
-                            {
-                                result[i][propertyName] = new Date(value);
+        var parseCompleted:boolean = false;
+        result = this.DataBeingParsed(result, parseCompleted);
+
+        if (parseCompleted == false) {
+            for (var i = 0; i < result.length; i++) {
+                for (var x = 0; x < this.SchemaFields.length; x++) {
+                    if (this.SchemaFields[x].FieldType == SobyFieldTypes.DateTime) {
+                        var propertyName = this.SchemaFields[x].FieldName;
+                        var value = result[i][propertyName];
+                        if (value != null) {
+                            if (value instanceof Date == true) {
+                                result[i][propertyName] = value;
                             }
-                            else
-                            {
-                                result[i][propertyName] = new Date(value.match(/\d+/)[0] * 1);
+                            else if (value != "") {
+                                if (value.indexOf("20") == 0 || value.indexOf("19") == 0) {
+                                    result[i][propertyName] = new Date(value);
+                                }
+                                else {
+                                    result[i][propertyName] = new Date(value.match(/\d+/)[0] * 1);
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
         return result;
     }
     GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType) {

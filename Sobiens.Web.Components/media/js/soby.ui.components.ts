@@ -1095,6 +1095,11 @@ function soby_RefreshAllGrids() {
 }
 
 class sobyActionPaneButtons extends Array<sobyActionPaneButton> {
+    constructor(items?: Array<sobyActionPaneButton>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(sobyActionPaneButtons.prototype));
+    }
+
     AddButton(button:sobyActionPaneButton)
     {
         this.push(new sobyActionPaneButton(button.Key, button.Text, button.Index, button.ImageUrl, button.ClassName, button.Visible, button.OnClick, button.EnabilityFunction));
@@ -1107,7 +1112,8 @@ class sobyActionPaneButtons extends Array<sobyActionPaneButton> {
     {
         for (var i = 0; i < buttons.length; i++)
         {
-            this.splice(0, 0, buttons[i]);
+            //this.splice(0, 0, buttons[i]);
+            this.push(buttons[i]);
         }
     }
 

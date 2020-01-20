@@ -857,6 +857,10 @@ class soby_Scheduler
 
 class soby_ScheduleCategories extends Array<soby_ScheduleCategory>
 {
+    constructor(items?: Array<soby_ScheduleCategory>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(soby_ScheduleCategories.prototype));
+    }
     GetCategoryById(categoryId)
     {
         for (var i = 0; i < this.length; i++)
@@ -879,6 +883,10 @@ class soby_ScheduleCategories extends Array<soby_ScheduleCategory>
 
 class soby_ScheduleItems extends Array<soby_ScheduleItem>
 {
+    constructor(items?: Array<soby_ScheduleItem>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(soby_ScheduleItems.prototype));
+    }
     Clone(): soby_ScheduleItems
     {
         var newItems = new soby_ScheduleItems();

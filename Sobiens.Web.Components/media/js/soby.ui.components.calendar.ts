@@ -647,6 +647,10 @@ class soby_CalendarView
 
 class soby_CalendarViewItems extends Array<soby_CalendarViewItem>
 {
+    constructor(items?: Array<soby_CalendarViewItem>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(soby_CalendarViewItems.prototype));
+    }
 }
 
 class soby_CalendarViewItem

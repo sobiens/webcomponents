@@ -20,7 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -204,6 +204,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Controls\SobyGridSideMenuControl.ascx" />
     <Content Include="Controls\SobyWizardSideMenuControl.ascx" />
     <Content Include="Controls\SobyValidatorViewSideMenuControl.ascx" />
     <Content Include="Controls\SobyCheckBoxListSideMenuControl.ascx" />
@@ -215,7 +216,7 @@
     <Content Include="Controls\SobyItemSelectionSideMenuControl.ascx" />
     <Content Include="Controls\SobyMetroStyleGridSideMenuControl.ascx" />
     <Content Include="Controls\SobyCarouselSideMenuControl.ascx" />
-    <Content Include="Controls\SobyGridSideMenuControl.ascx" />
+    <Content Include="Controls\SobyCodeViewSideMenuControl.ascx" />
     <Content Include="Css\bootstrap-theme.css" />
     <Content Include="Css\bootstrap-theme.min.css" />
     <Content Include="Css\bootstrap.css" />
@@ -354,6 +355,8 @@
     <TypeScriptCompile Include="media\js\soby.ui.components.ts" />
     <TypeScriptCompile Include="media\js\soby.validator.ts" />
     <TypeScriptCompile Include="Scripts\SPContext.d.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\CodeView\customizedtemplate2.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\CodeView\customizedtemplate1.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\codeview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.customdates.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.ts" />
@@ -379,7 +382,9 @@
     <Content Include="sitemap.xml" />
     <Content Include="Tutorials\SobyCalendarView\Getting Started.aspx" />
     <Content Include="Tutorials\SobyCheckBoxList\Getting Started.aspx" />
-    <Content Include="Tutorials\SobyCodeView\CodeView.aspx" />
+    <Content Include="Tutorials\SobyCodeView\CustomizedTemplate2.aspx" />
+    <Content Include="Tutorials\SobyCodeView\CustomizedTemplate1.aspx" />
+    <Content Include="Tutorials\SobyCodeView\Getting Started.aspx" />
     <Content Include="Tutorials\SobyDataRepeater\Custom Format.aspx" />
     <Content Include="Tutorials\SobyDataRepeater\Paging.aspx" />
     <Content Include="Tutorials\SobyDataRepeater\Getting Started.aspx" />
@@ -548,6 +553,13 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SobyGridSideMenuControl.ascx.cs">
+      <DependentUpon>SobyGridSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyGridSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyGridSideMenuControl.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SobyWizardSideMenuControl.ascx.cs">
       <DependentUpon>SobyWizardSideMenuControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -625,12 +637,12 @@
     <Compile Include="Controls\SobyCarouselSideMenuControl.ascx.designer.cs">
       <DependentUpon>SobyCarouselSideMenuControl.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SobyGridSideMenuControl.ascx.cs">
-      <DependentUpon>SobyGridSideMenuControl.ascx</DependentUpon>
+    <Compile Include="Controls\SobyCodeViewSideMenuControl.ascx.cs">
+      <DependentUpon>SobyCodeViewSideMenuControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\SobyGridSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyGridSideMenuControl.ascx</DependentUpon>
+    <Compile Include="Controls\SobyCodeViewSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyCodeViewSideMenuControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -692,12 +704,26 @@
     <Compile Include="Tutorials\SobyCheckBoxList\Getting Started.aspx.designer.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Tutorials\SobyCodeView\CodeView.aspx.cs">
-      <DependentUpon>CodeView.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyCodeView\CustomizedTemplate2.aspx.cs">
+      <DependentUpon>CustomizedTemplate2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Tutorials\SobyCodeView\CodeView.aspx.designer.cs">
-      <DependentUpon>CodeView.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyCodeView\CustomizedTemplate2.aspx.designer.cs">
+      <DependentUpon>CustomizedTemplate2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyCodeView\CustomizedTemplate1.aspx.cs">
+      <DependentUpon>CustomizedTemplate1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyCodeView\CustomizedTemplate1.aspx.designer.cs">
+      <DependentUpon>CustomizedTemplate1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyCodeView\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyCodeView\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyDataRepeater\Custom Format.aspx.cs">
       <DependentUpon>Custom Format.aspx</DependentUpon>

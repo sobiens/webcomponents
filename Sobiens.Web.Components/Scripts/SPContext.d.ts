@@ -17,4 +17,8 @@ interface SP
     CamlQuery?: any;
 }
 
+interface Object {
+    setPrototypeOf?: any;
+}
+
 declare var SP: SP; 

@@ -101,9 +101,11 @@ declare class soby_Scheduler {
     OnClick: any;
 }
 declare class soby_ScheduleCategories extends Array<soby_ScheduleCategory> {
+    constructor(items?: Array<soby_ScheduleCategory>);
     GetCategoryById(categoryId: any): any;
 }
 declare class soby_ScheduleItems extends Array<soby_ScheduleItem> {
+    constructor(items?: Array<soby_ScheduleItem>);
     Clone(): soby_ScheduleItems;
     GetItemById(id: any): soby_ScheduleItem;
     GetItemsByCategoryId(categoryId: any): soby_ScheduleItems;

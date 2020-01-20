@@ -1,7 +1,10 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -9,6 +12,27 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 // VERSION 1.0.8.1
+if (!Object.setPrototypeOf) {
+    // Only works in Chrome and FireFox, does not work in IE:
+    Object.prototype.setPrototypeOf = function (obj, proto) {
+        if (obj.__proto__) {
+            obj.__proto__ = proto;
+            return obj;
+        }
+        else {
+            // If you want to return prototype of Object.create(null):
+            var Fn = function () {
+                for (var key in obj) {
+                    Object.defineProperty(this, key, {
+                        value: obj[key],
+                    });
+                }
+            };
+            Fn.prototype = proto;
+            return new Fn();
+        }
+    };
+}
 var sobyLastReturnData = null;
 function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
     return $.ajax({
@@ -466,8 +490,10 @@ var SobyFilter = /** @class */ (function () {
 }());
 var SobySchemaFields = /** @class */ (function (_super) {
     __extends(SobySchemaFields, _super);
-    function SobySchemaFields() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SobySchemaFields(items) {
+        var _this = _super.apply(this, items) || this;
+        Object.setPrototypeOf(_this, Object.create(SobySchemaFields.prototype));
+        return _this;
     }
     SobySchemaFields.prototype.toWebAPIString = function () {
         var webAPIString = "";
@@ -506,8 +532,10 @@ var SobyNavigationInformation = /** @class */ (function () {
 }());
 var SobyOrderByFields = /** @class */ (function (_super) {
     __extends(SobyOrderByFields, _super);
-    function SobyOrderByFields() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SobyOrderByFields(items) {
+        var _this = _super.apply(this, items) || this;
+        Object.setPrototypeOf(_this, Object.create(SobyOrderByFields.prototype));
+        return _this;
     }
     SobyOrderByFields.prototype.GetOrderFieldByName = function (fieldName) {
         for (var i = 0; i < this.length; i++) {
@@ -545,8 +573,10 @@ var SobyOrderByField = /** @class */ (function () {
 }());
 var SobyAggregateFields = /** @class */ (function (_super) {
     __extends(SobyAggregateFields, _super);
-    function SobyAggregateFields() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SobyAggregateFields(items) {
+        var _this = _super.apply(this, items) || this;
+        Object.setPrototypeOf(_this, Object.create(SobyAggregateFields.prototype));
+        return _this;
     }
     SobyAggregateFields.prototype.ContainsField = function (fieldName) {
         for (var i = 0; i < this.length; i++) {
@@ -560,8 +590,10 @@ var SobyAggregateFields = /** @class */ (function (_super) {
 }(Array));
 var SobyGroupByFields = /** @class */ (function (_super) {
     __extends(SobyGroupByFields, _super);
-    function SobyGroupByFields() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SobyGroupByFields(items) {
+        var _this = _super.apply(this, items) || this;
+        Object.setPrototypeOf(_this, Object.create(SobyGroupByFields.prototype));
+        return _this;
     }
     SobyGroupByFields.prototype.ContainsField = function (fieldName) {
         for (var i = 0; i < this.length; i++) {
@@ -593,8 +625,10 @@ var SobyGroupByField = /** @class */ (function () {
 }());
 var SobyHeaders = /** @class */ (function (_super) {
     __extends(SobyHeaders, _super);
-    function SobyHeaders() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SobyHeaders(items) {
+        var _this = _super.apply(this, items) || this;
+        Object.setPrototypeOf(_this, Object.create(SobyHeaders.prototype));
+        return _this;
     }
     return SobyHeaders;
 }(Array));
@@ -607,8 +641,10 @@ var SobyHeader = /** @class */ (function () {
 }());
 var SobyArguments = /** @class */ (function (_super) {
     __extends(SobyArguments, _super);
-    function SobyArguments() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SobyArguments(items) {
+        var _this = _super.apply(this, items) || this;
+        Object.setPrototypeOf(_this, Object.create(SobyArguments.prototype));
+        return _this;
     }
     SobyArguments.prototype.ToJson = function () {
         return "";
@@ -676,7 +712,7 @@ var soby_DataSourceBuilderAbstract = /** @class */ (function () {
     soby_DataSourceBuilderAbstract.prototype.Clone = function () {
         return null;
     };
-    soby_DataSourceBuilderAbstract.prototype.DataBeingParsed = function (data) {
+    soby_DataSourceBuilderAbstract.prototype.DataBeingParsed = function (data, parseCompleted) {
         return data;
     };
     soby_DataSourceBuilderAbstract.prototype.ParseData = function (value) {
@@ -726,6 +762,8 @@ var soby_WebServiceService = /** @class */ (function () {
         var contentType = this.Transport.Read.ContentType;
         var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
         if (countServiceUrl == null || countServiceUrl == "") {
+            service.NextPageExist = this.DataSourceBuilderTemp.NextPageExist;
+            service.EndIndex = service.StartIndex + this.DataSourceBuilderTemp.ItemCount;
             service.NavigationInformationPopulated();
             return;
         }
@@ -1412,22 +1450,25 @@ var soby_WSBuilder = /** @class */ (function (_super) {
     };
     soby_WSBuilder.prototype.ParseData = function (result1) {
         var result = (result1.value != null ? result1.value : result1);
-        result = this.DataBeingParsed(result);
-        for (var i = 0; i < result.length; i++) {
-            for (var x = 0; x < this.SchemaFields.length; x++) {
-                if (this.SchemaFields[x].FieldType == SobyFieldTypes.DateTime) {
-                    var propertyName = this.SchemaFields[x].FieldName;
-                    var value = result[i][propertyName];
-                    if (value != null) {
-                        if (value instanceof Date == true) {
-                            result[i][propertyName] = value;
-                        }
-                        else if (value != "") {
-                            if (value.indexOf("20") == 0 || value.indexOf("19") == 0) {
-                                result[i][propertyName] = new Date(value);
+        var parseCompleted = false;
+        result = this.DataBeingParsed(result, parseCompleted);
+        if (parseCompleted == false) {
+            for (var i = 0; i < result.length; i++) {
+                for (var x = 0; x < this.SchemaFields.length; x++) {
+                    if (this.SchemaFields[x].FieldType == SobyFieldTypes.DateTime) {
+                        var propertyName = this.SchemaFields[x].FieldName;
+                        var value = result[i][propertyName];
+                        if (value != null) {
+                            if (value instanceof Date == true) {
+                                result[i][propertyName] = value;
                             }
-                            else {
-                                result[i][propertyName] = new Date(value.match(/\d+/)[0] * 1);
+                            else if (value != "") {
+                                if (value.indexOf("20") == 0 || value.indexOf("19") == 0) {
+                                    result[i][propertyName] = new Date(value);
+                                }
+                                else {
+                                    result[i][propertyName] = new Date(value.match(/\d+/)[0] * 1);
+                                }
                             }
                         }
                     }
