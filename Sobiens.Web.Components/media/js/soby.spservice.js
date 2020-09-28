@@ -232,17 +232,25 @@ var soby_SharePointService = /** @class */ (function () {
     soby_SharePointService.prototype.ItemPopulated = function (items) { };
     soby_SharePointService.prototype.ItemBeingPopulated = function () { };
     soby_SharePointService.prototype.ErrorThrown = function (errorMessage, errorTypeName) { };
-    soby_SharePointService.prototype.UpdateItem = function (key, objectInstance) {
-        var updateUrl = this.Transport.Update.Url.replace(/#key/gi, key);
-        ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, key], function (item, args) {
+    soby_SharePointService.prototype.UpdateItem = function (keyNames, keyValues, objectInstance) {
+        var updateUrl = this.Transport.Update.Url;
+        for (var i = 0; i < keyValues.length; i++) {
+            var regExp = new RegExp(keyNames[i], "gi");
+            updateUrl = updateUrl.replace(regExp, keyValues[i]);
+        }
+        ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, keyValues], function (item, args) {
             var service = args[0];
             service.ItemUpdated(args);
         }, function (errorThrown) {
         });
     };
     soby_SharePointService.prototype.DeleteItem = function (keyNames, keyValues) {
-        var deleteUrl = this.Transport.Delete.Url.replace(/#key/gi, keyValues[0]);
-        ajaxHelper(deleteUrl, this.Transport.Delete.Type, null, [this, keyValues[0]], function (item, args) {
+        var deleteUrl = this.Transport.Delete.Url;
+        for (var i = 0; i < keyValues.length; i++) {
+            var regExp = new RegExp(keyNames[i], "gi");
+            deleteUrl = deleteUrl.replace(regExp, keyValues[i]);
+        }
+        ajaxHelper(deleteUrl, this.Transport.Delete.Type, null, [this, keyValues], function (item, args) {
             var service = args[0];
             service.ItemDeleted(args);
         }, function (errorThrown) {

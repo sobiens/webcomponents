@@ -36,6 +36,8 @@ function soby_ShowHideViewCode(containerId, codeFile) {
 function soby_GetTutorialWebAPIUrl() {
     if (window.location.href.indexOf("http://webcomponents.sobiens.com/")>-1)
         return "http://webcomponentsservices.sobiens.com/api";
+    else if (window.location.href.indexOf("https://webcomponents.sobiens.com/") > -1)
+        return "https://webcomponentsservices.sobiens.com/api";
     else
         return "http://localhost:7287/api";
 }
@@ -43,6 +45,8 @@ function soby_GetTutorialWebAPIUrl() {
 function soby_GetTutorialWCFUrl() {
     if (window.location.href.indexOf("http://webcomponents.sobiens.com/") > -1)
         return "http://webcomponentsservices.sobiens.com/wcf";
+    else if (window.location.href.indexOf("https://webcomponents.sobiens.com/") > -1)
+        return "https://webcomponentsservices.sobiens.com/wcf";
     else
         return "http://localhost:7287/wcf";
 }

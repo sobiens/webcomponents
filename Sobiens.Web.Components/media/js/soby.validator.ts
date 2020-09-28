@@ -20,9 +20,21 @@ class soby_Validate
             GreaterThanMaxLength: "You can't enter a value grater than maximum length",
             LessThanMinLength: "You can't enter a value less than minimum length"
         },
-        Existence: {
+        Date: {
+            GreaterThanMaxValue: "You can't enter a value grater than maximum value",
+            LessThanMinValue: "You can't enter a value less than minimum value",
+            InvalidDate: "You can't enter an invalid date"
+        },
+        Presence: {
+            Required: "You can't leave this blank."
+        },
+        Exclusion: {
+            Required: "You can't leave this blank."
+        },
+        Inclusion: {
             Required: "You can't leave this blank."
         }
+
     }
 
     constructor()
@@ -32,7 +44,9 @@ class soby_Validate
         this.Validators.push(new soby_EmailValidator());
         this.Validators.push(new soby_NumericValidator());
         this.Validators.push(new soby_TextValidator());
-        this.Validators.push(new soby_ExistenceValidator());
+        this.Validators.push(new soby_PresenceValidator());
+        this.Validators.push(new soby_DateValidator());
+        this.Validators.push(new soby_ExclusionValidator());
     }
 
 
@@ -79,7 +93,7 @@ interface soby_ValidatorInterface
     Clone(): soby_ValidatorInterface;
     SetDefaultErrorMessages();
 }
-class soby_ExistenceValidator implements soby_ValidatorInterface
+class soby_PresenceValidator implements soby_ValidatorInterface
 {
     Name: string;
     Type: soby_ValidatorTypes;
@@ -91,13 +105,13 @@ class soby_ExistenceValidator implements soby_ValidatorInterface
 
     constructor()
     {
-        this.Name = "ExistenceValidator";
-        this.Type = soby_ValidatorTypes.Existence;
+        this.Name = "PresenceValidator";
+        this.Type = soby_ValidatorTypes.Presence;
     }
 
     SetDefaultErrorMessages()
     {
-        this.ErrorMessages.Required = sobyValidate.ErrorMessages.Existence.Required;
+        this.ErrorMessages.Required = sobyValidate.ErrorMessages.Presence.Required;
     }
 
     Validate(value: any): boolean
@@ -114,7 +128,7 @@ class soby_ExistenceValidator implements soby_ValidatorInterface
 
     Clone(): soby_ValidatorInterface
     {
-        var validator: soby_ExistenceValidator = new soby_ExistenceValidator();
+        var validator: soby_PresenceValidator = new soby_PresenceValidator();
         validator.Name = this.Name;
         validator.Required = this.Required;
         validator.Type = this.Type;
@@ -123,7 +137,97 @@ class soby_ExistenceValidator implements soby_ValidatorInterface
     }
 }
 
-class soby_NumericValidator extends soby_ExistenceValidator
+class soby_ExclusionValidator implements soby_PresenceValidator {
+    Name: string;
+    Type: soby_ValidatorTypes;
+    Required: boolean = false;
+    ErrorMessage: string = "";
+    ErrorMessages = {
+        Required: ""
+    }
+    ExcludedValues: Array<string>;
+
+    constructor() {
+        this.Name = "ExclusionValidator";
+        this.Type = soby_ValidatorTypes.Exclusion;
+        this.ExcludedValues= new Array<string>();
+    }
+
+    SetDefaultErrorMessages() {
+        this.ErrorMessages.Required = sobyValidate.ErrorMessages.Exclusion.Required;
+    }
+
+    Validate(value: any): boolean {
+        this.ErrorMessage = "";
+        if (sobyValidate.CheckIfEmpty(value) == true) {
+            this.ErrorMessage = this.ErrorMessages.Required;
+            return false;
+        }
+
+        for (var i = 0; i < this.ExcludedValues.length; i++) {
+            if (this.ExcludedValues[i] == value)
+                return false;
+        }
+
+        return true;
+    }
+
+    Clone(): soby_ValidatorInterface {
+        var validator: soby_ExclusionValidator = new soby_ExclusionValidator();
+        validator.Name = this.Name;
+        validator.Required = this.Required;
+        validator.Type = this.Type;
+        validator.ErrorMessage = this.ErrorMessage;
+        return validator;
+    }
+}
+
+class soby_InclusionValidator implements soby_PresenceValidator {
+    Name: string;
+    Type: soby_ValidatorTypes;
+    Required: boolean = false;
+    ErrorMessage: string = "";
+    ErrorMessages = {
+        Required: ""
+    }
+    IncludedValues: Array<string>;
+
+    constructor() {
+        this.Name = "InclusionValidator";
+        this.Type = soby_ValidatorTypes.Inclusion;
+        this.IncludedValues = new Array<string>();
+    }
+
+    SetDefaultErrorMessages() {
+        this.ErrorMessages.Required = sobyValidate.ErrorMessages.Exclusion.Required;
+    }
+
+    Validate(value: any): boolean {
+        this.ErrorMessage = "";
+        if (sobyValidate.CheckIfEmpty(value) == true) {
+            this.ErrorMessage = this.ErrorMessages.Required;
+            return false;
+        }
+
+        for (var i = 0; i < this.IncludedValues.length; i++) {
+            if (this.IncludedValues[i] == value)
+                return true;
+        }
+
+        return false;
+    }
+
+    Clone(): soby_ValidatorInterface {
+        var validator: soby_InclusionValidator = new soby_InclusionValidator();
+        validator.Name = this.Name;
+        validator.Required = this.Required;
+        validator.Type = this.Type;
+        validator.ErrorMessage = this.ErrorMessage;
+        return validator;
+    }
+}
+
+class soby_NumericValidator extends soby_PresenceValidator
 {
     MinValue: number = null;
     MaxValue: number = null;
@@ -199,8 +303,76 @@ class soby_NumericValidator extends soby_ExistenceValidator
 
 }
 
+class soby_DateValidator extends soby_PresenceValidator {
+    DateOnly: boolean = false;
+    Min: number = null;
+    Max: number = null;
+    Format: string = "YYYY-MM-DD";
+    ErrorMessage: string = "";
+    ErrorMessages = {
+        Required: "",
+        GreaterThanMaxValue: "",
+        LessThanMinValue: "",
+        InvalidDate: ""
+    }
 
-class soby_TextValidator extends soby_ExistenceValidator
+    constructor() {
+        super();
+        this.Name = "DateValidator";
+        this.Type = soby_ValidatorTypes.Date;
+    }
+
+    SetDefaultErrorMessages() {
+        super.SetDefaultErrorMessages();
+        this.ErrorMessages.GreaterThanMaxValue = sobyValidate.ErrorMessages.Date.GreaterThanMaxValue;
+        this.ErrorMessages.LessThanMinValue = sobyValidate.ErrorMessages.Date.LessThanMinValue;
+        this.ErrorMessages.InvalidDate = sobyValidate.ErrorMessages.Date.InvalidDate;
+    }
+
+
+    Validate(value: any): boolean {
+        var isValid = super.Validate(value);
+        if (isValid == false) {
+            this.ErrorMessage = this.ErrorMessages.InvalidDate;
+        }
+
+        var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
+        if (!(date_regex.test(value))) {
+            this.ErrorMessage = this.ErrorMessages.InvalidDate;
+        }
+
+        /*
+        if (this.Min != null && value < this.Min) {
+            this.ErrorMessage = this.ErrorMessages.LessThanMinValue;
+        }
+
+        if (this.Max != null && value > this.Max) {
+            this.ErrorMessage = this.ErrorMessages.GreaterThanMaxValue;
+        }
+        */
+
+        if (this.ErrorMessage != "") {
+            return false;
+        }
+
+        return true;
+    }
+
+    Clone(): soby_ValidatorInterface {
+        var validator: soby_DateValidator = new soby_DateValidator();
+        validator.Name = this.Name;
+        validator.Required = this.Required;
+        validator.Type = this.Type;
+        validator.ErrorMessage = this.ErrorMessage;
+        validator.Min = this.Min;
+        validator.Max = this.Max;
+
+        return validator;
+    }
+
+}
+
+class soby_TextValidator extends soby_PresenceValidator
 {
     MinLength: number = null;
     MaxLength: number = null;
@@ -267,7 +439,7 @@ class soby_TextValidator extends soby_ExistenceValidator
 }
 
 
-class soby_PatternValidator extends soby_ExistenceValidator
+class soby_PatternValidator extends soby_PresenceValidator
 {
     MinLength: number = null;
     MaxLength: number = null;
@@ -431,7 +603,7 @@ enum soby_ValidatorTypes
     DateTime=2,
     Email=3,
     Exclusion = 4,
-    Existence =5,
+    Presence =5,
     Inclusion = 6,
     Length = 7,
     Numeric = 8,
@@ -459,7 +631,7 @@ class soby_FormValidator
         for (var i = 0; i < textBoxes.length; i++)
         {
             var textBox = $(textBoxes[i]);
-            var textValidator: soby_ExistenceValidator = null;
+            var textValidator: soby_PresenceValidator = null;
             if (textBox.prop("tagName").toLowerCase() == "textarea" || textBox.attr("type") == "text")
             {
                 textValidator = sobyValidate.GetValidator(soby_ValidatorTypes.Text) as soby_TextValidator;

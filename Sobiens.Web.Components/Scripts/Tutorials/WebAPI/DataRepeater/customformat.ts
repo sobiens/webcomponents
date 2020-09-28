@@ -27,7 +27,7 @@ function soby_PopulateDataRepeaterCustomFormatRefreshData()
     bookGrid.ShowHeader = false;
     bookGrid.MaxCellCount = 3;
     bookGrid.ImagesFolderUrl = "/media/images";
-    bookGrid.AddKeyField("Id");
+    bookGrid.AddKeyField("Id", "Id");
     bookGrid.TableTagName = "div";
     bookGrid.TBodyTagName = "ul";
     bookGrid.RowTagName = "div";

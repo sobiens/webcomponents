@@ -29,7 +29,7 @@ declare class soby_SharePointService implements soby_ServiceInterface {
     ItemPopulated(items: Array<soby_Item>): void;
     ItemBeingPopulated(): void;
     ErrorThrown(errorMessage: string, errorTypeName: string): void;
-    UpdateItem(key: string, objectInstance: any): void;
+    UpdateItem(keyNames: Array<string>, keyValues: Array<string>, objectInstance: any): void;
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>): void;
     AddItem(objectInstance: any): void;
     ItemUpdated(args: any): void;

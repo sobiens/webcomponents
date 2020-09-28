@@ -18,7 +18,18 @@ declare class soby_Validate {
             GreaterThanMaxLength: string;
             LessThanMinLength: string;
         };
-        Existence: {
+        Date: {
+            GreaterThanMaxValue: string;
+            LessThanMinValue: string;
+            InvalidDate: string;
+        };
+        Presence: {
+            Required: string;
+        };
+        Exclusion: {
+            Required: string;
+        };
+        Inclusion: {
             Required: string;
         };
     };
@@ -37,7 +48,7 @@ interface soby_ValidatorInterface {
     Clone(): soby_ValidatorInterface;
     SetDefaultErrorMessages(): any;
 }
-declare class soby_ExistenceValidator implements soby_ValidatorInterface {
+declare class soby_PresenceValidator implements soby_ValidatorInterface {
     Name: string;
     Type: soby_ValidatorTypes;
     Required: boolean;
@@ -50,7 +61,35 @@ declare class soby_ExistenceValidator implements soby_ValidatorInterface {
     Validate(value: any): boolean;
     Clone(): soby_ValidatorInterface;
 }
-declare class soby_NumericValidator extends soby_ExistenceValidator {
+declare class soby_ExclusionValidator implements soby_PresenceValidator {
+    Name: string;
+    Type: soby_ValidatorTypes;
+    Required: boolean;
+    ErrorMessage: string;
+    ErrorMessages: {
+        Required: string;
+    };
+    ExcludedValues: Array<string>;
+    constructor();
+    SetDefaultErrorMessages(): void;
+    Validate(value: any): boolean;
+    Clone(): soby_ValidatorInterface;
+}
+declare class soby_InclusionValidator implements soby_PresenceValidator {
+    Name: string;
+    Type: soby_ValidatorTypes;
+    Required: boolean;
+    ErrorMessage: string;
+    ErrorMessages: {
+        Required: string;
+    };
+    IncludedValues: Array<string>;
+    constructor();
+    SetDefaultErrorMessages(): void;
+    Validate(value: any): boolean;
+    Clone(): soby_ValidatorInterface;
+}
+declare class soby_NumericValidator extends soby_PresenceValidator {
     MinValue: number;
     MaxValue: number;
     ErrorMessage: string;
@@ -65,7 +104,24 @@ declare class soby_NumericValidator extends soby_ExistenceValidator {
     Validate(value: any): boolean;
     Clone(): soby_ValidatorInterface;
 }
-declare class soby_TextValidator extends soby_ExistenceValidator {
+declare class soby_DateValidator extends soby_PresenceValidator {
+    DateOnly: boolean;
+    Min: number;
+    Max: number;
+    Format: string;
+    ErrorMessage: string;
+    ErrorMessages: {
+        Required: string;
+        GreaterThanMaxValue: string;
+        LessThanMinValue: string;
+        InvalidDate: string;
+    };
+    constructor();
+    SetDefaultErrorMessages(): void;
+    Validate(value: any): boolean;
+    Clone(): soby_ValidatorInterface;
+}
+declare class soby_TextValidator extends soby_PresenceValidator {
     MinLength: number;
     MaxLength: number;
     ErrorMessage: string;
@@ -79,7 +135,7 @@ declare class soby_TextValidator extends soby_ExistenceValidator {
     Validate(value: any): boolean;
     Clone(): soby_ValidatorInterface;
 }
-declare class soby_PatternValidator extends soby_ExistenceValidator {
+declare class soby_PatternValidator extends soby_PresenceValidator {
     MinLength: number;
     MaxLength: number;
     Pattern: RegExp;
@@ -112,7 +168,7 @@ declare enum soby_ValidatorTypes {
     DateTime = 2,
     Email = 3,
     Exclusion = 4,
-    Existence = 5,
+    Presence = 5,
     Inclusion = 6,
     Length = 7,
     Numeric = 8,

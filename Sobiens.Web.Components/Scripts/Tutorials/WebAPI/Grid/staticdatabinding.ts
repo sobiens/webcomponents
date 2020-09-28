@@ -26,7 +26,7 @@ function soby_PopulateGridStaticDataBinding() {
     customerGrid.ImagesFolderUrl = "/media/images";
     customerGrid.IsEditable = false;
     customerGrid.IsSelectable = false;
-    customerGrid.AddKeyField("ID");
+    customerGrid.AddKeyField("ID", "ID");
     customerGrid.AddColumn("FirstName", "FirstName", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     customerGrid.AddColumn("LastName", "LastName", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     customerGrid.AddColumn("Age", "Age", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);

@@ -211,13 +211,13 @@ declare class SobyShowFieldsOnObject {
     EditNew: number;
 }
 declare var SobyShowFieldsOn: SobyShowFieldsOnObject;
-declare function soby_RemoveNoneExistenceGrid(): void;
 declare function soby_GetActiveDataGrid(): soby_WebGrid;
 declare function soby_GetAllGrids(): any[];
 declare function soby_GetAllVisibleGrids(): any[];
 declare function soby_RefreshAllGrids(): void;
 declare class sobyActionPaneButtons extends Array<sobyActionPaneButton> {
     constructor(items?: Array<sobyActionPaneButton>);
+    Clone(): sobyActionPaneButtons;
     AddButton(button: sobyActionPaneButton): void;
     Add(key: string, text: string, index: number, imageUrl: string, className: string, visible: boolean, onClick: any, enabilityFunction: any): void;
     AddCollection(buttons: sobyActionPaneButtons): void;
@@ -227,6 +227,7 @@ declare class sobyActionPaneButtons extends Array<sobyActionPaneButton> {
 }
 declare class sobyActionPaneButton {
     constructor(key: string, text: string, index: number, imageUrl: string, className: string, visible: boolean, onClick: any, enabilityFunction: any);
+    Clone(): sobyActionPaneButton;
     ID: string;
     Key: string;
     Text: string;
@@ -304,6 +305,7 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
     ContentDivSelector: string;
     ItemDialogClientID: string;
     Title: string;
+    AltTitle: string;
     DisplayTitle: boolean;
     DataService: soby_ServiceInterface;
     EmptyDataHtml: string;
@@ -314,13 +316,15 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
     GroupByFields: SobyGroupByFields;
     AggregateFields: SobyAggregateFields;
     ResponsiveConditions: Array<sobyResponsiveCondition>;
-    KeyFields: Array<string>;
+    KeyFields: SobyKeyFields;
     CellCount: number;
     DataRelations: any[];
     Columns: SobyGridColumn[];
     InitializedActionPaneButtons: boolean;
     IsSelectable: boolean;
+    IsAddAllowed: boolean;
     IsEditable: boolean;
+    IsDeletable: boolean;
     IsGroupable: boolean;
     Items: any;
     ShowRefreshButton: boolean;
@@ -428,6 +432,7 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
     constructor(contentDivSelector: string, title: string, dataService: any, emptyDataHtml: string);
     /************************************ END CONSTRUCTORS ***************************/
     /************************************ METHODS ************************************/
+    Clone(contentDivSelector: string): soby_WebGrid;
     GetResponsiveConditionById(id: string): sobyResponsiveCondition;
     InitializeActionPaneButtons(): void;
     /**
@@ -543,7 +548,7 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
      * // Adds ID as key field
      * grid.AddKeyField("ID");
      */
-    AddKeyField(fieldName: string): void;
+    AddKeyField(fieldName: string, parameterName: string): void;
     /**
     * Not implemented yet.
     */
@@ -954,6 +959,7 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
     PopulateAggregateRow(rowAddBefore: any, level: number, hasEmptyCell: boolean): void;
     PopulateAggregateRows(): void;
     PopulateGroupByRow(itemIndex: number, item: any, row: any): any;
+    ExpandGroupBy(groupByRowID: any): void;
     PopulateDetailRow(rowID: any): void;
     PopulateSelectionCell(item: any, row: any, rowID: any): void;
     PopulateCellTemplateContent(cellId: string, columnIndex: number, dataItemIndex: number): void;

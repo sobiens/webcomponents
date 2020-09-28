@@ -122,6 +122,15 @@ declare class SobyAggregateFields extends Array<SobyAggregateField> {
     constructor(items?: Array<SobyAggregateField>);
     ContainsField(fieldName: string): boolean;
 }
+declare class SobyKeyFields extends Array<SobyKeyField> {
+    constructor(items?: Array<SobyKeyField>);
+    ContainsField(fieldName: string): boolean;
+}
+declare class SobyKeyField {
+    constructor(fieldName: string, parameterName: string);
+    FieldName: string;
+    ParameterName: string;
+}
 declare class SobyGroupByFields extends Array<SobyGroupByField> {
     constructor(items?: Array<SobyGroupByField>);
     ContainsField(fieldName: string): boolean;
@@ -177,7 +186,7 @@ interface soby_ServiceInterface {
     ItemPopulated(items: Array<soby_Item>): any;
     ItemBeingPopulated(): any;
     ErrorThrown(errorMessage: string, errorTypeName: string): any;
-    UpdateItem(key: string, objectInstance: any): any;
+    UpdateItem(keyNames: Array<string>, keyValues: Array<string>, objectInstance: any): any;
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>): any;
     AddItem(objectInstance: any): any;
     ItemUpdated(args: any): any;
@@ -256,7 +265,7 @@ declare class soby_WebServiceService implements soby_ServiceInterface {
     GetFieldNames(): any[];
     ItemPopulated(items: Array<soby_Item>): void;
     ErrorThrown(errorMessage: string, errorTypeName: string): void;
-    UpdateItem(key: string, objectInstance: any): void;
+    UpdateItem(keyNames: Array<string>, keyValues: Array<string>, objectInstance: any): void;
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>): void;
     AddItem(objectInstance: any): void;
     ItemUpdated(args: any): void;
@@ -309,7 +318,7 @@ declare class soby_StaticDataService implements soby_ServiceInterface {
     CanNavigateToPreviousPage(): boolean;
     PopulateItems(args: Array<any>): void;
     GetFieldNames(): any[];
-    UpdateItem(key: string, objectInstance: any): void;
+    UpdateItem(keyNames: Array<string>, keyValues: Array<string>, objectInstance: any): void;
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>): void;
     AddItem(objectInstance: any): void;
 }

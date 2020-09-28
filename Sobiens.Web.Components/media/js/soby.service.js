@@ -588,6 +588,30 @@ var SobyAggregateFields = /** @class */ (function (_super) {
     };
     return SobyAggregateFields;
 }(Array));
+var SobyKeyFields = /** @class */ (function (_super) {
+    __extends(SobyKeyFields, _super);
+    function SobyKeyFields(items) {
+        var _this = _super.apply(this, items) || this;
+        Object.setPrototypeOf(_this, Object.create(SobyKeyFields.prototype));
+        return _this;
+    }
+    SobyKeyFields.prototype.ContainsField = function (fieldName) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase()) {
+                return true;
+            }
+        }
+        return false;
+    };
+    return SobyKeyFields;
+}(Array));
+var SobyKeyField = /** @class */ (function () {
+    function SobyKeyField(fieldName, parameterName) {
+        this.FieldName = fieldName;
+        this.ParameterName = parameterName;
+    }
+    return SobyKeyField;
+}());
 var SobyGroupByFields = /** @class */ (function (_super) {
     __extends(SobyGroupByFields, _super);
     function SobyGroupByFields(items) {
@@ -945,17 +969,25 @@ var soby_WebServiceService = /** @class */ (function () {
     };
     soby_WebServiceService.prototype.ItemPopulated = function (items) { };
     soby_WebServiceService.prototype.ErrorThrown = function (errorMessage, errorTypeName) { };
-    soby_WebServiceService.prototype.UpdateItem = function (key, objectInstance) {
-        var updateUrl = this.Transport.Update.Url.replace(/#key/gi, key);
-        ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, key], function (item, args) {
+    soby_WebServiceService.prototype.UpdateItem = function (keyNames, keyValues, objectInstance) {
+        var updateUrl = this.Transport.Update.Url;
+        for (var i = 0; i < keyValues.length; i++) {
+            var regExp = new RegExp(keyNames[i], "gi");
+            updateUrl = updateUrl.replace(regExp, keyValues[i]);
+        }
+        ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, keyValues], function (item, args) {
             var service = args[0];
             service.ItemUpdated(args);
         }, function (errorThrown) {
         });
     };
     soby_WebServiceService.prototype.DeleteItem = function (keyNames, keyValues) {
-        var deleteUrl = this.Transport.Delete.Url.replace(/#key/gi, keyValues[0]);
-        ajaxHelper(deleteUrl, this.Transport.Delete.Type, null, [this, keyValues[0]], function (item, args) {
+        var deleteUrl = this.Transport.Delete.Url;
+        for (var i = 0; i < keyValues.length; i++) {
+            var regExp = new RegExp(keyNames[i], "gi");
+            deleteUrl = deleteUrl.replace(regExp, keyValues[i]);
+        }
+        ajaxHelper(deleteUrl, this.Transport.Delete.Type, null, [this, keyValues], function (item, args) {
             var service = args[0];
             service.ItemDeleted(args);
         }, function (errorThrown) {
@@ -1262,9 +1294,16 @@ var soby_StaticDataService = /** @class */ (function () {
         var fieldNames = new Array();
         return fieldNames;
     };
-    soby_StaticDataService.prototype.UpdateItem = function (key, objectInstance) {
+    soby_StaticDataService.prototype.UpdateItem = function (keyNames, keyValues, objectInstance) {
         for (var i = 0; i < this.Items.length; i++) {
-            if (this.Items[i]["ID"] == key) {
+            var matchItem = true;
+            for (var x = 0; x < keyNames.length; x++) {
+                if (this.Items[i][keyNames[x]] != keyValues[keyNames[x]]) {
+                    matchItem = false;
+                    break;
+                }
+            }
+            if (matchItem == true) {
                 this.Items[i] = objectInstance;
             }
         }

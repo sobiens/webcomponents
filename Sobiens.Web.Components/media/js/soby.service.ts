@@ -672,6 +672,37 @@ class SobyAggregateFields extends Array<SobyAggregateField> {
     }
 }
 
+
+
+class SobyKeyFields extends Array<SobyKeyField> {
+    constructor(items?: Array<SobyKeyField>) {
+        super(...items);
+        Object.setPrototypeOf(this, Object.create(SobyKeyFields.prototype));
+    }
+
+    ContainsField(fieldName: string) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+class SobyKeyField {
+    constructor(fieldName: string, parameterName: string) {
+        this.FieldName = fieldName;
+        this.ParameterName = parameterName;
+    }
+    FieldName: string;
+    ParameterName: string;
+}
+
+
+
+
+
 class SobyGroupByFields extends Array<SobyGroupByField> {
     constructor(items?: Array<SobyGroupByField>) {
         super(...items);
@@ -766,8 +797,8 @@ interface soby_ServiceInterface {
     ItemPopulated(items: Array<soby_Item>);
     ItemBeingPopulated();
     ErrorThrown(errorMessage: string, errorTypeName: string);
-    UpdateItem(key:string, objectInstance);
-    DeleteItem(keyNames:Array<string>, keyValues: Array<string>);
+    UpdateItem(keyNames: Array<string>, keyValues: Array<string>, objectInstance);
+    DeleteItem(keyNames: Array<string>, keyValues: Array<string>);
     AddItem(objectInstance);
     ItemUpdated(args);
     ItemAdded(args);
@@ -1136,17 +1167,26 @@ class soby_WebServiceService implements soby_ServiceInterface {
     }
     ItemPopulated(items: Array<soby_Item>) { }
     ErrorThrown(errorMessage: string, errorTypeName: string) { }
-    UpdateItem(key: string, objectInstance) {
-        var updateUrl = this.Transport.Update.Url.replace(/#key/gi, key)
-        ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, key], function (item, args) {
+    UpdateItem(keyNames: Array<string>, keyValues: Array<string>, objectInstance) {
+        var updateUrl = this.Transport.Update.Url;
+        for (var i = 0; i < keyValues.length; i++) {
+            var regExp = new RegExp(keyNames[i], "gi");
+            updateUrl = updateUrl.replace(regExp, keyValues[i]);
+        }
+        ajaxHelper(updateUrl, this.Transport.Update.Type, objectInstance, [this, keyValues], function (item, args) {
             var service = args[0];
             service.ItemUpdated(args);
         }, function (errorThrown) {
         })
     }
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>){
-        var deleteUrl = this.Transport.Delete.Url.replace(/#key/gi, keyValues[0])
-        ajaxHelper(deleteUrl, this.Transport.Delete.Type, null, [this, keyValues[0]], function (item, args) {
+        var deleteUrl = this.Transport.Delete.Url;
+        for (var i = 0; i < keyValues.length; i++) {
+            var regExp = new RegExp(keyNames[i], "gi");
+            deleteUrl = deleteUrl.replace(regExp, keyValues[i]);
+        }
+
+        ajaxHelper(deleteUrl, this.Transport.Delete.Type, null, [this, keyValues], function (item, args) {
             var service = args[0];
             service.ItemDeleted(args);
         }, function (errorThrown) {
@@ -1514,9 +1554,17 @@ class soby_StaticDataService implements soby_ServiceInterface {
         var fieldNames = new Array();
         return fieldNames;
     }
-    UpdateItem(key: string, objectInstance) {
+    UpdateItem(keyNames: Array<string>, keyValues: Array<string>, objectInstance) {
         for (var i = 0; i < this.Items.length; i++) {
-            if (this.Items[i]["ID"] == key)
+            var matchItem = true;
+            for (var x = 0; x < keyNames.length; x++) {
+                if (this.Items[i][keyNames[x]] != keyValues[keyNames[x]]) {
+                    matchItem = false;
+                    break;
+                }
+            }
+
+            if (matchItem == true)
             {
                 this.Items[i] = objectInstance;
             }

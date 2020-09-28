@@ -15,17 +15,17 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script type="text/javascript">
-        function sobyValidateValueExistence()
+        function sobyValidateValuePresence()
         {
-            if (sobyValidate.GetValidator(soby_ValidatorTypes.Existence).Validate($("#soby_ExistenceValidationValueTextBox").val()) == true)
+            if (sobyValidate.GetValidator(soby_ValidatorTypes.Presence).Validate($("#soby_PresenceValidationValueTextBox").val()) == true)
             {
-                $("#soby_ExistenceValidationResult").text("valid");
-                $("#soby_ExistenceValidationResult").css("color", "green");
+                $("#soby_PresenceValidationResult").text("valid");
+                $("#soby_PresenceValidationResult").css("color", "green");
             }
             else
             {
-                $("#soby_ExistenceValidationResult").text("invalid");
-                $("#soby_ExistenceValidationResult").css("color", "red");
+                $("#soby_PresenceValidationResult").text("invalid");
+                $("#soby_PresenceValidationResult").css("color", "red");
             }
 
         }
@@ -52,7 +52,7 @@
                     <li><a href='#ValidationPanel_DateTime'>DateTime</a></li>
                     <li><a href='#ValidationPanel_Email'>Email</a></li>
                     <li><a href='#ValidationPanel_Exclusion'>Exclusion</a></li>
-                    <li><a href='#ValidationPanel_Existence'>Existence</a></li>
+                    <li><a href='#ValidationPanel_Presence'>Presence</a></li>
                     <li><a href='#ValidationPanel_Inclusion'>Inclusion</a></li>
                     <li><a href='#ValidationPanel_Length'>Length</a></li>
                     <li><a href='#ValidationPanel_Numeric'>Numeric</a></li>
@@ -62,17 +62,17 @@
                 </ul>
             </div>
             <div class="col-md-10" style="height: 400px;overflow: auto;">
-                <div id="ValidationPanel_Existence" style="height: 400px">
-                    <h4>Existence Validator</h4>
+                <div id="ValidationPanel_Presence" style="height: 400px">
+                    <h4>Presence Validator</h4>
                     <p>
-                        This example demonstrates how to use filtering in the Soby Data Grid.
+                        This example demonstrates how to use presence validator in the Soby Validator.
                         <br />
                         "sobyValidate.GetValidator" method takes one parameter. The parameter is the type of the validator. This method returns the validator for the given type. "Validate" method of the validator, returns as invalid if the given value is one of the following empty, null or valid. It returns as valid if the given value is not any of those values.
-        <pre class="js"> var isValid = sobyValidate.GetValidator(soby_ValidatorTypes.Existence).Validate(null);</pre>
+        <pre class="js"> var isValid = sobyValidate.GetValidator(soby_ValidatorTypes.Presence).Validate(null);</pre>
                     </p>
                     <p>
-                        Value <input type="text" id="soby_ExistenceValidationValueTextBox" /> is <span id="soby_ExistenceValidationResult"></span>
-                        <input type="button" value="Validate" onclick="sobyValidateValueExistence()" />
+                        Value <input type="text" id="soby_PresenceValidationValueTextBox" /> is <span id="soby_PresenceValidationResult"></span>
+                        <input type="button" value="Validate" onclick="sobyValidateValuePresence()" />
                     </p>
 
                 </div>

@@ -360,6 +360,14 @@
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\codeview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.customdates.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\Validator\valuelengthvalidation.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\Validator\valueinclusionvalidation.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\Validator\valueexclusionvalidation.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\Validator\valueurlvalidation.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\Validator\valueemailvalidation.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\Validator\valuepresencevalidation.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\Validator\valuenumericvalidation.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\Validator\valuedatevalidation.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CalendarView\calendarview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CheckBoxList\general.ts" />
@@ -403,6 +411,14 @@
     <Content Include="Tutorials\SobyScheduler\Getting Started.aspx" />
     <Content Include="Tutorials\SobySelectBox\Getting Started.aspx" />
     <Content Include="Tutorials\SobyValidator\FormValidation.aspx" />
+    <Content Include="Tutorials\SobyValidator\ValueEmailValidation.aspx" />
+    <Content Include="Tutorials\SobyValidator\ValueLengthValidation.aspx" />
+    <Content Include="Tutorials\SobyValidator\ValueInclusionValidation.aspx" />
+    <Content Include="Tutorials\SobyValidator\ValueNumericValidation.aspx" />
+    <Content Include="Tutorials\SobyValidator\ValueURLValidation.aspx" />
+    <Content Include="Tutorials\SobyValidator\ValuePresenceValidation.aspx" />
+    <Content Include="Tutorials\SobyValidator\ValueExclusionValidation.aspx" />
+    <Content Include="Tutorials\SobyValidator\ValueDateValidation.aspx" />
     <Content Include="Tutorials\SobyValidator\Getting Started.aspx" />
     <Content Include="Web.sitemap" />
     <TypeScriptCompile Include="Scripts\main.ts" />
@@ -1052,6 +1068,62 @@
     </Compile>
     <Compile Include="Tutorials\SobyValidator\FormValidation.aspx.designer.cs">
       <DependentUpon>FormValidation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueEmailValidation.aspx.cs">
+      <DependentUpon>ValueEmailValidation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueEmailValidation.aspx.designer.cs">
+      <DependentUpon>ValueEmailValidation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueLengthValidation.aspx.cs">
+      <DependentUpon>ValueLengthValidation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueLengthValidation.aspx.designer.cs">
+      <DependentUpon>ValueLengthValidation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueInclusionValidation.aspx.cs">
+      <DependentUpon>ValueInclusionValidation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueInclusionValidation.aspx.designer.cs">
+      <DependentUpon>ValueInclusionValidation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueNumericValidation.aspx.cs">
+      <DependentUpon>ValueNumericValidation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueNumericValidation.aspx.designer.cs">
+      <DependentUpon>ValueNumericValidation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueURLValidation.aspx.cs">
+      <DependentUpon>ValueURLValidation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueURLValidation.aspx.designer.cs">
+      <DependentUpon>ValueURLValidation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValuePresenceValidation.aspx.cs">
+      <DependentUpon>ValuePresenceValidation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValuePresenceValidation.aspx.designer.cs">
+      <DependentUpon>ValuePresenceValidation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueExclusionValidation.aspx.cs">
+      <DependentUpon>ValueExclusionValidation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueExclusionValidation.aspx.designer.cs">
+      <DependentUpon>ValueExclusionValidation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueDateValidation.aspx.cs">
+      <DependentUpon>ValueDateValidation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueDateValidation.aspx.designer.cs">
+      <DependentUpon>ValueDateValidation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyValidator\Getting Started.aspx.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>

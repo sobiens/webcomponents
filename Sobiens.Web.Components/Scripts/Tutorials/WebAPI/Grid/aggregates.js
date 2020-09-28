@@ -18,7 +18,7 @@ function soby_PopulateGridAggregates() {
     bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.IsGroupable = true;
     bookGrid.IsEditable = false;
-    bookGrid.AddKeyField("Id");
+    bookGrid.AddKeyField("Id", "Id");
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);

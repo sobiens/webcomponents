@@ -9,9 +9,12 @@ namespace Sobiens.Web.Components.Tutorials.SobyGrid
 {
     public partial class CodeView : System.Web.UI.Page
     {
+        private string GetCategoryName(dynamic cat) {
+            return "TEST";
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-
+           string t = GetCategoryName("ddd");
         }
     }
 }
