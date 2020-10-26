@@ -1,19 +1,6 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 // VERSION 1.0.8.1
-var soby_SharePointService = /** @class */ (function () {
-    function soby_SharePointService(dataSourceBuilder) {
+class soby_SharePointService {
+    constructor(dataSourceBuilder) {
         this.NextPageString = "";
         this.PageIndex = 0;
         this.StartIndex = 0;
@@ -28,7 +15,7 @@ var soby_SharePointService = /** @class */ (function () {
         this.NextPageStrings[0] = "";
         this.Transport = new soby_Transport();
     }
-    soby_SharePointService.prototype.PopulateNavigationInformation = function () {
+    PopulateNavigationInformation() {
         if (this.NavigationInformationBeingPopulated != null) {
             this.NavigationInformationBeingPopulated();
         }
@@ -88,23 +75,23 @@ var soby_SharePointService = /** @class */ (function () {
             }
             soby_LogMessage(errorMessage);
         }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
-    };
-    soby_SharePointService.prototype.NavigationInformationBeingPopulated = function () { };
-    soby_SharePointService.prototype.NavigationInformationPopulated = function () { };
-    soby_SharePointService.prototype.GroupBy = function (groupByFields) {
+    }
+    NavigationInformationBeingPopulated() { }
+    NavigationInformationPopulated() { }
+    GroupBy(groupByFields) {
         this.GroupByFields = groupByFields;
         this.PopulateItems(null);
-    };
-    soby_SharePointService.prototype.Sort = function (orderByFields) {
+    }
+    Sort(orderByFields) {
         this.PageIndex = 0;
         this.NextPageString = "";
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
         this.PopulateItems(null);
-    };
+    }
     ;
-    soby_SharePointService.prototype.Filter = function (filters, clearOtherFilters) {
+    Filter(filters, clearOtherFilters) {
         this.PageIndex = 0;
         this.NextPageString = "";
         this.NextPageStrings = new Array();
@@ -116,9 +103,9 @@ var soby_SharePointService = /** @class */ (function () {
             this.Filters.AddFilterCollection(filters);
         }
         this.PopulateItems(null);
-    };
+    }
     ;
-    soby_SharePointService.prototype.SortAndFilter = function (orderByFields, filters, clearOtherFilters) {
+    SortAndFilter(orderByFields, filters, clearOtherFilters) {
         this.PageIndex = 0;
         this.NextPageString = "";
         this.NextPageStrings = new Array();
@@ -131,29 +118,29 @@ var soby_SharePointService = /** @class */ (function () {
             this.Filters.AddFilterCollection(filters);
         }
         this.PopulateItems(null);
-    };
-    soby_SharePointService.prototype.GoToPage = function (pageIndex) {
+    }
+    GoToPage(pageIndex) {
         this.DataSourceBuilderTemp.PageIndex = pageIndex;
         this.PageIndex = pageIndex;
         this.NextPageString = this.NextPageStrings[pageIndex];
         this.PopulateItems(null);
-    };
+    }
     ;
-    soby_SharePointService.prototype.CanNavigateToNextPage = function () {
+    CanNavigateToNextPage() {
         if (this.NextPageExist == false) {
             return false;
         }
         return true;
-    };
+    }
     ;
-    soby_SharePointService.prototype.CanNavigateToPreviousPage = function () {
+    CanNavigateToPreviousPage() {
         if (this.DataSourceBuilderTemp.PageIndex == 0) {
             return false;
         }
         return true;
-    };
+    }
     ;
-    soby_SharePointService.prototype.PopulateItems = function (args) {
+    PopulateItems(args) {
         this.Args = args;
         if (this.ItemBeingPopulated != null) {
             this.ItemBeingPopulated();
@@ -219,20 +206,20 @@ var soby_SharePointService = /** @class */ (function () {
             }
             soby_LogMessage(errorMessage);
         }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
-    };
-    soby_SharePointService.prototype.Parse = function () {
-    };
-    soby_SharePointService.prototype.GetFieldNames = function () {
+    }
+    Parse() {
+    }
+    GetFieldNames() {
         var fieldNames = new Array();
         for (var i = 0; i < this.DataSourceBuilderTemp.SchemaFields.length; i++) {
             fieldNames[fieldNames.length] = { FieldName: this.DataSourceBuilderTemp.SchemaFields[i].FieldName };
         }
         return fieldNames;
-    };
-    soby_SharePointService.prototype.ItemPopulated = function (items) { };
-    soby_SharePointService.prototype.ItemBeingPopulated = function () { };
-    soby_SharePointService.prototype.ErrorThrown = function (errorMessage, errorTypeName) { };
-    soby_SharePointService.prototype.UpdateItem = function (keyNames, keyValues, objectInstance) {
+    }
+    ItemPopulated(items) { }
+    ItemBeingPopulated() { }
+    ErrorThrown(errorMessage, errorTypeName) { }
+    UpdateItem(keyNames, keyValues, objectInstance) {
         var updateUrl = this.Transport.Update.Url;
         for (var i = 0; i < keyValues.length; i++) {
             var regExp = new RegExp(keyNames[i], "gi");
@@ -243,8 +230,8 @@ var soby_SharePointService = /** @class */ (function () {
             service.ItemUpdated(args);
         }, function (errorThrown) {
         });
-    };
-    soby_SharePointService.prototype.DeleteItem = function (keyNames, keyValues) {
+    }
+    DeleteItem(keyNames, keyValues) {
         var deleteUrl = this.Transport.Delete.Url;
         for (var i = 0; i < keyValues.length; i++) {
             var regExp = new RegExp(keyNames[i], "gi");
@@ -255,27 +242,24 @@ var soby_SharePointService = /** @class */ (function () {
             service.ItemDeleted(args);
         }, function (errorThrown) {
         });
-    };
-    soby_SharePointService.prototype.AddItem = function (objectInstance) {
+    }
+    AddItem(objectInstance) {
         ajaxHelper(this.Transport.Add.Url, this.Transport.Add.Type, objectInstance, [this], function (item, args) {
             var service = args[0];
             service.ItemAdded(args);
         }, function (errorThrown) {
         });
-    };
-    soby_SharePointService.prototype.ItemUpdated = function (args) { };
-    soby_SharePointService.prototype.ItemAdded = function (args) { };
-    soby_SharePointService.prototype.ItemDeleted = function (args) { };
-    return soby_SharePointService;
-}());
-var soby_SPSearchBuilder = /** @class */ (function (_super) {
-    __extends(soby_SPSearchBuilder, _super);
-    function soby_SPSearchBuilder() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.SourceId = "";
-        return _this;
     }
-    soby_SPSearchBuilder.prototype.Clone = function () {
+    ItemUpdated(args) { }
+    ItemAdded(args) { }
+    ItemDeleted(args) { }
+}
+class soby_SPSearchBuilder extends soby_WSBuilder {
+    constructor() {
+        super(...arguments);
+        this.SourceId = "";
+    }
+    Clone() {
         var builder = new soby_SPSearchBuilder();
         builder.RowLimit = this.RowLimit;
         builder.PageIndex = this.PageIndex;
@@ -295,8 +279,8 @@ var soby_SPSearchBuilder = /** @class */ (function (_super) {
         }
         builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
         return builder;
-    };
-    soby_SPSearchBuilder.prototype.GetWhereQuery = function (transport) {
+    }
+    GetWhereQuery(transport) {
         var query = "";
         if (transport.Type == "POST") {
             query = this.Filters.ToJson();
@@ -309,8 +293,8 @@ var soby_SPSearchBuilder = /** @class */ (function (_super) {
             }
         }
         return query;
-    };
-    soby_SPSearchBuilder.prototype.GetViewFieldsQuery = function (transport) {
+    }
+    GetViewFieldsQuery(transport) {
         var query = "";
         for (var i = 0; i < this.SchemaFields.length; i++) {
             if (i > 0) {
@@ -322,16 +306,16 @@ var soby_SPSearchBuilder = /** @class */ (function (_super) {
             query = "&selectproperties='" + query + "'";
         }
         return query;
-    };
-    soby_SPSearchBuilder.prototype.GetPagingQuery = function (transport) {
+    }
+    GetPagingQuery(transport) {
         if (this.RowLimit > 0) {
             return "startrow=" + (this.PageIndex * this.RowLimit) + "&rowlimit=" + this.RowLimit;
         }
         else {
             return "";
         }
-    };
-    soby_SPSearchBuilder.prototype.ParseData = function (result1) {
+    }
+    ParseData(result1) {
         var result = new Array();
         var items = result1.PrimaryQueryResult.RelevantResults.Table.Rows;
         for (var i = 0; i < items.length; i++) {
@@ -348,21 +332,18 @@ var soby_SPSearchBuilder = /** @class */ (function (_super) {
             result.push(dataItem);
         }
         return result;
-    };
-    soby_SPSearchBuilder.prototype.GetCountQuery = function (request) {
-        return null;
-    };
-    return soby_SPSearchBuilder;
-}(soby_WSBuilder));
-var soby_SPSearch2010Builder = /** @class */ (function (_super) {
-    __extends(soby_SPSearch2010Builder, _super);
-    function soby_SPSearch2010Builder() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.Scope = "";
-        _this.IsDocument = false;
-        return _this;
     }
-    soby_SPSearch2010Builder.prototype.Clone = function () {
+    GetCountQuery(request) {
+        return null;
+    }
+}
+class soby_SPSearch2010Builder extends soby_WSBuilder {
+    constructor() {
+        super(...arguments);
+        this.Scope = "";
+        this.IsDocument = false;
+    }
+    Clone() {
         var builder = new soby_SPSearch2010Builder();
         builder.RowLimit = this.RowLimit;
         builder.PageIndex = this.PageIndex;
@@ -382,8 +363,8 @@ var soby_SPSearch2010Builder = /** @class */ (function (_super) {
         }
         builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
         return builder;
-    };
-    soby_SPSearch2010Builder.prototype.GetWhereQuery = function (transport) {
+    }
+    GetWhereQuery(transport) {
         var query = "";
         query = this.Filters.ToSearch2010Xml();
         if (this.Scope != "") {
@@ -394,24 +375,24 @@ var soby_SPSearch2010Builder = /** @class */ (function (_super) {
         }
         query += "<Context><QueryText language='en-US' type='STRING'>" + query + "</QueryText></Context>";
         return query;
-    };
-    soby_SPSearch2010Builder.prototype.GetViewFieldsQuery = function (transport) {
+    }
+    GetViewFieldsQuery(transport) {
         var query = "<Properties>";
         for (var i = 0; i < this.SchemaFields.length; i++) {
             query += "<Property name='" + this.SchemaFields[i].FieldName + "'></Property>";
         }
         query += "</Properties>";
         return query;
-    };
-    soby_SPSearch2010Builder.prototype.GetPagingQuery = function (transport) {
+    }
+    GetPagingQuery(transport) {
         if (this.RowLimit > 0) {
             return "<Range><Count>" + this.RowLimit + "</Count></Range>";
         }
         else {
             return "";
         }
-    };
-    soby_SPSearch2010Builder.prototype.GetMainQuery = function (transport, excludePagingQuery) {
+    }
+    GetMainQuery(transport, excludePagingQuery) {
         var selectFieldsEnvelope = this.GetViewFieldsQuery(transport);
         var whereQuery = this.GetWhereQuery(transport);
         var pagingQuery = "";
@@ -420,8 +401,8 @@ var soby_SPSearch2010Builder = /** @class */ (function (_super) {
         }
         var body = "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'><soap:Body><QueryEx xmlns='http://microsoft.com/webservices/OfficeServer/QueryService'><queryXml><![CDATA[<QueryPacket xmlns='urn:Microsoft.Search.Query'><Query><TrimDuplicates>false</TrimDuplicates>" + whereQuery + pagingQuery + selectFieldsEnvelope + "</Query></QueryPacket>]]></queryXml></QueryEx></soap:Body></soap:Envelope>";
         return body;
-    };
-    soby_SPSearch2010Builder.prototype.ParseData = function (result1) {
+    }
+    ParseData(result1) {
         var xmlString = $(result1.children[0]).html();
         var result = new Array();
         var xml = $(xmlString.replace(/<soap:/gi, "<").replace(/<\/soap:/gi, "<\/").replace(/<xsi:/gi, "<").replace(/<\/xsi:/gi, "<\/").replace(/<xsd:/gi, "<").replace(/<\/xsd:/gi, "<\/").replace(/<xs:/gi, "<").replace(/<\/xs:/gi, "<\/"));
@@ -441,18 +422,13 @@ var soby_SPSearch2010Builder = /** @class */ (function (_super) {
             result.push(dataItem);
         }
         return result;
-    };
-    soby_SPSearch2010Builder.prototype.GetCountQuery = function (request) {
-        return null;
-    };
-    return soby_SPSearch2010Builder;
-}(soby_WSBuilder));
-var soby_SPRestBuilder = /** @class */ (function (_super) {
-    __extends(soby_SPRestBuilder, _super);
-    function soby_SPRestBuilder() {
-        return _super !== null && _super.apply(this, arguments) || this;
     }
-    soby_SPRestBuilder.prototype.Clone = function () {
+    GetCountQuery(request) {
+        return null;
+    }
+}
+class soby_SPRestBuilder extends soby_WSBuilder {
+    Clone() {
         var builder = new soby_SPRestBuilder();
         builder.RowLimit = this.RowLimit;
         builder.PageIndex = this.PageIndex;
@@ -471,8 +447,8 @@ var soby_SPRestBuilder = /** @class */ (function (_super) {
         }
         builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
         return builder;
-    };
-    soby_SPRestBuilder.prototype.GetWhereQuery = function (transport) {
+    }
+    GetWhereQuery(transport) {
         var query = "";
         if (transport.Type == "POST") {
             {
@@ -486,19 +462,16 @@ var soby_SPRestBuilder = /** @class */ (function (_super) {
             }
         }
         return query;
-    };
-    return soby_SPRestBuilder;
-}(soby_WSBuilder));
-var soby_SPCSOMBuilder = /** @class */ (function (_super) {
-    __extends(soby_SPCSOMBuilder, _super);
-    function soby_SPCSOMBuilder() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.ListTitle = "";
-        _this.SiteUrl = "";
-        _this.UseViewFields = false;
-        return _this;
     }
-    soby_SPCSOMBuilder.prototype.Clone = function () {
+}
+class soby_SPCSOMBuilder extends soby_SPRestBuilder {
+    constructor() {
+        super(...arguments);
+        this.ListTitle = "";
+        this.SiteUrl = "";
+        this.UseViewFields = false;
+    }
+    Clone() {
         var builder = new soby_SPCSOMBuilder();
         builder.ListTitle = this.ListTitle;
         builder.SiteUrl = this.SiteUrl;
@@ -521,11 +494,11 @@ var soby_SPCSOMBuilder = /** @class */ (function (_super) {
         }
         builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
         return builder;
-    };
-    soby_SPCSOMBuilder.prototype.GetCountQuery = function (request) {
+    }
+    GetCountQuery(request) {
         return null;
-    };
-    soby_SPCSOMBuilder.prototype.GetData = function (data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType) {
+    }
+    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType) {
         var camlBuilder = new soby_CamlBuilder(this.ListTitle, "", 10, "");
         camlBuilder.Filters = this.Filters; //new SobyFilters(false);
         camlBuilder.OrderByFields = this.OrderByFields; //new SobyFilters(false);
@@ -591,9 +564,8 @@ var soby_SPCSOMBuilder = /** @class */ (function (_super) {
                 errorcallback(XMLHttpRequest, textStatus, errorThrown);
             }
         }));
-    };
-    return soby_SPCSOMBuilder;
-}(soby_SPRestBuilder));
+    }
+}
 // ********************* CAML BUILDER *****************************
 function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     this.WebUrl = webUrl;
@@ -785,10 +757,8 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     };
 }
 // ************************************************************
-var sobySPListsObject = /** @class */ (function () {
-    function sobySPListsObject() {
-    }
-    sobySPListsObject.prototype.ApproveListItem = function (siteUrl, listName, id, callbackFunction) {
+class sobySPListsObject {
+    ApproveListItem(siteUrl, listName, id, callbackFunction) {
         var batch = "<Batch OnError=\"Continue\"> \
                         <Method ID=\"1\" Cmd=\"Moderate\"> \
                             <Field Name=\"ID\">" + id + "</Field> \
@@ -825,8 +795,8 @@ var sobySPListsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPListsObject.prototype.DeleteFile = function (siteUrl, fileSiteRelativeUrl, args, successCallbackFunction, errorCallbackFunction) {
+    }
+    DeleteFile(siteUrl, fileSiteRelativeUrl, args, successCallbackFunction, errorCallbackFunction) {
         var fullUrl = siteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileSiteRelativeUrl + "')";
         $.ajax({
             url: fullUrl,
@@ -849,8 +819,8 @@ var sobySPListsObject = /** @class */ (function () {
                 }
             }
         });
-    };
-    sobySPListsObject.prototype.DeleteItem = function (siteUrl, libraryName, itemId, successCallbackFunction, errorCallbackFunction, args) {
+    }
+    DeleteItem(siteUrl, libraryName, itemId, successCallbackFunction, errorCallbackFunction, args) {
         var clientContext = new SP.ClientContext(siteUrl);
         var list = clientContext.get_web().get_lists().getByTitle(libraryName);
         var listItem = list.getItemById(itemId);
@@ -864,8 +834,8 @@ var sobySPListsObject = /** @class */ (function () {
                 errorCallbackFunction(args);
             }
         }));
-    };
-    sobySPListsObject.prototype.RecycleFile = function (siteUrl, fileSiteRelativeUrl, args, successCallbackFunction, errorCallbackFunction) {
+    }
+    RecycleFile(siteUrl, fileSiteRelativeUrl, args, successCallbackFunction, errorCallbackFunction) {
         var fullUrl = siteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileSiteRelativeUrl + "')/recycle()";
         $.ajax({
             url: fullUrl,
@@ -888,8 +858,8 @@ var sobySPListsObject = /** @class */ (function () {
                 }
             }
         });
-    };
-    sobySPListsObject.prototype.GetListProperties = function (webUrl, listName, callbackFunction) {
+    }
+    GetListProperties(webUrl, listName, callbackFunction) {
         var soapEnv = "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'> \
 					<soap:Body> \
 					 <GetList xmlns='http://schemas.microsoft.com/sharepoint/soap/'> \
@@ -912,8 +882,8 @@ var sobySPListsObject = /** @class */ (function () {
         }, function (XMLHttpRequest, textStatus, errorThrown) {
             soby_LogMessage(errorThrown);
         }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, webUrl, null);
-    };
-    sobySPListsObject.prototype.GetListItem = function (siteUrl, listName, listItemId, callBackFunction, _arguments) {
+    }
+    GetListItem(siteUrl, listName, listItemId, callBackFunction, _arguments) {
         var clientContext = new SP.ClientContext(siteUrl);
         var oList = clientContext.get_web().get_lists().getByTitle(listName);
         var camlQuery = new SP.CamlQuery();
@@ -929,8 +899,8 @@ var sobySPListsObject = /** @class */ (function () {
                 callBackFunction(null);
             }
         }), Function.createDelegate(this, function () { }));
-    };
-    sobySPListsObject.prototype.UpdateList = function (siteUrl, listName, listProperties, callBackFunction, _arguments) {
+    }
+    UpdateList(siteUrl, listName, listProperties, callBackFunction, _arguments) {
         var listPropertiesXml = "<List ";
         for (var i = 0; i < listProperties.length; i++) {
             listPropertiesXml += listProperties[i].Key + "=\"" + listProperties[i].Value + "\" ";
@@ -959,8 +929,8 @@ var sobySPListsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); soby_LogMessage(textStatus); soby_LogMessage(errorThrown); },
             contentType: "text/xml; charset=\"utf-8\""
         });
-    };
-    sobySPListsObject.prototype.UpdateItem = function (webUrl, listName, itemID, dataFields, successCallbackFunction, errorCallbackFunction, isAsync, argumentsx) {
+    }
+    UpdateItem(webUrl, listName, itemID, dataFields, successCallbackFunction, errorCallbackFunction, isAsync, argumentsx) {
         var batch = "<Batch OnError=\"Continue\">";
         if (itemID != null && itemID != "") {
             batch += "<Method ID=\"" + itemID + "\" Cmd=\"Update\">";
@@ -1020,8 +990,8 @@ var sobySPListsObject = /** @class */ (function () {
             },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPListsObject.prototype.UploadFile = function (siteUrl, sourceFileUrl, destinationFileUrl, fieldValues, callBackFunction, _arguments, isAsync) {
+    }
+    UploadFile(siteUrl, sourceFileUrl, destinationFileUrl, fieldValues, callBackFunction, _arguments, isAsync) {
         var fieldValueString = "";
         for (var i = 0; i < fieldValues.length; i++) {
             fieldValueString += "<FieldInformation Type='" + fieldValues[i].Type + "' Value='" + fieldValues[i].Value + "' ";
@@ -1067,8 +1037,8 @@ var sobySPListsObject = /** @class */ (function () {
             },
             contentType: "text/xml; charset=\"utf-8\""
         });
-    };
-    sobySPListsObject.prototype.GetLists = function (siteUrl, callbackFunction) {
+    }
+    GetLists(siteUrl, callbackFunction) {
         var soapEnv = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \
         <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance/\" \
             xmlns:xsd=\"http://www.w3.org/2001/XMLSchema/\" \
@@ -1107,8 +1077,8 @@ var sobySPListsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPListsObject.prototype.GetListAndView = function (siteUrl, listName, viewName, callbackFunction) {
+    }
+    GetListAndView(siteUrl, listName, viewName, callbackFunction) {
         var soapEnv = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \
         <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance/\" \
             xmlns:xsd=\"http://www.w3.org/2001/XMLSchema/\" \
@@ -1148,8 +1118,8 @@ var sobySPListsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPListsObject.prototype.GetListFields = function (siteUrl, listName) {
+    }
+    GetListFields(siteUrl, listName) {
         var soapEnv = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \
         <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance/\" \
             xmlns:xsd=\"http://www.w3.org/2001/XMLSchema/\" \
@@ -1205,8 +1175,8 @@ var sobySPListsObject = /** @class */ (function () {
             contentType: "text/xml; charset=utf-8"
         });
         return fields;
-    };
-    sobySPListsObject.prototype.CreateList = function (siteUrl, listName, templateID) {
+    }
+    CreateList(siteUrl, listName, templateID) {
         var soapEnv = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \
         <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance/\" \
             xmlns:xsd=\"http://www.w3.org/2001/XMLSchema/\" \
@@ -1235,8 +1205,8 @@ var sobySPListsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPListsObject.prototype.CheckOutFile = function (siteUrl, fileUrl, callbackFunction, _arguments, isAsync) {
+    }
+    CheckOutFile(siteUrl, fileUrl, callbackFunction, _arguments, isAsync) {
         if (isAsync == null) {
             isAsync = true;
         }
@@ -1274,8 +1244,8 @@ var sobySPListsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPListsObject.prototype.CheckInFile = function (siteUrl, fileUrl, comment, checkinType, callbackFunction, _arguments, isAsync) {
+    }
+    CheckInFile(siteUrl, fileUrl, comment, checkinType, callbackFunction, _arguments, isAsync) {
         if (isAsync == null) {
             isAsync = true;
         }
@@ -1309,8 +1279,8 @@ var sobySPListsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPListsObject.prototype.UpdateFieldsToList = function (addAction, siteUrl, listTemplate, fieldTemplates, successCallBack, errorCallBack) {
+    }
+    UpdateFieldsToList(addAction, siteUrl, listTemplate, fieldTemplates, successCallBack, errorCallBack) {
         var fieldsXml = "";
         for (var i = 0; i < fieldTemplates.length; i++) {
             var fieldXml = "<Field DisplayName='" + (addAction == true ? fieldTemplates[i].InternalName : fieldTemplates[i].DisplayName) + "' Name='" + fieldTemplates[i].InternalName + "' ";
@@ -1409,8 +1379,8 @@ var sobySPListsObject = /** @class */ (function () {
         if (successCallBack != null) {
             successCallBack();
         }
-    };
-    sobySPListsObject.prototype.GetListItemAttachments = function (listName, listItemId, callbackFunction, webUrl) {
+    }
+    GetListItemAttachments(listName, listItemId, callbackFunction, webUrl) {
         var soapEnv = "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'> \
 					<soap:Body> \
 					 <GetAttachmentCollection xmlns='http://schemas.microsoft.com/sharepoint/soap/'> \
@@ -1431,13 +1401,10 @@ var sobySPListsObject = /** @class */ (function () {
         }, function (XMLHttpRequest, textStatus, errorThrown) {
             soby_LogMessage(errorThrown);
         }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, webUrl, null);
-    };
-    return sobySPListsObject;
-}());
-var sobySPUserGroupObject = /** @class */ (function () {
-    function sobySPUserGroupObject() {
     }
-    sobySPUserGroupObject.prototype.GetGroupInfo = function (siteUrl, groupName, callbackFunction, async, args) {
+}
+class sobySPUserGroupObject {
+    GetGroupInfo(siteUrl, groupName, callbackFunction, async, args) {
         if (async == null) {
             async = true;
         }
@@ -1468,8 +1435,8 @@ var sobySPUserGroupObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPUserGroupObject.prototype.CheckGroupContainsUser = function (siteUrl, groupName, userId, callbackFunction, async) {
+    }
+    CheckGroupContainsUser(siteUrl, groupName, userId, callbackFunction, async) {
         if (async == null) {
             async = true;
         }
@@ -1507,8 +1474,8 @@ var sobySPUserGroupObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPUserGroupObject.prototype.CheckUserRolesAndPermissions = function (siteUrl, callbackFunction) {
+    }
+    CheckUserRolesAndPermissions(siteUrl, callbackFunction) {
         var soapEnv = "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'> \
 					<soap:Body> \
 					    <GetRolesAndPermissionsForCurrentUser xmlns='http://schemas.microsoft.com/sharepoint/soap/directory/'></GetRolesAndPermissionsForCurrentUser > \
@@ -1538,8 +1505,8 @@ var sobySPUserGroupObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPUserGroupObject.prototype.GetRolesAndPermissionsForCurrentUser = function (siteUrl, callbackFunction) {
+    }
+    GetRolesAndPermissionsForCurrentUser(siteUrl, callbackFunction) {
         var soapEnv = "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'> \
 					<soap:Body> \
 					    <GetRolesAndPermissionsForCurrentUser xmlns=\"http://schemas.microsoft.com/sharepoint/soap/directory/\" /> \
@@ -1571,13 +1538,10 @@ var sobySPUserGroupObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    return sobySPUserGroupObject;
-}());
-var sobySPWebsObject = /** @class */ (function () {
-    function sobySPWebsObject() {
     }
-    sobySPWebsObject.prototype.GetSites = function (siteUrl, callbackFunction) {
+}
+class sobySPWebsObject {
+    GetSites(siteUrl, callbackFunction) {
         var soapEnv = "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'> \
 					<soap:Body> \
 					    <GetWebCollection xmlns='http://schemas.microsoft.com/sharepoint/soap/directory/'> \
@@ -1608,13 +1572,10 @@ var sobySPWebsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    return sobySPWebsObject;
-}());
-var sobySPSitesObject = /** @class */ (function () {
-    function sobySPSitesObject() {
     }
-    sobySPSitesObject.prototype.CreateSubSite = function (siteUrl, subSiteUrl, title, callBackFunction, _arguments) {
+}
+class sobySPSitesObject {
+    CreateSubSite(siteUrl, subSiteUrl, title, callBackFunction, _arguments) {
         var soapEnv = "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'> \
 					<soap:Body> \
 						<CreateWeb xmlns=\"http://schemas.microsoft.com/sharepoint/soap/\"> \
@@ -1645,13 +1606,10 @@ var sobySPSitesObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); soby_LogMessage(textStatus); soby_LogMessage(errorThrown); },
             contentType: "text/xml; charset=\"utf-8\""
         });
-    };
-    return sobySPSitesObject;
-}());
-var sobySPViewsObject = /** @class */ (function () {
-    function sobySPViewsObject() {
     }
-    sobySPViewsObject.prototype.GetViews = function (siteUrl, listName, callbackFunction) {
+}
+class sobySPViewsObject {
+    GetViews(siteUrl, listName, callbackFunction) {
         var soapEnv = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \
         <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance/\" \
             xmlns:xsd=\"http://www.w3.org/2001/XMLSchema/\" \
@@ -1690,13 +1648,10 @@ var sobySPViewsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    return sobySPViewsObject;
-}());
-var sobySPWebPartPagesObject = /** @class */ (function () {
-    function sobySPWebPartPagesObject() {
     }
-    sobySPWebPartPagesObject.prototype.AddContentEditorWebPart = function (siteUrl, pageUrl, properties, callBackFunction, _arguments) {
+}
+class sobySPWebPartPagesObject {
+    AddContentEditorWebPart(siteUrl, pageUrl, properties, callBackFunction, _arguments) {
         var webPartXml = "&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;WebPart xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://schemas.microsoft.com/WebPart/v2&quot;&gt;&lt;Title&gt;Custom Part&lt;/Title&gt;&lt;FrameType&gt;None&lt;/FrameType&gt;&lt;Description&gt;Use for formatted text, tables, and images.&lt;/Description&gt;&lt;IsIncluded&gt;true&lt;/IsIncluded&gt;&lt;ZoneID&gt;Left&lt;/ZoneID&gt; &lt;PartOrder&gt;6&lt;/PartOrder&gt;&lt;FrameState&gt;Normal&lt;/FrameState&gt;&lt;Height /&gt;&lt;Width /&gt; &lt;AllowRemove&gt;true&lt;/AllowRemove&gt;&lt;AllowZoneChange&gt;true&lt;/AllowZoneChange&gt;&lt;AllowMinimize&gt;true&lt;/AllowMinimize&gt;&lt;IsVisible&gt;true&lt;/IsVisible&gt;&lt;DetailLink /&gt;&lt;HelpLink /&gt;&lt;Dir&gt;Default&lt;/Dir&gt;&lt;PartImageSmall /&gt;&lt;MissingAssembly /&gt;&lt;PartImageLarge&gt;/_layouts/images/mscontl.gif&lt;/PartImageLarge&gt;&lt;IsIncludedFilter /&gt;&lt;Assembly&gt;Microsoft.SharePoint, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c&lt;/Assembly&gt;&lt;TypeName&gt;Microsoft.SharePoint.WebPartPages.ContentEditorWebPart&lt;/TypeName&gt;";
         for (var i = 0; i < properties.length; i++) {
             var contentXml = properties[i].Value.replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/\"/gi, "&quot;");
@@ -1728,13 +1683,10 @@ var sobySPWebPartPagesObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); soby_LogMessage(textStatus); soby_LogMessage(errorThrown); },
             contentType: "text/xml; charset=\"utf-8\""
         });
-    };
-    return sobySPWebPartPagesObject;
-}());
-var sobySPVersionsObject = /** @class */ (function () {
-    function sobySPVersionsObject() {
     }
-    sobySPVersionsObject.prototype.GetVersions = function (siteUrl, filename, callbackFunction) {
+}
+class sobySPVersionsObject {
+    GetVersions(siteUrl, filename, callbackFunction) {
         var soapEnv = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \
         <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance/\" \
             xmlns:xsd=\"http://www.w3.org/2001/XMLSchema/\" \
@@ -1763,8 +1715,8 @@ var sobySPVersionsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    sobySPVersionsObject.prototype.GetVersionCollection = function (siteUrl, listID, itemID, fieldName, callbackFunction) {
+    }
+    GetVersionCollection(siteUrl, listID, itemID, fieldName, callbackFunction) {
         var soapEnv = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \
         <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance/\" \
             xmlns:xsd=\"http://www.w3.org/2001/XMLSchema/\" \
@@ -1795,11 +1747,10 @@ var sobySPVersionsObject = /** @class */ (function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
             contentType: "text/xml; charset=utf-8"
         });
-    };
-    return sobySPVersionsObject;
-}());
-var sobySPLibraryObject = /** @class */ (function () {
-    function sobySPLibraryObject() {
+    }
+}
+class sobySPLibraryObject {
+    constructor() {
         this.GetData = function (soapEnv, callback, errorcallback, completecallback, async, siteUrl, argsx) {
             var url = "/_vti_bin/Lists.asmx";
             if (siteUrl != null && siteUrl != "") {
@@ -1840,13 +1791,11 @@ var sobySPLibraryObject = /** @class */ (function () {
         this.WebPartPages = new sobySPWebPartPagesObject();
         this.Versions = new sobySPVersionsObject();
     }
-    return sobySPLibraryObject;
-}());
-var sobyObject = /** @class */ (function () {
-    function sobyObject() {
+}
+class sobyObject {
+    constructor() {
         this.SPLibrary = new sobySPLibraryObject();
     }
-    return sobyObject;
-}());
+}
 var soby = new sobyObject();
 //# sourceMappingURL=soby.spservice.js.map

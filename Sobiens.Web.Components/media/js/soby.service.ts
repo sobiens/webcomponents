@@ -561,7 +561,12 @@ class SobyFilter implements ISobyFilter {
 }
 class SobySchemaFields extends Array<SobySchemaField> {
     constructor(items?: Array<SobySchemaField>) {
-        super(...items);
+        super();
+
+        if (items) {
+            this.push(...items);
+        }
+//        super(...items);
         Object.setPrototypeOf(this, Object.create(SobySchemaFields.prototype));
     }
 
@@ -610,7 +615,11 @@ class SobyNavigationInformation
 }
 class SobyOrderByFields extends Array<SobyOrderByField> {
     constructor(items?: Array<SobyOrderByField>) {
-        super(...items);
+        super();
+
+        if (items) {
+            this.push(...items);
+        }
         Object.setPrototypeOf(this, Object.create(SobyOrderByFields.prototype));
     }
 
@@ -656,7 +665,11 @@ class SobyOrderByField
 }
 class SobyAggregateFields extends Array<SobyAggregateField> {
     constructor(items?: Array<SobyAggregateField>) {
-        super(...items);
+        super();
+
+        if (items) {
+            this.push(...items);
+        }
         Object.setPrototypeOf(this, Object.create(SobyAggregateFields.prototype));
     }
 
@@ -676,7 +689,11 @@ class SobyAggregateFields extends Array<SobyAggregateField> {
 
 class SobyKeyFields extends Array<SobyKeyField> {
     constructor(items?: Array<SobyKeyField>) {
-        super(...items);
+        super();
+
+        if (items) {
+            this.push(...items);
+        }
         Object.setPrototypeOf(this, Object.create(SobyKeyFields.prototype));
     }
 
@@ -705,7 +722,11 @@ class SobyKeyField {
 
 class SobyGroupByFields extends Array<SobyGroupByField> {
     constructor(items?: Array<SobyGroupByField>) {
-        super(...items);
+        super();
+
+        if (items) {
+            this.push(...items);
+        }
         Object.setPrototypeOf(this, Object.create(SobyGroupByFields.prototype));
     }
 
@@ -741,7 +762,11 @@ class SobyGroupByField {
 }
 class SobyHeaders extends Array<SobyHeader> {
     constructor(items?: Array<SobyHeader>) {
-        super(...items);
+        super();
+
+        if (items) {
+            this.push(...items);
+        }
         Object.setPrototypeOf(this, Object.create(SobyHeaders.prototype));
     }
 
@@ -756,7 +781,11 @@ class SobyHeader {
 }
 class SobyArguments extends Array<SobyArgument> {
     constructor(items?: Array<SobyArgument>) {
-        super(...items);
+        super();
+
+        if (items) {
+            this.push(...items);
+        }
         Object.setPrototypeOf(this, Object.create(SobyArguments.prototype));
     }
 
@@ -1638,7 +1667,14 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
             builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
         }
 
-        builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
+        if (this.Arguments != null) {
+            builder.Arguments = new SobyArguments();
+            for (var i = 0; i < this.Arguments.length; i++) {
+                var argument = this.Arguments[i];
+                builder.Arguments.push(argument);
+            }
+        }
+
         builder.DataBeingParsed = this.DataBeingParsed;
         builder.WebServiceDataTypes = this.WebServiceDataTypes;
         builder.MethodName = this.MethodName;
@@ -1965,4 +2001,41 @@ function soby_GetFormatedDateString(date) {
     var dateOptions = { year: "numeric", month: "short", day: "numeric" };
     return (date != null ? date.toLocaleDateString("en-gb", dateOptions) : "")
 }
+function soby_GetDateWithFormat(dateString, format): Date {
+    var delimiter:string = "";
+    if (format.indexOf(".") > 0) {
+        delimiter = ".";
+    }
+    else if (format.indexOf("\\") > 0) {
+        delimiter = "\\";
+    }
+    else if (format.indexOf("\/") > 0) {
+        delimiter = "\/";
+    }
+    else if (format.indexOf("-") > 0) {
+        delimiter = "-";
+    }
+
+    if (delimiter == "")
+        return null;
+
+    var formatLowerCase:string = format.toLowerCase();
+    var formatItems = formatLowerCase.split(delimiter);
+    var dateItems = dateString.split(delimiter);
+    var monthIndex = formatItems.indexOf("mm");
+    var dayIndex = formatItems.indexOf("dd");
+    var yearIndex = formatItems.indexOf("yyyy");
+
+    if (dayIndex == -1)
+        return null;
+    if (monthIndex == -1)
+        return null;
+    if (yearIndex == -1)
+        return null;
+
+    var d = dateItems[dayIndex];
+    var month = parseInt(dateItems[monthIndex])-1;
+    var formatedDate: Date = new Date(dateItems[yearIndex], month, d);
+    return formatedDate;
+};
 // ************************************************************

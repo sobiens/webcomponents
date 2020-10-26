@@ -19,6 +19,8 @@ function soby_PopulateGridGrouping() {
     bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
     bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.IsGroupable = true;
+    //bookGrid.IsSelectable = false;
+    //bookGrid.IsEditable = false;
     bookGrid.AddKeyField("Id", "Id");
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);

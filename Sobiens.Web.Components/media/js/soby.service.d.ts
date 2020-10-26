@@ -344,3 +344,4 @@ declare function soby_LogMessage(message: any): void;
 declare function soby_DateToIso(d: any): string;
 declare function soby_DateFromISO(d: any): Date;
 declare function soby_GetFormatedDateString(date: any): any;
+declare function soby_GetDateWithFormat(dateString: any, format: any): Date;

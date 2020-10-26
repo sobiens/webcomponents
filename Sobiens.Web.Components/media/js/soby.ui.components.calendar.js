@@ -1,32 +1,18 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 // VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_CalendarViews = new Array();
-var SobyCalendarViewTypesObject = /** @class */ (function () {
-    function SobyCalendarViewTypesObject() {
+class SobyCalendarViewTypesObject {
+    constructor() {
         this.Daily = 1;
         this.Weekly = 2;
         this.Monthly = 3;
         this.Yearly = 4;
         this.TaskList = 5;
     }
-    return SobyCalendarViewTypesObject;
-}());
+}
 var SobyCalendarViewTypes = new SobyCalendarViewTypesObject();
-var soby_CalendarView = /** @class */ (function () {
-    function soby_CalendarView(contentDivSelector, title, dataService, year, month, day, emptyDataHtml, idFieldName, titleFieldName, descriptionFieldName, startDateFieldName, endDateFieldName, linkFieldName, imageFieldName, width, height) {
+class soby_CalendarView {
+    constructor(contentDivSelector, title, dataService, year, month, day, emptyDataHtml, idFieldName, titleFieldName, descriptionFieldName, startDateFieldName, endDateFieldName, linkFieldName, imageFieldName, width, height) {
         this.CalendarViewID = "";
         this.ContentDivSelector = "";
         this.Items = new soby_CalendarViewItems();
@@ -88,7 +74,7 @@ var soby_CalendarView = /** @class */ (function () {
             };
         }
     }
-    soby_CalendarView.prototype.Initialize = function () {
+    Initialize() {
         $(this.ContentDivSelector).addClass("soby_calendarview");
         $(this.ContentDivSelector).html("<div class='viewtypepanel'></div><div class='calendarviewpanel'></div>");
         if (this.ShowNavigation == true) {
@@ -96,20 +82,20 @@ var soby_CalendarView = /** @class */ (function () {
             this.SetViewTypeHeaderAsSelected(this.ViewType);
         }
         this.DataService.PopulateItems(null);
-    };
-    soby_CalendarView.prototype.AddItem = function (id, title, description, startDate, endDate) {
+    }
+    AddItem(id, title, description, startDate, endDate) {
         var item = new soby_CalendarViewItem(id, title, description, startDate, endDate);
         this.Items.push(item);
-    };
-    soby_CalendarView.prototype.GetItemData = function (calendarViewItemId) {
+    }
+    GetItemData(calendarViewItemId) {
         for (var i = 0; i < soby_CalendarViewItems.length; i++) {
             if (soby_CalendarViewItems[i]["SobyCalendarViewItemId"] == calendarViewItemId) {
                 return soby_CalendarViewItems[i];
             }
         }
         return null;
-    };
-    soby_CalendarView.prototype.GetItems = function (startDate, endDate) {
+    }
+    GetItems(startDate, endDate) {
         var items = new soby_CalendarViewItems();
         for (var i = 0; i < this.Items.length; i++) {
             var item = this.Items[i];
@@ -127,8 +113,8 @@ var soby_CalendarView = /** @class */ (function () {
             }
         }
         return items;
-    };
-    soby_CalendarView.prototype.GetDateTasks = function (startDate, endDate) {
+    }
+    GetDateTasks(startDate, endDate) {
         var sTable = "";
         var sClass = "";
         var startNo = startDate.getDay();
@@ -156,8 +142,8 @@ var soby_CalendarView = /** @class */ (function () {
             ul.append(li);
         }
         return ul;
-    };
-    soby_CalendarView.prototype.GenerateViewTypePanel = function () {
+    }
+    GenerateViewTypePanel() {
         var html = "<table class='viewtypetabs'>" +
             "<td class='viewtypeheader daily'><a href='javascript:void(0)' onclick=\"soby_CalendarViews['" + this.CalendarViewID + "'].ChangeView(SobyCalendarViewTypes.Daily)\">&nbsp;&nbsp;&nbsp;Daily&nbsp;&nbsp;&nbsp;</a></td>" +
             "<td class='viewtypeheader weekly'><a href='javascript:void(0)' onclick=\"soby_CalendarViews['" + this.CalendarViewID + "'].ChangeView(SobyCalendarViewTypes.Weekly)\">&nbsp;&nbsp;&nbsp;Weekly&nbsp;&nbsp;&nbsp;</a></td>" +
@@ -166,8 +152,8 @@ var soby_CalendarView = /** @class */ (function () {
             "<td class='viewtypeheader tasklist'><a href='javascript:void(0)' onclick=\"soby_CalendarViews['" + this.CalendarViewID + "'].ChangeView(SobyCalendarViewTypes.TaskList)\">&nbsp;&nbsp;&nbsp;Show All Events&nbsp;&nbsp;&nbsp;</a></td>" +
             "</table>";
         $(this.ContentDivSelector + " .viewtypepanel").html(html);
-    };
-    soby_CalendarView.prototype.ShowPopupViewSelection = function () {
+    }
+    ShowPopupViewSelection() {
         var html = "<table bgcolor=#D4D0C8 bordercolor=black border=1 cellspacing=0 cellpadding=0>" +
             "<tr><td bgcolor=#D4D0C8 style='font-size:13;font-face:tahoma;cursor:default' onmouseover=\"this.style.backgroundColor='MidnightBlue'\" onmouseout=\"this.style.backgroundColor='#D4D0C8';this.style.color='black'\"><a onmouseover=\"this.style.color='white'\" onmouseout=\"this.style.color='black'\" href='javascript:void(0)' onclick=\"objToolx.fnSetVisibility('idPopup',false);soby_CalendarViews['" + this.CalendarViewID + "'].Month=" + this.Month + ";soby_CalendarViews['" + this.CalendarViewID + "'].Day=" + this.Day + ";soby_CalendarViews['" + this.CalendarViewID + "'].ViewType=1;soby_CalendarViews['" + this.CalendarViewID + "'].GenerateCalendar()\">&nbsp;&nbsp;&nbsp;Show This Day&nbsp;&nbsp;&nbsp;</a></td></tr>" +
             "<tr><td bgcolor=#D4D0C8 style='font-size:13;font-face:tahoma;cursor:default' onmouseover=\"this.style.backgroundColor='MidnightBlue'\" onmouseout=\"this.style.backgroundColor='#D4D0C8';this.style.color='black'\"><a onmouseover=\"this.style.color='white'\" onmouseout=\"this.style.color='black'\" href='javascript:void(0)' onclick=\"objToolx.fnSetVisibility('idPopup',false);soby_CalendarViews['" + this.CalendarViewID + "'].Month=" + this.Month + ";soby_CalendarViews['" + this.CalendarViewID + "'].Day=" + this.Day + ";soby_CalendarViews['" + this.CalendarViewID + "'].ViewType=2;soby_CalendarViews['" + this.CalendarViewID + "'].GenerateCalendar()\">&nbsp;&nbsp;&nbsp;Show This Week&nbsp;&nbsp;&nbsp;</a></td></tr>" +
@@ -176,8 +162,8 @@ var soby_CalendarView = /** @class */ (function () {
             "<tr><td bgcolor=#D4D0C8 style='font-size:13;font-face:tahoma' onmouseover=\"this.style.backgroundColor='MidnightBlue'\" onmouseout=\"this.style.backgroundColor='#D4D0C8';this.style.color='black'\"><a onmouseover=\"this.style.color='white'\" onmouseout=\"this.style.color='black'\" href='javascript:void(0)' onclick=\"javascript:objToolx.fnSetVisibility('idPopup',false);soby_CalendarViews['" + this.CalendarViewID + "'].ViewType=5;soby_CalendarViews['" + this.CalendarViewID + "'].GenerateCalendar()\">&nbsp;&nbsp;&nbsp;Show All Event In This Year&nbsp;&nbsp;&nbsp;</a></td></tr>" +
             "</table>";
         $(this.ContentDivSelector + " .viewtypepanel").html(html);
-    };
-    soby_CalendarView.prototype.SetViewTypeHeaderAsSelected = function (viewType) {
+    }
+    SetViewTypeHeaderAsSelected(viewType) {
         $(".viewtypeheader").removeClass("selected");
         switch (viewType) {
             case SobyCalendarViewTypes.Daily:
@@ -196,13 +182,13 @@ var soby_CalendarView = /** @class */ (function () {
                 $(".viewtypeheader.tasklist").addClass("selected");
                 break;
         }
-    };
-    soby_CalendarView.prototype.ChangeView = function (viewType) {
+    }
+    ChangeView(viewType) {
         this.ViewType = viewType;
         this.SetViewTypeHeaderAsSelected(viewType);
         this.GenerateCalendar();
-    };
-    soby_CalendarView.prototype.GenerateCalendar = function () {
+    }
+    GenerateCalendar() {
         switch (this.ViewType) {
             case 4: // YEARLY SHOWING
                 this.ShowYearlyView();
@@ -221,8 +207,8 @@ var soby_CalendarView = /** @class */ (function () {
                 this.ShowTasklistView();
                 break;
         }
-    };
-    soby_CalendarView.prototype.ShowTasklistView = function () {
+    }
+    ShowTasklistView() {
         var bookGrid = new soby_WebGrid(this.ContentDivSelector + " .calendarviewpanel", "", this.DataService, "There is no record found.");
         bookGrid.IsEditable = false;
         bookGrid.IsSelectable = false;
@@ -232,8 +218,8 @@ var soby_CalendarView = /** @class */ (function () {
         bookGrid.AddColumn(this.StartDateFieldName, "Start Date", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
         bookGrid.AddColumn(this.EndDateFieldName, "End Date", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
         bookGrid.Initialize(true);
-    };
-    soby_CalendarView.prototype.ShowYearlyView = function () {
+    }
+    ShowYearlyView() {
         var sTable = "";
         sTable = "<table border=2 width='100%' cellspacing=0 cellpadding=3 bordercolor='#9999CC'><tr>";
         sTable += "<tr><td class='SmlTblTitle' colspan='3'><font size=2>" + this.Year + "</font></td><td colspan='2' align=right><b>" + "<a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpYear(-1)\">Geri</a> <a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpYear(1)\">İleri</a>" + "</b></td></tr>";
@@ -289,8 +275,8 @@ var soby_CalendarView = /** @class */ (function () {
             }
             */
         }
-    };
-    soby_CalendarView.prototype.GetMonthlyViewDayCell = function (currentStartDate) {
+    }
+    GetMonthlyViewDayCell(currentStartDate) {
         var currentEndDate = new Date(currentStartDate.getFullYear(), currentStartDate.getMonth(), currentStartDate.getDate() + 1, 0, 0, 0, -1);
         var sDay = currentStartDate.getDate().toString();
         sDay = sDay.toString().length == 1 ? "0" + sDay.toString() : sDay.toString();
@@ -299,8 +285,8 @@ var soby_CalendarView = /** @class */ (function () {
         var taskContainer = this.GetDateTasks(currentStartDate, currentEndDate);
         cell.append(taskContainer);
         return cell;
-    };
-    soby_CalendarView.prototype.ShowMonthlyView = function () {
+    }
+    ShowMonthlyView() {
         var table = $("<table width=" + this.Width + " height=" + this.Height + " class='soby_maintable'></table>");
         $(this.ContentDivSelector + " .calendarviewpanel").html("");
         $(this.ContentDivSelector + " .calendarviewpanel").append(table);
@@ -356,13 +342,13 @@ var soby_CalendarView = /** @class */ (function () {
             }
             table.append(row);
         }
-    };
-    soby_CalendarView.prototype.GetDayOfTheWeek = function (currentDate, dayIndex) {
+    }
+    GetDayOfTheWeek(currentDate, dayIndex) {
         var day = currentDate.getDay();
         var diff = currentDate.getDate() - day + (day == dayIndex ? -6 : 1); // adjust when day is sunday
         return new Date(currentDate.setDate(diff));
-    };
-    soby_CalendarView.prototype.GetDayHeaderClass = function (date) {
+    }
+    GetDayHeaderClass(date) {
         var startNo = date.getDay();
         if (startNo == 0) {
             startNo = 7;
@@ -379,9 +365,9 @@ var soby_CalendarView = /** @class */ (function () {
             className = "sunday";
         }
         return className;
-    };
-    soby_CalendarView.prototype.ConvertDateToShortDateString = function () { };
-    soby_CalendarView.prototype.ShowWeeklyView = function () {
+    }
+    ConvertDateToShortDateString() { }
+    ShowWeeklyView() {
         var today = new Date(this.Year, this.Month, this.Day, 0, 0, 0, 0);
         var firstDateOfTheWeek = this.GetDayOfTheWeek(today, 0);
         var lastDateOfTheWeek = new Date(firstDateOfTheWeek.getFullYear(), firstDateOfTheWeek.getMonth(), firstDateOfTheWeek.getDate() + 6, 0, 0, 0, 0);
@@ -434,8 +420,8 @@ var soby_CalendarView = /** @class */ (function () {
             }
             table.append(row);
         }
-    };
-    soby_CalendarView.prototype.ShowDailyView = function () {
+    }
+    ShowDailyView() {
         var date = new Date(this.Year, this.Month, this.Day);
         var table = $("<table width= " + this.Width + " height= " + this.Height + " class='soby_maintable' ></table>");
         table.append("<tr><td class='SmlTblTitle' colspan='3'><font size=2>" + soby_GetFormatedDateString(date) + "</font></td><td colspan='2' align=right><b>" + "<a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpDay(-1)\">Geri</a> <a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpDay(1)\">İleri</a>" + "</b></td></tr>");
@@ -458,41 +444,41 @@ var soby_CalendarView = /** @class */ (function () {
         }
         $(this.ContentDivSelector + " .calendarviewpanel").html("");
         $(this.ContentDivSelector + " .calendarviewpanel").append(table);
-    };
-    soby_CalendarView.prototype.JumpYear = function (yearCount) {
+    }
+    JumpYear(yearCount) {
         var dDueDate = new Date(this.Year + yearCount, this.Month, this.Day);
         this.Year = dDueDate.getFullYear();
         this.Month = dDueDate.getMonth();
         this.GenerateCalendar();
-    };
-    soby_CalendarView.prototype.JumpMonth = function (monthCount) {
+    }
+    JumpMonth(monthCount) {
         var dDueDate = new Date(this.Year, this.Month + monthCount, this.Day);
         this.Year = dDueDate.getFullYear();
         this.Month = dDueDate.getMonth();
         this.GenerateCalendar();
-    };
-    soby_CalendarView.prototype.JumpWeek = function (weekCount) {
+    }
+    JumpWeek(weekCount) {
         var dDueDate = new Date(this.Year, this.Month, this.Day + (weekCount * 7));
         this.Year = dDueDate.getFullYear();
         this.Month = dDueDate.getMonth();
         this.Day = dDueDate.getDate();
         this.GenerateCalendar();
-    };
-    soby_CalendarView.prototype.JumpDay = function (dayCount) {
+    }
+    JumpDay(dayCount) {
         var dDueDate = new Date(this.Year, this.Month, this.Day + (dayCount));
         this.Year = dDueDate.getFullYear();
         this.Month = dDueDate.getMonth();
         this.Day = dDueDate.getDate();
         this.GenerateCalendar();
-    };
-    soby_CalendarView.prototype.NavigateToDate = function (year, month, day, viewType) {
+    }
+    NavigateToDate(year, month, day, viewType) {
         this.Year = year;
         this.Month = month;
         this.Day = day;
         this.ViewType = viewType;
         this.GenerateCalendar();
-    };
-    soby_CalendarView.prototype.GetSelectedItems = function () {
+    }
+    GetSelectedItems() {
         var selectedItems = new Array();
         var selectedInputs = $("input[name='checkbox_" + this.CalendarViewID + "']:checked");
         if (this.AllowCheckBoxes == false) {
@@ -502,38 +488,37 @@ var soby_CalendarView = /** @class */ (function () {
             selectedItems[selectedItems.length] = this.GetItemData($(selectedInputs[i]).val());
         }
         return selectedItems;
-    };
-    soby_CalendarView.prototype.ClickNode = function (calendarViewItemId) {
+    }
+    ClickNode(calendarViewItemId) {
         if (this.OnClick != null) {
             this.OnClick(this.CalendarViewID, calendarViewItemId);
         }
-    };
-    soby_CalendarView.prototype.CheckNode = function (calendarViewItemId) {
+    }
+    CheckNode(calendarViewItemId) {
         if (this.OnSelectionChanged != null) {
             this.OnSelectionChanged(this.CalendarViewID);
         }
-    };
-    soby_CalendarView.prototype.EnsureItemSelectionExistency = function () {
+    }
+    EnsureItemSelectionExistency() {
         for (var key in soby_CalendarViews) {
             if (key == this.CalendarViewID) {
                 return;
             }
         }
         soby_CalendarViews[this.CalendarViewID] = this;
-    };
-    return soby_CalendarView;
-}());
-var soby_CalendarViewItems = /** @class */ (function (_super) {
-    __extends(soby_CalendarViewItems, _super);
-    function soby_CalendarViewItems(items) {
-        var _this = _super.apply(this, items) || this;
-        Object.setPrototypeOf(_this, Object.create(soby_CalendarViewItems.prototype));
-        return _this;
     }
-    return soby_CalendarViewItems;
-}(Array));
-var soby_CalendarViewItem = /** @class */ (function () {
-    function soby_CalendarViewItem(id, title, description, startDate, endDate) {
+}
+class soby_CalendarViewItems extends Array {
+    constructor(items) {
+        super();
+        if (items) {
+            this.push(...items);
+        }
+        Object.setPrototypeOf(this, Object.create(soby_CalendarViewItems.prototype));
+    }
+}
+class soby_CalendarViewItem {
+    constructor(id, title, description, startDate, endDate) {
         this.Id = "";
         this.StartDate = null;
         this.EndDate = null;
@@ -545,7 +530,6 @@ var soby_CalendarViewItem = /** @class */ (function () {
         this.StartDate = startDate;
         this.EndDate = endDate;
     }
-    return soby_CalendarViewItem;
-}());
+}
 // ************************************************************
 //# sourceMappingURL=soby.ui.components.calendar.js.map

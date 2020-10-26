@@ -106,8 +106,8 @@ declare class soby_NumericValidator extends soby_PresenceValidator {
 }
 declare class soby_DateValidator extends soby_PresenceValidator {
     DateOnly: boolean;
-    Min: number;
-    Max: number;
+    Min: Date;
+    Max: Date;
     Format: string;
     ErrorMessage: string;
     ErrorMessages: {

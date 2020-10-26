@@ -1,17 +1,16 @@
 // VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_CodeViews = new Array();
-var SobyCodeViewTypesObject = /** @class */ (function () {
-    function SobyCodeViewTypesObject() {
+class SobyCodeViewTypesObject {
+    constructor() {
         this.Html = 0;
         this.Js = 1;
         this.Xml = 2;
     }
-    return SobyCodeViewTypesObject;
-}());
+}
 var SobyCodeViewTypes = new SobyCodeViewTypesObject();
-var soby_CodeView = /** @class */ (function () {
-    function soby_CodeView(contentDivSelector, title, codeViewType) {
+class soby_CodeView {
+    constructor(contentDivSelector, title, codeViewType) {
         this.CodeViewID = "";
         this.ContentDivSelector = "";
         this.Title = "";
@@ -30,7 +29,7 @@ var soby_CodeView = /** @class */ (function () {
         this.CodeViewType = codeViewType;
         this.EnsureItemSelectionExistency();
     }
-    soby_CodeView.prototype.Initialize = function () {
+    Initialize() {
         $(this.ContentDivSelector).addClass("soby_codeview");
         var codeContent = $(this.ContentDivSelector).find(".code").html();
         var codeDescription = $(this.ContentDivSelector).find(".codedescription").html();
@@ -54,36 +53,35 @@ var soby_CodeView = /** @class */ (function () {
         $(function () {
             codeview.RunCode();
         });
-    };
-    soby_CodeView.prototype.RunCode = function () {
+    }
+    RunCode() {
         $(this.ContentDivSelector).find(".result").html("<iframe class='resultiframe' style= 'width:100%;height:200px;' > </iframe>");
         var html = $(this.ContentDivSelector).find(".code").val();
         var iframe = $(this.ContentDivSelector).find(".resultiframe")[0];
         iframe.contentWindow.document.write(html);
-    };
-    soby_CodeView.prototype.ResetExercise = function () {
+    }
+    ResetExercise() {
         var code = $(this.ContentDivSelector).find(".defaultcodecontainer").val();
         $(this.ContentDivSelector).find(".code").val(code);
-    };
-    soby_CodeView.prototype.CopyToClipboard = function () {
+    }
+    CopyToClipboard() {
         var html = $(this.ContentDivSelector).find(".code").val();
         var copyToClipboardTextarea = $(this.ContentDivSelector).find(".copytoclipboardtextarea");
         copyToClipboardTextarea.text(html);
         var copyText = copyToClipboardTextarea[0];
         eval("copyText.select();");
         document.execCommand("copy");
-    };
-    soby_CodeView.prototype.Populate = function () {
-    };
-    soby_CodeView.prototype.EnsureItemSelectionExistency = function () {
+    }
+    Populate() {
+    }
+    EnsureItemSelectionExistency() {
         for (var key in soby_CodeViews) {
             if (key == this.CodeViewID) {
                 return;
             }
         }
         soby_CodeViews[this.CodeViewID] = this;
-    };
-    return soby_CodeView;
-}());
+    }
+}
 // ************************************************************
 //# sourceMappingURL=soby.ui.components.codeview.js.map

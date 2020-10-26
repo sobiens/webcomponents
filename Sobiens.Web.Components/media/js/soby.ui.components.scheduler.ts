@@ -858,7 +858,11 @@ class soby_Scheduler
 class soby_ScheduleCategories extends Array<soby_ScheduleCategory>
 {
     constructor(items?: Array<soby_ScheduleCategory>) {
-        super(...items);
+        super();
+
+        if (items) {
+            this.push(...items);
+        }
         Object.setPrototypeOf(this, Object.create(soby_ScheduleCategories.prototype));
     }
     GetCategoryById(categoryId)
@@ -884,7 +888,11 @@ class soby_ScheduleCategories extends Array<soby_ScheduleCategory>
 class soby_ScheduleItems extends Array<soby_ScheduleItem>
 {
     constructor(items?: Array<soby_ScheduleItem>) {
-        super(...items);
+        super();
+
+        if (items) {
+            this.push(...items);
+        }
         Object.setPrototypeOf(this, Object.create(soby_ScheduleItems.prototype));
     }
     Clone(): soby_ScheduleItems

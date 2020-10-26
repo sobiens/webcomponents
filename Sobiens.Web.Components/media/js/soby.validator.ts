@@ -305,8 +305,8 @@ class soby_NumericValidator extends soby_PresenceValidator
 
 class soby_DateValidator extends soby_PresenceValidator {
     DateOnly: boolean = false;
-    Min: number = null;
-    Max: number = null;
+    Min: Date = null;
+    Max: Date = null;
     Format: string = "YYYY-MM-DD";
     ErrorMessage: string = "";
     ErrorMessages = {
@@ -336,20 +336,20 @@ class soby_DateValidator extends soby_PresenceValidator {
             this.ErrorMessage = this.ErrorMessages.InvalidDate;
         }
 
-        var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
-        if (!(date_regex.test(value))) {
+        var date: Date = soby_GetDateWithFormat(value, this.Format);
+        if (date == null) {
             this.ErrorMessage = this.ErrorMessages.InvalidDate;
         }
+        else {
+            if (this.Min != null && date < this.Min) {
+                this.ErrorMessage = this.ErrorMessages.LessThanMinValue;
+            }
 
-        /*
-        if (this.Min != null && value < this.Min) {
-            this.ErrorMessage = this.ErrorMessages.LessThanMinValue;
+            if (this.Max != null && date > this.Max) {
+                this.ErrorMessage = this.ErrorMessages.GreaterThanMaxValue;
+            }
         }
 
-        if (this.Max != null && value > this.Max) {
-            this.ErrorMessage = this.ErrorMessages.GreaterThanMaxValue;
-        }
-        */
 
         if (this.ErrorMessage != "") {
             return false;

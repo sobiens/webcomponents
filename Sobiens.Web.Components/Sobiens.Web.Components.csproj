@@ -20,7 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.8</TypeScriptToolsVersion>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -363,6 +363,7 @@
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valuelengthvalidation.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valueinclusionvalidation.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valueexclusionvalidation.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\Validator\valuetextvalidation.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valueurlvalidation.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valueemailvalidation.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valuepresencevalidation.ts" />
@@ -414,6 +415,7 @@
     <Content Include="Tutorials\SobyValidator\ValueEmailValidation.aspx" />
     <Content Include="Tutorials\SobyValidator\ValueLengthValidation.aspx" />
     <Content Include="Tutorials\SobyValidator\ValueInclusionValidation.aspx" />
+    <Content Include="Tutorials\SobyValidator\ValueTextValidation.aspx" />
     <Content Include="Tutorials\SobyValidator\ValueNumericValidation.aspx" />
     <Content Include="Tutorials\SobyValidator\ValueURLValidation.aspx" />
     <Content Include="Tutorials\SobyValidator\ValuePresenceValidation.aspx" />
@@ -1090,6 +1092,13 @@
     <Compile Include="Tutorials\SobyValidator\ValueInclusionValidation.aspx.designer.cs">
       <DependentUpon>ValueInclusionValidation.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueTextValidation.aspx.cs">
+      <DependentUpon>ValueTextValidation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyValidator\ValueTextValidation.aspx.designer.cs">
+      <DependentUpon>ValueTextValidation.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyValidator\ValueNumericValidation.aspx.cs">
       <DependentUpon>ValueNumericValidation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1203,13 +1212,19 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptModuleKind>commonjs</TypeScriptModuleKind>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
-    <TypeScriptJsxEmit>
-    </TypeScriptJsxEmit>
-    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJsxEmit>None</TypeScriptJsxEmit>
+    <TypeScriptTarget>ES2020</TypeScriptTarget>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

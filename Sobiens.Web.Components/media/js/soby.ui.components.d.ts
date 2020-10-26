@@ -151,9 +151,11 @@ declare class SobySelectBox {
     PopulateSelectedItems(): void;
     GetSelectedItems(): any[];
     RemoveItem(index: any): void;
+    ClearItems(): void;
     ShowHideSelectBox(): void;
     ShowSelectBox(): void;
     HideSelectBox(): void;
+    SearchTextBoxLostFocused(): void;
     SearchTextBoxFocused(): void;
     Initialized(): void;
     ValueBeingChanged(): void;
