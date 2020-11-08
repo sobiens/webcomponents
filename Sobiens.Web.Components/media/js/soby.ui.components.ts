@@ -490,9 +490,13 @@ class SobySelectBox
         this.ContainerClientId = containerClientId;
     }
     ContainerClientId: string;
+    SearchOnDemand: boolean = false;
+    AllowMultipleSelections: boolean = true;
+    SearchParameterName: string = "";
     Items = null;
     SelectedItemKeyValues = null;
     EmptyText: string = "Please Select";
+    NoRecordsText: string = "No records found";
     DataService: soby_ServiceInterface = null;
     ValueFieldName: string = null;
     TitleFieldName: string = null;
@@ -502,6 +506,8 @@ class SobySelectBox
     IsValid: boolean;
     FocusToNextItemAfterItemSelection: boolean = true;
     Width: string = '600px';
+    LastSearchKeyword: string = '';
+    
     GetValue(): any
     {
         var value = $("#" + this.ContainerClientId + " select.sobyselectbox").val();
@@ -528,6 +534,19 @@ class SobySelectBox
         $(".sobyselectbox").addClass(this.ThemeClassName);
     }
 
+    ShowLoadingIcon() {
+        $("#" + this.ContainerClientId + " .loadingicon").removeClass("hidden");
+        $("#" + this.ContainerClientId + " .clearitemslink").addClass("hidden");
+    }
+
+    HideLoadingIcon() {
+        $("#" + this.ContainerClientId + " .loadingicon").addClass("hidden");
+        if (this.SelectedItemKeyValues != null && this.SelectedItemKeyValues.length > 1)
+            $("#" + this.ContainerClientId + " .clearitemslink").removeClass("hidden");
+        else
+            $("#" + this.ContainerClientId + " .clearitemslink").addClass("hidden");
+    }
+
     Initialize()
     {
         var selectbox = this;
@@ -539,41 +558,34 @@ class SobySelectBox
             "<div class='selectionfilterpanel' onclick=\"soby_EditControls['" + this.ContainerClientId + "'].ShowSelectBox()\">" +
                 "<div class='selecteditemsandsearchpanel'>" +
                     "<div class='selecteditems'></div>" +
-                    "<div class='searchpanel'><input type='text' class='searchtextbox' onfocus=\"soby_EditControls['" + this.ContainerClientId + "'].SearchTextBoxFocused()\" onblur=\"soby_EditControls['" + this.ContainerClientId + "'].SearchTextBoxLostFocused()\"><div class='emptytext'></div></div>" +
                 "</div>" +
-                "<div class='expanderpanel'>" +
-            "<div><a href='javascript:void(0)'  onclick =\"soby_EditControls['" + this.ContainerClientId + "'].ClearItems()\" class=\"soby-itmHoverEnabled soby-selectboxitem-delete-link\"><span class='soby-icon-imgSpan'><img class='soby-list-delete soby-icon-img' src='" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43'></span></a></div>" +
-            "<span style=''></span>" +
-                    "<div><a href='javascript:void(0)'  onclick=\"soby_EditControls['" + this.ContainerClientId + "'].ShowHideSelectBox()\"><img src='" + this.ImagesFolderUrl + "/ecbarw.png' border='0' alt= 'Open Menu'></a></div>" +
+            "<div class='additionalcellonexpanderpanel'>" +
+            "<span class='loadingicon hidden'><img src='" + this.ImagesFolderUrl + "/loading16.gif'></span>" +
+            "<a href='javascript:void(0)'  onclick =\"soby_EditControls['" + this.ContainerClientId + "'].ClearItems()\" class=\"soby-itmHoverEnabled soby-selectboxitem-delete-link clearitemslink hidden\"><span class='soby-icon-imgSpan'><img class='soby-list-delete soby-icon-img' src='" + this.ImagesFolderUrl + "/formatmap16x16.png?rev=43'></span></a>" +
+            "</div>" +
+            "<div class='expanderpanel'>" +
+                    "<a href='javascript:void(0)'  onclick=\"soby_EditControls['" + this.ContainerClientId + "'].ShowHideSelectBox()\"><img src='" + this.ImagesFolderUrl + "/ecbarw.png' border='0' alt= 'Open Menu'></a>" +
                 "</div>" +
             "</div>" +
-            "<div class='selectbox hidden'></div>");
+            "<div class='selectbox hidden'>" +
+                "<div class='searchpanel' style='width:100%'><input type='text' class='searchtextbox' onfocus=\"soby_EditControls['" + this.ContainerClientId + "'].SearchTextBoxFocused()\" onblur=\"soby_EditControls['" + this.ContainerClientId + "'].SearchTextBoxLostFocused()\"><div class='emptytext'></div></div>" +
+            "</div><div><div>" +
+            "</div>");
         $("#" + this.ContainerClientId + " .emptytext").text(this.EmptyText);
 
-        $("#" + this.ContainerClientId + " .searchtextbox").keyup(function ()
-        {
-            $("#" + selectbox.ContainerClientId + " .soby_dataitem").addClass("hidden");
+        $("#" + this.ContainerClientId + " .searchtextbox").keyup(function () {
             var keyword = $(this).val();
-            if (selectbox.SelectedItemKeyValues.length == 0 && keyword == "")
-            {
-                $("#" + selectbox.ContainerClientId + " .emptytext").show();
+            console.log("keyword:");
+            console.log(keyword);
+            if (selectbox.SearchOnDemand == false) {
+                selectbox.SearchFromPopulatedData(keyword);
             }
-            else
-            {
-                $("#" + selectbox.ContainerClientId + " .emptytext").hide();
-            }
-
-            if (keyword.length > 0)
-            {
-                $("#" + selectbox.ContainerClientId + " .soby_dataitem[title*=\"" + keyword.toLowerCase() + "\"]").removeClass("hidden");
-            }
-            else
-            {
-                $("#" + selectbox.ContainerClientId + " .soby_dataitem").removeClass("hidden");
+            else {
+                selectbox.SearchFromService(keyword);
             }
 
-            $(this).css("width", (keyword.length * 30) + "px");
         });
+
 
         $("#" + this.ContainerClientId + " .searchtextbox").keydown(function (event)
         {
@@ -624,13 +636,22 @@ class SobySelectBox
             {
                 editControl.Items = items;
                 var selectbox = $("#" + editControl.ContainerClientId + " .selectbox");
-                selectbox.find("option").remove();
+                selectbox.find(".soby_dataitem").remove();
+                if (items.length == 0) {
+                    var option = $("<div class='item soby_dataitem soby-itmHoverEnabled'></div>");
+                    option.text(editControl.NoRecordsText);
+                    selectbox.append(option);
+                }
+
                 for (var i = 0; i < items.length; i++)
                 {
                     var option = $("<div class='item soby_dataitem soby-itmHoverEnabled'></div>");
                     var itemLink = $("<a href='javascript:void(0)'></a>");
+                    var title = items[i][editControl.TitleFieldName];
+                    if (title == null)
+                        title = "";
                     option.attr("value", items[i][editControl.ValueFieldName]);
-                    option.attr("title", items[i][editControl.TitleFieldName].toLowerCase());
+                    option.attr("title", title.toLowerCase());
                     option.attr("itemindex", i);
                     itemLink.text(items[i][editControl.TitleFieldName]);
                     itemLink.attr("onclick", "soby_EditControls['" + editControl.ContainerClientId + "'].SelectItem(" + i + ")");
@@ -670,16 +691,65 @@ class SobySelectBox
 
                 }
                 editControl.Initialized();
+                editControl.HideLoadingIcon();
             };
 
             this.DataService.PopulateItems(null);
         }
     }
 
+    SearchFromService(keyword) {
+        this.ShowLoadingIcon();
+
+        for (var i = this.DataService.DataSourceBuilder.Filters.Filters.length - 1; i > -1; i--) {
+            console.log("i" + i)
+            console.log(this.DataService.DataSourceBuilder.Filters.Filters[i].FieldName + " --- " + this.SearchParameterName)
+            if (this.DataService.DataSourceBuilder.Filters.Filters[i].FieldName == this.SearchParameterName) {
+                console.log("slicing index " + i)
+                console.log(this.DataService.DataSourceBuilder.Filters.Filters)
+                this.DataService.DataSourceBuilder.Filters.Filters.splice(i, 1);
+                console.log(this.DataService.DataSourceBuilder.Filters.Filters)
+            }
+        }
+
+        this.DataService.DataSourceBuilder.Filters.AddFilter(this.SearchParameterName, keyword, SobyFieldTypes.Text, SobyFilterTypes.Contains, false, true);
+        this.DataService.PopulateItems(null);
+    }
+
+    SearchFromPopulatedData(keyword) {
+        if (this.LastSearchKeyword == keyword)
+            return;
+
+        this.LastSearchKeyword = keyword;
+        this.ShowLoadingIcon();
+
+        $("#" + this.ContainerClientId + " .soby_dataitem").addClass("hidden");
+        if (this.SelectedItemKeyValues.length == 0 && keyword == "") {
+            $("#" + this.ContainerClientId + " .emptytext").show();
+        }
+        else {
+            $("#" + this.ContainerClientId + " .emptytext").hide();
+        }
+
+        if (keyword.length > 0) {
+            $("#" + this.ContainerClientId + " .soby_dataitem[title*=\"" + keyword.toLowerCase() + "\"]").removeClass("hidden");
+        }
+        else {
+            $("#" + this.ContainerClientId + " .soby_dataitem").removeClass("hidden");
+        }
+
+        $(this).css("width", (keyword.length * 30) + "px");
+        this.HideLoadingIcon();
+    }
+
     SelectItem(index)
     {
         var selectedItem = this.Items[index];
         var keyValue = selectedItem[this.ValueFieldName];
+        if (this.AllowMultipleSelections == false) {
+            this.SelectedItemKeyValues = new Array();
+        }
+
         if ($.inArray(keyValue, this.SelectedItemKeyValues) == -1)
         {
             this.SelectedItemKeyValues.push(keyValue);
@@ -701,6 +771,12 @@ class SobySelectBox
         else
         {
             $("#" + this.ContainerClientId + " .searchtextbox").focus();
+        }
+
+        this.HideLoadingIcon();
+        this.ValueChanged();
+        if (this.AllowMultipleSelections == false) {
+            this.HideSelectBox();
         }
     }
 
@@ -778,6 +854,12 @@ class SobySelectBox
 
             }
         }
+        var position = $("#" + this.ContainerClientId + " .selectionfilterpanel").position();
+        var height = $("#" + this.ContainerClientId + " .selecteditemsandsearchpanel").height();
+        if (height < 10)
+            height = 30;
+        var top = position.top + height + 5;
+        $("#" + this.ContainerClientId + " .selectbox").css("top", top);
     }
 
     GetSelectedItems()
@@ -816,6 +898,8 @@ class SobySelectBox
         {
             selectbox.ShowSelectBox();
         }, 500);
+        this.HideLoadingIcon();
+        this.ValueChanged();
     }
 
     ClearItems() {
@@ -825,6 +909,7 @@ class SobySelectBox
         setTimeout(function () {
             selectbox.ShowSelectBox();
         }, 500);
+        this.ValueChanged();
     }
 
     ShowHideSelectBox()
@@ -851,8 +936,11 @@ class SobySelectBox
         }
 
         $("#" + this.ContainerClientId + " .selectbox").removeClass("hidden");
-        var position = $(".selectionfilterpanel").position();
-        var top = position.top + $(".selecteditemsandsearchpanel").height() + 20;
+        var position = $("#" + this.ContainerClientId + " .selectionfilterpanel").position();
+        var height = $("#" + this.ContainerClientId + " .selecteditemsandsearchpanel").height();
+        if (height < 10)
+            height = 30;
+        var top = position.top + height + 5;
         $("#" + this.ContainerClientId + " .selectbox").css("top", top);
         $("#" + this.ContainerClientId + " .searchtextbox").focus();
     }
@@ -1262,8 +1350,10 @@ class SobyGridColumn
     Filterable: boolean;
     Editable: boolean;
     FilterControl: ISobyEditControlInterface = null;
-    CellCss: string;
-    CellClassNames: string;
+    CellCss: string = "";
+    CellClassNames: string ="";
+    HeaderCss: string = "";
+    HeaderClassNames: string = "";
     ResponsiveConditionID: string = null;
     IsVisible: boolean = true;
 }
@@ -1925,7 +2015,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
      * // Adds Title as a column
      * grid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
      */
-    AddColumn(fieldName, displayName, showFieldsOn: number, displayFunction, cellTemplate, sortable, filterable, editable, filterControl, cellCss, cellClassNames, responsiveCondition?: sobyResponsiveCondition)
+    AddColumn(fieldName, displayName, showFieldsOn: number, displayFunction, cellTemplate, sortable, filterable, editable, filterControl, cellCss, cellClassNames, responsiveCondition?: sobyResponsiveCondition): SobyGridColumn
     {
         var responsiveConditionID = null;
         if (responsiveCondition != null)
@@ -1949,7 +2039,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
 
         var gridColumn = new SobyGridColumn(fieldName, displayName, showFieldsOn, displayFunction, cellTemplate, sortable, filterable, editable, filterControl, cellCss, cellClassNames, responsiveConditionID);
         this.Columns.push(gridColumn);
-        //[this.Columns.length] = { FieldName: fieldName, DisplayName: displayName, ShowFieldsOn: showFieldsOn, DisplayFunction: displayFunction, CellTemplate: cellTemplate, Sortable: sortable, Filterable: filterable, Editable: editable, FilterControl: filterControl, CellCss: cellCss, CellClassNames: cellClassNames, ResponsiveConditionID: responsiveConditionID };
+        return gridColumn;
     }
 
     /**
@@ -2938,6 +3028,19 @@ class soby_WebGrid implements ISobySelectorControlInterface
         if (responsiveConditionId != null && responsiveConditionId != "")
         {
             headerCell.addClass(this.GetResponsiveConditionById(responsiveConditionId).GetClassName());
+        }
+
+        if (column.HeaderCss != null && column.HeaderCss != "") {
+            var cssValues = column.HeaderCss.split(";");
+            for (var d = 0; d < cssValues.length; d++) {
+                var cssName = cssValues[d].split(":")[0];
+                var cssValue = cssValues[d].split(":")[1];
+                headerCell.css(cssName, cssValue);
+            }
+        }
+
+        if (column.HeaderClassNames != null && column.HeaderClassNames != "") {
+            headerCell.addClass(column.HeaderClassNames);
         }
 
         var headerOnClick = "";
@@ -4579,7 +4682,7 @@ class soby_MetroTilesGrid {
     MaxWidth = null;
     TileWidth:number = 150;
     TileHeight: number = 120;
-    Width: number = 600;
+    Width: string = "600px";
     Items = null;
     EnsureMetroTilesExistency() {
         for (var key in soby_MetroTileGrids) {

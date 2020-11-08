@@ -68,6 +68,7 @@ declare class SobyFilters implements ISobyFilter {
     ShouldBeClearedOnUIFilterAction: boolean;
     constructor(isOr: boolean);
     Filters: any[];
+    GetFiltersByFieldName(fieldName: string): any[];
     Clear(): void;
     AddFilter(fieldName: string, filterValue: string, fieldType: number, filterType: number, lookupID: boolean, shouldBeClearedOnUIFilterAction: boolean): void;
     AddFilterObject(filter: SobyFilter): void;
@@ -221,6 +222,8 @@ declare abstract class soby_DataSourceBuilderAbstract implements soby_DataSource
     GetCountQuery(transport: soby_TransportRequest): string;
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: any): string;
     Clone(): soby_DataSourceBuilderAbstract;
+    CountQueryBeingGenerated(): void;
+    MainQueryBeingGenerated(): void;
     DataBeingParsed(data: any, parseCompleted: boolean): Array<soby_Item>;
     ParseData(value: string): Array<soby_Item>;
     GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any, contentType: any): void;

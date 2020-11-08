@@ -125,6 +125,14 @@ class SobyFilters {
         this.Filters = new Array();
         this.IsOr = isOr;
     }
+    GetFiltersByFieldName(fieldName) {
+        var filters = new Array();
+        for (var i = 0; i < this.Filters.length; i++) {
+            if (this.Filters[i].FieldName == fieldName)
+                filters.push(this.Filters[i]);
+        }
+        return filters;
+    }
     Clear() {
         this.Filters = new Array();
     }
@@ -168,6 +176,8 @@ class SobyFilters {
     }
     ToJson() {
         var json = "";
+        console.log("Last this.Filters:");
+        console.log(this.Filters);
         for (var i = 0; i < this.Filters.length; i++) {
             var argument = this.Filters[i];
             json += "\"" + argument.FieldName + "\": \"" + argument.FilterValue + "\",";
@@ -696,13 +706,19 @@ class soby_DataSourceBuilderAbstract {
         }
     }
     GetCountQuery(transport) {
+        this.CountQueryBeingGenerated();
         return null;
     }
     GetMainQuery(transport, excludePagingQuery) {
+        this.MainQueryBeingGenerated();
         return "";
     }
     Clone() {
         return null;
+    }
+    CountQueryBeingGenerated() {
+    }
+    MainQueryBeingGenerated() {
     }
     DataBeingParsed(data, parseCompleted) {
         return data;
@@ -819,9 +835,12 @@ class soby_WebServiceService {
         if (clearOtherFilters == true) {
             this.Filters = new SobyFilters(filters.IsOr);
         }
+        console.log("Filtering...");
         if (filters.Filters.length > 0) {
+            console.log("Filteringxyz...");
             this.Filters.AddFilterCollection(filters);
         }
+        console.log(this.Filters);
         this.PopulateItems(null);
     }
     ;
@@ -871,9 +890,12 @@ class soby_WebServiceService {
         if (this.OrderByFields.length > 0) {
             this.DataSourceBuilderTemp.AddOrderFields(this.OrderByFields);
         }
+        console.log("Filtering2...");
         if (this.Filters.Filters.length > 0) {
+            console.log("Filtering2xyz...");
             this.DataSourceBuilderTemp.Filters.AddFilterCollection(this.Filters);
         }
+        console.log(this.DataSourceBuilderTemp.Filters);
         this.DataSourceBuilderTemp.PageIndex = this.PageIndex;
         this.DataSourceBuilderTemp.NextPageString = this.NextPageString;
         var service = this;
@@ -1040,6 +1062,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         return query;
     }
     GetMainQuery(transport, excludePagingQuery) {
+        this.MainQueryBeingGenerated();
         var selectFieldsEnvelope = this.GetViewFieldsQuery(transport);
         var whereQuery = this.GetWhereQuery(transport);
         var orderByFieldsQuery = this.GetOrderByFieldsQuery(transport);
@@ -1071,6 +1094,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         }
     }
     GetCountQuery(transport) {
+        this.CountQueryBeingGenerated();
         var mainQuery = this.GetMainQuery(transport, true);
         var countServiceUrl = transport.Url + "/$count?" + mainQuery;
         if (transport.Type == "POST") {
@@ -1332,6 +1356,8 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract {
         builder.WebServiceDataTypes = this.WebServiceDataTypes;
         builder.MethodName = this.MethodName;
         builder.CountQuerySupported = this.CountQuerySupported;
+        builder.MainQueryBeingGenerated = this.MainQueryBeingGenerated;
+        builder.CountQueryBeingGenerated = this.CountQueryBeingGenerated;
         return builder;
     }
     GetPagingQuery(transport) {
@@ -1393,6 +1419,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract {
         return query;
     }
     GetMainQuery(transport, excludePagingQuery) {
+        this.MainQueryBeingGenerated();
         if (this.WebServiceDataTypes == SobyWebServiceDataTypes.Soap) {
             var envelope = "<?xml version= '1.0' encoding= 'utf-8' ?>" +
                 "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>" +
@@ -1438,6 +1465,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract {
     GetCountQuery(transport) {
         if (this.CountQuerySupported == false)
             return "";
+        this.CountQueryBeingGenerated();
         var mainQuery = this.GetMainQuery(transport, true);
         var countServiceUrl = transport.Url + "/$count?"; // + mainQuery;
         if (transport.Type == "POST") {

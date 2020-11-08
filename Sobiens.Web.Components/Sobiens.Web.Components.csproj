@@ -410,6 +410,7 @@
     <Content Include="Tutorials\SobyItemSelection\Single Selection.aspx" />
     <Content Include="Tutorials\SobyScheduler\Custom Dates.aspx" />
     <Content Include="Tutorials\SobyScheduler\Getting Started.aspx" />
+    <Content Include="Tutorials\SobySelectBox\SearchOnDemand.aspx" />
     <Content Include="Tutorials\SobySelectBox\Getting Started.aspx" />
     <Content Include="Tutorials\SobyValidator\FormValidation.aspx" />
     <Content Include="Tutorials\SobyValidator\ValueEmailValidation.aspx" />
@@ -496,6 +497,7 @@
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\treeviewselection.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\autocompletewatermark.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\singleselection.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\SelectBox\searchondemand.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\SelectBox\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\TreeView\treeview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Wizard\general.ts" />
@@ -1049,6 +1051,13 @@
     </Compile>
     <Compile Include="Tutorials\SobyScheduler\Getting Started.aspx.designer.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobySelectBox\SearchOnDemand.aspx.cs">
+      <DependentUpon>SearchOnDemand.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobySelectBox\SearchOnDemand.aspx.designer.cs">
+      <DependentUpon>SearchOnDemand.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobySelectBox\Getting Started.aspx.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>

@@ -140,6 +140,15 @@ class SobyFilters implements ISobyFilter {
     }
 
     Filters = new Array();
+    GetFiltersByFieldName(fieldName: string) {
+        var filters = new Array();
+        for (var i = 0; i < this.Filters.length; i++) {
+            if (this.Filters[i].FieldName == fieldName)
+                filters.push(this.Filters[i]);
+        }
+
+        return filters;
+    }
     Clear() {
         this.Filters = new Array();
     }
@@ -189,6 +198,8 @@ class SobyFilters implements ISobyFilter {
 
     ToJson() {
         var json = "";
+        console.log("Last this.Filters:");
+        console.log(this.Filters)
         for (var i = 0; i < this.Filters.length; i++) {
             var argument = this.Filters[i];
             json += "\"" + argument.FieldName + "\": \"" + argument.FilterValue + "\",";
@@ -893,13 +904,19 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
         }
     }
     GetCountQuery(transport: soby_TransportRequest): string {
+        this.CountQueryBeingGenerated();
         return null;
     }
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery):string {
+        this.MainQueryBeingGenerated();
         return "";
     }
     Clone(): soby_DataSourceBuilderAbstract {
         return null;
+    }
+    CountQueryBeingGenerated() {
+    }
+    MainQueryBeingGenerated() {
     }
     DataBeingParsed(data: any, parseCompleted: boolean  ): Array<soby_Item>
     {
@@ -1052,11 +1069,13 @@ class soby_WebServiceService implements soby_ServiceInterface {
             this.Filters = new SobyFilters(filters.IsOr);
         }
 
+        console.log("Filtering...");
         if (filters.Filters.length > 0)
         {
+            console.log("Filteringxyz...");
             this.Filters.AddFilterCollection(filters);
         }
-
+        console.log(this.Filters);
         this.PopulateItems(null);
     };
     SortAndFilter(orderByFields: SobyOrderByFields, filters: SobyFilters, clearOtherFilters: boolean)
@@ -1119,9 +1138,14 @@ class soby_WebServiceService implements soby_ServiceInterface {
             this.DataSourceBuilderTemp.AddOrderFields(this.OrderByFields);
         }
 
+        console.log("Filtering2...");
+
         if (this.Filters.Filters.length > 0) {
+            console.log("Filtering2xyz...");
             this.DataSourceBuilderTemp.Filters.AddFilterCollection(this.Filters);
         }
+        console.log(this.DataSourceBuilderTemp.Filters);
+
 
         this.DataSourceBuilderTemp.PageIndex = this.PageIndex;
         this.DataSourceBuilderTemp.NextPageString = this.NextPageString;
@@ -1329,6 +1353,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
     }
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: boolean)
     {
+        this.MainQueryBeingGenerated();
         var selectFieldsEnvelope = this.GetViewFieldsQuery(transport);
         var whereQuery = this.GetWhereQuery(transport);
         var orderByFieldsQuery = this.GetOrderByFieldsQuery(transport);
@@ -1372,6 +1397,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         }
     }
     GetCountQuery(transport: soby_TransportRequest) {
+        this.CountQueryBeingGenerated();
         var mainQuery = this.GetMainQuery(transport, true);
         var countServiceUrl = transport.Url + "/$count?" + mainQuery;
         if (transport.Type == "POST") {
@@ -1679,6 +1705,8 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
         builder.WebServiceDataTypes = this.WebServiceDataTypes;
         builder.MethodName = this.MethodName;
         builder.CountQuerySupported = this.CountQuerySupported;
+        builder.MainQueryBeingGenerated = this.MainQueryBeingGenerated;
+        builder.CountQueryBeingGenerated = this.CountQueryBeingGenerated;
 
         return builder;
     }
@@ -1761,6 +1789,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
     }
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: boolean)
     {
+        this.MainQueryBeingGenerated();
         if (this.WebServiceDataTypes == SobyWebServiceDataTypes.Soap)
         {
             var envelope = "<?xml version= '1.0' encoding= 'utf-8' ?>" +
@@ -1822,6 +1851,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
         if (this.CountQuerySupported == false)
             return "";
 
+        this.CountQueryBeingGenerated();
         var mainQuery = this.GetMainQuery(transport, true);
         var countServiceUrl = transport.Url + "/$count?";// + mainQuery;
         if (transport.Type == "POST") {

@@ -123,9 +123,13 @@ declare class SobySPViewFilterCheckBoxList extends SobyCheckBoxList {
 declare class SobySelectBox {
     constructor(containerClientId: string);
     ContainerClientId: string;
+    SearchOnDemand: boolean;
+    AllowMultipleSelections: boolean;
+    SearchParameterName: string;
     Items: any;
     SelectedItemKeyValues: any;
     EmptyText: string;
+    NoRecordsText: string;
     DataService: soby_ServiceInterface;
     ValueFieldName: string;
     TitleFieldName: string;
@@ -135,6 +139,7 @@ declare class SobySelectBox {
     IsValid: boolean;
     FocusToNextItemAfterItemSelection: boolean;
     Width: string;
+    LastSearchKeyword: string;
     GetValue(): any;
     SetValue(value: string): void;
     /**
@@ -146,7 +151,11 @@ declare class SobySelectBox {
      * grid.ChangeTheme('classic');
      */
     ChangeTheme(themeName: string): void;
+    ShowLoadingIcon(): void;
+    HideLoadingIcon(): void;
     Initialize(): void;
+    SearchFromService(keyword: any): void;
+    SearchFromPopulatedData(keyword: any): void;
     SelectItem(index: any): void;
     PopulateSelectedItems(): void;
     GetSelectedItems(): any[];
@@ -262,6 +271,8 @@ declare class SobyGridColumn {
     FilterControl: ISobyEditControlInterface;
     CellCss: string;
     CellClassNames: string;
+    HeaderCss: string;
+    HeaderClassNames: string;
     ResponsiveConditionID: string;
     IsVisible: boolean;
 }
@@ -581,7 +592,7 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
      * // Adds Title as a column
      * grid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
      */
-    AddColumn(fieldName: any, displayName: any, showFieldsOn: number, displayFunction: any, cellTemplate: any, sortable: any, filterable: any, editable: any, filterControl: any, cellCss: any, cellClassNames: any, responsiveCondition?: sobyResponsiveCondition): void;
+    AddColumn(fieldName: any, displayName: any, showFieldsOn: number, displayFunction: any, cellTemplate: any, sortable: any, filterable: any, editable: any, filterControl: any, cellCss: any, cellClassNames: any, responsiveCondition?: sobyResponsiveCondition): SobyGridColumn;
     /**
      * Adds a data relation
      *
@@ -1091,7 +1102,7 @@ declare class soby_MetroTilesGrid {
     MaxWidth: any;
     TileWidth: number;
     TileHeight: number;
-    Width: number;
+    Width: string;
     Items: any;
     EnsureMetroTilesExistency(): void;
     PopulateItems(items: any): void;

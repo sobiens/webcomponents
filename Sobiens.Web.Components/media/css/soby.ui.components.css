@@ -379,32 +379,34 @@
     padding-left: 0px;
     border-color: rgb(204, 204, 204)
 }
-.sobyselectbox .selectionfilterpanel { }
+.sobyselectbox .selectionfilterpanel { min-height:25px; }
 .sobyselectbox .hidden { display:none}
 .sobyselectbox .selectbox { position: absolute; background-color:white;border:solid 1px;max-height: 100px;overflow-x: hidden;overflow-y: auto;min-width: calc(100% + 2px);
-    width: calc(100% + 2px);left: -1px;}
+    width: calc(100% + 2px);left: -1px;
+    z-index:101;
+}
     .sobyselectbox .selectbox .item a{
         display: block
     }
-.sobyselectbox .selectbox .item{ cursor:pointer; }
+.sobyselectbox .selectbox .item{ cursor:pointer; clear:both; }
 .sobyselectbox .selectbox .item:hover{ background-color:aqua }
     .sobyselectbox .selecteditems {
-        padding: 5px;
+        padding-top: 3px;
         display: inline-block !important;
         float: left;
         padding-right: -55px;
     }
-    .sobyselectbox .selecteditems .selecteditem {
-        background-color: rgb(230, 230, 230);
-        border: 0px;
-        float: left;
-        border-radius: 2px;
-        padding: 4px;
-        margin-left: 5px;
-        float: left;
-        margin-bottom: 5px;
-        color: black;
-    }
+        .sobyselectbox .selecteditems .selecteditem {
+            background-color: rgb(230, 230, 230);
+            border: 0px;
+            float: left;
+            border-radius: 2px;
+            margin-left: 3px;
+            float: left;
+            margin-bottom: 3px;
+            padding-left: 3px;
+            color: black;
+        }
 .sobyselectbox .searchtextbox {max-width: 100%;padding: 5px;border: none !important; outline: none;min-width: 2.2em;background-color:transparent;}
 .sobyselectbox .emptytext{    display: inline-block;
     position: absolute;
@@ -415,8 +417,28 @@
     line-height: 1.21428571em;
     color: rgba(191,191,191,.87);}
 .sobyselectbox .searchpanel {float:left;}
-.sobyselectbox .selecteditemsandsearchpanel {float:left;}
-.sobyselectbox .expanderpanel {width:50px; float:right; right: 5px; position: absolute;top:2px;opacity:0.5}
+    .sobyselectbox .selecteditemsandsearchpanel {
+        float: left;
+        width:calc(100% - 50px)
+    }
+    .sobyselectbox .additionalcellonexpanderpanel {
+        width: 24px;
+        float: right;
+        position: absolute;
+        right: 24px;
+        height: 100%;
+    }
+    .sobyselectbox .expanderpanel {
+        width: 24px;
+        float: right;
+        padding-left: 5px;
+        right: 0px;
+        top: 2px;
+        border-left: 1px solid;
+        opacity: 0.5;
+        position: absolute;
+        height: 90%;
+    }
     .sobyselectbox.focus .expanderpanel {
         opacity: 1;
     }

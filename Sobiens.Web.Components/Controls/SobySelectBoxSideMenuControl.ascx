@@ -3,4 +3,6 @@
 <h3>Tutorials</h3>
 <ul>
     <li><a href="/Tutorials/SobySelectBox/Getting Started.aspx">Getting Started</a></li>
+    <li><a href="/Tutorials/SobySelectBox/SearchOnDemand.aspx">Search On Demand</a></li>
+    <li><a href="/Tutorials/SobySelectBox/Getting Started.aspx">Static Data Binding</a></li>
 </ul>
