@@ -1,16 +1,17 @@
 // VERSION 1.0.8.1
 // ********************* ITEM SELECTION *****************************
 var soby_CodeViews = new Array();
-class SobyCodeViewTypesObject {
-    constructor() {
+var SobyCodeViewTypesObject = /** @class */ (function () {
+    function SobyCodeViewTypesObject() {
         this.Html = 0;
         this.Js = 1;
         this.Xml = 2;
     }
-}
+    return SobyCodeViewTypesObject;
+}());
 var SobyCodeViewTypes = new SobyCodeViewTypesObject();
-class soby_CodeView {
-    constructor(contentDivSelector, title, codeViewType) {
+var soby_CodeView = /** @class */ (function () {
+    function soby_CodeView(contentDivSelector, title, codeViewType) {
         this.CodeViewID = "";
         this.ContentDivSelector = "";
         this.Title = "";
@@ -29,7 +30,7 @@ class soby_CodeView {
         this.CodeViewType = codeViewType;
         this.EnsureItemSelectionExistency();
     }
-    Initialize() {
+    soby_CodeView.prototype.Initialize = function () {
         $(this.ContentDivSelector).addClass("soby_codeview");
         var codeContent = $(this.ContentDivSelector).find(".code").html();
         var codeDescription = $(this.ContentDivSelector).find(".codedescription").html();
@@ -53,35 +54,36 @@ class soby_CodeView {
         $(function () {
             codeview.RunCode();
         });
-    }
-    RunCode() {
+    };
+    soby_CodeView.prototype.RunCode = function () {
         $(this.ContentDivSelector).find(".result").html("<iframe class='resultiframe' style= 'width:100%;height:200px;' > </iframe>");
         var html = $(this.ContentDivSelector).find(".code").val();
         var iframe = $(this.ContentDivSelector).find(".resultiframe")[0];
         iframe.contentWindow.document.write(html);
-    }
-    ResetExercise() {
+    };
+    soby_CodeView.prototype.ResetExercise = function () {
         var code = $(this.ContentDivSelector).find(".defaultcodecontainer").val();
         $(this.ContentDivSelector).find(".code").val(code);
-    }
-    CopyToClipboard() {
+    };
+    soby_CodeView.prototype.CopyToClipboard = function () {
         var html = $(this.ContentDivSelector).find(".code").val();
         var copyToClipboardTextarea = $(this.ContentDivSelector).find(".copytoclipboardtextarea");
         copyToClipboardTextarea.text(html);
         var copyText = copyToClipboardTextarea[0];
         eval("copyText.select();");
         document.execCommand("copy");
-    }
-    Populate() {
-    }
-    EnsureItemSelectionExistency() {
+    };
+    soby_CodeView.prototype.Populate = function () {
+    };
+    soby_CodeView.prototype.EnsureItemSelectionExistency = function () {
         for (var key in soby_CodeViews) {
             if (key == this.CodeViewID) {
                 return;
             }
         }
         soby_CodeViews[this.CodeViewID] = this;
-    }
-}
+    };
+    return soby_CodeView;
+}());
 // ************************************************************
 //# sourceMappingURL=soby.ui.components.codeview.js.map

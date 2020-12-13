@@ -2,8 +2,8 @@
 // ********************* ITEM SELECTION *****************************
 var soby_TreeViews = new Array();
 var soby_TreeViewItems = new Array();
-class soby_TreeView {
-    constructor(contentDivSelector, title, rootNodesDataService, childNodesDataService, emptyDataHtml, parentFieldName, valueFieldName, textFieldName) {
+var soby_TreeView = /** @class */ (function () {
+    function soby_TreeView(contentDivSelector, title, rootNodesDataService, childNodesDataService, emptyDataHtml, parentFieldName, valueFieldName, textFieldName) {
         this.TreeViewID = "";
         this.ContentDivSelector = "";
         this.Title = "";
@@ -35,30 +35,30 @@ class soby_TreeView {
             treeview.PopulateNodes(treeview.ContentDivSelector, items);
         };
     }
-    RootDataBeingParsed(data) {
+    soby_TreeView.prototype.RootDataBeingParsed = function (data) {
         return data;
-    }
-    ChildDataBeingParsed(data) {
+    };
+    soby_TreeView.prototype.ChildDataBeingParsed = function (data) {
         return data;
-    }
-    RootNodesDataServiceBeingQueried() {
-    }
-    ChildNodesDataServiceBeingQueried(node) {
-    }
-    Initialize() {
+    };
+    soby_TreeView.prototype.RootNodesDataServiceBeingQueried = function () {
+    };
+    soby_TreeView.prototype.ChildNodesDataServiceBeingQueried = function (node) {
+    };
+    soby_TreeView.prototype.Initialize = function () {
         $(this.ContentDivSelector).addClass("soby_treeview");
         this.RootNodesDataServiceBeingQueried();
         this.RootNodesDataService.PopulateItems(null);
-    }
-    GetItemData(treeviewItemId) {
+    };
+    soby_TreeView.prototype.GetItemData = function (treeviewItemId) {
         for (var i = 0; i < soby_TreeViewItems.length; i++) {
             if (soby_TreeViewItems[i]["SobyTreeViewItemId"] == treeviewItemId) {
                 return soby_TreeViewItems[i];
             }
         }
         return null;
-    }
-    GetRootNodeId(treeviewItemId) {
+    };
+    soby_TreeView.prototype.GetRootNodeId = function (treeviewItemId) {
         var rootNodeId = treeviewItemId;
         var currentParentNodeId = treeviewItemId;
         while (currentParentNodeId != null) {
@@ -68,26 +68,26 @@ class soby_TreeView {
             }
         }
         return rootNodeId;
-    }
-    GetParentNodeId(treeviewItemId) {
+    };
+    soby_TreeView.prototype.GetParentNodeId = function (treeviewItemId) {
         var parentNode = $("#" + treeviewItemId).parent().parent();
         if (parentNode.hasClass("soby_treeviewnode") == true) {
             return parentNode.attr("id");
         }
         return;
-    }
-    GetRootNodeItemData(treeviewItemId) {
+    };
+    soby_TreeView.prototype.GetRootNodeItemData = function (treeviewItemId) {
         var rootNodeId = this.GetRootNodeId(treeviewItemId);
         return this.GetItemData(rootNodeId);
-    }
-    GetParentNodeItemData(treeviewItemId) {
+    };
+    soby_TreeView.prototype.GetParentNodeItemData = function (treeviewItemId) {
         var parentNodeId = this.GetParentNodeId(treeviewItemId);
         if (parentNodeId != null) {
             return this.GetItemData(parentNodeId);
         }
         return;
-    }
-    ExpandNode(treeviewItemId) {
+    };
+    soby_TreeView.prototype.ExpandNode = function (treeviewItemId) {
         var isExpanded = $("#" + treeviewItemId).attr("isexpanded");
         var isLoaded = $("#" + treeviewItemId).attr("isloaded");
         if (isExpanded == "0") {
@@ -116,8 +116,8 @@ class soby_TreeView {
             this.ChildNodesDataServiceBeingQueried(itemData);
             this.ChildNodesDataService.PopulateItems([treeviewItemId, value]);
         }
-    }
-    PopulateNodes(contentDivSelector, items) {
+    };
+    soby_TreeView.prototype.PopulateNodes = function (contentDivSelector, items) {
         var ul = $("<ul></ul>");
         for (var i = 0; i < items.length; i++) {
             var treeViewItemId = soby_guid();
@@ -143,8 +143,8 @@ class soby_TreeView {
             ul.append(li);
         }
         $(contentDivSelector).append(ul);
-    }
-    GetSelectedDataItems() {
+    };
+    soby_TreeView.prototype.GetSelectedDataItems = function () {
         var selectedItems = new Array();
         var selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");
         if (this.AllowCheckBoxes == false) {
@@ -154,25 +154,26 @@ class soby_TreeView {
             selectedItems[selectedItems.length] = this.GetItemData($(selectedInputs[i]).val());
         }
         return selectedItems;
-    }
-    ClickNode(treeViewItemId) {
+    };
+    soby_TreeView.prototype.ClickNode = function (treeViewItemId) {
         if (this.OnClick != null) {
             this.OnClick(this.TreeViewID, treeViewItemId);
         }
-    }
-    CheckNode(treeViewItemId) {
+    };
+    soby_TreeView.prototype.CheckNode = function (treeViewItemId) {
         if (this.OnSelectionChanged != null) {
             this.OnSelectionChanged(this.TreeViewID);
         }
-    }
-    EnsureItemSelectionExistency() {
+    };
+    soby_TreeView.prototype.EnsureItemSelectionExistency = function () {
         for (var key in soby_TreeViews) {
             if (key == this.TreeViewID) {
                 return;
             }
         }
         soby_TreeViews[this.TreeViewID] = this;
-    }
-}
+    };
+    return soby_TreeView;
+}());
 // ************************************************************
 //# sourceMappingURL=soby.ui.components.treeview.js.map

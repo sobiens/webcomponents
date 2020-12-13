@@ -1,9 +1,24 @@
-class soby_CustomWCFBuilder extends soby_WSBuilder {
-    constructor() {
-        super();
-        this.RowLimit = 100;
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var soby_CustomWCFBuilder = /** @class */ (function (_super) {
+    __extends(soby_CustomWCFBuilder, _super);
+    function soby_CustomWCFBuilder() {
+        var _this = _super.call(this) || this;
+        _this.RowLimit = 100;
+        return _this;
     }
-    Clone() {
+    soby_CustomWCFBuilder.prototype.Clone = function () {
         var builder = new soby_CustomWCFBuilder();
         builder.RowLimit = this.RowLimit;
         for (var i = 0; i < this.SchemaFields.length; i++) {
@@ -20,19 +35,19 @@ class soby_CustomWCFBuilder extends soby_WSBuilder {
         }
         //builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
         return builder;
-    }
-    GetPagingQuery(transport) {
+    };
+    soby_CustomWCFBuilder.prototype.GetPagingQuery = function (transport) {
         if (transport.Type == "POST")
             return "'pageIndex': " + this.PageIndex + ","
                 + "'pageItemCount': " + this.RowLimit;
         else {
             return "pageIndex=" + this.PageIndex + "&pageItemCount=" + this.RowLimit;
         }
-    }
-    GetViewFieldsQuery(transport) {
+    };
+    soby_CustomWCFBuilder.prototype.GetViewFieldsQuery = function (transport) {
         return "";
-    }
-    GetOrderByFieldsQuery(transport) {
+    };
+    soby_CustomWCFBuilder.prototype.GetOrderByFieldsQuery = function (transport) {
         var jsonString = "";
         for (var i = 0; i < this.OrderByFields.length; i++) {
             jsonString += this.OrderByFields[i].FieldName + " " + (this.OrderByFields[i].IsAsc == true ? "asc" : "desc") + ",";
@@ -47,8 +62,8 @@ class soby_CustomWCFBuilder extends soby_WSBuilder {
         else
             jsonString = "sort=" + jsonString;
         return jsonString;
-    }
-    GetWhereQuery(transport) {
+    };
+    soby_CustomWCFBuilder.prototype.GetWhereQuery = function (transport) {
         var query = "";
         if (transport.Type == "POST") {
             query = this.Filters.ToJson();
@@ -59,8 +74,8 @@ class soby_CustomWCFBuilder extends soby_WSBuilder {
                 query = "filter=" + query;
         }
         return query;
-    }
-    GetMainQuery(transport) {
+    };
+    soby_CustomWCFBuilder.prototype.GetMainQuery = function (transport) {
         var selectFieldsEnvelope = this.GetViewFieldsQuery(transport);
         var whereQuery = this.GetWhereQuery(transport);
         var orderByFieldsQuery = this.GetOrderByFieldsQuery(transport);
@@ -81,11 +96,11 @@ class soby_CustomWCFBuilder extends soby_WSBuilder {
             envelope += pagingQuery;
             return envelope;
         }
-    }
-    GetCountQuery(transport) {
+    };
+    soby_CustomWCFBuilder.prototype.GetCountQuery = function (transport) {
         return null;
-    }
-    ParseData(result) {
+    };
+    soby_CustomWCFBuilder.prototype.ParseData = function (result) {
         /*
         for (var i = 0; i < result.length; i++) {
             for (var x = 0; x < this.SchemaFields.length; x++) {
@@ -101,8 +116,8 @@ class soby_CustomWCFBuilder extends soby_WSBuilder {
         this.NextPageExist = result.NextPageExist;
         //        this.
         return result.Data;
-    }
-    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType) {
+    };
+    soby_CustomWCFBuilder.prototype.GetData = function (data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType) {
         if (requestMethod == null || requestMethod == "")
             requestMethod = "POST";
         $.ajax({
@@ -134,9 +149,10 @@ class soby_CustomWCFBuilder extends soby_WSBuilder {
                 }
             }
         });
-    }
+    };
     ;
-}
+    return soby_CustomWCFBuilder;
+}(soby_WSBuilder));
 $(function () {
     soby_PopulateGridWCFDataBinding();
 });

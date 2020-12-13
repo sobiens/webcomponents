@@ -140,8 +140,8 @@ declare class SobySelectBox {
     FocusToNextItemAfterItemSelection: boolean;
     Width: string;
     LastSearchKeyword: string;
-    GetValue(): any;
     SetValue(value: string): void;
+    SetValueWithTitle(value: string, title: string): void;
     /**
      * Changes theme
      *
@@ -172,38 +172,12 @@ declare class SobySelectBox {
     Validate(): boolean;
     /************************************ EVENTS *************************************/
     /**
-     * Item creation event.
-     *
-     * @event soby_WebGrid#ItemCreated
-     * @type {object}
-     * @property {object} rowID - Identifier of the row.
-     * @property {object} item - Data item related with the row.
-     */
-    ItemCreated: any;
-    /**
      * Grid population event.
      *
      * @event soby_WebGrid#OnGridPopulated
      * @type {object}
      */
-    OnGridPopulated: any;
-    /**
-     * Row selection event.
-     *
-     * @event soby_WebGrid#OnRowSelected
-     * @type {object}
-     */
-    OnRowSelected: any;
-    /**
-     * Cell selection event.
-     *
-     * @event soby_WebGrid#OnCellSelected
-     * @type {object}
-     * @property {soby_WebGrid} grid - Current grid object.
-     * @property {object} rowID - Identifier of the row.
-     * @property {object} cellIndex - Index of the cell.
-     */
-    OnCellSelected: any;
+    OnSelectBoxItemsPopulated: any;
 }
 declare class SobyEditControlFactory {
     CreateEditControl(containerClientId: string, fieldType: number, args: any): ISobyEditControlInterface;
@@ -729,7 +703,10 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
      */
     DropGroupByColumn(ev: any): void;
     ExportToExcel(): void;
-    CopyToClipboard(elem: HTMLTextAreaElement): any;
+    ExportTableToCSV(): void;
+    DownloadCSV(csv: any, filename: any): void;
+    PrintGrid(): void;
+    CopyToClipboard(): void;
     /**
      * Generates group by pane
      * @example

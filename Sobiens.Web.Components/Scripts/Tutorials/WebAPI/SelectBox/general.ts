@@ -25,6 +25,9 @@ function soby_PopulateSelectBoxGeneral() {
     selectbox.TitleFieldName = "Title";
     selectbox.ValueFieldName = "Id";
     selectbox.FocusToNextItemAfterItemSelection = false;
+    selectbox.Initialized = function () {
+        selectbox.SetValueWithTitle("3232", "ewqewq");
+    }
     selectbox.Initialize();
 }
 

@@ -117,7 +117,7 @@ class soby_PresenceValidator implements soby_ValidatorInterface
     Validate(value: any): boolean
     {
         this.ErrorMessage = "";
-        if (sobyValidate.CheckIfEmpty(value) == true)
+        if (this.Required == true && sobyValidate.CheckIfEmpty(value) == true)
         {
             this.ErrorMessage = this.ErrorMessages.Required;
             return false;
@@ -657,7 +657,7 @@ class soby_FormValidator
                 errorMessageSpan.insertAfter(textBox);
             }
             var value = textBox.val();
-            if (textBox.attr("required") != null && textBox.attr("required") != undefined)
+            if (textBox[0].hasAttribute("required") == true)
             {
                 textValidator.Required = true;
             }
@@ -689,7 +689,7 @@ class soby_FormValidator
                 textBox.addClass("haserror");
                 $("#" + texBoxErrorMessageId).text(textValidator.ErrorMessage);
                 $("#" + texBoxErrorMessageId).show();
-                if (hasInValidData == false)
+                if (hasInValidData == false && textBox.is(":visible") == true)
                 {
                     textBox.focus();
                     textBox.select();

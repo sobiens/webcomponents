@@ -507,15 +507,31 @@ class SobySelectBox
     FocusToNextItemAfterItemSelection: boolean = true;
     Width: string = '600px';
     LastSearchKeyword: string = '';
-    
+
+    /*
     GetValue(): any
     {
         var value = $("#" + this.ContainerClientId + " select.sobyselectbox").val();
         return value;
     }
+    */
     SetValue(value: string)
     {
-        $("#" + this.ContainerClientId + " select.sobyselectbox").val(value);
+        for (var x = 0; x < this.Items.length; x++) {
+            var item = this.Items[x];
+            if (item[this.ValueFieldName] == value) {
+                this.SelectItem(x);
+                break;
+            }
+        }
+    }
+
+    SetValueWithTitle(value: string, title: string) {
+        var item = new Object();
+        item[this.ValueFieldName] = value;
+        item[this.TitleFieldName] = title;
+        this.Items.push(item);
+        this.SelectItem(this.Items.length-1);
     }
 
     /**
@@ -575,8 +591,6 @@ class SobySelectBox
 
         $("#" + this.ContainerClientId + " .searchtextbox").keyup(function () {
             var keyword = $(this).val();
-            console.log("keyword:");
-            console.log(keyword);
             if (selectbox.SearchOnDemand == false) {
                 selectbox.SearchFromPopulatedData(keyword);
             }
@@ -691,9 +705,13 @@ class SobySelectBox
 
                 }
                 editControl.Initialized();
+                if (editControl.OnSelectBoxItemsPopulated != null)
+                    editControl.OnSelectBoxItemsPopulated ();
+
                 editControl.HideLoadingIcon();
             };
 
+            this.ShowLoadingIcon();
             this.DataService.PopulateItems(null);
         }
     }
@@ -702,13 +720,8 @@ class SobySelectBox
         this.ShowLoadingIcon();
 
         for (var i = this.DataService.DataSourceBuilder.Filters.Filters.length - 1; i > -1; i--) {
-            console.log("i" + i)
-            console.log(this.DataService.DataSourceBuilder.Filters.Filters[i].FieldName + " --- " + this.SearchParameterName)
             if (this.DataService.DataSourceBuilder.Filters.Filters[i].FieldName == this.SearchParameterName) {
-                console.log("slicing index " + i)
-                console.log(this.DataService.DataSourceBuilder.Filters.Filters)
                 this.DataService.DataSourceBuilder.Filters.Filters.splice(i, 1);
-                console.log(this.DataService.DataSourceBuilder.Filters.Filters)
             }
         }
 
@@ -865,7 +878,6 @@ class SobySelectBox
     GetSelectedItems()
     {
         var selectedItems = new Array();
-        var selectedItemsPanel = $("#" + this.ContainerClientId + " .selecteditems");
         for (var i = 0; i < this.SelectedItemKeyValues.length; i++)
         {
             var keyValue = this.SelectedItemKeyValues[i];
@@ -971,41 +983,13 @@ class SobySelectBox
 
     /************************************ EVENTS *************************************/
     /**
-     * Item creation event.
-     *
-     * @event soby_WebGrid#ItemCreated
-     * @type {object}
-     * @property {object} rowID - Identifier of the row.
-     * @property {object} item - Data item related with the row.
-     */
-    ItemCreated = null;
-
-    /**
      * Grid population event.
      *
      * @event soby_WebGrid#OnGridPopulated
      * @type {object}
      */
-    OnGridPopulated = null;
+    OnSelectBoxItemsPopulated  = null;
 
-    /**
-     * Row selection event.
-     *
-     * @event soby_WebGrid#OnRowSelected
-     * @type {object}
-     */
-    OnRowSelected = null;
-
-    /**
-     * Cell selection event.
-     *
-     * @event soby_WebGrid#OnCellSelected
-     * @type {object}
-     * @property {soby_WebGrid} grid - Current grid object.
-     * @property {object} rowID - Identifier of the row.
-     * @property {object} cellIndex - Index of the cell.
-     */
-    OnCellSelected = null;
     /************************************ END EVENTS *********************************/
 
 }
@@ -1617,38 +1601,20 @@ class soby_WebGrid implements ISobySelectorControlInterface
 
         var buttons: sobyActionPaneButtons = new sobyActionPaneButtons();
 
-        buttons.Add("ExportToExcel", "Export item(s)", 0, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-icon-excel", true, function (grid)
+        buttons.Add("ExportToExcel", "Export to excel", 0, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-icon-excel", true, function (grid)
         {
             grid.ExportToExcel()
         }, function (grid) { return grid.AllowExportData; });
-        buttons.Add("Delete", "Delete item(s)", 1, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-delete", true,
+        buttons.Add("ExportToCSV", "Export to csv", 1, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-icon-csv", true, function (grid) {
+            grid.ExportTableToCSV()
+        }, function (grid) { return grid.AllowExportData; });
+        buttons.Add("PrintGrid", "Print", 2, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-icon-print", true, function (grid) {
+            grid.PrintGrid()
+        }, function (grid) { return grid.AllowExportData; });
+        buttons.Add("CopyToClipboard", "Copy to clipboard", 3, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-icon-clipboard", true,
             function (grid){
-                grid.DeleteSelectedRows();
-            }
-            , function (grid){
-                return (grid.IsDeletable == true && grid.GetSelectedRowIDs().length > 0);
-            });
-        buttons.Add("Edit", "Edit item(s)", 2, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-edit", true
-            , function (grid){
-                grid.EditSelectedRow();
-            }
-            , function (grid){
-                return (grid.IsEditable == true && grid.GetSelectedRowIDs().length == 1);
-            });
-        buttons.Add("Refresh", "Refresh", 3, this.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-refresh", true
-            , function (grid){
-                grid.Initialize(true);
-            }
-            , function (grid){
-                return (grid.ShowRefreshButton == true);
-            });
-        buttons.Add("Create", "New item", 4, this.ImagesFolderUrl + "/spcommon.png?rev=43", "soby-list-addnew", true
-            , function (grid){
-                grid.EditNewRow();
-            }
-            , function (grid){
-                return (grid.IsAddAllowed == true);
-            });
+                grid.CopyToClipboard();
+            }, function (grid) { return grid.AllowExportData; });
         this.ActionPaneButtons.AddCollection(buttons);
         this.InitializedActionPaneButtons = true;
     }
@@ -2408,79 +2374,120 @@ class soby_WebGrid implements ISobySelectorControlInterface
     }
 
     ExportToExcel() {
-        var dataText = "";
-        var rows = $(this.ContentDivSelector + " .soby_griddatarow");
-        for (var i = 0; i < rows.length; i++) {
-            var cells = $(rows[i]).find(".soby_gridcell");
-            for (var x = 0; x < cells.length; x++) {
-                dataText += $(cells[x]).text();
-                if (x < cells.length - 1)
-                {
-                    dataText += "\t";
-                }
-            }
+        var filename = 'exportdata1.xls';
+        var downloadLink;
+        var dataType = 'application/vnd.ms-excel';
+        var tableSelect = document.getElementById(this.GridID);
+        var newTable = $(tableSelect.outerHTML);
+        newTable.find(".groupbypanerow").remove();
+        newTable.find(".actionpanerow").remove();
+        newTable.find(".loadingrow").remove();
+        newTable.find("img").remove();
+        var tableHTML = newTable[0].outerHTML;
 
-            if (i < rows.length - 1)
-            {
-                dataText += "\n";
-            }
+        var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+        tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+        tab_text = tab_text + '<x:Name>Test Sheet</x:Name>';
+        tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+        tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+        tab_text = tab_text + "<table border='1px'>";
+        tab_text = tab_text + tableHTML;
+        tab_text = tab_text + '</table></body></html>';
+        
+        var blob = new Blob([tab_text], { type: "application/vnd.ms-excel;charset=utf-8" })
+
+        downloadLink = document.createElement("a");
+
+        document.body.appendChild(downloadLink);
+
+        if (navigator.msSaveOrOpenBlob) {
+            navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+            // Create a link to the file
+            downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+            // Setting the file name
+            downloadLink.download = filename;
+
+            //triggering the function
+            downloadLink.click();
         }
-        $(this.ContentDivSelector + " .tempdatadiv").text(dataText);
-        var element: HTMLTextAreaElement = <HTMLTextAreaElement > $(this.ContentDivSelector + " .tempdatadiv")[0];
-        var result = this.CopyToClipboard(element);
-        alert("It has been transferred to clipboard. You can paste into excel now.")
     }
+    ExportTableToCSV() {
+        var filename = "exportdata.csv";
+        var csv = [];
+        var rows = document.getElementById(this.GridID).querySelectorAll("tr.soby_gridheaderrow, tr.soby_griddatarow");
 
-    CopyToClipboard(elem:HTMLTextAreaElement) {
-        // create hidden text element, if it doesn't already exist
-        var targetId = "_hiddenCopyText_";
-        var target: HTMLTextAreaElement = null;
-        var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
-        var origSelectionStart, origSelectionEnd;
-        if (isInput) {
-            // can just use the original source element for the selection and copy
-            target = elem;
-            origSelectionStart = elem.selectionStart;
-            origSelectionEnd = elem.selectionEnd;
-        } else {
-            // must use a temporary form element for the selection and copy
-            target = <HTMLTextAreaElement>document.getElementById(targetId);
-            if (!target) {
-                target = document.createElement("textarea");
-                target.style.position = "absolute";
-                target.style.left = "-9999px";
-                target.style.top = "0";
-                target.id = targetId;
-                document.body.appendChild(target);
-            }
-            target.textContent = elem.textContent;
-        }
-        // select the content
-        var currentFocus = document.activeElement;
-        target.focus();
-        target.setSelectionRange(0, target.value.length);
-    
-        // copy the selection
-        var succeed;
-        try {
-            succeed = document.execCommand("copy");
-        } catch (e) {
-            succeed = false;
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+                row.push(cols[j].textContent);
+
+            csv.push(row.join(","));
         }
 
-        // restore original focus
-        //if (currentFocus && typeof currentFocus.focus === "function") {
-        //    currentFocus.focus();
-        //}
+        // Download CSV file
+        this.DownloadCSV(csv.join("\n"), filename);
+    }
+    DownloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
 
-        if (isInput) {
-            // restore prior selection
-            elem.setSelectionRange(origSelectionStart, origSelectionEnd);
-        } else {
-            // clear temporary content
-            target.textContent = "";
+        // CSV file
+        csvFile = new Blob([csv]);
+        // , { type: "text/csv" }
+        if (window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveBlob(csvFile, "filename.csv");
         }
-        return succeed;
+        else {
+
+            // Download link
+            downloadLink = document.createElement("a");
+
+            // File name
+            downloadLink.download = filename;
+
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+
+            // Hide download link
+            downloadLink.style.display = "none";
+
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+
+            // Click download link
+            downloadLink.click();
+        }
+    }
+    PrintGrid() {
+        var tableSelect = document.getElementById(this.GridID);
+        var newTable = $(tableSelect.outerHTML);
+        newTable.find(".groupbypanerow").remove();
+        newTable.find(".actionpanerow").remove();
+        newTable.find(".loadingrow").remove();
+        newTable.find("img").remove();
+        var tableHTML = newTable[0].outerHTML;
+
+        //var divContents = document.getElementById("soby_MembershipSearchDiv").innerHTML;
+        var a = window.open('', '', 'height=500, width=500');
+        a.document.write('<html>');
+        a.document.write('<body >');
+        a.document.write(tableHTML);
+        a.document.write('</body></html>');
+        a.document.close();
+        a.print();
+    }
+    CopyToClipboard() {
+        var range = document.createRange();
+        range.selectNode(document.getElementById(this.GridID));
+        window.getSelection().removeAllRanges(); // clear current selection
+        window.getSelection().addRange(range); // to select text
+        $("#" + this.GridID + " .actionpanerow").hide();
+        document.execCommand("copy");
+        $("#" + this.GridID + " .actionpanerow").show();
+        window.getSelection().removeAllRanges();// to deselect
     }
 
     /**
@@ -3045,7 +3052,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
 
         var headerOnClick = "";
         var headerLink = null;
-        var container = $("<div style='width:100%'></div>");
+        var container = $("<div style='width:100%;position: relative;'></div>");
         var sortCell = $("<div style='float:left;'></div>");
         var filterCell = $("<div style='width:10px;float:right;display:none' class='headerrowmenuiconcontainer'><a href='javascript:void(0)' class='openmenulink'><img src='" + this.ImagesFolderUrl + "/ecbarw.png' alt='Open Menu'></a></div>");
         container.append(sortCell);
@@ -3519,6 +3526,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
         }
         $(this.ContentDivSelector).append(table);
         $(this.ContentDivSelector).append("<div style='display:none' class='tempdatadiv'></div>");
+        $(this.ContentDivSelector).append("<canvas style='display:none' class='soby_webgridcanvas' width='200' height='200'></canvas>");
 
         var grid = this;
         this.DataService.ItemPopulated = function (items)

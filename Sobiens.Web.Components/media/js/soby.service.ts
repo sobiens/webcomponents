@@ -198,8 +198,6 @@ class SobyFilters implements ISobyFilter {
 
     ToJson() {
         var json = "";
-        console.log("Last this.Filters:");
-        console.log(this.Filters)
         for (var i = 0; i < this.Filters.length; i++) {
             var argument = this.Filters[i];
             json += "\"" + argument.FieldName + "\": \"" + argument.FilterValue + "\",";
@@ -1069,13 +1067,10 @@ class soby_WebServiceService implements soby_ServiceInterface {
             this.Filters = new SobyFilters(filters.IsOr);
         }
 
-        console.log("Filtering...");
         if (filters.Filters.length > 0)
         {
-            console.log("Filteringxyz...");
             this.Filters.AddFilterCollection(filters);
         }
-        console.log(this.Filters);
         this.PopulateItems(null);
     };
     SortAndFilter(orderByFields: SobyOrderByFields, filters: SobyFilters, clearOtherFilters: boolean)
@@ -1138,14 +1133,9 @@ class soby_WebServiceService implements soby_ServiceInterface {
             this.DataSourceBuilderTemp.AddOrderFields(this.OrderByFields);
         }
 
-        console.log("Filtering2...");
-
         if (this.Filters.Filters.length > 0) {
-            console.log("Filtering2xyz...");
             this.DataSourceBuilderTemp.Filters.AddFilterCollection(this.Filters);
         }
-        console.log(this.DataSourceBuilderTemp.Filters);
-
 
         this.DataSourceBuilderTemp.PageIndex = this.PageIndex;
         this.DataSourceBuilderTemp.NextPageString = this.NextPageString;
@@ -1425,8 +1415,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         return result;
     }
     GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType) {
-        if (requestMethod == null || requestMethod == "")
-        {
+        if (requestMethod == null || requestMethod == "") {
             requestMethod = "POST";
         }
 
@@ -1901,6 +1890,10 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
         if (contentType == null || contentType == "")
         {
             contentType = "application/json; charset=utf-8";
+        }
+
+        if (requestMethod == "GET") {
+            contentType = "";
         }
 
         $.ajax({
