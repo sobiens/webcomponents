@@ -87,7 +87,7 @@ var soby_SharePointService = /** @class */ (function () {
                 service.ErrorThrown(errorMessage, errorTypeName);
             }
             soby_LogMessage(errorMessage);
-        }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
+        }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     };
     soby_SharePointService.prototype.NavigationInformationBeingPopulated = function () { };
     soby_SharePointService.prototype.NavigationInformationPopulated = function () { };
@@ -218,7 +218,7 @@ var soby_SharePointService = /** @class */ (function () {
                 service.ErrorThrown(errorMessage, errorTypeName);
             }
             soby_LogMessage(errorMessage);
-        }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
+        }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     };
     soby_SharePointService.prototype.Parse = function () {
     };

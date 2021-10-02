@@ -128,6 +128,7 @@ declare class SobySelectBox {
     SearchParameterName: string;
     Items: any;
     SelectedItemKeyValues: any;
+    SelectedItemDisplayValues: any;
     EmptyText: string;
     NoRecordsText: string;
     DataService: soby_ServiceInterface;
@@ -352,6 +353,13 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
      * @type {object}
      */
     OnGridDataBeingParsed: any;
+    /**
+     * Grid before print event.
+     *
+     * @event soby_WebGrid#OnGridPrintBeingStarted
+     * @type {object}
+     */
+    OnGridPrintBeingStarted: any;
     /**
      * Row selection event.
      *

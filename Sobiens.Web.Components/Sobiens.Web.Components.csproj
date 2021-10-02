@@ -205,6 +205,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Controls\SobyGridSideMenuControl.ascx" />
+    <Content Include="Controls\SobyChartSideMenuControl.ascx" />
     <Content Include="Controls\SobyWizardSideMenuControl.ascx" />
     <Content Include="Controls\SobyValidatorViewSideMenuControl.ascx" />
     <Content Include="Controls\SobyCheckBoxListSideMenuControl.ascx" />
@@ -223,6 +224,7 @@
     <Content Include="Css\bootstrap.min.css" />
     <Content Include="Css\main.css" />
     <Content Include="download\Versions.aspx" />
+    <Content Include="Images\Tutorials\Soby_Chart_Default.png" />
     <Content Include="Images\Tutorials\Soby_CalendarView_Default.png" />
     <Content Include="Images\Tutorials\Soby_ItemSelection_Autocomplete.png" />
     <Content Include="Images\Tutorials\Soby_TreeView_Default.png" />
@@ -351,6 +353,7 @@
     <TypeScriptCompile Include="media\js\soby.ui.components.calendar.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.codeview.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.scheduler.ts" />
+    <TypeScriptCompile Include="media\js\soby.ui.components.charts.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.treeview.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.ts" />
     <TypeScriptCompile Include="media\js\soby.validator.ts" />
@@ -360,6 +363,7 @@
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\codeview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.customdates.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\StaticData\Scheduler\scheduler.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\StaticData\StaticDataBinding\staticdatabinding.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valuelengthvalidation.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valueinclusionvalidation.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valueexclusionvalidation.ts" />
@@ -371,6 +375,12 @@
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valuedatevalidation.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CalendarView\calendarview.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\columnchart.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\piechart.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\radarchart.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\polarareachart.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\barchart.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\linechart.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CheckBoxList\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\customformat.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\paging.ts" />
@@ -390,6 +400,13 @@
     <Content Include="Scripts\Tutorials\WebAPI\Grid\themes.js" />
     <Content Include="sitemap.xml" />
     <Content Include="Tutorials\SobyCalendarView\Getting Started.aspx" />
+    <Content Include="Tutorials\SobyChart\ColumnChart.aspx" />
+    <Content Include="Tutorials\SobyChart\PolarAreaChart.aspx" />
+    <Content Include="Tutorials\SobyChart\RadarChart.aspx" />
+    <Content Include="Tutorials\SobyChart\PieChart.aspx" />
+    <Content Include="Tutorials\SobyChart\BarChart.aspx" />
+    <Content Include="Tutorials\SobyChart\LineChart.aspx" />
+    <Content Include="Tutorials\SobyChart\Getting Started.aspx" />
     <Content Include="Tutorials\SobyCheckBoxList\Getting Started.aspx" />
     <Content Include="Tutorials\SobyCodeView\CustomizedTemplate2.aspx" />
     <Content Include="Tutorials\SobyCodeView\CustomizedTemplate1.aspx" />
@@ -410,6 +427,7 @@
     <Content Include="Tutorials\SobyItemSelection\Single Selection.aspx" />
     <Content Include="Tutorials\SobyScheduler\Custom Dates.aspx" />
     <Content Include="Tutorials\SobyScheduler\Getting Started.aspx" />
+    <Content Include="Tutorials\SobySelectBox\StaticDataBinding.aspx" />
     <Content Include="Tutorials\SobySelectBox\SearchOnDemand.aspx" />
     <Content Include="Tutorials\SobySelectBox\Getting Started.aspx" />
     <Content Include="Tutorials\SobyValidator\FormValidation.aspx" />
@@ -580,6 +598,13 @@
     <Compile Include="Controls\SobyGridSideMenuControl.ascx.designer.cs">
       <DependentUpon>SobyGridSideMenuControl.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SobyChartSideMenuControl.ascx.cs">
+      <DependentUpon>SobyChartSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyChartSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyChartSideMenuControl.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SobyWizardSideMenuControl.ascx.cs">
       <DependentUpon>SobyWizardSideMenuControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -715,6 +740,55 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Tutorials\SobyCalendarView\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\ColumnChart.aspx.cs">
+      <DependentUpon>ColumnChart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\ColumnChart.aspx.designer.cs">
+      <DependentUpon>ColumnChart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\PolarAreaChart.aspx.cs">
+      <DependentUpon>PolarAreaChart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\PolarAreaChart.aspx.designer.cs">
+      <DependentUpon>PolarAreaChart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\RadarChart.aspx.cs">
+      <DependentUpon>RadarChart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\RadarChart.aspx.designer.cs">
+      <DependentUpon>RadarChart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\PieChart.aspx.cs">
+      <DependentUpon>PieChart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\PieChart.aspx.designer.cs">
+      <DependentUpon>PieChart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\BarChart.aspx.cs">
+      <DependentUpon>BarChart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\BarChart.aspx.designer.cs">
+      <DependentUpon>BarChart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\LineChart.aspx.cs">
+      <DependentUpon>LineChart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\LineChart.aspx.designer.cs">
+      <DependentUpon>LineChart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\Getting Started.aspx.designer.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyCheckBoxList\Getting Started.aspx.cs">
@@ -1051,6 +1125,13 @@
     </Compile>
     <Compile Include="Tutorials\SobyScheduler\Getting Started.aspx.designer.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobySelectBox\StaticDataBinding.aspx.cs">
+      <DependentUpon>StaticDataBinding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobySelectBox\StaticDataBinding.aspx.designer.cs">
+      <DependentUpon>StaticDataBinding.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobySelectBox\SearchOnDemand.aspx.cs">
       <DependentUpon>SearchOnDemand.aspx</DependentUpon>

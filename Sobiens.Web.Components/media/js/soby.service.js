@@ -54,11 +54,12 @@ var soby_Transport = /** @class */ (function () {
     return soby_Transport;
 }());
 var soby_TransportRequest = /** @class */ (function () {
-    function soby_TransportRequest(url, dataType, contentType, type) {
+    function soby_TransportRequest(url, dataType, contentType, type, includeCredentials) {
         this.Url = url;
         this.DataType = dataType;
         this.ContentType = contentType;
         this.Type = type;
+        this.IncludeCredentials = includeCredentials !== null ? includeCredentials : false;
     }
     return soby_TransportRequest;
 }());
@@ -778,7 +779,7 @@ var soby_DataSourceBuilderAbstract = /** @class */ (function () {
     soby_DataSourceBuilderAbstract.prototype.ParseData = function (value) {
         return null;
     };
-    soby_DataSourceBuilderAbstract.prototype.GetData = function (data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType) { };
+    soby_DataSourceBuilderAbstract.prototype.GetData = function (data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType, includeCredentials) { };
     return soby_DataSourceBuilderAbstract;
 }());
 // ******************************************************************
@@ -869,7 +870,7 @@ var soby_WebServiceService = /** @class */ (function () {
                 service.ErrorThrown(errorMessage, null);
             }
             soby_LogMessage(errorMessage);
-        }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
+        }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     };
     soby_WebServiceService.prototype.NavigationInformationBeingPopulated = function () { };
     soby_WebServiceService.prototype.NavigationInformationPopulated = function () { };
@@ -992,7 +993,7 @@ var soby_WebServiceService = /** @class */ (function () {
                 service.ErrorThrown(errorMessage, null);
             }
             soby_LogMessage(errorMessage);
-        }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
+        }, function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     };
     soby_WebServiceService.prototype.Parse = function () {
     };
@@ -1175,9 +1176,12 @@ var soby_StaticDataBuilder = /** @class */ (function (_super) {
         }
         return result;
     };
-    soby_StaticDataBuilder.prototype.GetData = function (data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType) {
-        if (requestMethod == null || requestMethod == "") {
+    soby_StaticDataBuilder.prototype.GetData = function (data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, includeCredentials) {
+        if (requestMethod === null || requestMethod === "") {
             requestMethod = "POST";
+        }
+        if (includeCredentials == null) {
+            includeCredentials = false;
         }
         $.ajax({
             async: (async != null ? async : true),
@@ -1187,6 +1191,9 @@ var soby_StaticDataBuilder = /** @class */ (function (_super) {
             data: data,
             processData: false,
             contentType: "application/json; charset=utf-8",
+            xhrFields: (includeCredentials === true ? {
+                withCredentials: true
+            } : {}),
             complete: function (XMLHttpRequest) {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1217,7 +1224,16 @@ var soby_StaticDataBuilder = /** @class */ (function (_super) {
     return soby_StaticDataBuilder;
 }(soby_DataSourceBuilderAbstract));
 var soby_StaticDataService = /** @class */ (function () {
-    function soby_StaticDataService(dataSourceBuilder, items) {
+    /*
+    constructor(dataSourceBuilder: soby_StaticDataBuilder, items: Array<soby_Item>) {
+        this.Items = items;
+        this.DataSourceBuilder = dataSourceBuilder;
+        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
+        this.NextPageStrings = new Array<string>();
+        this.NextPageStrings[0] = "";
+    }
+    */
+    function soby_StaticDataService(fields, items) {
         this.NextPageString = "";
         this.PageIndex = 0;
         this.StartIndex = 0;
@@ -1227,6 +1243,11 @@ var soby_StaticDataService = /** @class */ (function () {
         this.OrderByFields = new SobyOrderByFields();
         this.NextPageExist = false;
         this.Items = items;
+        var dataSourceBuilder = new soby_StaticDataBuilder();
+        dataSourceBuilder.Filters = new SobyFilters(false);
+        for (var i = 0; i < fields.length; i++) {
+            dataSourceBuilder.AddSchemaField(fields[i].FieldName, fields[i].FieldType, fields[i].Args);
+        }
         this.DataSourceBuilder = dataSourceBuilder;
         this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
         this.NextPageStrings = new Array();
@@ -1276,7 +1297,7 @@ var soby_StaticDataService = /** @class */ (function () {
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
-        if (clearOtherFilters == true) {
+        if (clearOtherFilters === true) {
             this.Filters = new SobyFilters(filters.IsOr);
         }
         if (filters.Filters.length > 0) {
@@ -1298,7 +1319,7 @@ var soby_StaticDataService = /** @class */ (function () {
     ;
     soby_StaticDataService.prototype.PopulateItems = function (args) {
         this.Args = args;
-        if (this.ItemBeingPopulated != null) {
+        if (this.ItemBeingPopulated !== null) {
             this.ItemBeingPopulated();
         }
         if (this.OrderByFields.length > 0) {
@@ -1307,7 +1328,7 @@ var soby_StaticDataService = /** @class */ (function () {
                 var result = 0;
                 for (var i = 0; i < orderByFields.length; i++) {
                     if (x[orderByFields[i].FieldName] > y[orderByFields[i].FieldName]) {
-                        if (orderByFields[i].IsAsc == true) {
+                        if (orderByFields[i].IsAsc === true) {
                             return 1;
                         }
                         else {
@@ -1315,7 +1336,7 @@ var soby_StaticDataService = /** @class */ (function () {
                         }
                     }
                     else if (x[orderByFields[i].FieldName] < y[orderByFields[i].FieldName]) {
-                        if (orderByFields[i].IsAsc == true) {
+                        if (orderByFields[i].IsAsc === true) {
                             return -1;
                         }
                         else {
@@ -1564,7 +1585,7 @@ var soby_WSBuilder = /** @class */ (function (_super) {
         }
         return result;
     };
-    soby_WSBuilder.prototype.GetData = function (data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType) {
+    soby_WSBuilder.prototype.GetData = function (data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType, includeCredentials) {
         if (requestMethod == null || requestMethod == "") {
             requestMethod = "POST";
         }
@@ -1582,6 +1603,9 @@ var soby_WSBuilder = /** @class */ (function (_super) {
             data: data,
             processData: false,
             contentType: contentType,
+            xhrFields: (includeCredentials === true ? {
+                withCredentials: true
+            } : {}),
             complete: function (XMLHttpRequest) {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

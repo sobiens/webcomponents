@@ -7,11 +7,12 @@ declare class soby_Transport {
     Delete: soby_TransportRequest;
 }
 declare class soby_TransportRequest {
-    constructor(url: string, dataType: string, contentType: string, type: string);
+    constructor(url: string, dataType: string, contentType: string, type: string, includeCredentials?: boolean);
     Url: string;
     DataType: string;
     ContentType: string;
     Type: string;
+    IncludeCredentials: boolean;
 }
 declare var soby_FilterValueSeperator: string;
 declare class SobyFieldTypesObject {
@@ -226,7 +227,7 @@ declare abstract class soby_DataSourceBuilderAbstract implements soby_DataSource
     MainQueryBeingGenerated(): void;
     DataBeingParsed(data: any, parseCompleted: boolean): Array<soby_Item>;
     ParseData(value: string): Array<soby_Item>;
-    GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any, contentType: any): void;
+    GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any, contentType: any, includeCredentials: any): void;
 }
 declare class soby_Filter {
     FieldName: string;
@@ -285,12 +286,12 @@ declare class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: boolean): string;
     GetCountQuery(transport: soby_TransportRequest): string;
     ParseData(result: any): any;
-    GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any): void;
+    GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any, includeCredentials: any): void;
 }
 declare class soby_StaticDataService implements soby_ServiceInterface {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
     DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
-    constructor(dataSourceBuilder: soby_StaticDataBuilder, items: Array<soby_Item>);
+    constructor(fields: Array<SobySchemaField>, items: Array<soby_Item>);
     Items: Array<soby_Item>;
     NextPageString: string;
     PageIndex: number;
@@ -340,7 +341,7 @@ declare class soby_WSBuilder extends soby_DataSourceBuilderAbstract {
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: boolean): string;
     GetCountQuery(transport: soby_TransportRequest): string;
     ParseData(result1: any): any;
-    GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any, contentType: any): void;
+    GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any, contentType: any, includeCredentials: any): void;
 }
 declare var soby_guid: () => string;
 declare function soby_LogMessage(message: any): void;

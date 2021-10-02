@@ -95,7 +95,7 @@ class soby_SharePointService implements soby_ServiceInterface
                 }
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     }
     NavigationInformationBeingPopulated() { }
     NavigationInformationPopulated() { }
@@ -254,7 +254,7 @@ class soby_SharePointService implements soby_ServiceInterface
                 }
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     }
 
     Parse() {

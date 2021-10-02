@@ -495,6 +495,7 @@ class SobySelectBox
     SearchParameterName: string = "";
     Items = null;
     SelectedItemKeyValues = null;
+    SelectedItemDisplayValues = null;
     EmptyText: string = "Please Select";
     NoRecordsText: string = "No records found";
     DataService: soby_ServiceInterface = null;
@@ -567,6 +568,7 @@ class SobySelectBox
     {
         var selectbox = this;
         this.SelectedItemKeyValues = new Array();
+        this.SelectedItemDisplayValues = new Array();
         $("#" + this.ContainerClientId).addClass("sobyselectbox");
         $("#" + this.ContainerClientId).css("width", this.Width);
         $("#" + this.ContainerClientId).addClass(this.ThemeClassName);
@@ -591,7 +593,7 @@ class SobySelectBox
 
         $("#" + this.ContainerClientId + " .searchtextbox").keyup(function () {
             var keyword = $(this).val();
-            if (selectbox.SearchOnDemand == false) {
+            if (selectbox.SearchOnDemand === false) {
                 selectbox.SearchFromPopulatedData(keyword);
             }
             else {
@@ -623,7 +625,7 @@ class SobySelectBox
                     break;
                 case 37: //Left
                     var keyword = $("#" + this.ContainerClientId + " .searchtextbox").val();
-                    if (keyword == null || keyword == undefined || keyword == "")
+                    if (keyword === null || keyword === undefined || keyword === "")
                     {
                         event.preventDefault();
                         $("#" + editControl.ContainerClientId + " .selecteditemsandsearchpanel .selecteditem:last a").focus();
@@ -665,7 +667,7 @@ class SobySelectBox
                     if (title == null)
                         title = "";
                     option.attr("value", items[i][editControl.ValueFieldName]);
-                    option.attr("title", title.toLowerCase());
+                    option.attr("title", title);
                     option.attr("itemindex", i);
                     itemLink.text(items[i][editControl.TitleFieldName]);
                     itemLink.attr("onclick", "soby_EditControls['" + editControl.ContainerClientId + "'].SelectItem(" + i + ")");
@@ -730,14 +732,14 @@ class SobySelectBox
     }
 
     SearchFromPopulatedData(keyword) {
-        if (this.LastSearchKeyword == keyword)
+        if (this.LastSearchKeyword === keyword)
             return;
 
         this.LastSearchKeyword = keyword;
         this.ShowLoadingIcon();
 
         $("#" + this.ContainerClientId + " .soby_dataitem").addClass("hidden");
-        if (this.SelectedItemKeyValues.length == 0 && keyword == "") {
+        if (this.SelectedItemKeyValues.length === 0 && keyword === "") {
             $("#" + this.ContainerClientId + " .emptytext").show();
         }
         else {
@@ -745,7 +747,7 @@ class SobySelectBox
         }
 
         if (keyword.length > 0) {
-            $("#" + this.ContainerClientId + " .soby_dataitem[title*=\"" + keyword.toLowerCase() + "\"]").removeClass("hidden");
+            $("#" + this.ContainerClientId + " .soby_dataitem[title*=\"" + keyword.toLowerCase() + "\" i] ").removeClass("hidden");
         }
         else {
             $("#" + this.ContainerClientId + " .soby_dataitem").removeClass("hidden");
@@ -759,13 +761,16 @@ class SobySelectBox
     {
         var selectedItem = this.Items[index];
         var keyValue = selectedItem[this.ValueFieldName];
+        var displayValue = selectedItem[this.TitleFieldName];
         if (this.AllowMultipleSelections == false) {
             this.SelectedItemKeyValues = new Array();
+            this.SelectedItemDisplayValues = new Array();
         }
 
         if ($.inArray(keyValue, this.SelectedItemKeyValues) == -1)
         {
             this.SelectedItemKeyValues.push(keyValue);
+            this.SelectedItemDisplayValues.push(displayValue);
         }
 
         this.PopulateSelectedItems();
@@ -801,7 +806,7 @@ class SobySelectBox
         var keyword = $("#" + this.ContainerClientId + " .searchtextbox").val();
         var selectedItemsPanel = $("#" + this.ContainerClientId + " .selecteditems");
         selectedItemsPanel.html("");
-        if (this.SelectedItemKeyValues.length == 0 && keyword == "")
+        if (this.SelectedItemKeyValues.length === 0 && keyword === "")
         {
             $("#" + this.ContainerClientId + " .emptytext").show();
         }
@@ -816,7 +821,7 @@ class SobySelectBox
             for (var x = 0; x < this.Items.length; x++)
             {
                 var item = this.Items[x];
-                if (item[this.ValueFieldName] == keyValue)
+                if (item[this.ValueFieldName] === keyValue)
                 {
                     selectedItem = item;
                     $("#" + this.ContainerClientId + " .soby_dataitem[itemindex='" + x + "']").addClass("selected");
@@ -904,6 +909,7 @@ class SobySelectBox
     RemoveItem(index)
     {
         this.SelectedItemKeyValues.splice(index, 1);
+        this.SelectedItemDisplayValues.splice(index, 1);
         this.PopulateSelectedItems();
         var selectbox = this;
         setTimeout(function ()
@@ -916,6 +922,8 @@ class SobySelectBox
 
     ClearItems() {
         this.SelectedItemKeyValues = new Array();
+        this.SelectedItemDisplayValues = new Array();
+        
         this.PopulateSelectedItems();
         var selectbox = this;
         setTimeout(function () {
@@ -1451,6 +1459,14 @@ class soby_WebGrid implements ISobySelectorControlInterface
      * @type {object}
      */
     OnGridDataBeingParsed = null;
+
+    /**
+     * Grid before print event.
+     *
+     * @event soby_WebGrid#OnGridPrintBeingStarted
+     * @type {object}
+     */
+    OnGridPrintBeingStarted = null;
 
     /**
      * Row selection event.
@@ -2475,7 +2491,10 @@ class soby_WebGrid implements ISobySelectorControlInterface
         a.document.write('<html>');
         a.document.write('<body >');
         a.document.write(tableHTML);
-        a.document.write('</body></html>');
+        a.document.write('</body>');
+        if (this.OnGridPrintBeingStarted !== null)
+            this.OnGridPrintBeingStarted(a.document);
+        a.document.write('</html>');
         a.document.close();
         a.print();
     }
@@ -3830,16 +3849,47 @@ class soby_WebGrid implements ISobySelectorControlInterface
     ExpandGroupBy(groupByRowID) {
         var groupByRow = $("#" + groupByRowID);
         var isExpanded = groupByRow.next().is(':visible');
+        groupByRow.find("img").removeClass("soby-list-expand").removeClass("soby-list-collapse");
+        groupByRow.find("img").addClass(isExpanded == true ? "soby-list-expand" : "soby-list-collapse");
         var nextDataRow = groupByRow.next();
-        while (nextDataRow.hasClass("soby_griddatarow") == true) {
-            if (isExpanded == true)
-                nextDataRow.hide();
-            else
-                nextDataRow.show();
+        var areChilhdrenGroupByRow = nextDataRow.hasClass("soby_gridgroupbyrow");
 
-            nextDataRow = nextDataRow.next();
+        if (areChilhdrenGroupByRow == true) {
+            const groupByRowLevel = parseInt(groupByRow.attr("level"));
+            let shouldExit = false;
+            while (shouldExit == false) {
+                const currentRowLevel = parseInt(nextDataRow.attr("level"));
+                if (nextDataRow.hasClass("soby_gridgroupbyrow") == true && currentRowLevel <= groupByRowLevel) {
+                    shouldExit = true;
+                    break;
+                }
+                if (nextDataRow.hasClass("soby_gridgroupbyrow")) {
+                    this.ExpandGroupBy(nextDataRow.attr("id"));
+
+                    if (isExpanded === true)
+                        nextDataRow.hide();
+                    else
+                        nextDataRow.show();
+                }
+
+                nextDataRow = nextDataRow.next();
+                if (nextDataRow.length === 0) {
+                    shouldExit = true;
+                    break;
+                }
+
+            }
         }
-        
+        else {
+            while (nextDataRow.hasClass("soby_griddatarow") == true) {
+                if (isExpanded == true)
+                    nextDataRow.hide();
+                else
+                    nextDataRow.show();
+
+                nextDataRow = nextDataRow.next();
+            }
+        }
     }
 
      PopulateDetailRow(rowID)

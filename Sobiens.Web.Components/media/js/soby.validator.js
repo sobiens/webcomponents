@@ -372,19 +372,21 @@ var soby_PatternValidator = /** @class */ (function (_super) {
     };
     soby_PatternValidator.prototype.Validate = function (value) {
         var isValid = _super.prototype.Validate.call(this, value);
-        if (isValid == false) {
+        if (isValid === false) {
             return false;
         }
-        if (this.MinLength != null && value.length < this.MinLength) {
-            this.ErrorMessage = this.ErrorMessages.LessThanMinLength;
+        if (this.Required === true || value !== "") {
+            if (this.MinLength !== null && value.length < this.MinLength) {
+                this.ErrorMessage = this.ErrorMessages.LessThanMinLength;
+            }
+            if (this.MaxLength !== null && value.length > this.MaxLength) {
+                this.ErrorMessage = this.ErrorMessages.GreaterThanMaxLength;
+            }
+            if (this.Pattern.test(value.toString()) === false) {
+                this.ErrorMessage = this.ErrorMessages.NotMatchingPattern;
+            }
         }
-        if (this.MaxLength != null && value.length > this.MaxLength) {
-            this.ErrorMessage = this.ErrorMessages.GreaterThanMaxLength;
-        }
-        if (this.Pattern.test(value.toString()) == false) {
-            this.ErrorMessage = this.ErrorMessages.NotMatchingPattern;
-        }
-        if (this.ErrorMessage != "") {
+        if (this.ErrorMessage !== "") {
             return false;
         }
         return true;

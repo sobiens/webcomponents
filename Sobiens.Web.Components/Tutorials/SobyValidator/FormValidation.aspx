@@ -39,7 +39,7 @@
     <tr>
         <td>
       <label for="cemail">E-Mail (required)</label>
-</td><td>      <input id="cemail" type="email" name="email" required></td>
+</td><td>      <input id="cemail" type="email" name="email"></td>
     </tr>
     <tr>
         <td>

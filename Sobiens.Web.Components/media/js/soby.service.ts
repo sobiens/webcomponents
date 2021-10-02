@@ -43,16 +43,18 @@ class soby_Transport {
 }
 
 class soby_TransportRequest {
-    constructor(url: string, dataType: string, contentType: string, type: string) {
+    constructor(url: string, dataType: string, contentType: string, type: string, includeCredentials?: boolean) {
         this.Url = url;
         this.DataType = dataType;
         this.ContentType = contentType;
         this.Type = type;
+        this.IncludeCredentials = includeCredentials !== null ? includeCredentials:false;
     }
     Url: string;
     DataType: string;
     ContentType: string;
     Type: string;
+    IncludeCredentials: boolean;
 }
 // ******************************************************************
 
@@ -923,7 +925,7 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
     ParseData(value: string): Array<soby_Item> {
         return null;
     }
-    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType) { }
+    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType, includeCredentials) { }
 }
 // ******************************************************************
 
@@ -1040,7 +1042,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
 
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     }
     NavigationInformationBeingPopulated() { }
     NavigationInformationPopulated() { }
@@ -1193,7 +1195,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
 
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     }
 
     Parse() {
@@ -1414,9 +1416,12 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         }
         return result;
     }
-    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType) {
-        if (requestMethod == null || requestMethod == "") {
+    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, includeCredentials) {
+        if (requestMethod === null || requestMethod === "") {
             requestMethod = "POST";
+        }
+        if (includeCredentials == null) {
+            includeCredentials = false;
         }
 
         $.ajax({
@@ -1427,6 +1432,9 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
             data: data,
             processData: false,
             contentType: "application/json; charset=utf-8",
+            xhrFields: (includeCredentials === true ? {
+                withCredentials: true
+            } : {}),
             complete: function (XMLHttpRequest) {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1465,6 +1473,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
 class soby_StaticDataService implements soby_ServiceInterface {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
     DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
+    /*
     constructor(dataSourceBuilder: soby_StaticDataBuilder, items: Array<soby_Item>) {
         this.Items = items;
         this.DataSourceBuilder = dataSourceBuilder;
@@ -1472,6 +1481,23 @@ class soby_StaticDataService implements soby_ServiceInterface {
         this.NextPageStrings = new Array<string>();
         this.NextPageStrings[0] = "";
     }
+    */
+    constructor(fields: Array<SobySchemaField>, items: Array<soby_Item>) {
+        this.Items = items;
+
+        const dataSourceBuilder = new soby_StaticDataBuilder();
+        dataSourceBuilder.Filters = new SobyFilters(false);
+        for (let i = 0; i < fields.length; i++) {
+            dataSourceBuilder.AddSchemaField(fields[i].FieldName, fields[i].FieldType, fields[i].Args);
+        }
+
+        this.DataSourceBuilder = dataSourceBuilder;
+        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
+        this.NextPageStrings = new Array<string>();
+        this.NextPageStrings[0] = "";
+    }
+
+    
     Items: Array<soby_Item>
     NextPageString: string = "";
     PageIndex: number = 0;
@@ -1534,7 +1560,7 @@ class soby_StaticDataService implements soby_ServiceInterface {
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
-        if (clearOtherFilters == true)
+        if (clearOtherFilters === true)
         {
             this.Filters = new SobyFilters(filters.IsOr);
         }
@@ -1558,7 +1584,7 @@ class soby_StaticDataService implements soby_ServiceInterface {
     };
     PopulateItems(args: Array<any>) {
         this.Args = args;
-        if (this.ItemBeingPopulated != null)
+        if (this.ItemBeingPopulated !== null)
         {
             this.ItemBeingPopulated();
         }
@@ -1570,7 +1596,7 @@ class soby_StaticDataService implements soby_ServiceInterface {
                     var result = 0;
                     for (var i = 0; i < orderByFields.length; i++) {
                         if (x[orderByFields[i].FieldName] > y[orderByFields[i].FieldName]) {
-                            if (orderByFields[i].IsAsc == true) {
+                            if (orderByFields[i].IsAsc === true) {
                                 return 1;
                             }
                             else {
@@ -1578,7 +1604,7 @@ class soby_StaticDataService implements soby_ServiceInterface {
                             }
                         }
                         else if (x[orderByFields[i].FieldName] < y[orderByFields[i].FieldName]) {
-                            if (orderByFields[i].IsAsc == true) {
+                            if (orderByFields[i].IsAsc === true) {
                                 return -1;
                             }
                             else {
@@ -1882,7 +1908,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
 
         return result;
     }
-    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType) {
+    GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType, includeCredentials) {
         if (requestMethod == null || requestMethod == "")
         {
             requestMethod = "POST";
@@ -1904,6 +1930,9 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
             data: data,
             processData: false,
             contentType: contentType,
+            xhrFields: (includeCredentials === true ? {
+                withCredentials: true
+            } : {}),
             complete: function (XMLHttpRequest) {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
