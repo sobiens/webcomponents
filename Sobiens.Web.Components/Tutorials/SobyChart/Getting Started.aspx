@@ -20,6 +20,9 @@
         <script src="/media/js/soby.service.js"></script>
         <script src="/media/js/soby.ui.components.js"></script>
         <script src="/Scripts/Tutorials/WebAPI/Grid/general.js"></script>
+        <script language="javascript">
+            window.location.href = 'LineChart.aspx';
+        </script>
         <p>
             <strong>Soby WebGrid</strong> is a comprehensive AJAX data grid component for web developers.
         It is designed to ease the exhausting process of implementing the necessary code for sorting, navigation, grouping, searching and real time data editing in a simple data representation object.

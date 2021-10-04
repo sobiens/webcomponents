@@ -33,6 +33,8 @@ var soby_ChartCalculatedValues = /** @class */ (function () {
         this.Padding = 20;
         this.InnerPaneWidth = 0;
         this.InnerPaneHeight = 0;
+        this.SeriesPanelWidth = 0;
+        this.SeriesPanelHeight = 0;
         this.MaxValue = null;
         this.MinValue = null;
         this.TotalValue = null;
@@ -52,7 +54,10 @@ var soby_Chart = /** @class */ (function () {
         this.EmptyDataHtml = "";
         this.ImagesFolderUrl = "/_layouts/1033/images";
         this.Type = null;
-        this.LabelPosition = SobyChartLabelPosition.Bottom;
+        this.LabelPosition = SobyChartElementPosition.Bottom;
+        this.SeriesPosition = SobyChartElementPosition.Top;
+        this.SeriesVerticalAligment = SobyChartVerticalAligment.Top;
+        this.SeriesHorizontalAligment = SobyChartHorizontalAligment.Center;
         this.Colours = ["#4472c4", "#ed7d31", "#ffce3a", "#a5a5a5", "#5b9bd5", "#70ad47"];
         this.CalculatedValues = new soby_ChartCalculatedValues();
         this.OnSelectionChanged = null;
@@ -117,10 +122,6 @@ var soby_Chart = /** @class */ (function () {
         var mouseY = e.clientY - tooltipOffsetY;
         for (var i = 0; i < chart.CalculatedValues.Dots.length; i++) {
             if (chart.CheckMouseHit(mouseX, mouseY, chart.CalculatedValues.Dots[i]) === true) {
-                //var dotrXr = chart.CalculatedValues.Dots[i].rXr;
-                //var dx = mouseX - chart.CalculatedValues.Dots[i].X;
-                //var dy = mouseY - chart.CalculatedValues.Dots[i].Y;
-                //if (dx * dx + dy * dy < dotrXr) {
                 canvas.style.left = (chart.CalculatedValues.Dots[i].X) + "px";
                 canvas.style.top = (chart.CalculatedValues.Dots[i].Y - 40) + "px";
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -171,6 +172,16 @@ var soby_Chart = /** @class */ (function () {
         }
     };
     soby_Chart.prototype.CalculateValues = function () {
+        if (this.SeriesPosition === SobyChartElementPosition.Top
+            || this.SeriesPosition === SobyChartElementPosition.Bottom) {
+            this.CalculatedValues.SeriesPanelWidth = this.Width;
+            this.CalculatedValues.SeriesPanelHeight = 30;
+        }
+        if (this.SeriesPosition === SobyChartElementPosition.Left
+            || this.SeriesPosition === SobyChartElementPosition.Right) {
+            this.CalculatedValues.SeriesPanelWidth = 70;
+            this.CalculatedValues.SeriesPanelHeight = this.Height;
+        }
         this.CalculatedValues.MinValue = null;
         this.CalculatedValues.MaxValue = 0;
         this.CalculatedValues.TotalValue = 0;
@@ -186,9 +197,30 @@ var soby_Chart = /** @class */ (function () {
         }
         this.CalculatedValues.yInnerPaneStartPixel = this.Height - this.CalculatedValues.Padding - this.CalculatedValues.xLabelHeight;
         this.CalculatedValues.xInnerPaneStartPixel = this.CalculatedValues.Padding + this.CalculatedValues.yLabelWidth;
+        this.CalculatedValues.xLabelYStartPoint = this.Height - 20;
+        if (this.SeriesPosition === SobyChartElementPosition.Bottom) {
+            this.CalculatedValues.yInnerPaneStartPixel -= this.CalculatedValues.SeriesPanelHeight;
+            this.CalculatedValues.xLabelYStartPoint -= this.CalculatedValues.SeriesPanelHeight;
+        }
+        else if (this.SeriesPosition === SobyChartElementPosition.Left) {
+            this.CalculatedValues.xInnerPaneStartPixel += this.CalculatedValues.SeriesPanelWidth;
+            this.CalculatedValues.yLabelXStartPoint += this.CalculatedValues.SeriesPanelWidth;
+        }
         this.CalculatedValues.InnerPaneWidth = this.Width - this.CalculatedValues.Padding - this.CalculatedValues.xInnerPaneStartPixel;
         this.CalculatedValues.InnerPaneHeight = this.Height - (this.CalculatedValues.Padding * 2) - this.CalculatedValues.xLabelHeight;
-        if (this.LabelPosition === SobyChartLabelPosition.Bottom) {
+        if (this.SeriesPosition === SobyChartElementPosition.Bottom) {
+            this.CalculatedValues.InnerPaneHeight -= this.CalculatedValues.SeriesPanelHeight;
+        }
+        else if (this.SeriesPosition === SobyChartElementPosition.Top) {
+            this.CalculatedValues.InnerPaneHeight -= this.CalculatedValues.SeriesPanelHeight;
+        }
+        else if (this.SeriesPosition === SobyChartElementPosition.Left) {
+            this.CalculatedValues.InnerPaneWidth -= this.CalculatedValues.SeriesPanelWidth;
+        }
+        else if (this.SeriesPosition === SobyChartElementPosition.Right) {
+            this.CalculatedValues.InnerPaneWidth -= this.CalculatedValues.SeriesPanelWidth;
+        }
+        if (this.LabelPosition === SobyChartElementPosition.Bottom) {
             this.CalculatedValues.yLabelHeight = (this.CalculatedValues.InnerPaneHeight) / (this.CalculatedValues.ValueLabelCount + 1);
             this.CalculatedValues.xLabelWidth = (this.CalculatedValues.InnerPaneWidth) / this.Labels.length;
             this.CalculatedValues.yLabelPieceValue = this.CalculatedValues.MaxValue / this.CalculatedValues.ValueLabelCount;
@@ -208,13 +240,13 @@ var soby_Chart = /** @class */ (function () {
         if (this.Type === SobyChartTypes.PieChart || this.Type === SobyChartTypes.PolarAreaChart) {
         }
         else {
-            if (this.LabelPosition === SobyChartLabelPosition.Bottom) {
+            if (this.LabelPosition === SobyChartElementPosition.Bottom) {
                 for (var i = 0; i < this.Labels.length; i++) {
                     var xPoint_1 = i * this.CalculatedValues.xLabelWidth + this.CalculatedValues.xInnerPaneStartPixel;
                     ctx.font = "10px Arial";
                     ctx.fillStyle = "#FF0000";
                     ctx.lineWidth = 1;
-                    ctx.strokeText(this.Labels[i], xPoint_1, this.Height - 10);
+                    ctx.strokeText(this.Labels[i], xPoint_1, this.CalculatedValues.xLabelYStartPoint);
                     ctx.fillStyle = "#ebebeb";
                     ctx.lineWidth = 0.2;
                     ctx.beginPath();
@@ -281,16 +313,43 @@ var soby_Chart = /** @class */ (function () {
                 }
             }
         }
+        if (this.SeriesPosition !== SobyChartElementPosition.Hidden) {
+            var titles = new Array();
+            if (this.Type === SobyChartTypes.PieChart || this.Type === SobyChartTypes.PolarAreaChart) {
+                for (var x = 0; x < this.Labels.length; x++) {
+                    titles.push(this.Labels[x]);
+                }
+            }
+            else {
+                for (var x = 0; x < this.Datasets.length; x++) {
+                    titles.push(this.Datasets[x].Title);
+                }
+            }
+            var titleAligment = SobyChartAligment.Horizontally;
+            if (this.SeriesPosition === SobyChartElementPosition.Left || this.SeriesPosition === SobyChartElementPosition.Right) {
+                titleAligment = SobyChartAligment.Vertically;
+            }
+            var seriesPanelX = 10;
+            var seriesPanelY = 10;
+            if (this.SeriesPosition === SobyChartElementPosition.Bottom) {
+                seriesPanelY = this.Height - 30;
+            }
+            if (this.SeriesPosition === SobyChartElementPosition.Right) {
+                seriesPanelX = this.Width - 70;
+            }
+            var seriesPanel = new soby_SeriesPanel(ctx, titleAligment, this.SeriesVerticalAligment, this.SeriesHorizontalAligment, this.CalculatedValues.SeriesPanelHeight, this.CalculatedValues.SeriesPanelWidth, seriesPanelX, seriesPanelY, titles, this.Colours);
+            seriesPanel.Paint();
+        }
     };
     soby_Chart.prototype.getXPixel = function (val) {
         var maxValue = this.CalculatedValues.MaxValue;
-        if (this.LabelPosition === SobyChartLabelPosition.Bottom)
+        if (this.LabelPosition === SobyChartElementPosition.Bottom)
             maxValue = this.Labels.length + 1;
         return this.CalculatedValues.xInnerPaneStartPixel + ((this.CalculatedValues.InnerPaneWidth / maxValue) * val);
     };
     soby_Chart.prototype.getYPixel = function (val) {
         var maxValue = this.CalculatedValues.MaxValue;
-        if (this.LabelPosition === SobyChartLabelPosition.Left)
+        if (this.LabelPosition === SobyChartElementPosition.Left)
             maxValue = this.Labels.length;
         return this.CalculatedValues.yInnerPaneStartPixel - ((this.CalculatedValues.InnerPaneHeight / maxValue) * val);
     };
@@ -346,7 +405,9 @@ var soby_LineChart = /** @class */ (function (_super) {
 var soby_ColumnChart = /** @class */ (function (_super) {
     __extends(soby_ColumnChart, _super);
     function soby_ColumnChart(contentDivSelector, title, datasets, emptyDataHtml, labels) {
-        return _super.call(this, SobyChartTypes.ColumnChart, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
+        var _this = _super.call(this, SobyChartTypes.ColumnChart, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
+        _this.ColumnWidth = null;
+        return _this;
     }
     soby_ColumnChart.prototype.PopulateItems = function () {
         _super.prototype.PopulateItems.call(this);
@@ -356,25 +417,24 @@ var soby_ColumnChart = /** @class */ (function (_super) {
         ctx.lineCap = "butt";
         ctx.beginPath();
         this.CalculatedValues.Dots = new Array();
-        var columnWidth = (this.CalculatedValues.xLabelWidth - 15) / this.Datasets.length;
+        this.ColumnWidth = (this.CalculatedValues.xLabelWidth - 15) / this.Datasets.length;
         for (var x = 0; x < this.Datasets.length; x++) {
             ctx.fillStyle = this.Colours[x];
             ctx.strokeStyle = this.Colours[x];
             for (var i = 0; i < this.Datasets[x].Data.length; i++) {
                 var value = this.Datasets[x].Data[i];
-                var currentX = this.CalculatedValues.xInnerPaneStartPixel + (i * this.CalculatedValues.xLabelWidth) + x * columnWidth;
+                var currentX = this.CalculatedValues.xInnerPaneStartPixel + (i * this.CalculatedValues.xLabelWidth) + x * this.ColumnWidth;
                 var currentY = this.getYPixel(0); //this.Height - value - this.CalculatedValues.xLabelYStartPoint - 50;
                 this.CalculatedValues.Dots.push(new soby_ChartDotValue(this.Labels[i], value, this.Datasets[x].Title, this.Colours[x], currentX, currentY, 4, 16));
                 ctx.beginPath();
-                ctx.fillRect(currentX, currentY, columnWidth, this.getYPixel(value) - currentY);
+                ctx.fillRect(currentX, currentY, this.ColumnWidth, this.getYPixel(value) - currentY);
             }
             ctx.stroke();
         }
     };
     soby_ColumnChart.prototype.CheckMouseHit = function (mouseX, mouseY, dot) {
-        var dx = mouseX - dot.X;
-        var dy = mouseY - dot.Y;
-        if (dx * dx + dy * dy < dot.rXr) {
+        if (mouseX >= dot.X && mouseX <= (dot.X + this.ColumnWidth)
+            && mouseY <= this.getYPixel(0) && mouseY >= this.getYPixel(dot.Value)) {
             return true;
         }
         return false;
@@ -385,7 +445,8 @@ var soby_BarChart = /** @class */ (function (_super) {
     __extends(soby_BarChart, _super);
     function soby_BarChart(contentDivSelector, title, datasets, emptyDataHtml, labels) {
         var _this = _super.call(this, SobyChartTypes.BarChart, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
-        _this.LabelPosition = SobyChartLabelPosition.Left;
+        _this.BarHeight = null;
+        _this.LabelPosition = SobyChartElementPosition.Left;
         return _this;
     }
     soby_BarChart.prototype.PopulateItems = function () {
@@ -397,7 +458,7 @@ var soby_BarChart = /** @class */ (function (_super) {
         ctx.lineWidth = 3;
         ctx.lineCap = "butt";
         ctx.beginPath();
-        var barHeight = (this.CalculatedValues.yLabelHeight - 15) / this.Datasets.length;
+        this.BarHeight = (this.CalculatedValues.yLabelHeight - 15) / this.Datasets.length;
         this.CalculatedValues.Dots = new Array();
         for (var x = 0; x < this.Datasets.length; x++) {
             ctx.fillStyle = this.Colours[x];
@@ -405,15 +466,22 @@ var soby_BarChart = /** @class */ (function (_super) {
             for (var i = 0; i < this.Datasets[x].Data.length; i++) {
                 var value = this.Datasets[x].Data[i];
                 var currentX = this.getXPixel(0); //this.CalculatedValues.xInnerPaneStartPixel + (i * this.CalculatedValues.xLabelWidth);
-                var currentY = this.CalculatedValues.yInnerPaneStartPixel - (i * this.CalculatedValues.yLabelHeight) - (barHeight * (x + 1));
+                var currentY = this.CalculatedValues.yInnerPaneStartPixel - (i * this.CalculatedValues.yLabelHeight) - (this.BarHeight * (x + 1));
                 this.CalculatedValues.Dots.push(new soby_ChartDotValue(this.Labels[i], value, this.Datasets[x].Title, this.Colours[x], currentX, currentY, 4, 16));
                 ctx.beginPath();
-                ctx.fillRect(currentX, currentY, this.getXPixel(value) - currentX, barHeight);
+                ctx.fillRect(currentX, currentY, this.getXPixel(value) - currentX, this.BarHeight);
                 //ctx.stroke();
                 //ctx.strokeRect(currentX, currentX+20, 0, currentY);
             }
             ctx.stroke();
         }
+    };
+    soby_BarChart.prototype.CheckMouseHit = function (mouseX, mouseY, dot) {
+        if (mouseX >= this.getXPixel(0) && mouseX <= this.getXPixel(dot.Value)
+            && mouseY <= (dot.Y + this.BarHeight) && mouseY >= dot.Y) {
+            return true;
+        }
+        return false;
     };
     return soby_BarChart;
 }(soby_Chart));
@@ -497,6 +565,79 @@ var soby_PolarAreaChart = /** @class */ (function (_super) {
     }
     return soby_PolarAreaChart;
 }(soby_PieChart));
+var soby_SeriesPanel = /** @class */ (function () {
+    function soby_SeriesPanel(ctx, titleAligment, verticalAligment, horizontalAligment, height, width, x, y, titles, colours) {
+        this.CTX = null;
+        this.Height = null;
+        this.Width = null;
+        this.X = null;
+        this.Y = null;
+        this.Titles = null;
+        this.Colours = null;
+        this.TitleAligment = SobyChartAligment.Horizontally;
+        this.VerticalAligment = SobyChartVerticalAligment.Top;
+        this.HorizontalAligment = SobyChartHorizontalAligment.Center;
+        this.CTX = ctx;
+        this.TitleAligment = titleAligment;
+        this.VerticalAligment = verticalAligment;
+        this.HorizontalAligment = horizontalAligment;
+        this.Height = height;
+        this.Width = width;
+        this.X = x;
+        this.Y = y;
+        this.Titles = titles;
+        this.Colours = colours;
+    }
+    soby_SeriesPanel.prototype.Paint = function () {
+        var charachterFontPixel = 6;
+        var totalCharachterLength = 0;
+        for (var x = 0; x < this.Titles.length; x++) {
+            totalCharachterLength += this.Titles[x].length;
+        }
+        var startXPosition = this.X - 20;
+        var startYPosition = this.Y;
+        if (this.TitleAligment === SobyChartAligment.Horizontally) {
+            if (this.HorizontalAligment === SobyChartHorizontalAligment.Left) {
+                startXPosition += 30;
+            }
+            else if (this.HorizontalAligment === SobyChartHorizontalAligment.Center) {
+                startXPosition += (this.Width - (totalCharachterLength * charachterFontPixel) - (this.Titles.length * 15)) / 2;
+            }
+            else if (this.HorizontalAligment === SobyChartHorizontalAligment.Right) {
+                startXPosition += (this.Width - (totalCharachterLength * charachterFontPixel) - (this.Titles.length * 15));
+            }
+        }
+        else {
+            if (this.VerticalAligment === SobyChartVerticalAligment.Top) {
+                startYPosition += 40;
+            }
+            else if (this.VerticalAligment === SobyChartVerticalAligment.Middle) {
+                startYPosition += (this.Height - (this.Titles.length * 15)) / 2;
+            }
+            else if (this.VerticalAligment === SobyChartVerticalAligment.Bottom) {
+                startYPosition += (this.Height - (this.Titles.length * 15));
+            }
+        }
+        for (var x = 0; x < this.Titles.length; x++) {
+            this.CTX.strokeStyle = "black";
+            this.CTX.fillStyle = "black";
+            this.CTX.fillText(this.Titles[x], startXPosition + 13, startYPosition + 8);
+            this.CTX.fillStyle = this.Colours[x];
+            this.CTX.strokeStyle = this.Colours[x];
+            this.CTX.fillRect(startXPosition, startYPosition, 10, 10);
+            //console.log(this.TitleAligment);
+            console.log(startYPosition);
+            console.log(startXPosition);
+            if (this.TitleAligment === SobyChartAligment.Horizontally) {
+                startXPosition += 15 + (this.Titles[x].length * charachterFontPixel);
+            }
+            else {
+                startYPosition -= 15;
+            }
+        }
+    };
+    return soby_SeriesPanel;
+}());
 var soby_ChartDataset = /** @class */ (function () {
     function soby_ChartDataset() {
         this.Title = "";
@@ -529,12 +670,30 @@ var SobyChartTypes;
     SobyChartTypes[SobyChartTypes["PolarAreaChart"] = 4] = "PolarAreaChart";
     SobyChartTypes[SobyChartTypes["ColumnChart"] = 5] = "ColumnChart";
 })(SobyChartTypes || (SobyChartTypes = {}));
-var SobyChartLabelPosition;
-(function (SobyChartLabelPosition) {
-    SobyChartLabelPosition[SobyChartLabelPosition["Left"] = 0] = "Left";
-    SobyChartLabelPosition[SobyChartLabelPosition["Bottom"] = 1] = "Bottom";
-    SobyChartLabelPosition[SobyChartLabelPosition["Top"] = 2] = "Top";
-    SobyChartLabelPosition[SobyChartLabelPosition["Right"] = 3] = "Right";
-})(SobyChartLabelPosition || (SobyChartLabelPosition = {}));
+var SobyChartElementPosition;
+(function (SobyChartElementPosition) {
+    SobyChartElementPosition[SobyChartElementPosition["Left"] = 0] = "Left";
+    SobyChartElementPosition[SobyChartElementPosition["Bottom"] = 1] = "Bottom";
+    SobyChartElementPosition[SobyChartElementPosition["Right"] = 2] = "Right";
+    SobyChartElementPosition[SobyChartElementPosition["Top"] = 3] = "Top";
+    SobyChartElementPosition[SobyChartElementPosition["Hidden"] = 4] = "Hidden";
+})(SobyChartElementPosition || (SobyChartElementPosition = {}));
+var SobyChartAligment;
+(function (SobyChartAligment) {
+    SobyChartAligment[SobyChartAligment["Vertically"] = 0] = "Vertically";
+    SobyChartAligment[SobyChartAligment["Horizontally"] = 1] = "Horizontally";
+})(SobyChartAligment || (SobyChartAligment = {}));
+var SobyChartVerticalAligment;
+(function (SobyChartVerticalAligment) {
+    SobyChartVerticalAligment[SobyChartVerticalAligment["Top"] = 0] = "Top";
+    SobyChartVerticalAligment[SobyChartVerticalAligment["Middle"] = 1] = "Middle";
+    SobyChartVerticalAligment[SobyChartVerticalAligment["Bottom"] = 2] = "Bottom";
+})(SobyChartVerticalAligment || (SobyChartVerticalAligment = {}));
+var SobyChartHorizontalAligment;
+(function (SobyChartHorizontalAligment) {
+    SobyChartHorizontalAligment[SobyChartHorizontalAligment["Left"] = 0] = "Left";
+    SobyChartHorizontalAligment[SobyChartHorizontalAligment["Center"] = 1] = "Center";
+    SobyChartHorizontalAligment[SobyChartHorizontalAligment["Right"] = 2] = "Right";
+})(SobyChartHorizontalAligment || (SobyChartHorizontalAligment = {}));
 // ************************************************************
 //# sourceMappingURL=soby.ui.components.charts.js.map

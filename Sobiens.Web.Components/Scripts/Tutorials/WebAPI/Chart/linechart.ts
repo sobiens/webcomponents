@@ -1,5 +1,4 @@
-﻿document.write("<div id='soby_LineChartDiv'></div>");
-$(function ()
+﻿$(function ()
 {
     soby_PopulateLineChartRefreshData();
 });
@@ -18,7 +17,7 @@ function soby_PopulateLineChartRefreshData()
     dataSet3.Title = "Chart3";
     dataSet3.Data = [21, 51, 31, 6, 62, 24];
 
-    var lineChart = new soby_LineChart("#soby_LineChartDiv", "Line Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+    var lineChart = new soby_LineChart("#soby_ChartDiv", "Line Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     lineChart.Width = 600;
     lineChart.Height = 300;
     lineChart.ImagesFolderUrl = "/media/images";

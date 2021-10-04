@@ -43,7 +43,7 @@
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.charts.js"></script>
             <script src="/Scripts/Tutorials/WebAPI/Chart/barchart.js"></script>
-            <div id='soby_BooksDiv'></div>
+            <div id='soby_ChartDiv'></div>
         <a href="javascript:void(0)" onclick="soby_ShowHideViewSource()">
             <img src="/Images/viewsource.png" border="0" width="20px" /> View source
         </a>
@@ -52,7 +52,7 @@
 <span class="tag_start">&lt;link</span> <span class="attr_name">href</span>=<span class="attr_value">"/media/css/soby.ui.components.css"</span> <span class="attr_name">rel</span>=<span class="attr_value">"stylesheet"</span> <span class="attr_name">type</span>=<span class="attr_value">"text/css"</span> <span class="attr_name">media</span>=<span class="attr_value">"all"</span> <span class="tag_start">/&gt;</span>
 <span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/soby.service.js"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
 <span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/soby.ui.components.charts.js"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
-<span class="tag_start">&lt;div</span> <span class="attr_name">id</span>=<span class="attr_value">'soby_BooksDiv'</span> <span class="tag_start">&gt;&lt;/div&gt;</span>
+<span class="tag_start">&lt;div</span> <span class="attr_name">id</span>=<span class="attr_value">'soby_ChartDiv'</span> <span class="tag_start">&gt;&lt;/div&gt;</span>
             <div class="viewsourcecodefileoutput"></div>
         </pre>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.

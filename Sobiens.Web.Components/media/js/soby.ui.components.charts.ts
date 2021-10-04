@@ -26,6 +26,8 @@ class soby_ChartCalculatedValues {
     Padding: number = 20;
     InnerPaneWidth: number = 0;
     InnerPaneHeight: number = 0;
+    SeriesPanelWidth: number = 0;
+    SeriesPanelHeight: number = 0;
 
     MaxValue: number = null;
     MinValue: number = null;
@@ -46,7 +48,10 @@ class soby_Chart implements soby_ChartInterface {
     EmptyDataHtml: string = "";
     ImagesFolderUrl: string = "/_layouts/1033/images";
     Type: SobyChartTypes = null;
-    LabelPosition: SobyChartLabelPosition = SobyChartLabelPosition.Bottom;
+    LabelPosition: SobyChartElementPosition = SobyChartElementPosition.Bottom;
+    SeriesPosition: SobyChartElementPosition = SobyChartElementPosition.Top;
+    SeriesVerticalAligment: SobyChartVerticalAligment = SobyChartVerticalAligment.Top;
+    SeriesHorizontalAligment: SobyChartHorizontalAligment = SobyChartHorizontalAligment.Center;
     Colours: Array<string> = ["#4472c4", "#ed7d31", "#ffce3a", "#a5a5a5", "#5b9bd5", "#70ad47"];
 
     CalculatedValues: soby_ChartCalculatedValues = new soby_ChartCalculatedValues();
@@ -121,10 +126,6 @@ class soby_Chart implements soby_ChartInterface {
 
         for (var i = 0; i < chart.CalculatedValues.Dots.length; i++) {
             if (chart.CheckMouseHit(mouseX, mouseY, chart.CalculatedValues.Dots[i]) === true) {
-            //var dotrXr = chart.CalculatedValues.Dots[i].rXr;
-            //var dx = mouseX - chart.CalculatedValues.Dots[i].X;
-            //var dy = mouseY - chart.CalculatedValues.Dots[i].Y;
-            //if (dx * dx + dy * dy < dotrXr) {
                 canvas.style.left = (chart.CalculatedValues.Dots[i].X) + "px";
                 canvas.style.top = (chart.CalculatedValues.Dots[i].Y - 40) + "px";
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -195,6 +196,18 @@ class soby_Chart implements soby_ChartInterface {
     }
 
     CalculateValues() {
+        if (this.SeriesPosition === SobyChartElementPosition.Top
+            || this.SeriesPosition === SobyChartElementPosition.Bottom) {
+            this.CalculatedValues.SeriesPanelWidth = this.Width;
+            this.CalculatedValues.SeriesPanelHeight = 30;
+        }
+
+        if (this.SeriesPosition === SobyChartElementPosition.Left
+            || this.SeriesPosition === SobyChartElementPosition.Right) {
+            this.CalculatedValues.SeriesPanelWidth = 70;
+            this.CalculatedValues.SeriesPanelHeight = this.Height;
+        }
+
         this.CalculatedValues.MinValue = null;
         this.CalculatedValues.MaxValue = 0;
         this.CalculatedValues.TotalValue = 0;
@@ -211,10 +224,37 @@ class soby_Chart implements soby_ChartInterface {
         }
         this.CalculatedValues.yInnerPaneStartPixel = this.Height - this.CalculatedValues.Padding - this.CalculatedValues.xLabelHeight;
         this.CalculatedValues.xInnerPaneStartPixel = this.CalculatedValues.Padding + this.CalculatedValues.yLabelWidth;
+        this.CalculatedValues.xLabelYStartPoint = this.Height - 20;
+
+        if (this.SeriesPosition === SobyChartElementPosition.Bottom) {
+            this.CalculatedValues.yInnerPaneStartPixel -= this.CalculatedValues.SeriesPanelHeight;
+            this.CalculatedValues.xLabelYStartPoint -= this.CalculatedValues.SeriesPanelHeight;
+        }
+        else if (this.SeriesPosition === SobyChartElementPosition.Left) {
+            this.CalculatedValues.xInnerPaneStartPixel += this.CalculatedValues.SeriesPanelWidth;
+            this.CalculatedValues.yLabelXStartPoint += this.CalculatedValues.SeriesPanelWidth;
+        }
+
 
         this.CalculatedValues.InnerPaneWidth = this.Width - this.CalculatedValues.Padding - this.CalculatedValues.xInnerPaneStartPixel;
         this.CalculatedValues.InnerPaneHeight = this.Height - (this.CalculatedValues.Padding * 2) - this.CalculatedValues.xLabelHeight;
-        if (this.LabelPosition === SobyChartLabelPosition.Bottom) {
+
+        if (this.SeriesPosition === SobyChartElementPosition.Bottom) {
+            this.CalculatedValues.InnerPaneHeight -= this.CalculatedValues.SeriesPanelHeight;
+        }
+        else if (this.SeriesPosition === SobyChartElementPosition.Top) {
+            this.CalculatedValues.InnerPaneHeight -= this.CalculatedValues.SeriesPanelHeight;
+        }
+        else if (this.SeriesPosition === SobyChartElementPosition.Left) {
+            this.CalculatedValues.InnerPaneWidth -= this.CalculatedValues.SeriesPanelWidth;
+        }
+        else if (this.SeriesPosition === SobyChartElementPosition.Right) {
+            this.CalculatedValues.InnerPaneWidth -= this.CalculatedValues.SeriesPanelWidth;
+        }
+
+
+
+        if (this.LabelPosition === SobyChartElementPosition.Bottom) {
             this.CalculatedValues.yLabelHeight = (this.CalculatedValues.InnerPaneHeight) / (this.CalculatedValues.ValueLabelCount + 1);
             this.CalculatedValues.xLabelWidth = (this.CalculatedValues.InnerPaneWidth) / this.Labels.length;
             this.CalculatedValues.yLabelPieceValue = this.CalculatedValues.MaxValue / this.CalculatedValues.ValueLabelCount;
@@ -236,13 +276,13 @@ class soby_Chart implements soby_ChartInterface {
         if (this.Type === SobyChartTypes.PieChart || this.Type === SobyChartTypes.PolarAreaChart) {
         }
         else {
-            if (this.LabelPosition === SobyChartLabelPosition.Bottom) {
+            if (this.LabelPosition === SobyChartElementPosition.Bottom) {
                 for (let i = 0; i < this.Labels.length; i++) {
                     const xPoint = i * this.CalculatedValues.xLabelWidth + this.CalculatedValues.xInnerPaneStartPixel;
                     ctx.font = "10px Arial";
                     ctx.fillStyle = "#FF0000";
                     ctx.lineWidth = 1;
-                    ctx.strokeText(this.Labels[i], xPoint, this.Height - 10);
+                    ctx.strokeText(this.Labels[i], xPoint, this.CalculatedValues.xLabelYStartPoint);
 
                     ctx.fillStyle = "#ebebeb";
                     ctx.lineWidth = 0.2;
@@ -317,11 +357,41 @@ class soby_Chart implements soby_ChartInterface {
                 }
             }
         }
+        if (this.SeriesPosition !== SobyChartElementPosition.Hidden) {
+            const titles: Array<string> = new Array<string>();
+            if (this.Type === SobyChartTypes.PieChart || this.Type === SobyChartTypes.PolarAreaChart) {
+                for (let x = 0; x < this.Labels.length; x++) {
+                    titles.push(this.Labels[x]);
+                }
+            }
+            else {
+                for (let x = 0; x < this.Datasets.length; x++) {
+                    titles.push(this.Datasets[x].Title);
+                }
+            }
+
+            let titleAligment: SobyChartAligment = SobyChartAligment.Horizontally;
+            if (this.SeriesPosition === SobyChartElementPosition.Left || this.SeriesPosition === SobyChartElementPosition.Right) {
+                titleAligment = SobyChartAligment.Vertically;
+            }
+
+            let seriesPanelX: number = 10;
+            let seriesPanelY: number = 10;
+            if (this.SeriesPosition === SobyChartElementPosition.Bottom) {
+                seriesPanelY = this.Height - 30;
+            }
+            if (this.SeriesPosition === SobyChartElementPosition.Right) {
+                seriesPanelX = this.Width - 70;
+            }
+
+            const seriesPanel: soby_SeriesPanel = new soby_SeriesPanel(ctx, titleAligment, this.SeriesVerticalAligment, this.SeriesHorizontalAligment, this.CalculatedValues.SeriesPanelHeight, this.CalculatedValues.SeriesPanelWidth, seriesPanelX, seriesPanelY, titles, this.Colours);
+            seriesPanel.Paint();
+        }
     }
 
     getXPixel(val) {
         let maxValue = this.CalculatedValues.MaxValue;
-        if (this.LabelPosition === SobyChartLabelPosition.Bottom)
+        if (this.LabelPosition === SobyChartElementPosition.Bottom)
             maxValue = this.Labels.length+1;
 
         return this.CalculatedValues.xInnerPaneStartPixel + ((this.CalculatedValues.InnerPaneWidth / maxValue) * val);
@@ -329,7 +399,7 @@ class soby_Chart implements soby_ChartInterface {
 
     getYPixel(val) {
         let maxValue = this.CalculatedValues.MaxValue;
-        if (this.LabelPosition === SobyChartLabelPosition.Left)
+        if (this.LabelPosition === SobyChartElementPosition.Left)
             maxValue = this.Labels.length;
 
         return this.CalculatedValues.yInnerPaneStartPixel - ((this.CalculatedValues.InnerPaneHeight / maxValue) * val);
@@ -393,6 +463,7 @@ class soby_LineChart extends soby_Chart {
 }
 
 class soby_ColumnChart extends soby_Chart {
+    ColumnWidth: number = null;
     constructor(contentDivSelector, title, datasets: Array<soby_ChartDataset>, emptyDataHtml, labels: Array<string>) {
         super(SobyChartTypes.ColumnChart, contentDivSelector, title, datasets, emptyDataHtml, labels);
     }
@@ -407,26 +478,28 @@ class soby_ColumnChart extends soby_Chart {
         ctx.beginPath();
 
         this.CalculatedValues.Dots = new Array<soby_ChartDotValue>();
-        const columnWidth = (this.CalculatedValues.xLabelWidth-15) / this.Datasets.length;
+        this.ColumnWidth = (this.CalculatedValues.xLabelWidth-15) / this.Datasets.length;
         for (let x = 0; x < this.Datasets.length; x++) {
             ctx.fillStyle = this.Colours[x];
             ctx.strokeStyle = this.Colours[x];
             for (let i = 0; i < this.Datasets[x].Data.length; i++) {
                 const value = this.Datasets[x].Data[i];
-                const currentX = this.CalculatedValues.xInnerPaneStartPixel + (i * this.CalculatedValues.xLabelWidth) + x * columnWidth;
+                const currentX = this.CalculatedValues.xInnerPaneStartPixel + (i * this.CalculatedValues.xLabelWidth) + x * this.ColumnWidth;
                 const currentY = this.getYPixel(0) //this.Height - value - this.CalculatedValues.xLabelYStartPoint - 50;
                 this.CalculatedValues.Dots.push(new soby_ChartDotValue(this.Labels[i], value, this.Datasets[x].Title, this.Colours[x], currentX, currentY, 4, 16));
                 ctx.beginPath();
-                ctx.fillRect(currentX, currentY, columnWidth, this.getYPixel(value) - currentY);
+                ctx.fillRect(currentX, currentY, this.ColumnWidth, this.getYPixel(value) - currentY);
             }
             ctx.stroke();
         }
     }
 
     CheckMouseHit(mouseX: number, mouseY: number, dot: soby_ChartDotValue) {
-        var dx = mouseX - dot.X;
-        var dy = mouseY - dot.Y;
-        if (dx * dx + dy * dy < dot.rXr) {
+        
+        if (
+            mouseX >= dot.X && mouseX <= (dot.X + this.ColumnWidth)
+            && mouseY <= this.getYPixel(0) && mouseY >= this.getYPixel(dot.Value)
+        ) {
             return true;
         }
 
@@ -436,9 +509,10 @@ class soby_ColumnChart extends soby_Chart {
 }
 
 class soby_BarChart extends soby_Chart {
+    BarHeight: number = null;
     constructor(contentDivSelector, title, datasets: Array<soby_ChartDataset>, emptyDataHtml, labels: Array<string>) {
         super(SobyChartTypes.BarChart, contentDivSelector, title, datasets, emptyDataHtml, labels);
-        this.LabelPosition = SobyChartLabelPosition.Left;
+        this.LabelPosition = SobyChartElementPosition.Left;
     }
 
     PopulateItems() {
@@ -452,7 +526,7 @@ class soby_BarChart extends soby_Chart {
         ctx.lineCap = "butt";
         ctx.beginPath();
 
-        const barHeight = (this.CalculatedValues.yLabelHeight-15) / this.Datasets.length;
+        this.BarHeight = (this.CalculatedValues.yLabelHeight-15) / this.Datasets.length;
         this.CalculatedValues.Dots = new Array<soby_ChartDotValue>();
         for (let x = 0; x < this.Datasets.length; x++) {
             ctx.fillStyle = this.Colours[x];
@@ -460,15 +534,26 @@ class soby_BarChart extends soby_Chart {
             for (let i = 0; i < this.Datasets[x].Data.length; i++) {
                 const value = this.Datasets[x].Data[i];
                 const currentX = this.getXPixel(0); //this.CalculatedValues.xInnerPaneStartPixel + (i * this.CalculatedValues.xLabelWidth);
-                const currentY = this.CalculatedValues.yInnerPaneStartPixel - (i * this.CalculatedValues.yLabelHeight) - (barHeight*(x+1));
+                const currentY = this.CalculatedValues.yInnerPaneStartPixel - (i * this.CalculatedValues.yLabelHeight) - (this.BarHeight*(x+1));
                 this.CalculatedValues.Dots.push(new soby_ChartDotValue(this.Labels[i], value, this.Datasets[x].Title, this.Colours[x], currentX, currentY, 4, 16));
                 ctx.beginPath();
-                ctx.fillRect(currentX, currentY, this.getXPixel(value) - currentX, barHeight);
+                ctx.fillRect(currentX, currentY, this.getXPixel(value) - currentX, this.BarHeight);
                 //ctx.stroke();
                 //ctx.strokeRect(currentX, currentX+20, 0, currentY);
             }
             ctx.stroke();
         }
+    }
+
+    CheckMouseHit(mouseX: number, mouseY: number, dot: soby_ChartDotValue) {
+        if (
+            mouseX >= this.getXPixel(0) && mouseX <= this.getXPixel(dot.Value)
+            && mouseY <= (dot.Y + this.BarHeight) && mouseY >= dot.Y
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }
 
@@ -560,6 +645,83 @@ class soby_PolarAreaChart extends soby_PieChart {
     */
 }
 
+class soby_SeriesPanel {
+    CTX = null;
+    Height: number = null;
+    Width: number = null;
+    X: number = null;
+    Y: number = null;
+    Titles: Array<string> = null;
+    Colours: Array<string> = null;
+    TitleAligment: SobyChartAligment = SobyChartAligment.Horizontally;
+    VerticalAligment: SobyChartVerticalAligment = SobyChartVerticalAligment.Top;
+    HorizontalAligment: SobyChartHorizontalAligment = SobyChartHorizontalAligment.Center;
+    constructor(ctx, titleAligment: SobyChartAligment, verticalAligment: SobyChartVerticalAligment, horizontalAligment: SobyChartHorizontalAligment, height: number, width: number, x: number, y: number, titles: Array<string>, colours: Array<string>) {
+        this.CTX = ctx;
+        this.TitleAligment = titleAligment;
+        this.VerticalAligment = verticalAligment;
+        this.HorizontalAligment = horizontalAligment;
+        this.Height = height;
+        this.Width = width;
+        this.X = x;
+        this.Y = y;
+        this.Titles = titles;
+        this.Colours = colours;
+    }
+
+    Paint() {
+        const charachterFontPixel = 6;
+
+        let totalCharachterLength: number = 0;
+        for (let x = 0; x < this.Titles.length; x++) {
+            totalCharachterLength += this.Titles[x].length;
+        }
+        let startXPosition = this.X-20;
+        let startYPosition = this.Y;
+
+        if (this.TitleAligment === SobyChartAligment.Horizontally) {
+            if (this.HorizontalAligment === SobyChartHorizontalAligment.Left) {
+                startXPosition += 30;
+            }
+            else if (this.HorizontalAligment === SobyChartHorizontalAligment.Center) {
+                startXPosition += (this.Width - (totalCharachterLength * charachterFontPixel) - (this.Titles.length * 15)) / 2;
+            }
+            else if (this.HorizontalAligment === SobyChartHorizontalAligment.Right) {
+                startXPosition += (this.Width - (totalCharachterLength * charachterFontPixel) - (this.Titles.length * 15));
+            }
+        }
+        else {
+            if (this.VerticalAligment === SobyChartVerticalAligment.Top) {
+                startYPosition += 40;
+            }
+            else if (this.VerticalAligment === SobyChartVerticalAligment.Middle) {
+                startYPosition += (this.Height - (this.Titles.length * 15)) / 2;
+            }
+            else if (this.VerticalAligment === SobyChartVerticalAligment.Bottom) {
+                startYPosition += (this.Height - (this.Titles.length * 15));
+            }
+        }
+
+        for (let x = 0; x < this.Titles.length; x++) {
+            this.CTX.strokeStyle = "black";
+            this.CTX.fillStyle = "black";
+            this.CTX.fillText(this.Titles[x], startXPosition + 13, startYPosition + 8);
+            this.CTX.fillStyle = this.Colours[x];
+            this.CTX.strokeStyle = this.Colours[x];
+            this.CTX.fillRect(startXPosition, startYPosition, 10, 10);
+            //console.log(this.TitleAligment);
+            console.log(startYPosition);
+            console.log(startXPosition);
+            if (this.TitleAligment === SobyChartAligment.Horizontally) {
+                startXPosition += 15 + (this.Titles[x].length * charachterFontPixel);
+            }
+            else {
+                startYPosition -= 15 ;
+            }
+        }
+    }
+}
+
 class soby_ChartDataset {
     Title: string = "";
     Data: Array<number>;
@@ -595,11 +757,27 @@ enum SobyChartTypes {
     ColumnChart = 5
 }
 
-enum SobyChartLabelPosition {
+enum SobyChartElementPosition {
     Left = 0,
     Bottom = 1,
-    Top = 2,
-    Right = 3
+    Right = 2,
+    Top = 3,
+    Hidden=4
 }
 
+enum SobyChartAligment {
+    Vertically = 0,
+    Horizontally = 1
+}
+enum SobyChartVerticalAligment {
+    Top = 0,
+    Middle = 1,
+    Bottom = 2
+}
+
+enum SobyChartHorizontalAligment {
+    Left = 0,
+    Center = 1,
+    Right = 2
+}
 // ************************************************************

@@ -1,5 +1,4 @@
-﻿document.write("<div id='soby_BarChartDiv'></div>");
-$(function ()
+﻿$(function ()
 {
     soby_PopulateBarChartRefreshData();
 });
@@ -18,7 +17,7 @@ function soby_PopulateBarChartRefreshData()
     dataSet3.Title = "Chart3";
     dataSet3.Data = [21, 51, 31, 6, 62, 24];
 
-    var barChart = new soby_BarChart("#soby_BarChartDiv", "Bar Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+    var barChart = new soby_BarChart("#soby_ChartDiv", "Bar Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     barChart.Width = 600;
     barChart.Height = 300;
     barChart.ImagesFolderUrl = "/media/images";
