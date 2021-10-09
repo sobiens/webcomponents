@@ -53,7 +53,6 @@ function soby_PopulateEntityGrid(entitySetName, entitySetType) {
     entityService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/" + entitySetName + "(#" + keyFieldName + ")", "json", "application/json; charset=utf-8", "DELETE");
     var entityGrid = new soby_WebGrid("#soby_AdminEntityGridDiv", entitySetName, entityService, "There is no record found.");
     entityGrid.AddKeyField(keyFieldName, keyFieldName);
-    entityGrid.ImagesFolderUrl = "/media/images";
     for (var i = 0; i < properties.length; i++) {
         var property = $(properties[i]);
         var name = property.attr("Name");

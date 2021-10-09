@@ -17,7 +17,6 @@ function soby_PopulateSelectBoxGeneral() {
     bookService.Transport.Update = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "PUT");
     bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "DELETE");
     var selectbox = new SobySelectBox("soby_BooksDiv");
-    selectbox.ImagesFolderUrl = "/media/images";
     selectbox.DataService = bookService;
     selectbox.TitleFieldName = "Title";
     selectbox.ValueFieldName = "Id";

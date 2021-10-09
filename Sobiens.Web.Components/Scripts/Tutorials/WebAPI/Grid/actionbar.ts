@@ -20,7 +20,6 @@ function soby_PopulateGridActionBar() {
     bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "DELETE");
         
     bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
-    bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddKeyField("Id", "Id");
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
@@ -29,7 +28,7 @@ function soby_PopulateGridActionBar() {
     bookGrid.AddColumn("AuthorId", "Author", SobyShowFieldsOn.All, function (item) {
         return item.Author.Name;
     }, null, true, true, true, null, null, null);
-    bookGrid.ActionPaneButtons.Add("CustomAction", "show selected items", 0, bookGrid.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-warning", true
+    bookGrid.ActionPaneButtons.Add("CustomAction", "show selected items", 0, "/media/images/formatmap16x16.png?rev=43", "soby-list-warning", true
         , function (grid)
         {
             var text = "Selected items: ";

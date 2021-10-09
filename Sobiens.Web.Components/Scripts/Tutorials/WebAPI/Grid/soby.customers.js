@@ -46,7 +46,6 @@ function soby_PopulateWebHeader() {
     dataSourceBuilder.AddSchemaField("Sex", SobyFieldTypes.Text, null);
     var spService = new soby_WebServiceService(dataSourceBuilder);
     var customerGrid = new soby_WebGrid("#soby_CustomerDiv", "Customers", spService, "There is no record found.");
-    customerGrid.ImagesFolderUrl = "/media/images";
     customerGrid.AddColumn("ID", "ID", SobyShowFieldsOn.All, null, null, true, true, false, null, null, null);
     customerGrid.AddColumn("FirstName", "Full Name", SobyShowFieldsOn.All, function (item) {
         return item.FirstName + " " + item.LastName;
@@ -60,7 +59,6 @@ function soby_PopulateWebHeader() {
     dataSourceBuilder1.AddSchemaField("Number", SobyFieldTypes.Text, null);
     var spService = new soby_WebServiceService(dataSourceBuilder1);
     var customerPhonesGrid = new soby_WebGrid("#soby_CustomerPhonesDiv", "Phones", spService, "There is no record found.");
-    customerPhonesGrid.ImagesFolderUrl = "/media/images";
     customerPhonesGrid.DisplayTitle = false;
     customerPhonesGrid.IsSelectable = false;
     customerPhonesGrid.AddColumn("PhoneType", "Phone Type", SobyShowFieldsOn.All, null, null, true, true, false, null, null, null);
@@ -84,7 +82,6 @@ function soby_PopulateWebHeader() {
     dataSourceBuilder2.AddSchemaField("Address1", SobyFieldTypes.Text, null);
     var spService = new soby_WebServiceService(dataSourceBuilder2);
     var customerAddressesGrid = new soby_WebGrid("#soby_CustomerAddressesDiv", "Addresses", spService, "There is no record found.");
-    customerAddressesGrid.ImagesFolderUrl = "/media/images";
     customerAddressesGrid.DisplayTitle = false;
     customerAddressesGrid.IsSelectable = false;
     var cellTemplate1 = { TemplateType: "CellContent", PopupLinkText: "More info", Template: "<div><div style='background-color: blue;color: white;padding: 5px;float: left;'><strong>PostCode:</strong></div><div style='background-color: black;color: white;padding: 5px;float: left;'>#{PostCode}</div></div>" };

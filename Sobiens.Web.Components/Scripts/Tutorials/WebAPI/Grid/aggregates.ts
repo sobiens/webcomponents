@@ -15,7 +15,6 @@ function soby_PopulateGridAggregates() {
     bookService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
     bookDataSourceBuilder.RowLimit = 40;
     bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
-    bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.IsGroupable = true;
     bookGrid.IsEditable = false;
     bookGrid.AddKeyField("Id", "Id");

@@ -25,7 +25,7 @@
         <strong>6. visible:</strong> States whether it is visible or not<br />
         <strong>7. onClick:</strong> The function which will be triggered on click<br />
         <strong>8. enabilityFunction:</strong>The function which should return boolean value to state if it is enabled or not. This function is executed to make button visible/hidden on all grid events.<br />
-        <pre class="js">    bookGrid.ActionPaneButtons.Add("CustomAction", "show selected items", 0, bookGrid.ImagesFolderUrl + "/formatmap16x16.png?rev=43", "soby-list-warning", true
+        <pre class="js">    bookGrid.ActionPaneButtons.Add("CustomAction", "show selected items", 0, "/media/images/formatmap16x16.png?rev=43", "soby-list-warning", true
         , function (grid)
         {
             var text = "Selected items: ";

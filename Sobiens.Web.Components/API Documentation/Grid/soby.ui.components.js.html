@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -963,7 +963,7 @@ class soby_WebGrid {
         var navigationPane = $(this.ContentDivSelector + " .navigationpane");
         navigationPane.html("&lt;table style='margin:auto'>&lt;tbody>&lt;tr> \
 							  " + (this.DataService.CanNavigateToPreviousPage() == true ? "&lt;td>&lt;a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].GoToPreviousPage()\">&lt;img src='" + this.ImagesFolderUrl + "/prev.gif' border='0' alt='Previous' style='vertical-align: middle;'>&lt;/a>&lt;/td>" : "") + " \
-							  &lt;td class='ms-paging'>" + this.DataService.StartIndex + " - " + this.DataService.EndIndex + "&lt;/td> \
+							  &lt;td class='soby-paging'>" + this.DataService.StartIndex + " - " + this.DataService.EndIndex + "&lt;/td> \
 							  " + (this.DataService.CanNavigateToNextPage() == true ? "&lt;td>&lt;a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].GoToNextPage()\">&lt;img src='" + this.ImagesFolderUrl + "/next.gif' border='0' alt='Next' style='vertical-align: middle;'>&lt;/a>&lt;/td>" : "") + " \
 							  &lt;/tr>&lt;/tbody>&lt;/table>");
     }

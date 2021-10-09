@@ -123,7 +123,9 @@ class soby_Chart implements soby_ChartInterface {
         var tooltipOffsetY = canvasOffset.top - $(window).scrollTop();
         var mouseX = e.clientX - tooltipOffsetX;
         var mouseY = e.clientY - tooltipOffsetY;
-
+        console.log("--------------");
+        console.log(tooltipOffsetY);
+        console.log(e.clientY);
         for (var i = 0; i < chart.CalculatedValues.Dots.length; i++) {
             if (chart.CheckMouseHit(mouseX, mouseY, chart.CalculatedValues.Dots[i]) === true) {
                 canvas.style.left = (chart.CalculatedValues.Dots[i].X) + "px";

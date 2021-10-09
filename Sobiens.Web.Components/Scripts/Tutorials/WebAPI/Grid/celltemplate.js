@@ -16,11 +16,10 @@ function soby_PopulateGridCellTemplate() {
     bookService.Transport.Update = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "PUT");
     bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "DELETE");
     var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
-    bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddKeyField("Id", "Id");
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
-    var cellTemplate1 = { TemplateType: "CellContent", PopupLinkText: "More info", Template: "<div><div style='background-color: blue;color: white;padding: 5px;float: left;width:150px'><strong>AU: #{Author.Name} - #{Genre} - #{Year}</strong></div><div style='background-color: black;color: white;padding: 5px;float: left;text-align:right;width:30px'>$#{Price}</div></div>" };
-    var cellTemplate2 = { TemplateType: "PopupContent", PopupLinkText: "More info", Template: "<div><div style='background-color: blue;color: white;padding: 5px;float: left;width:150px'><strong>AU: #{Author.Name} - #{Genre} - #{Year}</strong></div><div style='background-color: black;color: white;padding: 5px;float: left;text-align:right;width:30px'>$#{Price}</div></div>" };
+    var cellTemplate1 = { TemplateType: "CellContent", PopupLinkText: "More info", Template: "<div><div style='background-color: blue;color: white;padding: 5px;float: left;width:250px'><strong>Author:</strong> #{Author.Name}<br><strong>Genre:</strong> #{Genre}<br> <strong>Year:</strong> #{Year}<br><strong>Price:</strong> $#{Price}</div></div>" };
+    var cellTemplate2 = { TemplateType: "PopupContent", PopupLinkText: "More info", Template: "<div><div style='background-color: blue;color: white;padding: 5px;float: left;width:250px'><strong>Author:</strong> #{Author.Name}<br><strong>Genre:</strong> #{Genre}<br> <strong>Year:</strong> #{Year}<br><strong>Price:</strong> $#{Price}</div></div>" };
     bookGrid.AddColumn("Year", "Description", SobyShowFieldsOn.All, null, cellTemplate1, true, true, true, null, null, null);
     bookGrid.AddColumn("Year", "Description", SobyShowFieldsOn.All, null, cellTemplate2, true, true, true, null, null, null);
     bookGrid.Initialize(true);

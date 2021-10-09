@@ -34,7 +34,6 @@ function soby_PopulateItemSelectionAsTreeView() {
     itemSelection = new soby_ItemSelection("#soby_BooksDiv", "Meters", SobyItemSelectorTypes.TreeView, autoCompleteBookDataService, advancedSearchChildrenDataDataService, advancedSearchChildrenDataDataService, "No record", "BookSelectionDialog", "/Management/CustomerSelection.html", "Id", "Title", "ParentId");
     itemSelection.WaterMark = "Please start typing";
     itemSelection.AllowMultipleSelections = true;
-    itemSelection.ImagesFolderUrl = "/media/images";
     itemSelection.Initialize();
 
 }

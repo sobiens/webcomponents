@@ -17,7 +17,6 @@ function soby_PopulateGridGrouping() {
     bookService.Transport.Update = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "PUT");
     bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "DELETE");
     bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
-    bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.IsGroupable = true;
     //bookGrid.IsSelectable = false;
     //bookGrid.IsEditable = false;

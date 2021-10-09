@@ -12,7 +12,6 @@ function soby_PopulateGridCustomerOrders() {
     var customerService = new soby_WebServiceService(customerDataSourceBuilder);
     customerService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/CustomersOData", "json", "application/json; charset=utf-8", "GET");
     var customerGrid = new soby_WebGrid("#soby_CustomersDiv", "Customers", customerService, "There is no record found.");
-    customerGrid.ImagesFolderUrl = "/media/images";
     customerGrid.AddColumn("FirstName", "Name", SobyShowFieldsOn.All, function (item) {
         return item.FirstName + " " + item.LastName;
     }, null, true, true, false, null, null, null);
@@ -29,6 +28,9 @@ function soby_PopulateGridCustomerOrders() {
         }
         soby_PopulateCustomerAndOrderDetails(customerIds);
     };
+    customerGrid.OnGridPopulated = function () {
+        customerGrid.SelectRowByIndex(4);
+    };
     customerGrid.Initialize(true);
 }
 function soby_PopulateCustomerAndOrderDetails(customerIds) {
@@ -43,7 +45,6 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     var customerAddressesService = new soby_WebServiceService(customerAddressesDataSourceBuilder);
     customerAddressesService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/CustomerAddressesOData", "json", "application/json; charset=utf-8", "GET");
     var customerAddressesGrid = new soby_WebGrid("#soby_AddressesDiv", "Addresses", customerAddressesService, "There is no record found.");
-    customerAddressesGrid.ImagesFolderUrl = "/media/images";
     customerAddressesGrid.DisplayTitle = true;
     customerAddressesGrid.IsSelectable = false;
     customerAddressesGrid.IsEditable = false;
@@ -62,7 +63,6 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     var customerPhonesService = new soby_WebServiceService(customerPhonesDataSourceBuilder);
     customerPhonesService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/CustomerPhonesOData", "json", "application/json; charset=utf-8", "GET");
     var customerPhonesGrid = new soby_WebGrid("#soby_PhonesDiv", "Phones", customerPhonesService, "There is no record found.");
-    customerPhonesGrid.ImagesFolderUrl = "/media/images";
     customerPhonesGrid.DisplayTitle = true;
     customerPhonesGrid.IsSelectable = false;
     customerPhonesGrid.IsEditable = false;
@@ -77,7 +77,6 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     var orderService = new soby_WebServiceService(orderDataSourceBuilder);
     orderService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Orders", "json", "application/json; charset=utf-8", "GET");
     var orderGrid = new soby_WebGrid("#soby_OrdersDiv", "Orders", orderService, "There is no record found.");
-    orderGrid.ImagesFolderUrl = "/media/images";
     orderGrid.AddColumn("OrderDate", "OrderDate", SobyShowFieldsOn.All, null, null, true, true, false, null, null, null);
     orderGrid.IsSelectable = false;
     orderGrid.IsEditable = false;
@@ -92,7 +91,6 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     var orderItemsService = new soby_WebServiceService(orderItemsDataSourceBuilder);
     orderItemsService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/OrderItems", "json", "application/json; charset=utf-8", "GET");
     var orderItemsGrid = new soby_WebGrid("#soby_CustomerPhonesDiv", "Order Items", orderItemsService, "There is no record found.");
-    orderItemsGrid.ImagesFolderUrl = "/media/images";
     orderItemsGrid.DisplayTitle = false;
     orderItemsGrid.IsSelectable = false;
     orderItemsGrid.IsEditable = false;

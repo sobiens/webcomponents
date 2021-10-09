@@ -8,7 +8,6 @@
     <li style="display:none"><a href="/Tutorials/SobyGrid/Localization.aspx">Localization</a></li>
     <li><a href="/Tutorials/SobyGrid/Sorting.aspx">Sorting</a></li>
     <li><a href="/Tutorials/SobyGrid/Filtering.aspx">Filtering</a></li>
-    <li><a href="/Tutorials/SobyGrid/Custom Filtering.aspx">Custom Filtering</a></li>
     <li><a href="/Tutorials/SobyGrid/Paging.aspx">Paging</a></li>
     <li><a href="/Tutorials/SobyGrid/Editing.aspx">Editing</a></li>
     <li><a href="/Tutorials/SobyGrid/Grouping.aspx">Grouping</a></li>

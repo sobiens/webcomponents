@@ -1,11 +1,10 @@
-declare var testObj: any;
-declare var soby_EditControls: any[];
+declare let testObj: any;
+declare let soby_EditControls: any[];
 interface ISobyEditControlInterface {
     ContainerClientId: string;
     FieldType: number;
     Args: any;
     ItemClassName: string;
-    ImagesFolderUrl: string;
     ListItems: Array<SobyListItem>;
     PopulateChoiceItems(): any;
     IsValid: boolean;
@@ -18,7 +17,6 @@ interface ISobyEditControlInterface {
     Validate(): boolean;
 }
 interface ISobySelectorControlInterface {
-    ImagesFolderUrl: string;
     GetSelectedDataItems(): any[];
 }
 declare enum SobyPaginationViewTypes {
@@ -42,7 +40,6 @@ declare class SobyListItem {
 }
 declare class SobyTextBox implements ISobyEditControlInterface {
     constructor(containerClientId: string, fieldType: number, args: any);
-    ImagesFolderUrl: string;
     ItemClassName: string;
     ContainerClientId: string;
     FieldType: number;
@@ -64,7 +61,6 @@ declare class SobyLookupSelectBox implements ISobyEditControlInterface {
     ValueFieldName: string;
     TitleFieldName: string;
     ItemClassName: string;
-    ImagesFolderUrl: string;
     ContainerClientId: string;
     FieldType: number;
     Args: any;
@@ -88,13 +84,13 @@ declare class SobyCheckBoxList implements ISobyEditControlInterface {
     ValueFieldName: string;
     TitleFieldName: string;
     ItemClassName: string;
-    ImagesFolderUrl: string;
     SelectedValuesTempState: any;
     ContainerClientId: string;
     FieldType: number;
     Args: any;
     IsValid: boolean;
     ShowSearchBox: boolean;
+    SVGImages: soby_SVGImages;
     GetValue(): any;
     SetValue(value: string): void;
     SetArrayValue(values: any): void;
@@ -134,13 +130,13 @@ declare class SobySelectBox {
     DataService: soby_ServiceInterface;
     ValueFieldName: string;
     TitleFieldName: string;
-    ImagesFolderUrl: string;
     ThemeName: string;
     ThemeClassName: string;
     IsValid: boolean;
     FocusToNextItemAfterItemSelection: boolean;
     Width: string;
     LastSearchKeyword: string;
+    SVGImages: soby_SVGImages;
     SetValue(value: string): void;
     SetValueWithTitle(value: string, title: string): void;
     /**
@@ -184,9 +180,9 @@ declare class SobyEditControlFactory {
     CreateEditControl(containerClientId: string, fieldType: number, args: any): ISobyEditControlInterface;
     GetEditControl(containerClientId: string): ISobyEditControlInterface;
 }
-declare var sobyEditControlFactory: SobyEditControlFactory;
-declare var soby_WebGrids: soby_WebGrid[];
-declare var soby_IsCtrlOnHold: boolean;
+declare let sobyEditControlFactory: SobyEditControlFactory;
+declare let soby_WebGrids: soby_WebGrid[];
+declare let soby_IsCtrlOnHold: boolean;
 declare class SobyShowFieldsOnObject {
     All: number;
     ListOnly: number;
@@ -196,7 +192,7 @@ declare class SobyShowFieldsOnObject {
     ListNew: number;
     EditNew: number;
 }
-declare var SobyShowFieldsOn: SobyShowFieldsOnObject;
+declare let SobyShowFieldsOn: SobyShowFieldsOnObject;
 declare function soby_GetActiveDataGrid(): soby_WebGrid;
 declare function soby_GetAllGrids(): any[];
 declare function soby_GetAllVisibleGrids(): any[];
@@ -204,8 +200,9 @@ declare function soby_RefreshAllGrids(): void;
 declare class sobyActionPaneButtons extends Array<sobyActionPaneButton> {
     constructor(items?: Array<sobyActionPaneButton>);
     Clone(): sobyActionPaneButtons;
-    AddButton(button: sobyActionPaneButton): void;
-    Add(key: string, text: string, index: number, imageUrl: string, className: string, visible: boolean, onClick: any, enabilityFunction: any): void;
+    AddButton(button: sobyActionPaneButton): sobyActionPaneButton;
+    Add(key: string, text: string, index: number, imageUrl: string, className: string, visible: boolean, onClick: any, enabilityFunction: any): sobyActionPaneButton;
+    AddAsSVG(key: string, text: string, index: number, svg: string, className: string, visible: boolean, onClick: any, enabilityFunction: any): sobyActionPaneButton;
     AddCollection(buttons: sobyActionPaneButtons): void;
     Get(key: string): sobyActionPaneButton;
     Hide(key: string): void;
@@ -223,6 +220,7 @@ declare class sobyActionPaneButton {
     Visible: boolean;
     OnClick: any;
     EnabilityFunction: any;
+    SVG: string;
     Hide(): void;
     Show(): void;
 }
@@ -268,7 +266,6 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
      * @property {Array}                    FilterControls              - Controls for filter fields.
      * @property {string}                   GridID                      - ID string of the grid.
      * @property {SobyGroupByFields}        GroupByFields               - Group by fields.
-     * @property {string}                   ImagesFolderUrl             - Url of the grid images folder.
      * @property {boolean}                  IsSelectable                - States whether rows should be selectable or not.
      * @property {boolean}                  IsEditable                  - States whether rows should be editable or not.
      * @property {boolean}                  IsGroupable                 - States whether fields should be groupable or not.
@@ -317,7 +314,7 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
     Items: any;
     ShowRefreshButton: boolean;
     ShowHeader: boolean;
-    ImagesFolderUrl: string;
+    SVGImages: soby_SVGImages;
     ActionPaneButtons: sobyActionPaneButtons;
     LastGroupByValues: any[];
     TableTagName: string;
@@ -397,7 +394,7 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
      * @param {string} emptyDataHtml - Html content which will be displayed if there is no record.
      * @example
      * // Creates the grid object
-     * var bookDataSourceBuilder = new soby_WSBuilder();
+     * let bookDataSourceBuilder = new soby_WSBuilder();
      * bookDataSourceBuilder.Filters = new SobyFilters(false);
      * bookDataSourceBuilder.AddSchemaField("Id", SobyFieldTypes.Number, null);
      * bookDataSourceBuilder.AddSchemaField("Title", SobyFieldTypes.Text, null);
@@ -405,14 +402,13 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
      * bookDataSourceBuilder.AddSchemaField("Price", SobyFieldTypes.Number, null);
      * bookDataSourceBuilder.AddSchemaField("Genre", SobyFieldTypes.Text, null);
      * bookDataSourceBuilder.AddSchemaField("AuthorId", SobyFieldTypes.Lookup, { ModelName: "Author", ValueFieldType: SobyFieldTypes.Number, ValueFieldName: "Id", TitleFieldName: "Name", ReadTransport: new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Authors", "json", "application/json; charset=utf-8", "GET")});
-     * var bookService = new soby_WebServiceService(bookDataSourceBuilder);
+     * let bookService = new soby_WebServiceService(bookDataSourceBuilder);
      * bookService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
      * bookService.Transport.Add = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "POST");
      * bookService.Transport.Update = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "PUT");
      * bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "DELETE");
         
-     * var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
-     * bookGrid.ImagesFolderUrl = "/Images";
+     * let bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
      * bookGrid.AddKeyField("Id");
      * bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
      * bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null);
@@ -960,6 +956,7 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
     ExpandGroupBy(groupByRowID: any): void;
     PopulateDetailRow(rowID: any): void;
     PopulateSelectionCell(item: any, row: any, rowID: any): void;
+    GenerateConteFromCellTemplate(columnIndex: number, dataItemIndex: number): string;
     PopulateCellTemplateContent(cellId: string, columnIndex: number, dataItemIndex: number): void;
     PopulateViewColumns(item: any, row: any, rowID: any, itemIndex: number): void;
     /**
@@ -1037,10 +1034,9 @@ declare class soby_DataRepeater extends soby_WebGrid {
      */
     PopulateGridData(items: any): void;
 }
-declare var soby_Carousels: any[];
+declare let soby_Carousels: any[];
 declare class soby_Carousel {
     constructor(contentDivSelector: string, title: string, dataService: any, emptyDataHtml: string, imageFieldName: string, captionFieldName: string, contentFieldName: string, isContentFieldUrl: boolean);
-    ImagesFolderUrl: string;
     /************************************ EVENTS *************************************/
     OnGridPopulated: any;
     OnRowSelected: any;
@@ -1058,6 +1054,7 @@ declare class soby_Carousel {
     MaxWidth: number;
     Items: any;
     ItemDataBound: any;
+    SVGImages: soby_SVGImages;
     EnsureCarouselExistency(): void;
     GoToItem(index: any): void;
     NextItem(): void;
@@ -1068,7 +1065,7 @@ declare class soby_Carousel {
     PopulateGridData(items: any): void;
     Initialize(populateItems: any): void;
 }
-declare var soby_MetroTileGrids: any[];
+declare let soby_MetroTileGrids: any[];
 declare class soby_MetroTilesGrid {
     constructor(contentDivSelector: string, title: string, dataService: any, emptyDataHtml: string, imageFieldName: string, captionFieldName: string, urlFieldName: string, openInNewWindowFieldName: string, startColorFieldName: string, endColorFieldName: string, colspanFieldName: string, rowspanFieldName: string);
     MetroTileGridID: string;
@@ -1089,12 +1086,13 @@ declare class soby_MetroTilesGrid {
     TileHeight: number;
     Width: string;
     Items: any;
+    SVGImages: soby_SVGImages;
     EnsureMetroTilesExistency(): void;
     PopulateItems(items: any): void;
     Initialize(populateItems: any): void;
     ItemPopulated(items: Array<soby_Item>): void;
 }
-declare var soby_Wizards: any[];
+declare let soby_Wizards: any[];
 declare class soby_Wizard {
     constructor(contentDivSelector: string);
     AutoPopulateStepNumbersOnHeaders: boolean;
@@ -1122,7 +1120,35 @@ declare class soby_Wizard {
     HideStepPanels: () => void;
     ShowStepPanels: () => void;
 }
-declare var soby_Menus: any[];
+declare let soby_Tabs: any[];
+declare class soby_Tab {
+    constructor(contentDivSelector: string);
+    AutoPopulateTabNumbersOnHeaders: boolean;
+    TabID: string;
+    ContentDivSelector: string;
+    CurrentTabIndex: number;
+    TempTabIndex: number;
+    MaxWidth: any;
+    TileWidth: string;
+    TileHeight: string;
+    Width: string;
+    Items: any;
+    EnsureTabsExistency: () => void;
+    GetItemById: (id: any) => any;
+    ActivateTab: (linkId: any) => void;
+    GoToNextTab: () => void;
+    GoToPreviousTab: () => void;
+    EventBeforeTabChange: any;
+    EventAfterTabChange: any;
+    GoToTab: (tabIndex: any) => void;
+    CommitToTab: () => void;
+    Initialize: () => void;
+    HideNavigationBar: () => void;
+    ShowNavigationBar: () => void;
+    HideTabPanels: () => void;
+    ShowTabPanels: () => void;
+}
+declare let soby_Menus: any[];
 declare class soby_Menu {
     constructor(contentDivSelector: any, dataService: any, displayNameField: any, idField: any, parentIdField: any);
     MenuID: string;
@@ -1144,13 +1170,13 @@ declare class soby_Menu {
     PopulateGridData: (items: any) => void;
     Initialize: () => void;
 }
-declare var soby_ItemSelections: any[];
+declare let soby_ItemSelections: any[];
 declare class SobyItemSelectorTypeObject {
     GridView: number;
     TreeView: number;
     CardView: number;
 }
-declare var SobyItemSelectorTypes: SobyItemSelectorTypeObject;
+declare let SobyItemSelectorTypes: SobyItemSelectorTypeObject;
 declare function soby_GetItemSelectionByContentDivSelector(contentDivSelector: any): soby_ItemSelection;
 declare function soby_GetAllItemSelections(): any[];
 declare class soby_ItemSelection {
@@ -1171,7 +1197,7 @@ declare class soby_ItemSelection {
     ParentFieldName: string;
     ValueFieldName: string;
     TextFieldName: string;
-    ImagesFolderUrl: string;
+    SVGImages: soby_SVGImages;
     InitializeAdvancedSearchControl(): void;
     Initialize(): void;
     OpenItemPicker(event: any): void;
@@ -1193,3 +1219,26 @@ declare function CloseDialog(dialogID: any, argument: any): void;
 declare function CommonCloseDialog(dialogID: any, argument: any): void;
 declare function SetDialogArgument(dialogID: any, argument: any): void;
 declare function SetCommonDialogArgument(dialogID: any, argument: any): void;
+declare class soby_SVGImages {
+    Width: number;
+    Height: number;
+    constructor();
+    GetArrowDown(): string;
+    GetArrowUp(): string;
+    GetSortAZDown(): string;
+    GetSortAZUp(): string;
+    GetXCircle(): string;
+    GetFilterCircle(): string;
+    GetCheck(): string;
+    GetCardView(): string;
+    GetLeftCircle(): string;
+    GetRightCircle(): string;
+    GetCollapse(): string;
+    GetExpand(): string;
+    GetPicker(): string;
+    GetExcel(): string;
+    GetCSV(): string;
+    GetPrint(): string;
+    GetClipboard(): string;
+    GetLoading(): string;
+}

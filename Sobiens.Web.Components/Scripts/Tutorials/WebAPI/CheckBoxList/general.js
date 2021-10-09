@@ -11,7 +11,6 @@ function soby_PopulateCheckBoxList() {
     dataService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
     var checkBoxList = new SobyCheckBoxList("soby_BooksDiv", null, null);
     checkBoxList.ItemClassName = "financialyear";
-    checkBoxList.ImagesFolderUrl = "/media/images";
     checkBoxList.DataService = dataService;
     checkBoxList.ValueFieldName = "Title";
     checkBoxList.TitleFieldName = "Title";

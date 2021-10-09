@@ -27,7 +27,6 @@ function soby_PopulateGridStaticDataBinding() {
         new SobySchemaField("Sex", SobyFieldTypes.Text, null)
     ], items);
     var customerGrid = new soby_WebGrid("#soby_CustomersDiv", "Customers", customerService, "There is no record found.");
-    customerGrid.ImagesFolderUrl = "/media/images";
     customerGrid.IsEditable = false;
     customerGrid.IsSelectable = false;
     customerGrid.AddKeyField("ID", "ID");

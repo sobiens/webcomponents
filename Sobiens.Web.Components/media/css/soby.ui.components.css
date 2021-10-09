@@ -1,6 +1,22 @@
 ﻿/*********************** SOBY GRID *****************************/
+.soby_grid {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+}
+    .soby_grid .soby_gridcell {
+        font-size: 12px;
+    }
+    .soby_grid .soby_gridgroupbycell {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .soby_grid .soby_gridheadercell, .soby_grid .soby-groupby-heading a, .soby_grid .soby_gridaggregatecell, .soby_grid .soby-paging {
+        font-size: 14px;
+        font-weight: 600;
+    }
     /**************** Classic Theme **************/
-    .soby_grid.classic.active{border:solid 1px blue } 
+    .soby_grid.classic.active {
+        border: solid 1px blue
+    } 
     .soby_grid.classic .soby_griddatarow.alt {  } 
     .soby_grid.classic .soby_griddatarow.selected { background-color: rgba( 123,179,211,0.5 ); color:white;}
     .soby_grid.classic tbody { border: 1px solid rgba( 156,206,240,0.5 ); }
@@ -15,9 +31,17 @@
     .soby_grid.classic .soby_tabheader.active {background-color:white;} 
     .soby_grid.classic .soby_tabcontent {border:1px solid #aaaaaa} 
     .soby_grid.classic .soby_gridheadercell:hover, .soby_grid.classic .soby_gridheadercell:hover a { background-color:rgba( 205,230,247,0.5 ); }
-    .soby_grid.classic .soby-itmHoverEnabled:hover { background-color:rgba( 205,230,247,0.5 );}
-    .soby_grid.classic .soby_griddatarow.selected .soby-itmHoverEnabled:hover { background-color:rgba( 156,206,240,0.5 ); }
-    .soby_grid.classic .soby_griddatarow.selected .soby_selectitemcell, .soby_grid.classic .soby_gridheadercell { background-color:#0072c6;}
+/*    .soby_grid.classic .soby-itmHoverEnabled:hover { background-color:rgba( 205,230,247,0.5 );}
+.soby_grid.classic .soby_griddatarow.selected .soby-itmHoverEnabled:hover {
+    background-color: rgba( 156,206,240,0.5);
+    color: red !important;
+}*/
+    .soby_grid.classic .soby_gridgroupbycell, .soby_grid.classic .soby-groupby-heading a {
+        color: rgb(50, 49, 48);
+    }
+.soby_grid.classic .soby_griddatarow.selected .soby_selectitemcell, .soby_grid.classic .soby_gridheadercell {
+    background-color: #0072c6;
+}
     .soby_grid.classic .soby_gridheaderlink { color:white}
     .sobygridmenu.classic{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
     .sobyitemdialog.classic { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
@@ -130,6 +154,9 @@
         position: absolute;
         right: 10px;
     }
+.soby_gridheaderlink, .soby-groupby-heading a {
+    text-decoration: none;
+}
 .soby_tabletitle {
     font-weight: bold;
     font-size: 14px;
@@ -367,6 +394,100 @@
 .sobywizardnavigationbar { clear: both; text-align: center; }
 /***************************************************************/
 
+/*********************** SOBY Tabs *****************************/
+.sobytab {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+}
+
+    .sobytab > ul > li:not(:first-child) {
+        padding-left: 30px;
+    }
+
+    .sobytab > ul {
+        padding-left: 0px;
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+
+        .sobytab > ul > li {
+            list-style: none;
+            float: left;
+            padding: 5px;
+        }
+
+.sobytablink {
+    padding: 10px;
+    color: rgb(50, 49, 48) ;
+}
+
+    .sobytablink.active {
+        font-weight: 600;
+        color: rgb(50, 49, 48);
+        text-decoration: underline;
+    }
+
+    .sobytablink:before {
+        width: 0;
+        height: 0;
+        border-top: 30px inset transparent;
+        border-bottom: 30px inset transparent;
+        border-left: 30px solid #FFFFFF;
+        position: absolute;
+        content: \"\";
+        top: 0;
+        left: 0;
+    }
+
+    .sobytablink:after {
+        width: 0;
+        height: 0;
+        border-top: 29px inset transparent;
+        border-bottom: 28px inset transparent;
+        border-left: 30px solid #4B92D8;
+        position: absolute;
+        content: \"\";
+        top: 0;
+        right: -30px;
+        z-index: 2;
+    }
+
+.sobytablink {
+    padding: 20px 12px 20px;
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    min-width: 24.75%;
+    margin-left: 0.25%;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    color: #707070;
+    background: #EBEBEB;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+    .sobytablink:hover {
+        text-decoration: none;
+    }
+
+    .sobytablink:first-child {
+        margin-left: 0;
+    }
+
+.sobytab > ul > li:first-child .sobytablink:before, .sobytab > li:last-child .sobytablink:after {
+    border: none;
+}
+
+.sobytablink.active:after {
+    border-left: 30px solid orange;
+}
+
+.sobytabnavigationbar {
+    clear: both;
+    text-align: center;
+}
+/***************************************************************/
 /*********************** SOBY MENU *****************************/
 .sobymenu {} 
 .sobymenu > ul > li:not(:first-child) {padding-left: 30px;} 
@@ -388,7 +509,29 @@
 .soby_treeviewnode { list-style:none; }
 /***************************************************************/
 
+/*********************** SOBY Chart *****************************/
+.soby_chart {
+    position: relative;
+}
+/***************************************************************/
 
+/*********************** SOBY CODE EDITOR *****************************/
+.codeeditor {
+    border: 0px;
+    border-top: 1px solid lightgray;
+    font-size: 13px;
+}
+    .codeeditor:focus {
+        border: 1px solid lightgray;
+        outline: none !important;
+        box-shadow: 0 0 10px #719ECE;
+    }
+
+.actionbuttons {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+/***************************************************************/
 /*********************** SOBY SELECTBOX *****************************/
 .sobyselectbox {
     position: relative;

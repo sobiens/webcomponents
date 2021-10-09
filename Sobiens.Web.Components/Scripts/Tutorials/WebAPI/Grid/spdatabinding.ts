@@ -16,7 +16,6 @@ function soby_PopulateSPDataBindingGrid() {
     bookService.Transport.Read = new soby_TransportRequest("http://spsiteurl/_vti_bin/listdata.svc/Book", "json", "application/json; charset=utf-8", "GET");
     bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
     bookGrid.IsEditable = false;
-    bookGrid.ImagesFolderUrl = "../../../style library/media/images";
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);

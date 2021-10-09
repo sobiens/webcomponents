@@ -14,7 +14,6 @@ function soby_PopulateGridSorting() {
     bookService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
     bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
     bookGrid.IsEditable = false;
-    bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddOrderByField("Title", true);
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);

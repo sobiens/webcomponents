@@ -15,15 +15,22 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div class="article col-md-9">
-            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
+        <script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+        <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
             <script src="/media/js/soby.ui.components.codeview.js"></script>
             <script src="/Scripts/Tutorials/CodeView/codeview.js"></script>
             <h3>Example</h3>
-            <div class='soby_CodeDiv'><div class="code">&lt;script language='javascript'&gt;var fruits = ["Banana", "Orange", "Apple", "Mango"];
-fruits.splice(2, 0, "Lemon", "Kiwi");
-document.write(fruits);&lt;/script&gt;</div><div class="codedescription">This example displays all array values</div><div class="resultdescription"></div></div>
+            <div class='soby_CodeDiv'>
+                <div class="htmlcode">&lt;div id='fruittable'&gt;&lt;/div&gt;</div>
+                <div class="csscode">.fruit { color:red; }</div>
+                <div class="jscode">var fruits = ["Banana", "Orange", "Apple", "Mango"];
+document.getElementById("fruittable").innerHTML = "";
+for(var i=0;i&lt;fruits.length;i++){
+    document.getElementById("fruittable").innerHTML += '&lt;div class="fruit"&gt;' + fruits[i] + '&lt;/div&gt;';
+}
+</div><div class="codedescription">This example displays all array values</div><div class="resultdescription"></div></div>
         <a href="javascript:void(0)" onclick="soby_ShowHideViewSource()">
             <img src="/Images/viewsource.png" border="0" width="20px" /> View source
         </a>

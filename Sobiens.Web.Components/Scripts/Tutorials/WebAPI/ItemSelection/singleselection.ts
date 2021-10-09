@@ -23,7 +23,6 @@ function soby_PopulateItemSelectionSingle() {
 
     itemSelection = new soby_ItemSelection("#soby_BooksDiv", "Meters", SobyItemSelectorTypes.GridView, autoCompleteBookDataService, advancedSearchBookDataService, null, "No record", "BookSelectionDialog", "/Management/CustomerSelection.html", "Id", "Title", "");
     itemSelection.AllowMultipleSelections = false;
-    itemSelection.ImagesFolderUrl = "/media/images";
     itemSelection.Initialize();
 
 }

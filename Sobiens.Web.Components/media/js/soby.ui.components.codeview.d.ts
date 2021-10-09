@@ -1,18 +1,24 @@
-declare var soby_CodeViews: any[];
-declare class SobyCodeViewTypesObject {
-    Html: number;
-    Js: number;
-    Xml: number;
+declare const soby_CodeViews: any[];
+declare enum SobyCodeViewTypes {
+    SingleHtml = 0,
+    HtmlParts = 1,
+    Xml = 2
 }
-declare var SobyCodeViewTypes: SobyCodeViewTypesObject;
+declare enum SobyCodeViews {
+    SinglePage = 0,
+    Html = 1,
+    Js = 2,
+    Css = 3,
+    Xml = 4
+}
 declare class soby_CodeView {
-    constructor(contentDivSelector: any, title: any, codeViewType: number);
     CodeViewID: string;
     ContentDivSelector: string;
     Title: string;
-    ImagesFolderUrl: string;
-    CodeViewType: number;
+    CodeViewType: SobyCodeViewTypes;
     TemplateHtml: string;
+    ActiveView: SobyCodeViews;
+    constructor(contentDivSelector: any, title: any, codeViewType: SobyCodeViewTypes);
     Initialize(): void;
     RunCode(): void;
     ResetExercise(): void;

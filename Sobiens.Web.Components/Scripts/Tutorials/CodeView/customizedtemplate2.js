@@ -2,8 +2,7 @@ $(function () {
     soby_PopulateCustomizedCodeView2();
 });
 function soby_PopulateCustomizedCodeView2() {
-    var codeView = new soby_CodeView(".soby_CodeDiv", "Examples", SobyCodeViewTypes.Js);
-    codeView.ImagesFolderUrl = "/media/images";
+    var codeView = new soby_CodeView(".soby_CodeDiv", "Examples", SobyCodeViewTypes.HtmlParts);
     codeView.TemplateHtml = "<div style='width:100%'>" +
         "<div class='codeeditor' style='width:47%;float:left;'></div>" +
         "<div class='actionbuttons' style='width:6%;float:left;'></div>" +

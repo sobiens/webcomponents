@@ -12,7 +12,6 @@ function soby_PopulateCheckBoxList() {
 
     var checkBoxList = new SobyCheckBoxList("soby_BooksDiv", null, null);
     checkBoxList.ItemClassName = "financialyear";
-    checkBoxList.ImagesFolderUrl = "/media/images";
     checkBoxList.DataService = dataService;
     checkBoxList.ValueFieldName = "Title";
     checkBoxList.TitleFieldName = "Title";

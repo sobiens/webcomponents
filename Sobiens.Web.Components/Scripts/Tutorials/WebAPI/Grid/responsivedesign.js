@@ -28,7 +28,6 @@ function soby_PopulateGridResponsiveDesign() {
             return true;
     });
     var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
-    bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddKeyField("Id", "Id");
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);

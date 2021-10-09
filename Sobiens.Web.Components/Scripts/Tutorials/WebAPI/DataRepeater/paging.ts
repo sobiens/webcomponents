@@ -26,7 +26,6 @@ function soby_PopulateDataRepeaterRefreshData()
     var bookGrid = new soby_DataRepeater("#soby_BooksDiv", "Books", bookService, "There is no record found.");
     bookGrid.ShowHeader = false;
     bookGrid.MaxCellCount = 3;
-    bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddKeyField("Id", "Id");
     bookGrid.AddOrderByField("Title", true);
 //    bookGrid.AddGroupByField("Genre", true);

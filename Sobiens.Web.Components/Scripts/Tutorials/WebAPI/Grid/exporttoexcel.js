@@ -1,8 +1,8 @@
-var bookGrid = null;
+document.write("<div id='soby_BooksDiv'></div>");
 $(function () {
-    soby_PopulateGridSFiltering();
+    soby_PopulateGridExportToExcel();
 });
-function soby_PopulateGridSFiltering() {
+function soby_PopulateGridExportToExcel() {
     var bookDataSourceBuilder = new soby_WSBuilder();
     bookDataSourceBuilder.Filters = new SobyFilters(false);
     bookDataSourceBuilder.AddSchemaField("Id", SobyFieldTypes.Number, null);
@@ -15,11 +15,10 @@ function soby_PopulateGridSFiltering() {
     bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
     bookGrid.IsEditable = false;
     bookGrid.AllowExportData = true;
-    bookGrid.ImagesFolderUrl = "/media/images";
-    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null);
-    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null);
+    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.Initialize(true);
 }
-//# sourceMappingURL=filtering.js.map
+//# sourceMappingURL=exporttoexcel.js.map

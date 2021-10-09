@@ -21,7 +21,6 @@ function soby_PopulateGridRefreshData()
     bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "DELETE");
 
     var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
-    bookGrid.ImagesFolderUrl = "/media/images";
     bookGrid.AddKeyField("Id", "Id");
     bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
@@ -32,6 +31,21 @@ function soby_PopulateGridRefreshData()
         return item.Author.Name;
     }, null, true, true, true, null, null, null);
 
-    bookGrid.Initialize(false);
+    bookGrid.IsEditable = true;
+    bookGrid.ActionPaneButtons.Add("CustomAction", "new", 0, "/media/images/formatmap16x16.png?rev=43", "soby-list-add", true
+        , function (grid) {
+            grid.EditNewRow();
+        }
+        , function (grid) {
+            return grid.GetSelectedRowIDs().length === 0 ? true : false;
+        });
+    bookGrid.ActionPaneButtons.Add("CustomAction", "edit", 0, "/media/images/formatmap16x16.png?rev=43", "soby-list-edit", true
+        , function (grid) {
+            grid.EditSelectedRow();
+        }
+        , function (grid) {
+            return grid.GetSelectedRowIDs().length === 1 ? true : false;
+        });
+    bookGrid.Initialize(true);
 }
 
