@@ -21,7 +21,8 @@
     <pre id="SPDataBindingViewSourceDiv" class="viewsource html" style="display:none;background-color:ivory">
 &lt;script src="/media/js/jquery-3.1.0.js" type="text/javascript" &gt;&lt;/script&gt;
 &lt;script src='/media/js/jquery-ui-1.12.0.min.js'&gt;&lt;/script&gt;
-&lt;link href='/media/css/jquery-ui.min.css' rel='stylesheet' /&gt;&lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
+&lt;link href='/media/css/jquery-ui.min.css' rel='stylesheet' /&gt;
+&lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
 &lt;script src="/media/js/soby.service.js" &gt;&lt;/script&gt;
 &lt;script src="/media/js/soby.ui.components.js" &gt;&lt;/script&gt;
 &lt;div id='soby_BooksDiv' &gt;&lt;/div&gt;

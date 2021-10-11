@@ -92,20 +92,30 @@ var SobyLookupSelectBox = /** @class */ (function () {
             this.ValueFieldName = this.Args.ValueFieldName;
             this.TitleFieldName = this.Args.TitleFieldName;
             var readTransport = this.Args.ReadTransport;
-            var dataSourceBuilder = new soby_WSBuilder();
-            dataSourceBuilder.Filters = new SobyFilters(false);
-            dataSourceBuilder.AddSchemaField(this.Args.ValueFieldName, SobyFieldTypes.Text, null);
-            dataSourceBuilder.AddSchemaField(this.Args.TitleFieldName, SobyFieldTypes.Text, null);
-            if (this.Args.AdditionalReadFields !== null && this.Args.AdditionalReadFields !== undefined) {
-                var fieldNames = this.Args.AdditionalReadFields.split(",");
-                for (var i = 0; i < fieldNames.length; i++) {
-                    dataSourceBuilder.AddSchemaField(fieldNames[i], SobyFieldTypes.Text, null);
+            if (readTransport !== null && readTransport !== undefined) {
+                var dataSourceBuilder = new soby_WSBuilder();
+                dataSourceBuilder.Filters = new SobyFilters(false);
+                dataSourceBuilder.AddSchemaField(this.Args.ValueFieldName, SobyFieldTypes.Text, null);
+                dataSourceBuilder.AddSchemaField(this.Args.TitleFieldName, SobyFieldTypes.Text, null);
+                if (this.Args.AdditionalReadFields !== null && this.Args.AdditionalReadFields !== undefined) {
+                    var fieldNames = this.Args.AdditionalReadFields.split(",");
+                    for (var i = 0; i < fieldNames.length; i++) {
+                        dataSourceBuilder.AddSchemaField(fieldNames[i], SobyFieldTypes.Text, null);
+                    }
                 }
+                var service_1 = new soby_WebServiceService(dataSourceBuilder);
+                service_1.SetRowLimit(0);
+                service_1.Transport.Read = new soby_TransportRequest(readTransport.Url, readTransport.DataType, readTransport.ContentType, readTransport.Type);
+                this.DataService = service_1;
             }
-            dataSourceBuilder.RowLimit = 0;
-            var service = new soby_WebServiceService(dataSourceBuilder);
-            service.Transport.Read = new soby_TransportRequest(readTransport.Url, readTransport.DataType, readTransport.ContentType, readTransport.Type);
-            this.DataService = service;
+            else {
+                var service = new soby_StaticDataService([
+                    new SobySchemaField(this.Args.ValueFieldName, SobyFieldTypes.Text, null),
+                    new SobySchemaField(this.Args.TitleFieldName, SobyFieldTypes.Text, null)
+                ], this.Args.Items);
+                service.SetRowLimit(0);
+                this.DataService = service;
+            }
         }
     }
     SobyLookupSelectBox.prototype.GetValue = function () {
@@ -1607,7 +1617,6 @@ var soby_WebGrid = /** @class */ (function () {
     soby_WebGrid.prototype.AddColumn = function (fieldName, displayName, showFieldsOn, displayFunction, cellTemplate, sortable, filterable, editable, filterControl, cellCss, cellClassNames, responsiveCondition) {
         var responsiveConditionID = null;
         if (responsiveCondition !== null && responsiveCondition !== undefined) {
-            console.log(responsiveCondition);
             responsiveConditionID = responsiveCondition.ID;
             var exists = false;
             for (var i = 0; i < this.ResponsiveConditions.length; i++) {
@@ -3033,16 +3042,13 @@ var soby_WebGrid = /** @class */ (function () {
         rowAddBefore.before(aggregatesRow);
     };
     soby_WebGrid.prototype.PopulateAggregateRows = function () {
-        console.log(1);
         if (this.AggregateFields.length === 0) {
             return;
         }
-        console.log(2);
         var dataRows = $(this.ContentDivSelector + " .soby_griddatarow");
         if (dataRows.length === 0) {
             return;
         }
-        console.log(3);
         var hasEmptyCell = false;
         if ($(this.ContentDivSelector + " .soby_selectitemcell").length > 0) {
             hasEmptyCell = true;
@@ -3052,9 +3058,7 @@ var soby_WebGrid = /** @class */ (function () {
         var currentGroupByLevel = 0;
         var currentGridRow = $(this.ContentDivSelector + " tbody tr:first");
         currentGridRow = currentGridRow.next();
-        console.log(4);
         while (currentGridRow.length > 0) {
-            console.log(5);
             if (currentGridRow.hasClass("soby_griddatarow") === true) {
                 hadDataRow = true;
             }
@@ -3065,9 +3069,7 @@ var soby_WebGrid = /** @class */ (function () {
                 else {
                     currentGroupByLevel = 0;
                 }
-                console.log(6);
                 if (hadDataRow === true) {
-                    console.log(7);
                     for (var e = previousGroupByLevel; e > currentGroupByLevel - 1; e--) {
                         this.PopulateAggregateRow(currentGridRow, e, hasEmptyCell);
                     }
@@ -3083,7 +3085,7 @@ var soby_WebGrid = /** @class */ (function () {
         var hasDifferentGroupValue = false;
         for (var x = 0; x < this.GroupByFields.length; x++) {
             var value = null;
-            if (this.GroupByFields[x].DisplayFunction !== null) {
+            if (this.GroupByFields[x].DisplayFunction !== null && this.GroupByFields[x].DisplayFunction !== undefined) {
                 value = this.GroupByFields[x].DisplayFunction(item);
             }
             else {
@@ -3272,7 +3274,6 @@ var soby_WebGrid = /** @class */ (function () {
             propertyNames.push(remainingContent.substr(startIndex + 2, endIndex - startIndex - 2));
             remainingContent = remainingContent.substr(endIndex);
         }
-        console.log(propertyNames);
         for (var n = 0; n < propertyNames.length; n++) {
             try {
                 var subFieldNames = propertyNames[n].split(".");
@@ -3284,25 +3285,21 @@ var soby_WebGrid = /** @class */ (function () {
                     value = value[subFieldName];
                 }
                 var regex = new RegExp('#{' + propertyNames[n] + '}', 'ig');
-                console.log("ValueDisplayFunction:");
-                console.log(column.CellTemplate.ValueDisplayFunction);
                 if (column.CellTemplate.ValueDisplayFunction !== null && column.CellTemplate.ValueDisplayFunction !== undefined) {
                     value = column.CellTemplate.ValueDisplayFunction(propertyNames[n], value);
                 }
                 if (value === null) {
                     value = "";
                 }
-                console.log(value);
                 contentHtml = contentHtml.replace(regex, value);
             }
             catch (err) {
-                console.log(err);
+                soby_LogMessage(err);
             }
         }
         return contentHtml;
     };
     soby_WebGrid.prototype.PopulateCellTemplateContent = function (cellId, columnIndex, dataItemIndex) {
-        console.log("543");
         var popup_contentPanel = $("#" + cellId + " .popup_content");
         var content = popup_contentPanel.html();
         if (content !== null && content !== "") {

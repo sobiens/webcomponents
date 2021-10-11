@@ -13,6 +13,7 @@ declare class soby_SharePointService implements soby_ServiceInterface {
     OrderByFields: SobyOrderByFields;
     NextPageExist: boolean;
     Transport: soby_Transport;
+    SetRowLimit(rowLimit: number): void;
     PopulateNavigationInformation(): void;
     NavigationInformationBeingPopulated(): void;
     NavigationInformationPopulated(): void;

@@ -29,23 +29,67 @@
         <pre class="js">bookGrid.ShowRefreshButton = true; </pre>
     </p>
 
-        <div class="article" style="float: left;width: 74%;">
-            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
+        <div class="article" style="float: left;width: 100%;">
+            <script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
+            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
-            <script src="/Scripts/Tutorials/WebAPI/Grid/refreshdata.js"></script>
-            <div id='soby_BooksDiv'></div>
-        <a href="javascript:void(0)" onclick="soby_ShowHideViewSource()">
-            <img src="/Images/viewsource.png" border="0" width="20px" /> View source
-        </a>
-        <pre id="ViewSourceDiv" class="viewsource html" codefile="/Scripts/Tutorials/WebAPI/Grid/refreshdata.js" style="display:none;background-color:ivory">
-<span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/jquery-3.1.0.js"</span> <span class="attr_name">type</span>=<span class="attr_value">"text/javascript"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
-<span class="tag_start">&lt;link</span> <span class="attr_name">href</span>=<span class="attr_value">"/media/css/soby.ui.components.css"</span> <span class="attr_name">rel</span>=<span class="attr_value">"stylesheet"</span> <span class="attr_name">type</span>=<span class="attr_value">"text/css"</span> <span class="attr_name">media</span>=<span class="attr_value">"all"</span> <span class="tag_start">/&gt;</span>
-<span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/soby.service.js"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
-<span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/soby.ui.components.js"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
-<span class="tag_start">&lt;div</span> <span class="attr_name">id</span>=<span class="attr_value">'soby_BooksDiv'</span> <span class="tag_start">&gt;&lt;/div&gt;</span>
-            <div class="viewsourcecodefileoutput"></div>
-        </pre>
+            <script src="/media/js/soby.ui.components.codeview.js"></script>
+                        <div class='soby_CodeDiv'>
+                <div class="htmlcode">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+    &lt;title&gt;Soby Web DataGrid Demo&lt;/title&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge" /&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /&gt;
+    &lt;script src="/media/js/jquery-3.1.0.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
+    &lt;script src="/media/js/soby.service.js"&gt;&lt;/script&gt;
+    &lt;script src="/media/js/soby.ui.components.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id='soby_BooksDiv'&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                <div class="csscode"></div>
+                <div class="jscode">    var bookDataSourceBuilder = new soby_WSBuilder();
+    bookDataSourceBuilder.Filters = new SobyFilters(false);
+    bookDataSourceBuilder.AddSchemaField("Id", SobyFieldTypes.Number, null);
+    bookDataSourceBuilder.AddSchemaField("Title", SobyFieldTypes.Text, null);
+    bookDataSourceBuilder.AddSchemaField("Year", SobyFieldTypes.Number, null);
+    bookDataSourceBuilder.AddSchemaField("Price", SobyFieldTypes.Number, null);
+    bookDataSourceBuilder.AddSchemaField("Genre", SobyFieldTypes.Text, null);
+    bookDataSourceBuilder.AddSchemaField("AuthorId", SobyFieldTypes.Lookup, { ModelName: "Author", ValueFieldType: SobyFieldTypes.Number, ValueFieldName: "Id", TitleFieldName: "Name", ReadTransport: new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Authors", "json", "application/json; charset=utf-8", "GET") });
+    var bookService = new soby_WebServiceService(bookDataSourceBuilder);
+    bookService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
+    bookService.Transport.Add = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "POST");
+    bookService.Transport.Update = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "PUT");
+    bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books(#key)", "json", "application/json; charset=utf-8", "DELETE");
+    bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");
+    bookGrid.ShowRefreshButton = true;
+    bookGrid.AddKeyField("Id", "Id");
+    bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Year", "Year", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    bookGrid.AddColumn("AuthorId", "Author", SobyShowFieldsOn.All, function (item) {
+        return item.Author.Name;
+    }, null, true, true, true, null, null, null);
+    bookGrid.Initialize(true);
+</div><div class="codedescription">This example displays all array values</div><div class="resultdescription"></div></div>
+<script language="javascript">
+    $(function () {
+        soby_PopulateCustomizedCodeView();
+    });
+
+    function soby_PopulateCustomizedCodeView() {
+        var codeView = new soby_CodeView(".soby_CodeDiv", "Examples", SobyCodeViewTypes.HtmlParts);
+        codeView.ActiveView = SobyCodeViews.Js;
+        codeView.Initialize();
+    }
+</script>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
 </div>

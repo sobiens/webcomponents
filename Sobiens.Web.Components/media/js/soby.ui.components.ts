@@ -134,22 +134,30 @@ class SobyLookupSelectBox implements ISobyEditControlInterface {
             this.TitleFieldName = this.Args.TitleFieldName;
 
             let readTransport = this.Args.ReadTransport;
-            let dataSourceBuilder = new soby_WSBuilder();
-            dataSourceBuilder.Filters = new SobyFilters(false);
-            dataSourceBuilder.AddSchemaField(this.Args.ValueFieldName, SobyFieldTypes.Text, null);
-            dataSourceBuilder.AddSchemaField(this.Args.TitleFieldName, SobyFieldTypes.Text, null);
-            if (this.Args.AdditionalReadFields !== null && this.Args.AdditionalReadFields !== undefined)
-            {
-                let fieldNames = this.Args.AdditionalReadFields.split(",");
-                for (let i = 0; i < fieldNames.length; i++)
-                {
-                    dataSourceBuilder.AddSchemaField(fieldNames[i], SobyFieldTypes.Text, null);
+            if (readTransport !== null && readTransport !== undefined) {
+                let dataSourceBuilder = new soby_WSBuilder();
+                dataSourceBuilder.Filters = new SobyFilters(false);
+                dataSourceBuilder.AddSchemaField(this.Args.ValueFieldName, SobyFieldTypes.Text, null);
+                dataSourceBuilder.AddSchemaField(this.Args.TitleFieldName, SobyFieldTypes.Text, null);
+                if (this.Args.AdditionalReadFields !== null && this.Args.AdditionalReadFields !== undefined) {
+                    let fieldNames = this.Args.AdditionalReadFields.split(",");
+                    for (let i = 0; i < fieldNames.length; i++) {
+                        dataSourceBuilder.AddSchemaField(fieldNames[i], SobyFieldTypes.Text, null);
+                    }
                 }
+                let service = new soby_WebServiceService(dataSourceBuilder);
+                service.SetRowLimit(0);
+                service.Transport.Read = new soby_TransportRequest(readTransport.Url, readTransport.DataType, readTransport.ContentType, readTransport.Type);
+                this.DataService = service;
             }
-            dataSourceBuilder.RowLimit = 0;
-            let service = new soby_WebServiceService(dataSourceBuilder);
-            service.Transport.Read = new soby_TransportRequest(readTransport.Url, readTransport.DataType, readTransport.ContentType, readTransport.Type);
-            this.DataService = service;
+            else {
+                var service = new soby_StaticDataService([
+                    new SobySchemaField(this.Args.ValueFieldName, SobyFieldTypes.Text, null),
+                    new SobySchemaField(this.Args.TitleFieldName, SobyFieldTypes.Text, null)
+                ], this.Args.Items);
+                service.SetRowLimit(0);
+                this.DataService = service;
+            }
         }
     }
     DataService: soby_ServiceInterface = null;
@@ -2003,7 +2011,6 @@ class soby_WebGrid implements ISobySelectorControlInterface
         let responsiveConditionID = null;
         if (responsiveCondition !== null && responsiveCondition !== undefined)
         {
-            console.log(responsiveCondition)
             responsiveConditionID = responsiveCondition.ID;
             let exists = false;
             for (let i = 0; i < this.ResponsiveConditions.length; i++)
@@ -3716,20 +3723,17 @@ class soby_WebGrid implements ISobySelectorControlInterface
      }
 
     PopulateAggregateRows() {
-         console.log(1)
          if (this.AggregateFields.length === 0)
          {
              return;
          }
 
-        console.log(2)
          const dataRows = $(this.ContentDivSelector + " .soby_griddatarow");
          if (dataRows.length === 0)
          {
              return;
          }
 
-        console.log(3)
          let hasEmptyCell = false;
          if ($(this.ContentDivSelector + " .soby_selectitemcell").length > 0)
          {
@@ -3741,9 +3745,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
          let currentGroupByLevel = 0
          let currentGridRow = $(this.ContentDivSelector + " tbody tr:first");
          currentGridRow = currentGridRow.next();
-        console.log(4)
          while (currentGridRow.length >0) {
-             console.log(5)
              if (currentGridRow.hasClass("soby_griddatarow") === true) {
                  hadDataRow = true;
              }
@@ -3757,9 +3759,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
                      currentGroupByLevel = 0;
                  }
 
-                 console.log(6)
                  if (hadDataRow === true) {
-                     console.log(7)
                      for (let e = previousGroupByLevel ; e > currentGroupByLevel-1 ; e--) {
                          this.PopulateAggregateRow(currentGridRow, e, hasEmptyCell);
                      }
@@ -3780,7 +3780,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
          for (let x = 0; x < this.GroupByFields.length; x++)
          {
              let value = null;
-             if (this.GroupByFields[x].DisplayFunction !== null)
+             if (this.GroupByFields[x].DisplayFunction !== null && this.GroupByFields[x].DisplayFunction !== undefined)
              {
                  value = this.GroupByFields[x].DisplayFunction(item);
              }
@@ -4021,7 +4021,6 @@ class soby_WebGrid implements ISobySelectorControlInterface
             propertyNames.push(remainingContent.substr(startIndex + 2, endIndex - startIndex - 2));
             remainingContent = remainingContent.substr(endIndex);
         }
-        console.log(propertyNames);
 
         for (let n = 0; n < propertyNames.length; n++) {
             try {
@@ -4037,8 +4036,6 @@ class soby_WebGrid implements ISobySelectorControlInterface
 
 
                 let regex = new RegExp('#{' + propertyNames[n] + '}', 'ig');
-                console.log("ValueDisplayFunction:")
-                console.log(column.CellTemplate.ValueDisplayFunction)
                 if (column.CellTemplate.ValueDisplayFunction !== null && column.CellTemplate.ValueDisplayFunction !== undefined) {
                     value = column.CellTemplate.ValueDisplayFunction(propertyNames[n], value);
                 }
@@ -4046,11 +4043,10 @@ class soby_WebGrid implements ISobySelectorControlInterface
                 if (value === null) {
                     value = "";
                 }
-                console.log(value);
                 contentHtml = contentHtml.replace(regex, value);
             }
             catch (err) {
-                console.log(err);
+                soby_LogMessage(err);
 
             }
         }
@@ -4059,7 +4055,6 @@ class soby_WebGrid implements ISobySelectorControlInterface
     }
      PopulateCellTemplateContent(cellId: string, columnIndex: number, dataItemIndex: number)
      {
-         console.log("543");
 
          let popup_contentPanel = $("#" + cellId + " .popup_content");
          let content = popup_contentPanel.html();

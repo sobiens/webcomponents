@@ -82,6 +82,7 @@ var SobyFieldTypesObject = /** @class */ (function () {
         this.CurrentUserGroups = 11;
         this.DateTimeNowDifferenceAsMinute = 12;
         this.DateTimeRange = 13;
+        this.Object = 14;
     }
     return SobyFieldTypesObject;
 }());
@@ -813,6 +814,10 @@ var soby_WebServiceService = /** @class */ (function () {
         this.NextPageStrings[0] = "";
         this.Transport = new soby_Transport();
     }
+    soby_WebServiceService.prototype.SetRowLimit = function (rowLimit) {
+        this.DataSourceBuilder.RowLimit = rowLimit;
+        this.DataSourceBuilderTemp.RowLimit = rowLimit;
+    };
     soby_WebServiceService.prototype.PopulateNavigationInformation = function () {
         if (this.NavigationInformationBeingPopulated != null) {
             this.NavigationInformationBeingPopulated();
@@ -822,7 +827,7 @@ var soby_WebServiceService = /** @class */ (function () {
         var dataType = this.Transport.Read.DataType;
         var contentType = this.Transport.Read.ContentType;
         var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
-        if (countServiceUrl == null || countServiceUrl == "") {
+        if (countServiceUrl === null || countServiceUrl === "") {
             service.NextPageExist = this.DataSourceBuilderTemp.NextPageExist;
             service.EndIndex = service.StartIndex + this.DataSourceBuilderTemp.ItemCount;
             service.NavigationInformationPopulated();
@@ -849,11 +854,11 @@ var soby_WebServiceService = /** @class */ (function () {
             soby_LogMessage("Total item count:" + totalItemCount);
             var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
             var endIndex = ((service.DataSourceBuilderTemp.PageIndex + 1) * service.DataSourceBuilderTemp.RowLimit);
-            if (service.DataSourceBuilderTemp.RowLimit == 0) {
+            if (service.DataSourceBuilderTemp.RowLimit === 0) {
                 startIndex = 0;
                 endIndex = 0;
             }
-            if (endIndex != 0 && totalItemCount > endIndex) {
+            if (endIndex !== 0 && totalItemCount > endIndex) {
                 service.NextPageExist = true;
             }
             else {
@@ -922,14 +927,14 @@ var soby_WebServiceService = /** @class */ (function () {
     };
     ;
     soby_WebServiceService.prototype.CanNavigateToNextPage = function () {
-        if (this.NextPageExist == false) {
+        if (this.NextPageExist === false) {
             return false;
         }
         return true;
     };
     ;
     soby_WebServiceService.prototype.CanNavigateToPreviousPage = function () {
-        if (this.DataSourceBuilderTemp.PageIndex == 0) {
+        if (this.DataSourceBuilderTemp.PageIndex === 0) {
             return false;
         }
         return true;
@@ -1224,15 +1229,6 @@ var soby_StaticDataBuilder = /** @class */ (function (_super) {
     return soby_StaticDataBuilder;
 }(soby_DataSourceBuilderAbstract));
 var soby_StaticDataService = /** @class */ (function () {
-    /*
-    constructor(dataSourceBuilder: soby_StaticDataBuilder, items: Array<soby_Item>) {
-        this.Items = items;
-        this.DataSourceBuilder = dataSourceBuilder;
-        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
-        this.NextPageStrings = new Array<string>();
-        this.NextPageStrings[0] = "";
-    }
-    */
     function soby_StaticDataService(fields, items) {
         this.NextPageString = "";
         this.PageIndex = 0;
@@ -1265,10 +1261,32 @@ var soby_StaticDataService = /** @class */ (function () {
     soby_StaticDataService.prototype.ItemUpdated = function (args) { };
     soby_StaticDataService.prototype.ItemAdded = function (args) { };
     soby_StaticDataService.prototype.ItemDeleted = function (args) { };
+    soby_StaticDataService.prototype.SetRowLimit = function (rowLimit) {
+        this.DataSourceBuilder.RowLimit = rowLimit;
+        this.DataSourceBuilderTemp.RowLimit = rowLimit;
+    };
     soby_StaticDataService.prototype.PopulateNavigationInformation = function () {
-        if (this.NavigationInformationBeingPopulated != null) {
+        if (this.NavigationInformationBeingPopulated !== null) {
             this.NavigationInformationBeingPopulated();
         }
+        var totalItemCount = this.Items.length;
+        var startIndex = (this.DataSourceBuilderTemp.PageIndex * this.DataSourceBuilderTemp.RowLimit) + 1;
+        var endIndex = ((this.DataSourceBuilderTemp.PageIndex + 1) * this.DataSourceBuilderTemp.RowLimit);
+        if (this.DataSourceBuilderTemp.RowLimit === 0) {
+            startIndex = 0;
+            endIndex = 0;
+        }
+        if (endIndex !== 0 && totalItemCount > endIndex) {
+            this.NextPageExist = true;
+        }
+        else {
+            this.NextPageExist = false;
+            endIndex = totalItemCount;
+        }
+        soby_LogMessage("NextPageExist:" + this.NextPageExist);
+        this.StartIndex = startIndex;
+        this.EndIndex = endIndex;
+        this.NavigationInformationPopulated();
     };
     soby_StaticDataService.prototype.Sort = function (orderByFields) {
         this.PageIndex = 0;
@@ -1306,14 +1324,22 @@ var soby_StaticDataService = /** @class */ (function () {
         this.PopulateItems(null);
     };
     soby_StaticDataService.prototype.GoToPage = function (pageIndex) {
+        this.DataSourceBuilderTemp.PageIndex = pageIndex;
+        this.PageIndex = pageIndex;
         this.PopulateItems(null);
     };
     ;
     soby_StaticDataService.prototype.CanNavigateToNextPage = function () {
+        if (this.NextPageExist === false) {
+            return false;
+        }
         return true;
     };
     ;
     soby_StaticDataService.prototype.CanNavigateToPreviousPage = function () {
+        if (this.DataSourceBuilderTemp.PageIndex === 0) {
+            return false;
+        }
         return true;
     };
     ;
@@ -1322,9 +1348,19 @@ var soby_StaticDataService = /** @class */ (function () {
         if (this.ItemBeingPopulated !== null) {
             this.ItemBeingPopulated();
         }
+        this.DataSourceBuilderTemp.PageIndex = this.PageIndex;
+        this.DataSourceBuilderTemp.NextPageString = this.NextPageString;
+        var items = JSON.parse(JSON.stringify(this.Items));
+        if (this.Filters.Filters.length > 0) {
+            for (var i = items.length - 1; i > -1; i--) {
+                if (this.CheckIfMatchFilters(items[i], this.Filters) === false) {
+                    items.splice(i, 1);
+                }
+            }
+        }
         if (this.OrderByFields.length > 0) {
             var orderByFields = this.OrderByFields;
-            this.Items.sort(function (x, y) {
+            items.sort(function (x, y) {
                 var result = 0;
                 for (var i = 0; i < orderByFields.length; i++) {
                     if (x[orderByFields[i].FieldName] > y[orderByFields[i].FieldName]) {
@@ -1347,7 +1383,90 @@ var soby_StaticDataService = /** @class */ (function () {
                 return result;
             });
         }
-        this.ItemPopulated(this.Items);
+        var _items = new Array();
+        if (this.DataSourceBuilder.RowLimit > 0) {
+            for (var i = this.PageIndex * this.DataSourceBuilder.RowLimit; i < ((this.PageIndex + 1) * this.DataSourceBuilder.RowLimit); i++) {
+                if (i > items.length - 1)
+                    break;
+                _items.push(items[i]);
+            }
+        }
+        else {
+            _items = items;
+        }
+        this.ItemPopulated(_items);
+    };
+    soby_StaticDataService.prototype.CheckIfMatchFilter = function (value, filter) {
+        if (filter.FilterType === SobyFilterTypes.Equal) {
+            if (value !== filter.FilterValue) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.BeginsWith) {
+            if (value === null || value === undefined) {
+                return false;
+            }
+            if (value.toString().startsWith(filter.FilterValue) === false) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.Contains) {
+            if (value === null || value === undefined) {
+                return false;
+            }
+            if (value.toString().indexOf(filter.FilterValue) === -1) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.Greater) {
+            if (value > filter.FilterValue) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.GreaterEqual) {
+            if (value >= filter.FilterValue) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.IsNotNull) {
+            if (value === null || value === undefined) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.IsNull) {
+            if (value !== null || value !== undefined) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.Lower) {
+            if (value < filter.FilterValue) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.LowerEqual) {
+            if (value <= filter.FilterValue) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.NotEqual) {
+            if (value === filter.FilterValue) {
+                return false;
+            }
+        }
+        return true;
+    };
+    soby_StaticDataService.prototype.CheckIfMatchFilters = function (item, filters) {
+        for (var x = 0; x < filters.Filters.length; x++) {
+            if (filters.Filters[x] instanceof SobyFilters) {
+                if (this.CheckIfMatchFilters(item, filters.Filters[x]) === false) {
+                    return false;
+                }
+            }
+            else if (this.CheckIfMatchFilter(item[filters.Filters[x].FieldName], filters.Filters[x]) === false) {
+                return false;
+            }
+        }
+        return true;
     };
     soby_StaticDataService.prototype.GetFieldNames = function () {
         var fieldNames = new Array();

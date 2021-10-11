@@ -795,7 +795,7 @@
     <Content Include="js\bootstrap.esm.min.js.map" />
     <Content Include="js\bootstrap.js.map" />
     <Content Include="js\bootstrap.min.js.map" />
-    <Content Include="download\Sobiens.Web.Components 1.0.9.1.zip" />
+    <Content Include="download\Sobiens.Web.Components 1.0.9.2.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-3.1.0.js" />

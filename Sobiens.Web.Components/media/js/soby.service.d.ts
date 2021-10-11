@@ -30,6 +30,7 @@ declare class SobyFieldTypesObject {
     CurrentUserGroups: number;
     DateTimeNowDifferenceAsMinute: number;
     DateTimeRange: number;
+    Object: number;
 }
 declare class SobyFilterTypesObject {
     Equal: number;
@@ -194,6 +195,7 @@ interface soby_ServiceInterface {
     ItemUpdated(args: any): any;
     ItemAdded(args: any): any;
     ItemDeleted(args: any): any;
+    SetRowLimit(rowLimit: number): any;
 }
 interface soby_DataSourceBuilderInterface {
     ViewName: string;
@@ -254,6 +256,7 @@ declare class soby_WebServiceService implements soby_ServiceInterface {
     NextPageExist: boolean;
     Transport: soby_Transport;
     ItemBeingPopulated: () => void;
+    SetRowLimit(rowLimit: number): void;
     PopulateNavigationInformation(): void;
     NavigationInformationBeingPopulated(): void;
     NavigationInformationPopulated(): void;
@@ -313,14 +316,17 @@ declare class soby_StaticDataService implements soby_ServiceInterface {
     ItemUpdated(args: any): void;
     ItemAdded(args: any): void;
     ItemDeleted(args: any): void;
+    SetRowLimit(rowLimit: number): void;
     PopulateNavigationInformation(): void;
     Sort(orderByFields: SobyOrderByFields): void;
     Filter(filters: SobyFilters, clearOtherFilters: boolean): void;
     SortAndFilter(orderByFields: SobyOrderByFields, filters: SobyFilters, clearOtherFilters: boolean): void;
-    GoToPage(pageIndex: any): void;
+    GoToPage(pageIndex: number): void;
     CanNavigateToNextPage(): boolean;
     CanNavigateToPreviousPage(): boolean;
     PopulateItems(args: Array<any>): void;
+    CheckIfMatchFilter(value: any, filter: any): boolean;
+    CheckIfMatchFilters(item: soby_Item, filters: SobyFilters): boolean;
     GetFieldNames(): any[];
     UpdateItem(keyNames: Array<string>, keyValues: Array<string>, objectInstance: any): void;
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>): void;

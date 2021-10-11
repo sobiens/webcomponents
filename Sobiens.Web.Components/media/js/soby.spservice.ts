@@ -21,7 +21,10 @@ class soby_SharePointService implements soby_ServiceInterface
     OrderByFields: SobyOrderByFields = new SobyOrderByFields();
     NextPageExist: boolean = false;
     Transport: soby_Transport;
-
+    SetRowLimit(rowLimit: number) {
+        this.DataSourceBuilder.RowLimit = rowLimit;
+        this.DataSourceBuilderTemp.RowLimit = rowLimit;
+    }
     PopulateNavigationInformation()
     {
         if (this.NavigationInformationBeingPopulated != null)

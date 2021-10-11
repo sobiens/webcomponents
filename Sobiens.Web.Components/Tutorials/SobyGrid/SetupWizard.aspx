@@ -16,7 +16,8 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
     <script src="/media/js/jquery-ui-1.12.0.min.js"></script>
-    <link href="/media/css/jquery-ui.min.css" rel="stylesheet" />    <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/media/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
     <script src="/media/js/soby.service.js"></script>
     <script src="/media/js/soby.ui.components.js"></script>
     <style>
@@ -404,7 +405,8 @@ bookGrid.ImagesFolderUrl = '/media/images';\n";
             var sourceCodeHtml = " \
 &lt;script src='/media/js/jquery-3.1.0.js' type='text/javascript'&gt;&lt;/script&gt;\n \
 &lt;script src='/media/js/jquery-ui-1.12.0.min.js'&gt;&lt;/script&gt;\n \
-&lt;link href='/media/css/jquery-ui.min.css' rel='stylesheet' /&gt;\n \&lt;link href='/media/css/soby.ui.components.css' rel='stylesheet' type='text/css' media='all' /&gt;\n \
+&lt;link href='/media/css/jquery-ui.min.css' rel='stylesheet' /&gt;\n \
+&lt;link href='/media/css/soby.ui.components.css' rel='stylesheet' type='text/css' media='all' /&gt;\n \
 &lt;script src='/media/js/soby.service.js'&gt;&lt;/script&gt;\n \
 &lt;script src='/media/js/soby.ui.components.js'&gt;&lt;/script&gt;\n \
 &lt;div id='soby_BooksGridDiv'&gt;&lt;/div&gt;\n \

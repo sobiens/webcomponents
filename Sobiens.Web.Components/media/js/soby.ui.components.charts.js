@@ -120,9 +120,6 @@ var soby_Chart = /** @class */ (function () {
         var tooltipOffsetY = canvasOffset.top - $(window).scrollTop();
         var mouseX = e.clientX - tooltipOffsetX;
         var mouseY = e.clientY - tooltipOffsetY;
-        console.log("--------------");
-        console.log(tooltipOffsetY);
-        console.log(e.clientY);
         for (var i = 0; i < chart.CalculatedValues.Dots.length; i++) {
             if (chart.CheckMouseHit(mouseX, mouseY, chart.CalculatedValues.Dots[i]) === true) {
                 canvas.style.left = (chart.CalculatedValues.Dots[i].X) + "px";
@@ -628,9 +625,6 @@ var soby_SeriesPanel = /** @class */ (function () {
             this.CTX.fillStyle = this.Colours[x];
             this.CTX.strokeStyle = this.Colours[x];
             this.CTX.fillRect(startXPosition, startYPosition, 10, 10);
-            //console.log(this.TitleAligment);
-            console.log(startYPosition);
-            console.log(startXPosition);
             if (this.TitleAligment === SobyChartAligment.Horizontally) {
                 startXPosition += 15 + (this.Titles[x].length * charachterFontPixel);
             }

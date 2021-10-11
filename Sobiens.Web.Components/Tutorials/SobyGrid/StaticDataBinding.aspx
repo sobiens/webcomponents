@@ -16,23 +16,68 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div class="article col-md-9">
+            <script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
             <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
-            <script src="/Scripts/Tutorials/WebAPI/Grid/staticdatabinding.js"></script>
-            <div id='soby_CustomersDiv'></div>
-        <a href="javascript:void(0)" onclick="soby_ShowHideViewSource()">
-            <img src="/Images/viewsource.png" border="0" width="20px" /> View source
-        </a>
-        <pre id="ViewSourceDiv" class="viewsource html" codefile="/Scripts/Tutorials/WebAPI/Grid/staticdatabinding.js" style="display:none;background-color:ivory">
-<span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/jquery-3.1.0.js"</span> <span class="attr_name">type</span>=<span class="attr_value">"text/javascript"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
-<span class="tag_start">&lt;link</span> <span class="attr_name">href</span>=<span class="attr_value">"/media/css/soby.ui.components.css"</span> <span class="attr_name">rel</span>=<span class="attr_value">"stylesheet"</span> <span class="attr_name">type</span>=<span class="attr_value">"text/css"</span> <span class="attr_name">media</span>=<span class="attr_value">"all"</span> <span class="tag_start">/&gt;</span>
-<span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/soby.service.js"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
-<span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/soby.ui.components.js"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
-<span class="tag_start">&lt;div</span> <span class="attr_name">id</span>=<span class="attr_value">'soby_CustomersDiv'</span> <span class="tag_start">&gt;&lt;/div&gt;</span>
-            <div class="viewsourcecodefileoutput"></div>
-        </pre>
+            <script src="/media/js/soby.ui.components.codeview.js"></script>
+                        <div class='soby_CodeDiv'>
+                <div class="htmlcode">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+    &lt;title&gt;Soby Web DataGrid Demo&lt;/title&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge" /&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /&gt;
+    &lt;script src="/media/js/jquery-3.1.0.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
+    &lt;script src="/media/js/soby.service.js"&gt;&lt;/script&gt;
+    &lt;script src="/media/js/soby.ui.components.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id='soby_CustomersDiv'&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                <div class="csscode"></div>
+                <div class="jscode">    var items = [
+        { ID: 1, FirstName: "Serkant", LastName: "Samurkas", Age: 37, Sex: "M" },
+        { ID: 2, FirstName: "Dexter", LastName: "McKenzie", Age: 39, Sex: "M" },
+        { ID: 3, FirstName: "Tricia", LastName: "Cooper", Age: 31, Sex: "F" },
+        { ID: 4, FirstName: "Debra", LastName: "Drinian", Age: 39, Sex: "F" },
+        { ID: 5, FirstName: "Alex", LastName: "Long", Age: 24, Sex: "M" },
+        { ID: 6, FirstName: "Michele", LastName: "Kane", Age: 26, Sex: "F" }
+    ];
+
+    var customerService = new soby_StaticDataService([
+        new SobySchemaField("Id", SobyFieldTypes.Number, null),
+        new SobySchemaField("FirstName", SobyFieldTypes.Text, null),
+        new SobySchemaField("LastName", SobyFieldTypes.Text, null),
+        new SobySchemaField("Age", SobyFieldTypes.Number, null),
+        new SobySchemaField("Sex", SobyFieldTypes.Text, null)
+    ], items);
+    var customerGrid = new soby_WebGrid("#soby_CustomersDiv", "Customers", customerService, "There is no record found.");
+    customerGrid.IsEditable = false;
+    customerGrid.IsSelectable = false;
+    customerGrid.AddKeyField("ID", "ID");
+    customerGrid.AddColumn("FirstName", "FirstName", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerGrid.AddColumn("LastName", "LastName", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerGrid.AddColumn("Age", "Age", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerGrid.AddColumn("Sex", "Sex", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
+    customerGrid.Initialize(true);
+
+</div><div class="codedescription">This example displays all array values</div><div class="resultdescription"></div></div>
+<script language="javascript">
+    $(function () {
+        soby_PopulateCustomizedCodeView();
+    });
+
+    function soby_PopulateCustomizedCodeView() {
+        var codeView = new soby_CodeView(".soby_CodeDiv", "Examples", SobyCodeViewTypes.HtmlParts);
+        codeView.ActiveView = SobyCodeViews.Js;
+        codeView.Initialize();
+    }
+</script>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
     </div>
 

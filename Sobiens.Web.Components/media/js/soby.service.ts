@@ -76,6 +76,7 @@ class SobyFieldTypesObject{
     CurrentUserGroups:number = 11;
     DateTimeNowDifferenceAsMinute:number = 12;
     DateTimeRange:number = 13;
+    Object: number = 14;
 }
 class SobyFilterTypesObject {
     Equal:number = 0;
@@ -843,6 +844,7 @@ interface soby_ServiceInterface {
     ItemUpdated(args);
     ItemAdded(args);
     ItemDeleted(args);
+    SetRowLimit(rowLimit: number);
 }
 
 
@@ -966,7 +968,10 @@ class soby_WebServiceService implements soby_ServiceInterface {
     Transport: soby_Transport;
 
     ItemBeingPopulated = function () { };
-
+    SetRowLimit(rowLimit: number) {
+        this.DataSourceBuilder.RowLimit = rowLimit;
+        this.DataSourceBuilderTemp.RowLimit = rowLimit;
+    }
     PopulateNavigationInformation() {
         if (this.NavigationInformationBeingPopulated != null)
         {
@@ -979,7 +984,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
         var contentType = this.Transport.Read.ContentType;
 
         var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
-        if (countServiceUrl == null || countServiceUrl == "") {
+        if (countServiceUrl === null || countServiceUrl === "") {
             service.NextPageExist = this.DataSourceBuilderTemp.NextPageExist;
             service.EndIndex = service.StartIndex + this.DataSourceBuilderTemp.ItemCount;
             service.NavigationInformationPopulated();
@@ -1011,16 +1016,16 @@ class soby_WebServiceService implements soby_ServiceInterface {
 
         this.DataSourceBuilderTemp.GetData(data,
             function (result) {
-                var totalItemCount = parseInt(result);
+                const totalItemCount = parseInt(result);
                 soby_LogMessage("Total item count:" + totalItemCount);
 
-                var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
-                var endIndex = ((service.DataSourceBuilderTemp.PageIndex+1) * service.DataSourceBuilderTemp.RowLimit);
-                if (service.DataSourceBuilderTemp.RowLimit == 0) {
+                let startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
+                let endIndex = ((service.DataSourceBuilderTemp.PageIndex+1) * service.DataSourceBuilderTemp.RowLimit);
+                if (service.DataSourceBuilderTemp.RowLimit === 0) {
                     startIndex = 0;
                     endIndex = 0;
                 }
-                if (endIndex != 0 && totalItemCount > endIndex) {
+                if (endIndex !== 0 && totalItemCount > endIndex) {
                     service.NextPageExist = true;
                 }
                 else {
@@ -1101,7 +1106,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
         this.PopulateItems(null);
     };
     CanNavigateToNextPage() {
-        if (this.NextPageExist == false)
+        if (this.NextPageExist === false)
         {
             return false;
         }
@@ -1109,7 +1114,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
         return true;
     };
     CanNavigateToPreviousPage() {
-        if (this.DataSourceBuilderTemp.PageIndex == 0)
+        if (this.DataSourceBuilderTemp.PageIndex === 0)
         {
             return false;
         }
@@ -1473,15 +1478,6 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
 class soby_StaticDataService implements soby_ServiceInterface {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
     DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
-    /*
-    constructor(dataSourceBuilder: soby_StaticDataBuilder, items: Array<soby_Item>) {
-        this.Items = items;
-        this.DataSourceBuilder = dataSourceBuilder;
-        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
-        this.NextPageStrings = new Array<string>();
-        this.NextPageStrings[0] = "";
-    }
-    */
     constructor(fields: Array<SobySchemaField>, items: Array<soby_Item>) {
         this.Items = items;
 
@@ -1490,7 +1486,6 @@ class soby_StaticDataService implements soby_ServiceInterface {
         for (let i = 0; i < fields.length; i++) {
             dataSourceBuilder.AddSchemaField(fields[i].FieldName, fields[i].FieldType, fields[i].Args);
         }
-
         this.DataSourceBuilder = dataSourceBuilder;
         this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
         this.NextPageStrings = new Array<string>();
@@ -1523,12 +1518,36 @@ class soby_StaticDataService implements soby_ServiceInterface {
     ItemUpdated(args) { }
     ItemAdded(args) { }
     ItemDeleted(args) { }
+    SetRowLimit(rowLimit:number) {
+        this.DataSourceBuilder.RowLimit = rowLimit;
+        this.DataSourceBuilderTemp.RowLimit = rowLimit;
+    }
 
     PopulateNavigationInformation() {
-        if (this.NavigationInformationBeingPopulated != null)
+        if (this.NavigationInformationBeingPopulated !== null)
         {
             this.NavigationInformationBeingPopulated();
         }
+
+        const totalItemCount = this.Items.length;
+        let startIndex = (this.DataSourceBuilderTemp.PageIndex * this.DataSourceBuilderTemp.RowLimit) + 1;
+        let endIndex = ((this.DataSourceBuilderTemp.PageIndex + 1) * this.DataSourceBuilderTemp.RowLimit);
+        if (this.DataSourceBuilderTemp.RowLimit === 0) {
+            startIndex = 0;
+            endIndex = 0;
+        }
+        if (endIndex !== 0 && totalItemCount > endIndex) {
+            this.NextPageExist = true;
+        }
+        else {
+            this.NextPageExist = false;
+            endIndex = totalItemCount;
+        }
+        soby_LogMessage("NextPageExist:" + this.NextPageExist);
+
+        this.StartIndex = startIndex;
+        this.EndIndex = endIndex;
+        this.NavigationInformationPopulated();
     }
 
     Sort(orderByFields: SobyOrderByFields) {
@@ -1573,13 +1592,24 @@ class soby_StaticDataService implements soby_ServiceInterface {
         this.PopulateItems(null);
     }
 
-    GoToPage(pageIndex) {
+    GoToPage(pageIndex: number) {
+        this.DataSourceBuilderTemp.PageIndex = pageIndex;
+        this.PageIndex = pageIndex;
+
         this.PopulateItems(null);
     };
     CanNavigateToNextPage() {
+        if (this.NextPageExist === false) {
+            return false;
+        }
+
         return true;
     };
     CanNavigateToPreviousPage() {
+        if (this.DataSourceBuilderTemp.PageIndex === 0) {
+            return false;
+        }
+
         return true;
     };
     PopulateItems(args: Array<any>) {
@@ -1588,13 +1618,24 @@ class soby_StaticDataService implements soby_ServiceInterface {
         {
             this.ItemBeingPopulated();
         }
+        this.DataSourceBuilderTemp.PageIndex = this.PageIndex;
+        this.DataSourceBuilderTemp.NextPageString = this.NextPageString;
+
+        var items = JSON.parse(JSON.stringify(this.Items));
+        if (this.Filters.Filters.length > 0) {
+            for (let i = items.length - 1; i > -1; i--) {
+                if (this.CheckIfMatchFilters(items[i], this.Filters) === false) {
+                    items.splice(i, 1);
+                }
+            }
+        }
 
         if (this.OrderByFields.length > 0) {
             var orderByFields = this.OrderByFields;
-            this.Items.sort(
+            items.sort(
                 function (x: soby_Item, y: soby_Item) {
                     var result = 0;
-                    for (var i = 0; i < orderByFields.length; i++) {
+                    for (let i = 0; i < orderByFields.length; i++) {
                         if (x[orderByFields[i].FieldName] > y[orderByFields[i].FieldName]) {
                             if (orderByFields[i].IsAsc === true) {
                                 return 1;
@@ -1618,7 +1659,97 @@ class soby_StaticDataService implements soby_ServiceInterface {
             );
         }
 
-        this.ItemPopulated(this.Items);
+        let _items = new Array();
+        if (this.DataSourceBuilder.RowLimit > 0) {
+            for (let i = this.PageIndex * this.DataSourceBuilder.RowLimit; i < ((this.PageIndex + 1) * this.DataSourceBuilder.RowLimit); i++) {
+                if (i > items.length - 1)
+                    break;
+
+                _items.push(items[i]);
+            }
+        }
+        else {
+            _items = items;
+        }
+
+        this.ItemPopulated(_items);
+    }
+    CheckIfMatchFilter(value, filter): boolean {
+        if (filter.FilterType === SobyFilterTypes.Equal) {
+            if (value !== filter.FilterValue) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.BeginsWith) {
+            if (value === null || value === undefined) {
+                return false;
+            }
+
+            if (value.toString().startsWith(filter.FilterValue) === false) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.Contains) {
+            if (value === null || value === undefined) {
+                return false;
+            }
+
+            if (value.toString().indexOf(filter.FilterValue) === -1) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.Greater) {
+            if (value > filter.FilterValue) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.GreaterEqual) {
+            if (value >= filter.FilterValue) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.IsNotNull) {
+            if (value === null || value === undefined) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.IsNull) {
+            if (value !== null || value !== undefined) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.Lower) {
+            if (value < filter.FilterValue) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.LowerEqual) {
+            if (value <= filter.FilterValue) {
+                return false;
+            }
+        }
+        else if (filter.FilterType === SobyFilterTypes.NotEqual) {
+            if (value === filter.FilterValue) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    CheckIfMatchFilters(item: soby_Item, filters: SobyFilters): boolean {
+        for (let x = 0; x < filters.Filters.length; x++) {
+            if (filters.Filters[x] instanceof SobyFilters) {
+                if (this.CheckIfMatchFilters(item, filters.Filters[x]) === false) {
+                    return false;
+                }
+            }
+            else if (this.CheckIfMatchFilter(item[filters.Filters[x].FieldName], filters.Filters[x]) === false) {
+                return false;
+            }
+        }
+
+        return true;
     }
     GetFieldNames() {
         var fieldNames = new Array();

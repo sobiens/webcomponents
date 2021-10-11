@@ -28,6 +28,10 @@ var soby_SharePointService = /** @class */ (function () {
         this.NextPageStrings[0] = "";
         this.Transport = new soby_Transport();
     }
+    soby_SharePointService.prototype.SetRowLimit = function (rowLimit) {
+        this.DataSourceBuilder.RowLimit = rowLimit;
+        this.DataSourceBuilderTemp.RowLimit = rowLimit;
+    };
     soby_SharePointService.prototype.PopulateNavigationInformation = function () {
         if (this.NavigationInformationBeingPopulated != null) {
             this.NavigationInformationBeingPopulated();

@@ -55,6 +55,7 @@ function soby_PopulateSPNewsImages(itemID) {
             new SobySchemaField("FirstName", SobyFieldTypes.Text, null),
             new SobySchemaField("Body", SobyFieldTypes.Text, null)
         ], items);
+        staticDataService.SetRowLimit(5);
         var carousel = new soby_Carousel("#soby_newsImageDiv_" + itemID, "Carousel", staticDataService, "There is no record found.", "Image", "Title", "Body", false);
         carousel.MaxWidth = 600;
         carousel.Initialize(true);

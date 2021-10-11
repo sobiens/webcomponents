@@ -14,7 +14,8 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div class="article col-md-9">
-            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
+            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
+            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
             <script src="/Scripts/Tutorials/WebAPI/Grid/admin.js"></script>
