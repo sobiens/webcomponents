@@ -56,8 +56,6 @@ Soby web components provides set of libraries to make developers life easy. It i
                     <a href="http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Getting Started.aspx" target="_blank"><img src="https://raw.githubusercontent.com/sobiens/webcomponents/master/Sobiens.Web.Components/Images/Tutorials/Soby_ItemSelection_Autocomplete.png" width="350px" ></a></div>
             </div>
         </li>
-
-
         <li class="six">
             <div class="row">
                 <div class="col-md-7">
