@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="NestedGrids.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.NestedGrids" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="NestedGrids.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.NestedGrids" Title="DataGrid - Nested Grids Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
@@ -110,7 +110,6 @@
             authorIds[authorIds.length] = selectedDataItems[i]["Id"];
         }
         authorBooksGrid.FilterResultWithMultipleValues("AuthorId", authorIds, SobyFieldTypes.Number, SobyFilterTypes.Equal, false);
-                    console.log(authorBooksGrid);
     };
 
     authorGrid.Initialize(true);

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ExportToExcel.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.ExportToExcel" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ExportToExcel.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.ExportToExcel" Title="DataGrid - Export to Excel Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
@@ -8,7 +8,7 @@
         <hgroup class="title">
         <h1><%: Title %></h1>
         <br />
-        <h2>Sorting Example</h2>
+        <h2>Export to Excel Example</h2>
     </hgroup>
         </div>
     </section>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master"  CodeBehind="MVCSample.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.MVCSample" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master"  CodeBehind="MVCSample.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.MVCSample" Title="DataGrid - MVC Integration Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
@@ -8,14 +8,15 @@
         <hgroup class="title">
         <h1><%: Title %></h1>
         <br />
-        <h2>General Example</h2>
+        <h2>MVC Integration Example</h2>
     </hgroup>
         </div>
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div class="article col-md-9">
-            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>            <link href="/Css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
+            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
+            <link href="/Css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/Scripts/soby.service.js"></script>
             <script src="/Scripts/soby.ui.components.js"></script>
             <script src="/Scripts/Tutorials/WebAPI/Grid/general.js"></script>

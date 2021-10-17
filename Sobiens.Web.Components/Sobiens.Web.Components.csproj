@@ -202,6 +202,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Controls\SobyRangeSelectionSideMenuControl.ascx" />
     <Content Include="Controls\SobyGridSideMenuControl.ascx" />
     <Content Include="Controls\SobyChartSideMenuControl.ascx" />
     <Content Include="Controls\SobyTabsSideMenuControl.ascx" />
@@ -795,7 +796,7 @@
     <Content Include="js\bootstrap.esm.min.js.map" />
     <Content Include="js\bootstrap.js.map" />
     <Content Include="js\bootstrap.min.js.map" />
-    <Content Include="download\Sobiens.Web.Components 1.0.9.2.zip" />
+    <Content Include="download\Sobiens.Web.Components 1.0.9.3.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-3.1.0.js" />
@@ -874,6 +875,7 @@
     <Content Include="Tutorials\SobyDataRepeater\Getting Started.aspx" />
     <Content Include="Tutorials\SobyGrid\ActionBar.aspx" />
     <Content Include="Tutorials\SobyGrid\Cell Styles.aspx" />
+    <Content Include="Tutorials\SobyGrid\CustomDataBinding.aspx" />
     <Content Include="Tutorials\SobyGrid\ResponsiveDesign.aspx" />
     <Content Include="Tutorials\SobyGrid\ExportToExcel.aspx" />
     <Content Include="Tutorials\SobyGrid\RefreshData.aspx" />
@@ -882,6 +884,8 @@
     <Content Include="Tutorials\SobyItemSelection\Treeview Selection.aspx" />
     <Content Include="Tutorials\SobyItemSelection\Autocomplete watermark.aspx" />
     <Content Include="Tutorials\SobyItemSelection\Single Selection.aspx" />
+    <Content Include="Tutorials\SobyRangeSelection\DateRangeSelection.aspx" />
+    <Content Include="Tutorials\SobyRangeSelection\Getting Started.aspx" />
     <Content Include="Tutorials\SobyScheduler\Custom Dates.aspx" />
     <Content Include="Tutorials\SobyScheduler\Getting Started.aspx" />
     <Content Include="Tutorials\SobySelectBox\StaticDataBinding.aspx" />
@@ -946,7 +950,7 @@
     <Content Include="Tutorials\SobyGrid\Columns.aspx" />
     <Content Include="Tutorials\SobyGrid\CellTemplate.aspx" />
     <Content Include="Tutorials\SobyGrid\Aggregates.aspx" />
-    <Content Include="Tutorials\SobyGrid\CustomDataBinding.aspx" />
+    <Content Include="Tutorials\SobyGrid\ExtendingDataBinding.aspx" />
     <Content Include="Tutorials\SobyGrid\Editing.aspx" />
     <Content Include="Tutorials\SobyGrid\Filtering.aspx" />
     <Content Include="Tutorials\SobyGrid\Sorting.aspx" />
@@ -983,7 +987,6 @@
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.0.min.map" />
     <None Include="Scripts\_references.js" />
-    <Content Include="Site.Mobile.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1049,6 +1052,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SobyRangeSelectionSideMenuControl.ascx.cs">
+      <DependentUpon>SobyRangeSelectionSideMenuControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SobyRangeSelectionSideMenuControl.ascx.designer.cs">
+      <DependentUpon>SobyRangeSelectionSideMenuControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\SobyGridSideMenuControl.ascx.cs">
       <DependentUpon>SobyGridSideMenuControl.ascx</DependentUpon>
@@ -1179,13 +1189,6 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.designer.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyCarousel\Getting Started.aspx.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
@@ -1326,6 +1329,13 @@
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Cell Styles.aspx.designer.cs">
       <DependentUpon>Cell Styles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\CustomDataBinding.aspx.cs">
+      <DependentUpon>CustomDataBinding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\CustomDataBinding.aspx.designer.cs">
+      <DependentUpon>CustomDataBinding.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\ResponsiveDesign.aspx.cs">
       <DependentUpon>ResponsiveDesign.aspx</DependentUpon>
@@ -1474,12 +1484,12 @@
     <Compile Include="Tutorials\SobyGrid\Aggregates.aspx.designer.cs">
       <DependentUpon>Aggregates.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Tutorials\SobyGrid\CustomDataBinding.aspx.cs">
-      <DependentUpon>CustomDataBinding.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyGrid\ExtendingDataBinding.aspx.cs">
+      <DependentUpon>ExtendingDataBinding.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Tutorials\SobyGrid\CustomDataBinding.aspx.designer.cs">
-      <DependentUpon>CustomDataBinding.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyGrid\ExtendingDataBinding.aspx.designer.cs">
+      <DependentUpon>ExtendingDataBinding.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Editing.aspx.cs">
       <DependentUpon>Editing.aspx</DependentUpon>
@@ -1570,6 +1580,20 @@
     </Compile>
     <Compile Include="Tutorials\SobyMetroStyleGrid\General.aspx.designer.cs">
       <DependentUpon>General.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyRangeSelection\DateRangeSelection.aspx.cs">
+      <DependentUpon>DateRangeSelection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyRangeSelection\DateRangeSelection.aspx.designer.cs">
+      <DependentUpon>DateRangeSelection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyRangeSelection\Getting Started.aspx.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyRangeSelection\Getting Started.aspx.designer.cs">
+      <DependentUpon>Getting Started.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyScheduler\Custom Dates.aspx.cs">
       <DependentUpon>Custom Dates.aspx</DependentUpon>

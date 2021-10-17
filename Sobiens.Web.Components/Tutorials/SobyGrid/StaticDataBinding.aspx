@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="StaticDataBinding.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.StaticDataBinding" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="StaticDataBinding.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.StaticDataBinding" Title="DataGrid - Static DataBinding Example" %>
 
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
@@ -16,6 +16,10 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div class="article col-md-9">
+            <p>This example demonstrates how to bind static data into the Soby Data Grid. <br />
+        "soby_StaticDataService" class takes json data as parameter. You will also need to define the properties with "SobySchemaField" class. You can check the following code;
+</p>
+
             <script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
             <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Getting Started" Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Getting Started.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.GettingStarted" %>
+﻿<%@ Page Title="DataGrid - Getting Started" Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Getting Started.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.GettingStarted" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
@@ -8,7 +8,7 @@
     <hgroup class="title">
         <h1><%: Title %></h1>
         <br />
-        <h2></h2>
+        <h2>Getting Started</h2>
     </hgroup>
         </div>
     </section>

@@ -2745,6 +2745,13 @@ class soby_WebGrid implements ISobySelectorControlInterface
                         fieldType = viewField.Args.ValueFieldType;
                     }
                 }
+                if (fieldType === SobyFieldTypes.Number && value !== null && value !== undefined && value !== "") {
+                    try {
+                        value = parseInt(value);
+                    }
+                    catch {
+                    }
+                }
                 grid1.Filters.Clear();
                 grid1.FilterResult(fieldName, value, fieldType, SobyFilterTypes.Equal, false);
             }
@@ -2848,6 +2855,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
      * grid.FilterResult('Title', 'Moby', SobyFieldTypes.Text, SobyFilterTypes.Contains)
      */
     FilterResult(fieldName, value, fieldType, filterType, shouldBeClearedOnUIFilterAction: boolean) {
+        this.NavigationInformation.PageIndex = 0;
         this.HideHeaderRowMenu(null);
         this.ClearUIFilters();
         //this.Filters = new SobyFilters(false);
@@ -2869,7 +2877,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
      */
     FilterResultWithMultipleValues(fieldName, values, fieldType, filterType, shouldBeClearedOnUIFilterAction: boolean)
     {
-        soby_LogMessage(values)
+        this.NavigationInformation.PageIndex = 0;
         this.HideHeaderRowMenu(null);
 //        if (shouldBeClearedOnUIFilterAction === true)
 //            this.Filters = new SobyFilters(false);
@@ -2960,6 +2968,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
         this.HideHeaderRowMenu(null);
         this.OrderByFields = new SobyOrderByFields();
         this.AddOrderByField(sortFieldName, isAsc);
+        this.NavigationInformation.PageIndex = 0;
         this.DataService.Sort(this.OrderByFields);
     }
 
@@ -4302,7 +4311,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
         this.PopulateAggregateRows();
         this.GenerateGroupByPanePane();
         this.GenerateActionPane();
-        this.GenerateFilterPane();
+         this.GenerateFilterPane();
         this.DataService.PopulateNavigationInformation();
         this.ApplyResponsiveElementsVisibility();
         if (this.OnGridPopulated !== null)
@@ -5363,6 +5372,423 @@ function soby_GetAllItemSelections() {
     }
 
     return itemSelections;
+}
+
+enum SobyRangeSelectionViewTypes {
+    NumericRange = 0,
+    DateRange = 1
+}
+
+let soby_RangeSelections = new Array();
+class soby_RangeSelection {
+    constructor(contentDivSelector, title, viewType: SobyRangeSelectionViewTypes, width: number, height: number, startValue, endValue, minorRangeInterval, minorRangeCountInAMajorRange, selectedRange) {
+        this.RangeSelectionID = "soby_rangeselection_" + soby_guid();
+        this.RangeSelectionTooltipID = this.RangeSelectionID + "_tip";;
+        this.ContentDivSelector = contentDivSelector;
+        this.Title = title;
+        this.ViewType = viewType;
+        this.Width = width;
+        this.Height = height;
+        this.SelectedRange = selectedRange;
+        if (this.ViewType === SobyRangeSelectionViewTypes.NumericRange) {
+            this.StartNumericValue = parseFloat(startValue);
+            this.EndNumericValue = parseFloat(endValue);
+            this.MinorRangeInterval = parseFloat(minorRangeInterval);
+            this.MinorRangeCountInAMajorRange = parseFloat(minorRangeCountInAMajorRange);
+        }
+        else {
+            this.StartNumericValue = soby_TicksFromDate(startValue);
+            this.EndNumericValue = soby_TicksFromDate(endValue);
+            this.MinorRangeInterval = 864000000000; // day
+            this.MinorRangeCountInAMajorRange = 7; // week
+            this.SelectedRange = [soby_TicksFromDate(selectedRange[0]), soby_TicksFromDate(selectedRange[1])];
+            this.AdditionalLabelSectionHeight = 20;
+        }
+
+        this.EnsureRangeSelectionsExistency();
+    }
+
+    RangeSelectionID: string = null;
+    RangeSelectionTooltipID: string = "";
+    ViewType: number = null;
+    Title: string = null;
+    ContentDivSelector: string = null;
+    Width: number = null;
+    Height: number = null;
+    PaddingLeft: number = 20;
+    PaddingRight: number = 20;
+    PaddingBottom: number = 20;
+    PaddingTop: number = 20;
+    LabelHeight: number = 20;
+    RangeBarHeight: number = 20;
+    SelectedRangeBarHeight: number = 40;
+    AdditionalLabelSectionHeight: number = 0;
+    StartNumericValue:number = null;
+    EndNumericValue: number = null;
+    MinorRangeInterval = null;
+    MinorRangeCountInAMajorRange = null;
+    MinimumValue = null;
+    MaximumValue = null;
+    PageItemCount = null;
+    SelectedRange = null;
+    DragDirection: string = "";
+    IsBeingDragged: boolean = false;
+    MonthNames: Array<string> = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    EnsureRangeSelectionsExistency() {
+        for (const key in soby_RangeSelections) {
+            if (key === this.RangeSelectionID) {
+                return;
+            }
+        }
+
+        soby_RangeSelections[this.RangeSelectionID] = this;
+    };
+    RePaint() {
+        this.Clear();
+        this.DrawPane();
+        this.DrawSelectedRange();
+    }
+    Clear() {
+        const ctx = this.GetContext();
+        ctx.clearRect(0, 0, this.Width, this.Height);
+    }
+    Initialize() {
+        const canvas = $("<canvas id='" + this.RangeSelectionID + "' width='" + this.Width + "' height='" + this.Height + "' style='border: 1px solid;'></canvas>");
+        const tooltipCanvas = $("<canvas id='" + this.RangeSelectionTooltipID + "' width='120' height='40' style='position: absolute;'></canvas>");
+        $(this.ContentDivSelector).html("");
+        $(this.ContentDivSelector).append(canvas);
+        $(this.ContentDivSelector).append(tooltipCanvas);
+        $("#" + this.RangeSelectionID).attr("draggable", "true");
+
+        document.getElementById(this.RangeSelectionID).addEventListener('mousemove', this.HandleMouseMove);
+        document.getElementById(this.RangeSelectionID).addEventListener('mousedown', this.HandleMouseDown);
+        document.getElementById(this.RangeSelectionID).addEventListener('mouseup', this.HandleMouseUp);
+
+        this.DrawPane();
+        this.DrawSelectedRange();
+    };
+
+    HandleMouseDown(e: MouseEvent) {
+        e.preventDefault();
+        var rangeSelection = soby_RangeSelections[eval("e.target.id")];
+        const ctx = rangeSelection.GetTooltipContext();
+        const canvas = rangeSelection.GetTooltipCanvas();
+        var canvasOffset = $("#" + rangeSelection.RangeSelectionID).offset();
+        var canvasOffsetX = canvasOffset.left - $(window).scrollLeft();
+        var canvasOffsetY = canvasOffset.top - $(window).scrollTop();
+        var mouseX = e.clientX - canvasOffsetX;
+        var mouseY = e.clientY - canvasOffsetY;
+
+        if (rangeSelection.CheckMouseHitSelectedRangeLeftResize(mouseX, mouseY) === true) {
+            rangeSelection.GetCanvas().style.cursor = "e-resize";
+            rangeSelection.IsBeingDragged = true;
+            rangeSelection.DragDirection = "leftresize";
+        }
+        else if (rangeSelection.CheckMouseHitSelectedRangeRightResize(mouseX, mouseY) === true) {
+            rangeSelection.GetCanvas().style.cursor = "e-resize";
+            rangeSelection.IsBeingDragged = true;
+            rangeSelection.DragDirection = "rightresize";
+        }
+        else if (rangeSelection.CheckMouseHitSelectedRange(mouseX, mouseY) === true) {
+            rangeSelection.GetCanvas().style.cursor = "pointer";
+            rangeSelection.IsBeingDragged = true;
+            rangeSelection.DragDirection = "moveposition";
+        }
+    }
+
+    HandleMouseUp(e: MouseEvent) {
+        e.preventDefault();
+        var rangeSelection = soby_RangeSelections[eval("e.target.id")];
+        rangeSelection.RePaintOnMouseMove(e.offsetX, true);
+    }
+
+    HandleMouseMove(e: MouseEvent) {
+        e.preventDefault();
+        var rangeSelection = soby_RangeSelections[eval("e.target.id")];
+        if (rangeSelection.IsBeingDragged === true) {
+            if (rangeSelection.DragDirection === "moveposition") {
+                rangeSelection.GetCanvas().style.cursor = "move";
+                rangeSelection.RePaintOnMouseMove(e.offsetX, false);
+            }
+            else if (rangeSelection.DragDirection === "rightresize" || rangeSelection.DragDirection === "leftresize") {
+                rangeSelection.GetCanvas().style.cursor = "e-resize";
+                rangeSelection.RePaintOnMouseMove(e.offsetX, false);
+            }
+
+            return;
+        }
+
+        const ctx = rangeSelection.GetTooltipContext();
+        const canvas = rangeSelection.GetTooltipCanvas();
+        var canvasOffset = $("#" + rangeSelection.RangeSelectionID).offset();
+        var tooltipOffsetX = canvasOffset.left - $(window).scrollLeft();
+        var tooltipOffsetY = canvasOffset.top - $(window).scrollTop();
+        var mouseX = e.clientX - tooltipOffsetX;
+        var mouseY = e.clientY - tooltipOffsetY;
+
+        if (rangeSelection.CheckMouseHitSelectedRangeLeftResize(mouseX, mouseY) === true) {
+            rangeSelection.GetCanvas().style.cursor = "e-resize";
+            rangeSelection.DragDirection = "leftresize";
+        }
+        else if (rangeSelection.CheckMouseHitSelectedRangeRightResize(mouseX, mouseY) === true) {
+            rangeSelection.GetCanvas().style.cursor = "e-resize";
+            rangeSelection.DragDirection = "rightresize";
+        }
+        else if (rangeSelection.CheckMouseHitSelectedRange(mouseX, mouseY) === true) {
+            rangeSelection.GetCanvas().style.cursor = "pointer";
+            rangeSelection.DragDirection = "moveposition";
+        }
+        else {
+            rangeSelection.GetCanvas().style.cursor = "default";
+        }
+    }
+
+    CheckMouseHitSelectedRangeLeftResize(x: number, y: number) {
+        const selectedRangeLeft: number = this.GetSelectedRangeLeft()-2;
+        const selectedRangeRight: number = selectedRangeLeft+4;
+        const selectedRangeBottom: number = this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom;
+        const selectedRangeTop: number = selectedRangeBottom - this.SelectedRangeBarHeight;
+        if (selectedRangeLeft < x && selectedRangeRight > x && selectedRangeBottom > y && selectedRangeTop < y)
+            return true;
+
+        return false;
+    }
+
+    CheckMouseHitSelectedRangeRightResize(x: number, y: number) {
+        const selectedRangeRight: number = this.GetSelectedRangeRight()+2;
+        const selectedRangeLeft: number = selectedRangeRight-4;
+        const selectedRangeBottom: number = this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom;
+        const selectedRangeTop: number = selectedRangeBottom - this.SelectedRangeBarHeight;
+        if (selectedRangeLeft < x && selectedRangeRight > x && selectedRangeBottom > y && selectedRangeTop < y)
+            return true;
+
+        return false;
+    }
+
+    CheckMouseHitSelectedRange(x: number, y: number) {
+        const selectedRangeLeft: number = this.GetSelectedRangeLeft();
+        const selectedRangeRight: number = this.GetSelectedRangeRight();
+        const selectedRangeBottom: number = this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom;
+        const selectedRangeTop: number = selectedRangeBottom - this.SelectedRangeBarHeight;
+        if (selectedRangeLeft < x && selectedRangeRight > x && selectedRangeBottom > y && selectedRangeTop < y)
+            return true;
+
+        return false;
+    }
+
+
+    RePaintOnMouseMove(offsetX: number, mouseUp: boolean) {
+        if (this.IsBeingDragged === true) {
+            let direction = this.DragDirection;
+            const mousePositionValue = this.GetValueFromOffsetX(offsetX);
+            let newStartValue: number = this.SelectedRange[0];
+            let newEndValue: number = this.SelectedRange[1];
+            if (direction === "leftresize") {
+                newStartValue = mousePositionValue;
+            }
+            else if (direction === "rightresize") {
+                newEndValue = mousePositionValue;
+            }
+            else if (direction === "moveposition") {
+                let difference = this.SelectedRange[1] - this.SelectedRange[0];
+                if (difference === 0) {
+                    return;
+                }
+
+                if (difference < -1)
+                    difference = difference * -1;
+
+                newStartValue = mousePositionValue;
+                newEndValue = newStartValue + difference;
+                if (newStartValue < this.StartNumericValue)
+                    return;
+                if (newEndValue > this.EndNumericValue)
+                    return;
+
+
+            }
+
+            if (newStartValue !== this.SelectedRange[0] || newEndValue !== this.SelectedRange[1]) {
+                this.SelectedRange = [newStartValue, newEndValue];
+                this.RePaint();
+            }
+
+            if (mouseUp === true) {
+                this.GetCanvas().style.cursor = "default"
+                var dragingImageObjectId = this.RangeSelectionID + "_DragingImageObject";
+                if ($("#" + dragingImageObjectId).length > 0) {
+                    $("#" + dragingImageObjectId).remove();
+                }
+
+                this.IsBeingDragged = false;
+            }
+        }
+    }
+
+    DrawPane() {
+        const rangeItemCount: number = this.GetRangeItemCount();
+        const rangeValueWidth = this.GetRangeValueWidth();
+        console.log("rangeItemCount:" + rangeItemCount);
+        const ctx = this.GetContext();
+        ctx.fillStyle = "gray";
+        ctx.strokeStyle = "gray";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(this.PaddingLeft, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.RangeBarHeight / 2);
+        ctx.lineTo(this.Width - (this.PaddingRight), this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.RangeBarHeight/2);
+        ctx.stroke();
+
+        for (let i = 0; i < rangeItemCount; i = i + this.MinorRangeCountInAMajorRange) {
+
+            const currentX = this.PaddingLeft + i*rangeValueWidth;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(currentX, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom);
+            ctx.lineTo(currentX, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.RangeBarHeight);
+            ctx.stroke();
+
+
+            const currentValueFromStart = (i * this.MinorRangeInterval);
+            const currentValue = this.StartNumericValue + currentValueFromStart;
+            ctx.fillText(this.GetValueLabel(currentValue), currentX - 6, this.Height - this.AdditionalLabelSectionHeight - this.PaddingBottom);
+        }
+
+        const currentX = this.Width - this.PaddingRight;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(currentX, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom);
+        ctx.lineTo(currentX, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.RangeBarHeight);
+        ctx.stroke();
+
+        ctx.fillText(this.GetValueLabel(this.EndNumericValue), currentX - 6, this.Height - this.AdditionalLabelSectionHeight - this.PaddingBottom);
+
+        if (this.ViewType === SobyRangeSelectionViewTypes.DateRange) {
+            const startDate: Date = soby_DateFromTicks(this.StartNumericValue);
+            const currentDate: Date = soby_DateFromTicks(this.StartNumericValue);
+            const endDate: Date = soby_DateFromTicks(this.EndNumericValue);
+            while (endDate > currentDate) {
+                if (currentDate.getDate() === 1) {
+                    const currentX: number = this.GetOffsetXFromValue(soby_TicksFromDate(currentDate));
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(currentX, this.Height - this.PaddingBottom - this.AdditionalLabelSectionHeight + 4);
+                    ctx.lineTo(currentX, this.Height - this.PaddingBottom);
+                    ctx.stroke();
+
+                    ctx.fillText(this.MonthNames[currentDate.getMonth()], currentX + 6, this.Height - this.PaddingBottom-4);
+
+                    if (startDate.getDate() < 25) {
+                        const yesterdayOfCurrentDate: Date = new Date(currentDate.getTime());
+                        yesterdayOfCurrentDate.setDate(yesterdayOfCurrentDate.getDate() - 1);
+                        if (yesterdayOfCurrentDate.getMonth() === startDate.getMonth() && yesterdayOfCurrentDate.getFullYear() === startDate.getFullYear()) {
+                            const startDateX: number = this.GetOffsetXFromValue(this.StartNumericValue);
+                            ctx.fillText(this.MonthNames[yesterdayOfCurrentDate.getMonth()], startDateX + 4, this.Height - this.PaddingBottom-4);
+                        }
+                    }
+                }
+
+                currentDate.setDate(currentDate.getDate() +1);
+            }
+        }
+    }
+
+    GetValueLabel(value: number): string {
+        if (this.ViewType === SobyRangeSelectionViewTypes.DateRange) {
+            return soby_DateFromTicks(value).getDate().toString();
+        }
+
+        return value.toString();
+    }
+
+    GetContext() {
+        return eval("document.getElementById('" + this.RangeSelectionID + "').getContext('2d');");
+    }
+
+    GetCanvas() {
+        return eval("document.getElementById('" + this.RangeSelectionID + "');");
+    }
+
+    GetTooltipContext() {
+        return eval("document.getElementById('" + this.RangeSelectionTooltipID + "').getContext('2d');");
+    }
+
+    GetTooltipCanvas() {
+        return eval("document.getElementById('" + this.RangeSelectionTooltipID + "');");
+    }
+    DrawSelectedRange() {
+        const selectedRangeLeft = this.GetSelectedRangeLeft();
+        const selectedRangeRight = this.GetSelectedRangeRight();
+        const selectedRangeWidth = selectedRangeRight - selectedRangeLeft;
+        const ctx = this.GetContext();
+
+        ctx.fillStyle = "#606060";
+        ctx.strokeStyle = "#606060";
+        ctx.fillRect(selectedRangeLeft, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.RangeBarHeight*(3/4), selectedRangeWidth, 10);
+
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(selectedRangeLeft - 1, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.SelectedRangeBarHeight * (3 / 4));
+        ctx.lineTo(selectedRangeLeft - 1, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom + this.SelectedRangeBarHeight * (1 / 4));
+        ctx.stroke();
+
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(selectedRangeRight + 1, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.SelectedRangeBarHeight * (3 / 4));
+        ctx.lineTo(selectedRangeRight + 1, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom + this.SelectedRangeBarHeight * (1 / 4));
+        ctx.stroke();
+
+        const selectedRangeValueBoxWidth: number = 72;
+        const selectedRangeValueBoxHeight: number = 18;
+        let selectedRangeStartValueBoxLeft: number = selectedRangeLeft - selectedRangeValueBoxWidth;
+        if (selectedRangeStartValueBoxLeft - this.PaddingLeft < 0)
+            selectedRangeStartValueBoxLeft = this.PaddingLeft;
+
+        let selectedRangeStartValueBoxRight: number = selectedRangeRight;
+        if (selectedRangeStartValueBoxRight + selectedRangeValueBoxWidth + this.PaddingRight > this.Width)
+            selectedRangeStartValueBoxRight = this.Width - this.PaddingRight - selectedRangeValueBoxWidth;
+
+        ctx.fillRect(selectedRangeStartValueBoxLeft-2, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.SelectedRangeBarHeight * (3/4) - selectedRangeValueBoxHeight, selectedRangeValueBoxWidth+2, selectedRangeValueBoxHeight);
+        ctx.fillRect(selectedRangeStartValueBoxRight, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.SelectedRangeBarHeight * (3 / 4) - selectedRangeValueBoxHeight, selectedRangeValueBoxWidth+2, selectedRangeValueBoxHeight);
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.strokeStyle = "#FFFFFF";
+        let startValueLabel: string = this.SelectedRange[0].toString();
+        let endValueLabel: string = this.SelectedRange[1].toString();
+        if (this.ViewType === SobyRangeSelectionViewTypes.DateRange) {
+            const selectedRangeStartDate: Date = soby_DateFromTicks(this.SelectedRange[0]);
+            const selectedRangeEndDate: Date = soby_DateFromTicks(this.SelectedRange[1]);
+            startValueLabel = this.MonthNames[selectedRangeStartDate.getMonth()] + " " + selectedRangeStartDate.getDate().toString();
+            endValueLabel = this.MonthNames[selectedRangeEndDate.getMonth()] + " " + selectedRangeEndDate.getDate().toString();
+        }
+
+        ctx.fillText(startValueLabel, selectedRangeStartValueBoxLeft + 5, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.SelectedRangeBarHeight * (3 / 4) - 5);
+        ctx.fillText(endValueLabel, selectedRangeStartValueBoxRight + 5, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.SelectedRangeBarHeight * (3 / 4) - 5);
+
+    }
+
+    GetRangeItemCount() {
+        return (this.EndNumericValue - this.StartNumericValue) / this.MinorRangeInterval;
+    }
+
+    GetRangeValueWidth() {
+        return (this.Width - (this.PaddingLeft + this.PaddingRight)) / this.GetRangeItemCount();
+    }
+
+    GetValueFromOffsetX(offsetX) {
+        return this.StartNumericValue + (((offsetX - this.PaddingLeft) / this.GetRangeValueWidth()) * this.MinorRangeInterval);
+    }
+
+    GetOffsetXFromValue(value) {
+        return this.PaddingLeft + (((value - this.StartNumericValue) / this.MinorRangeInterval) * this.GetRangeValueWidth());
+    }
+
+    GetSelectedRangeLeft() {
+        return this.GetOffsetXFromValue(this.SelectedRange[0]);
+    }
+    GetSelectedRangeRight() {
+        return this.GetOffsetXFromValue(this.SelectedRange[1]);
+    }
+
 }
 
 class soby_ItemSelection {

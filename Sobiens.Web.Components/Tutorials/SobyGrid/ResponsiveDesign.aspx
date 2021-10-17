@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ResponsiveDesign.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.ResponsiveDesign" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ResponsiveDesign.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.ResponsiveDesign" Title="DataGrid - Responsive Design Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
@@ -8,13 +8,27 @@
     <hgroup class="title">
         <h1><%: Title %></h1>
         <br />
-        <h2>Cell Template Example</h2>
+        <h2>Responsive Design Example</h2>
     </hgroup>
         </div>
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div class="article col-md-9">
+    <p>This example demonstrates how to use responsive design in the Soby Data Grid. <br />
+        "sobyResponsiveCondition" class should be used to define condition. This needs to be added into "ResponsiveConditions" property of the grid. Passing this condition into "AddColumn" method will state the visibility of the column on different screen resolution. 
+        <pre class="js">    var responsiveCondition1 = new sobyResponsiveCondition(function (width, height) {
+        if (width &lt; 600)
+            return false;
+        else
+            return true;
+    });
+                bookGrid.AddColumn("Genre", "Genre", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null, responsiveCondition1);
+    bookGrid.ResponsiveConditions.push(responsiveCondition2);
+        </pre>
+        Setting a condition on "RowDetailDisplayViewResponsiveCondition" property will state the visibility of the column expander on different screen resolution. 
+    <pre class="js">    bookGrid.RowDetailDisplayViewResponsiveCondition = responsiveCondition2;</pre>
+    </p>
             <script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
             <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
@@ -65,7 +79,8 @@
         new SobySchemaField("Author", SobyFieldTypes.Object, null),
         new SobySchemaField("ImageUrl", SobyFieldTypes.Text, null),
         new SobySchemaField("WebSiteUrl", SobyFieldTypes.Text, null)
-    ], items);    var responsiveCondition1 = new sobyResponsiveCondition(function (width, height) {
+    ], items);   
+    var responsiveCondition1 = new sobyResponsiveCondition(function (width, height) {
         if (width &lt; 600)
             return false;
         else

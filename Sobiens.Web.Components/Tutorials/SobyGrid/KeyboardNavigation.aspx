@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="KeyboardNavigation.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.KeyboardNavigation" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="KeyboardNavigation.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.KeyboardNavigation" Title="DataGrid - Keyboard integration" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
@@ -7,7 +7,7 @@
         <div class="content-wrapper">
     <hgroup class="title">
         <h1><%: Title %>.</h1>
-        <h2>Your app description page.</h2>
+        <h2>Keyboard integration</h2>
     </hgroup>
         </div>
     </section>

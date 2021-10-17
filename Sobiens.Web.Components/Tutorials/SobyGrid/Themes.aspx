@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Themes.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Themes" Title="Grid Themes Example" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Themes.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Themes" Title="DataGrid - Themes Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
@@ -8,7 +8,7 @@
     <hgroup class="title">
         <h1><%: Title %></h1>
         <br />
-        <h2></h2>
+        <h2>Themes Example</h2>
     </hgroup>
         </div>
     </section>

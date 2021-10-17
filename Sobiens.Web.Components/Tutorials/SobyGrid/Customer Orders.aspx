@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Customer Orders.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.CustomerOrders" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Customer Orders.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.CustomerOrders" Title="DataGrid - Customer Orders Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
@@ -65,7 +65,7 @@ function soby_PopulateGridCustomerOrders() {
                     {Id:2, FirstName:"Dexter", LastName:"McKenzie", Sex:"M", Age:39},
                     {Id:3, FirstName:"Tricia", LastName:"Cooper", Sex:"F", Age:21},
                     {Id:4, FirstName:"Debra", LastName:"Drinian", Sex:"F", Age:39},
-                    {Id:5, FirstName:"Alex", LastName:"Long", Sex:"M", Age:24},
+                    {Id:5, FirstName:"Catherine", LastName:"Lyla", Sex:"F", Age:24},
                     {Id:6, FirstName:"Michele", LastName:"Kane", Sex:"F", Age:26}
                   ];
 
@@ -165,18 +165,18 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     ], orders);
 
     var orderItems = [
-                        {Id:1, Price:"9.99", OrderId:1, ProductId:1},
-                        {Id:2, Price:"12.95", OrderId:2, ProductId:2},
-                        {Id:3, Price:"15.00", OrderId:3, ProductId:3},
-                        {Id:4, Price:"16.00", OrderId:4, ProductId:4},
-                        {Id:5, Price:"11.00", OrderId:5, ProductId:5},
-                        {Id:6, Price:"17.00", OrderId:6, ProductId:6},
-                        {Id:7, Price:"11.00", OrderId:7, ProductId:7},
-                        {Id:8, Price:"21.00", OrderId:8, ProductId:8},
-                        {Id:9, Price:"19.00", OrderId:9, ProductId:9},
-                        {Id:10, Price:"16.00", OrderId:10, ProductId:10},
-                        {Id:11, Price:"5.60", OrderId:11, ProductId:11},
-                        {Id:12, Price:"7.80", OrderId:12, ProductId:12}
+                        {Id:1, Price:"16.00", OrderId:1, ProductId:1, ProductTitle:"Pride and Prejudice"},
+                        {Id:2, Price:"12.95", OrderId:2, ProductId:2, ProductTitle:"Northanger Abbey"},
+                        {Id:3, Price:"16.00", OrderId:3, ProductId:1, ProductTitle:"Pride and Prejudice"},
+                        {Id:4, Price:"12.95", OrderId:4, ProductId:2, ProductTitle:"Northanger Abbey"},
+                        {Id:5, Price:"11.00", OrderId:5, ProductId:3, ProductTitle:"David Copperfield"},
+                        {Id:6, Price:"11.00", OrderId:6, ProductId:3, ProductTitle:"David Copperfield"},
+                        {Id:7, Price:"14.00", OrderId:7, ProductId:7, ProductTitle:"Moby Dick"},
+                        {Id:8, Price:"21.00", OrderId:8, ProductId:8, ProductTitle:"Tom Jones"},
+                        {Id:9, Price:"19.00", OrderId:9, ProductId:9, ProductTitle:"Frankenstein"},
+                        {Id:10, Price:"14.00", OrderId:10, ProductId:7, ProductTitle:"Moby Dick"},
+                        {Id:11, Price:"21.00", OrderId:11, ProductId:8, ProductTitle:"Tom Jones"},
+                        {Id:12, Price:"21.00", OrderId:12, ProductId:8, ProductTitle:"Tom Jones"}
                     ];
 
     var orderItemsService = new soby_StaticDataService([
@@ -221,8 +221,6 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     orderItemsGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     orderGrid.AddDataRelation("Price", "Id", orderItemsGrid.GridID, "OrderId");
     orderGrid.FilterResultWithMultipleValues("CustomerId", customerIds, SobyFieldTypes.Number, SobyFilterTypes.Equal, false);
-
-
     orderGrid.Initialize(true);
 }
 

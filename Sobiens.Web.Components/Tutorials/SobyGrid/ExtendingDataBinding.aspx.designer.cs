@@ -11,7 +11,7 @@ namespace Sobiens.Web.Components.Tutorials.SobyGrid
 {
 
 
-    public partial class CustomDataBinding
+    public partial class ExtendingDataBinding
     {
 
         /// <summary>

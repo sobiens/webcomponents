@@ -216,6 +216,7 @@ declare abstract class soby_DataSourceBuilderAbstract implements soby_DataSource
     OrderByFields: SobyOrderByFields;
     Arguments: SobyArguments;
     Headers: SobyHeaders;
+    constructor();
     GetViewField(fieldName: string): SobySchemaField;
     GetViewFieldByPropertyName(propertyName: string): SobySchemaField;
     AddHeader(key: string, value: string): void;
@@ -242,7 +243,6 @@ declare class soby_Item {
 }
 declare class soby_WebServiceService implements soby_ServiceInterface {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
-    DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
     constructor(dataSourceBuilder: soby_DataSourceBuilderAbstract);
     NextPageString: string;
     PageIndex: number;
@@ -267,6 +267,7 @@ declare class soby_WebServiceService implements soby_ServiceInterface {
     GoToPage(pageIndex: number): void;
     CanNavigateToNextPage(): boolean;
     CanNavigateToPreviousPage(): boolean;
+    GetQueriesAppliedDataSourceBuilder(): soby_DataSourceBuilderAbstract;
     PopulateItems(args: Array<any>): void;
     Parse(): void;
     GetFieldNames(): any[];
@@ -355,3 +356,5 @@ declare function soby_DateToIso(d: any): string;
 declare function soby_DateFromISO(d: any): Date;
 declare function soby_GetFormatedDateString(date: any): any;
 declare function soby_GetDateWithFormat(dateString: any, format: any): Date;
+declare function soby_TicksFromDate(date: any): number;
+declare function soby_DateFromTicks(ticks: any): Date;

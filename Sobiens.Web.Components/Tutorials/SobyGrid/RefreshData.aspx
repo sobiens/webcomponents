@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="RefreshData.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.RefreshData" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="RefreshData.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.RefreshData" Title="DataGrid - Refresh Data Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
@@ -8,7 +8,7 @@
     <hgroup class="title">
         <h1><%: Title %></h1>
         <br />
-        <h2>Filtering Example</h2>
+        <h2>Refresh Data Example</h2>
     </hgroup>
         </div>
     </section>

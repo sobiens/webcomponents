@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Grouping.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Grouping" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Grouping.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Grouping" Title="DataGrid - Grouping Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 

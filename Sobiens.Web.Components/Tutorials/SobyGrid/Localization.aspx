@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Localization.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Localization" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Localization.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Localization" Title="DataGrid - Localization Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
@@ -8,7 +8,7 @@
     <hgroup class="title">
         <h1><%: Title %></h1>
         <br />
-        <h2>Master Details Example</h2>
+        <h2>Localization Example</h2>
     </hgroup>
         </div>
     </section>

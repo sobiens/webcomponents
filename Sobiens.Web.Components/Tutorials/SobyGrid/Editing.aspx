@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Editing.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Editing" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Editing.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Editing" Title="DataGrid - Editing Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 

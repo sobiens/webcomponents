@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="WebAPIOData.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.WebAPIOData" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="WebAPIOData.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.WebAPIOData" Title="Grid - Web API and OData Implementation" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 

@@ -515,8 +515,49 @@
 }
 /***************************************************************/
 
-/*********************** SOBY CODE EDITOR *****************************/
-.codeeditor {
+/*********************** SOBY Range Selection *****************************/
+.sobyrangeselection .majorrangevalue, .sobyrangeselection .minorrangevalue, .sobyrangeselection .rangelabel {
+    float: left;
+}
+.sobyrangeselection .rangevalues, .sobyrangeselection .rangelabels {
+    clear: both;
+}
+.sobyrangeselection .majorrangevalue {
+        background-color: gray;
+}
+.sobyrangeselection .minorrangevalue {
+    background-color: lightgray;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.sobyrangeselection .rangemajorvalues, .sobyrangeselection .selectedrange {
+    position: absolute;
+}
+.sobyrangeselection .selectedrange {
+    background-color: #787878;
+    margin-bottom: 9px;
+    margin-top: 9px;
+    cursor: pointer;
+}
+
+.sobyrangeselection .selectedrangeresizer.left {
+    float: left;
+}
+
+.sobyrangeselection .selectedrangeresizer.right {
+    float: right;
+    right:0px;
+}
+
+.sobyrangeselection .selectedrangeresizer {
+    top: -10px;
+    background-color: #787878;
+    position: absolute;
+    cursor: e-resize;
+}
+    /***************************************************************/
+    /*********************** SOBY CODE EDITOR *****************************/
+    .codeeditor {
     border: 0px;
     border-top: 1px solid lightgray;
     font-size: 13px;

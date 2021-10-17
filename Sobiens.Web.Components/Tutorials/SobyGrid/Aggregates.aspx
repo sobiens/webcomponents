@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Aggregates.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Aggregates" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Aggregates.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Aggregates" Title="DataGrid - Aggregates Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 

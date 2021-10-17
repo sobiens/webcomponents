@@ -1,6 +1,5 @@
 declare class soby_SharePointService implements soby_ServiceInterface {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
-    DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
     constructor(dataSourceBuilder: soby_DataSourceBuilderAbstract);
     NextPageString: string;
     PageIndex: number;

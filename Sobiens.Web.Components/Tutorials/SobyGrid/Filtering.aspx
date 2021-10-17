@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Filtering.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Filtering" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Filtering.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Filtering" Title="DataGrid - Filtering Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 

@@ -2,10 +2,8 @@
 class soby_SharePointService implements soby_ServiceInterface
 {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
-    DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
     constructor(dataSourceBuilder: soby_DataSourceBuilderAbstract) {
         this.DataSourceBuilder = dataSourceBuilder;
-        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
         this.NextPageStrings = new Array<string>();
         this.NextPageStrings[0] = "";
         this.Transport = new soby_Transport();
@@ -23,7 +21,6 @@ class soby_SharePointService implements soby_ServiceInterface
     Transport: soby_Transport;
     SetRowLimit(rowLimit: number) {
         this.DataSourceBuilder.RowLimit = rowLimit;
-        this.DataSourceBuilderTemp.RowLimit = rowLimit;
     }
     PopulateNavigationInformation()
     {
@@ -37,21 +34,21 @@ class soby_SharePointService implements soby_ServiceInterface
         var dataType = this.Transport.Read.DataType;
         var contentType = this.Transport.Read.ContentType;
 
-        var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
+        var countServiceUrl = this.DataSourceBuilder.GetCountQuery(this.Transport.Read);
         soby_LogMessage("countServiceUrl");
         soby_LogMessage(countServiceUrl);
-        if (countServiceUrl == null)
+        if (countServiceUrl === null)
         {
-            var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
-            var endIndex = ((service.DataSourceBuilderTemp.PageIndex + 1) * service.DataSourceBuilderTemp.RowLimit);
-            if (service.DataSourceBuilderTemp.RowLimit == 0)
+            var startIndex = (service.DataSourceBuilder.PageIndex * service.DataSourceBuilder.RowLimit) + 1;
+            var endIndex = ((service.DataSourceBuilder.PageIndex + 1) * service.DataSourceBuilder.RowLimit);
+            if (service.DataSourceBuilder.RowLimit === 0)
             {
                 startIndex = 0;
                 endIndex = 0;
             }
 
-            service.NextPageExist = service.DataSourceBuilderTemp.NextPageExist;
-            service.NextPageString = service.DataSourceBuilderTemp.NextPageString;
+            service.NextPageExist = service.DataSourceBuilder.NextPageExist;
+            service.NextPageString = service.DataSourceBuilder.NextPageString;
             service.NextPageStrings[this.PageIndex + 1] = service.NextPageString;
             soby_LogMessage("NextPageExist:" + service.NextPageExist);
 
@@ -61,14 +58,14 @@ class soby_SharePointService implements soby_ServiceInterface
             return;
         }
         soby_LogMessage("querying count...");
-        this.DataSourceBuilderTemp.GetData("",
+        this.DataSourceBuilder.GetData("",
             function (result) {
                 var totalItemCount = parseInt(result);
                 soby_LogMessage("Total item count:" + totalItemCount);
 
-                var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
-                var endIndex = ((service.DataSourceBuilderTemp.PageIndex + 1) * service.DataSourceBuilderTemp.RowLimit);
-                if (service.DataSourceBuilderTemp.RowLimit == 0) {
+                var startIndex = (service.DataSourceBuilder.PageIndex * service.DataSourceBuilder.RowLimit) + 1;
+                var endIndex = ((service.DataSourceBuilder.PageIndex + 1) * service.DataSourceBuilder.RowLimit);
+                if (service.DataSourceBuilder.RowLimit === 0) {
                     startIndex = 0;
                     endIndex = 0;
                 }
@@ -98,7 +95,7 @@ class soby_SharePointService implements soby_ServiceInterface
                 }
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilder.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     }
     NavigationInformationBeingPopulated() { }
     NavigationInformationPopulated() { }
@@ -121,7 +118,7 @@ class soby_SharePointService implements soby_ServiceInterface
         this.NextPageString = "";
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
-        if (clearOtherFilters == true)
+        if (clearOtherFilters === true)
         {
             this.Filters = new SobyFilters(filters.IsOr);
         }
@@ -139,7 +136,7 @@ class soby_SharePointService implements soby_ServiceInterface
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
-        if (clearOtherFilters == true)
+        if (clearOtherFilters === true)
         {
             this.Filters = new SobyFilters(filters.IsOr);
         }
@@ -153,14 +150,14 @@ class soby_SharePointService implements soby_ServiceInterface
     }
 
     GoToPage(pageIndex: number) {
-        this.DataSourceBuilderTemp.PageIndex = pageIndex;
+        this.DataSourceBuilder.PageIndex = pageIndex;
         this.PageIndex = pageIndex;
         this.NextPageString = this.NextPageStrings[pageIndex]
 
         this.PopulateItems(null);
     };
     CanNavigateToNextPage() {
-        if (this.NextPageExist == false)
+        if (this.NextPageExist === false)
         {
             return false;
         }
@@ -168,7 +165,7 @@ class soby_SharePointService implements soby_ServiceInterface
         return true;
     };
     CanNavigateToPreviousPage() {
-        if (this.DataSourceBuilderTemp.PageIndex == 0)
+        if (this.DataSourceBuilder.PageIndex === 0)
         {
             return false;
         }
@@ -183,28 +180,28 @@ class soby_SharePointService implements soby_ServiceInterface
             this.ItemBeingPopulated();
         }
 
-        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
+        this.DataSourceBuilder = this.DataSourceBuilder.Clone();
         for (var i = 0; i < this.GroupByFields.length; i++) {
-            this.DataSourceBuilderTemp.AddOrderField(this.GroupByFields[i].FieldName, this.GroupByFields[i].IsAsc);
+            this.DataSourceBuilder.AddOrderField(this.GroupByFields[i].FieldName, this.GroupByFields[i].IsAsc);
 
         }
         if (this.OrderByFields.length > 0)
         {
-            this.DataSourceBuilderTemp.AddOrderFields(this.OrderByFields);
+            this.DataSourceBuilder.AddOrderFields(this.OrderByFields);
         }
 
         if (this.Filters.Filters.length > 0) {
-            this.DataSourceBuilderTemp.Filters.AddFilterCollection(this.Filters);
+            this.DataSourceBuilder.Filters.AddFilterCollection(this.Filters);
         }
 
-        this.DataSourceBuilderTemp.PageIndex = this.PageIndex;
-        if (this.PageIndex == 0)
+        this.DataSourceBuilder.PageIndex = this.PageIndex;
+        if (this.PageIndex === 0)
         {
-            this.DataSourceBuilderTemp.NextPageString = "";
+            this.DataSourceBuilder.NextPageString = "";
         }
         else
         {
-            this.DataSourceBuilderTemp.NextPageString = this.NextPageString;
+            this.DataSourceBuilder.NextPageString = this.NextPageString;
         }
 
         var service = this;
@@ -212,9 +209,9 @@ class soby_SharePointService implements soby_ServiceInterface
         var requestMethod = this.Transport.Read.Type;
         var dataType = this.Transport.Read.DataType;
         var contentType = this.Transport.Read.ContentType;
-        var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read, false);
+        var mainQuery = service.DataSourceBuilder.GetMainQuery(this.Transport.Read, false);
         if (mainQuery != null && mainQuery != "") {
-            if (serviceUrl.indexOf("?") == -1) {
+            if (serviceUrl.indexOf("?") === -1) {
                 serviceUrl += "?";
             }
             else {
@@ -223,16 +220,16 @@ class soby_SharePointService implements soby_ServiceInterface
             serviceUrl += mainQuery;
         }
 
-        this.DataSourceBuilderTemp.GetData("",
+        this.DataSourceBuilder.GetData("",
             function (result) {
                 soby_LogMessage(result);
-                var items = service.DataSourceBuilderTemp.ParseData(result);
+                var items = service.DataSourceBuilder.ParseData(result);
                 soby_LogMessage(items);
                 soby_LogMessage(service);
 
-                var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
-                var endIndex = startIndex + service.DataSourceBuilderTemp.ItemCount - 1;
-                if (service.DataSourceBuilderTemp.ItemCount == 0) {
+                var startIndex = (service.DataSourceBuilder.PageIndex * service.DataSourceBuilder.RowLimit) + 1;
+                var endIndex = startIndex + service.DataSourceBuilder.ItemCount - 1;
+                if (service.DataSourceBuilder.ItemCount === 0) {
                     startIndex = 0;
                     endIndex = 0;
                 }
@@ -246,7 +243,7 @@ class soby_SharePointService implements soby_ServiceInterface
                 try
                 {
                     errorTypeName = textStatus.get_errorTypeName()
-                    if (errorTypeName == "Microsoft.SharePoint.SPQueryThrottledException")
+                    if (errorTypeName === "Microsoft.SharePoint.SPQueryThrottledException")
                     {
                         errorMessage = "Your query returned number of items which is higher than threshold. Please apply some filters and try again.";
                     }
@@ -257,7 +254,7 @@ class soby_SharePointService implements soby_ServiceInterface
                 }
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilder.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     }
 
     Parse() {
@@ -266,8 +263,8 @@ class soby_SharePointService implements soby_ServiceInterface
 
     GetFieldNames() {
         var fieldNames = new Array();
-        for (var i = 0; i < this.DataSourceBuilderTemp.SchemaFields.length; i++) {
-            fieldNames[fieldNames.length] = { FieldName: this.DataSourceBuilderTemp.SchemaFields[i].FieldName }
+        for (var i = 0; i < this.DataSourceBuilder.SchemaFields.length; i++) {
+            fieldNames[fieldNames.length] = { FieldName: this.DataSourceBuilder.SchemaFields[i].FieldName }
         }
 
         return fieldNames;
@@ -348,7 +345,7 @@ class soby_SPSearchBuilder extends soby_WSBuilder
     GetWhereQuery(transport: soby_TransportRequest)
     {
         var query = "";
-        if (transport.Type == "POST")
+        if (transport.Type === "POST")
         {
             query = this.Filters.ToJson();
         }
@@ -408,7 +405,7 @@ class soby_SPSearchBuilder extends soby_WSBuilder
                 dataItem[this.SchemaFields[x].FieldName] = "";
                 for (var y = 0; y < item.Cells.length; y++)
                 {
-                    if (this.SchemaFields[x].FieldName == item.Cells[y].Key)
+                    if (this.SchemaFields[x].FieldName === item.Cells[y].Key)
                     {
                         dataItem[this.SchemaFields[x].FieldName] = item.Cells[y].Value;
                     }
@@ -503,7 +500,7 @@ class soby_SPSearch2010Builder extends soby_WSBuilder
         var selectFieldsEnvelope = this.GetViewFieldsQuery(transport);
         var whereQuery = this.GetWhereQuery(transport);
         var pagingQuery = "";
-        if (excludePagingQuery == false)
+        if (excludePagingQuery === false)
         {
             pagingQuery = this.GetPagingQuery(transport);
         }
@@ -573,7 +570,7 @@ class soby_SPRestBuilder extends soby_WSBuilder {
     }
     GetWhereQuery(transport: soby_TransportRequest) {
         var query = "";
-        if (transport.Type == "POST")
+        if (transport.Type === "POST")
         {
             {
                 query = this.Filters.ToJson();
@@ -663,7 +660,7 @@ class soby_SPCSOMBuilder extends soby_SPRestBuilder
                 }
 
                 var viewXml = "<View Scope='RecursiveAll'>" +
-                    (this.UseViewFields == true ? camlBuilder.GetViewFieldsQuery() : "")
+                    (this.UseViewFields === true ? camlBuilder.GetViewFieldsQuery() : "")
                     + "<Query>" + camlBuilder.GetOrderByFieldsQuery() + camlBuilder.GetWhereQuery() + "</Query><RowLimit>" + this.RowLimit + "</RowLimit></View>";
                 soby_LogMessage(viewXml);
                 camlQuery.set_viewXml(viewXml);
@@ -764,7 +761,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     {
         for (var i = 0; i < this.SchemaFields.length; i++)
         {
-            if (this.SchemaFields[i].FieldName == fieldName)
+            if (this.SchemaFields[i].FieldName === fieldName)
             {
                 return this.SchemaFields[i];
             }
@@ -777,7 +774,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     {
         for (var i = 0; i < this.SchemaFields.length; i++)
         {
-            if (this.SchemaFields[i].PropertyName == propertyName)
+            if (this.SchemaFields[i].PropertyName === propertyName)
             {
                 return this.SchemaFields[i];
             }
@@ -841,7 +838,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
         var query = "";
         for (var i = 0; i < this.OrderByFields.length; i++)
         {
-            query += "<FieldRef Name='" + this.OrderByFields[i].FieldName + "'  Ascending='" + (this.OrderByFields[i].IsAsc == true ? "TRUE" : "FALSE") + "' />";
+            query += "<FieldRef Name='" + this.OrderByFields[i].FieldName + "'  Ascending='" + (this.OrderByFields[i].IsAsc === true ? "TRUE" : "FALSE") + "' />";
         }
 
         if (query != "")
@@ -929,7 +926,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
                             var values = value.split(";#");
                             for (var x = 0; x < values.length; x++)
                             {
-                                if (x == 0 || x == values.length - 1)
+                                if (x === 0 || x === values.length - 1)
                                 {
                                     continue;
                                 }
@@ -940,7 +937,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
                         item[propertyName] = valueArray;
                         break;
                     case SobyFieldTypes.Boolean:
-                        if (value == "1")
+                        if (value === "1")
                         {
                             item[propertyName] = true;
                         }
@@ -956,7 +953,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
                         }
                         break;
                     default:
-                        if (value == null)
+                        if (value === null)
                         {
                             item[propertyName] = "";
                         }
@@ -967,7 +964,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
                 }
             }
 
-            if (viewFields.length == 0)
+            if (viewFields.length === 0)
             {
                 $.each(this.attributes, function (i, attrib)
                 {
@@ -1241,7 +1238,7 @@ class sobySPListsObject
         </soap:Envelope>";
 
         soby_LogMessage(soapEnv);
-        if (isAsync == null || isAsync == "")
+        if (isAsync === null || isAsync === "")
         {
             isAsync = true;
         }
@@ -1315,7 +1312,7 @@ class sobySPListsObject
     </soap:Envelope>";
         soby_LogMessage(soapEnv);
 
-        if (isAsync == null)
+        if (isAsync === null)
         {
             isAsync = true;
         }
@@ -1472,23 +1469,23 @@ class sobySPListsObject
                 for (var i = 0; i < fieldsXml.length; i++)
                 {
                     var fieldXml = $(fieldsXml[i]);
-                    if (fieldXml.attr("frombasetype") == "TRUE" && fieldXml.attr("name") != "Title")
+                    if (fieldXml.attr("frombasetype") === "TRUE" && fieldXml.attr("name") != "Title")
                     {
                         continue;
                     }
-                    if (fieldXml.attr("id") == null || fieldXml.attr("id") == "")
+                    if (fieldXml.attr("id") === null || fieldXml.attr("id") === "")
                     {
                         continue;
                     }
 
                     var required = false;
-                    if (fieldXml.attr("required") == "TRUE")
+                    if (fieldXml.attr("required") === "TRUE")
                     {
                         required = true;
                     }
 
                     var hidden = false;
-                    if (fieldXml.attr("hidden") == "TRUE")
+                    if (fieldXml.attr("hidden") === "TRUE")
                     {
                         hidden = true;
                     }
@@ -1549,7 +1546,7 @@ class sobySPListsObject
     }
     CheckOutFile(siteUrl, fileUrl, callbackFunction, _arguments, isAsync)
     {
-        if (isAsync == null)
+        if (isAsync === null)
         {
             isAsync = true;
         }
@@ -1583,7 +1580,7 @@ class sobySPListsObject
                 var xmlData = $(data.responseText);
                 var result = xmlData.find("CheckOutFileResult").text();
                 var success = false;
-                if (result == "true")
+                if (result === "true")
                 {
                     success = true;
                 }
@@ -1600,7 +1597,7 @@ class sobySPListsObject
     }
     CheckInFile(siteUrl, fileUrl, comment, checkinType, callbackFunction, _arguments, isAsync)
     {
-        if (isAsync == null)
+        if (isAsync === null)
         {
             isAsync = true;
         }
@@ -1648,8 +1645,8 @@ class sobySPListsObject
         var fieldsXml = "";
         for (var i = 0; i < fieldTemplates.length; i++)
         {
-            var fieldXml = "<Field DisplayName='" + (addAction == true ? fieldTemplates[i].InternalName : fieldTemplates[i].DisplayName) + "' Name='" + fieldTemplates[i].InternalName + "' ";
-            if (fieldTemplates[i].Type == "User" && fieldTemplates[i].Mult == true)
+            var fieldXml = "<Field DisplayName='" + (addAction === true ? fieldTemplates[i].InternalName : fieldTemplates[i].DisplayName) + "' Name='" + fieldTemplates[i].InternalName + "' ";
+            if (fieldTemplates[i].Type === "User" && fieldTemplates[i].Mult === true)
             {
                 fieldXml += " Type='UserMulti'";
             }
@@ -1658,21 +1655,21 @@ class sobySPListsObject
                 fieldXml += " Type='" + fieldTemplates[i].Type + "'";
             }
 
-            if (fieldTemplates[i].Hidden == true)
+            if (fieldTemplates[i].Hidden === true)
             {
                 fieldXml += " Hidden='TRUE'";
             }
-            if (fieldTemplates[i].Required == true)
+            if (fieldTemplates[i].Required === true)
             {
                 fieldXml += " Required='TRUE'";
             }
             /*
-            if (fieldTemplates[i].Type == "Lookup") {
+            if (fieldTemplates[i].Type === "Lookup") {
                 fieldXml += " Group='Operations'/>";
                 oField = oList.get_fields().addFieldAsXml(fieldXml);
                 oField = clientContext.castTo(oField, SP.FieldLookup);
                 for (var y = 0; y < un_SelectedTemplate.Lists.length; y++) {
-                    if (un_SelectedTemplate.Lists[y].Title == fieldTemplates[i].LookupListName) {
+                    if (un_SelectedTemplate.Lists[y].Title === fieldTemplates[i].LookupListName) {
                         oField.set_lookupList(un_SelectedTemplate.Lists[y].ID);
                     }
                 }
@@ -1681,7 +1678,7 @@ class sobySPListsObject
             }
             else
             */
-            if (fieldTemplates[i].Type == "Choice" || fieldTemplates[i].Type == "MultiChoice")
+            if (fieldTemplates[i].Type === "Choice" || fieldTemplates[i].Type === "MultiChoice")
             {
 
                 fieldXml += "><CHOICES>";
@@ -1697,17 +1694,17 @@ class sobySPListsObject
 
                 fieldXml += "</Field>";
             }
-            else if (fieldTemplates[i].Type == "URL")
+            else if (fieldTemplates[i].Type === "URL")
             {
                 fieldXml += " Format='Hyperlink' />";
             }
-            else if (fieldTemplates[i].Type == "Note")
+            else if (fieldTemplates[i].Type === "Note")
             {
                 fieldXml += " NumLines='6' AppendOnly='FALSE' RichText='FALSE' />";
             }
-            else if (fieldTemplates[i].Type == "User")
+            else if (fieldTemplates[i].Type === "User")
             {
-                if (fieldTemplates[i].Mult == true)
+                if (fieldTemplates[i].Mult === true)
                 {
                     fieldXml += " UserSelectionMode='PeopleOnly' UserSelectionScope='0' Mult='TRUE' />"
                 }
@@ -1728,7 +1725,7 @@ class sobySPListsObject
 
         var newFieldsString = "";
         var updateFieldsString = "";
-        if (addAction == true)
+        if (addAction === true)
         {
             newFieldsString = "<newFields>" + fieldsXml + "</newFields>";
         }
@@ -1808,7 +1805,7 @@ class sobySPUserGroupObject
 {
     GetGroupInfo(siteUrl, groupName, callbackFunction, async, args)
     {
-        if (async == null)
+        if (async === null)
         {
             async = true;
         }
@@ -1849,7 +1846,7 @@ class sobySPUserGroupObject
     }
     CheckGroupContainsUser(siteUrl, groupName, userId, callbackFunction, async)
     {
-        if (async == null)
+        if (async === null)
         {
             async = true;
         }
@@ -1879,7 +1876,7 @@ class sobySPUserGroupObject
                 for (var i = 0; i < users.length; i++)
                 {
                     var _userId = $(users[i]).attr("id");
-                    if (_userId == userId)
+                    if (_userId === userId)
                     {
                         contains = true;
                     }

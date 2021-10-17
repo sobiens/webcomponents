@@ -99,23 +99,23 @@ class SobyAggregateTypesObject {
     Min: number = 3;
     Sum: number = 4;
     GetAggregateTypeName(aggregateType: number) {
-        if (aggregateType == 0)
+        if (aggregateType === 0)
         {
             return "Average";
         }
-        else if (aggregateType == 1)
+        else if (aggregateType === 1)
         {
             return "Count";
         }
-        else if (aggregateType == 2)
+        else if (aggregateType === 2)
         {
             return "Max";
         }
-        else if (aggregateType == 3)
+        else if (aggregateType === 3)
         {
             return "Min";
         }
-        else if (aggregateType == 4)
+        else if (aggregateType === 4)
         {
             return "Sum";
         }
@@ -146,7 +146,7 @@ class SobyFilters implements ISobyFilter {
     GetFiltersByFieldName(fieldName: string) {
         var filters = new Array();
         for (var i = 0; i < this.Filters.length; i++) {
-            if (this.Filters[i].FieldName == fieldName)
+            if (this.Filters[i].FieldName === fieldName)
                 filters.push(this.Filters[i]);
         }
 
@@ -171,18 +171,18 @@ class SobyFilters implements ISobyFilter {
 
     ToCaml(): string {
         var camlString = "";
-        var filterCompareString = this.IsOr == true ? "Or" : "And";
+        var filterCompareString = this.IsOr === true ? "Or" : "And";
         for (var i = 0; i < this.Filters.length; i++) {
-            if (this.Filters.length == 1) {
+            if (this.Filters.length === 1) {
                 camlString += this.Filters[i].ToCaml();
             }
-            else if (i == 1) {
+            else if (i === 1) {
                 camlString += "<" + filterCompareString + ">" + this.Filters[i - 1].ToCaml() + this.Filters[i].ToCaml() + "</" + filterCompareString + ">";
             }
-            else if (i % 2 == 1) {
+            else if (i % 2 === 1) {
                 camlString = "<" + filterCompareString + ">" + camlString + "<" + filterCompareString + ">" + this.Filters[i - 1].ToCaml() + this.Filters[i].ToCaml() + "</" + filterCompareString + "></" + filterCompareString + ">";
             }
-            else if (i == this.Filters.length - 1) {
+            else if (i === this.Filters.length - 1) {
                 camlString = "<" + filterCompareString + ">" + camlString + this.Filters[i].ToCaml() + "</" + filterCompareString + ">"
             }
         }
@@ -206,7 +206,7 @@ class SobyFilters implements ISobyFilter {
             json += "\"" + argument.FieldName + "\": \"" + argument.FilterValue + "\",";
         }
 
-        if (json != "")
+        if (json !== "")
         {
             return json.substr(0, json.length - 1);
         }
@@ -215,7 +215,7 @@ class SobyFilters implements ISobyFilter {
     }
 
     ToQueryString(_type: number /* 0 - Normal, 1 - SP Rest */) {
-        if (this.Filters.length == 0)
+        if (this.Filters.length === 0)
         {
             return "";
         }
@@ -243,7 +243,7 @@ class SobyFilters implements ISobyFilter {
 
     ToSearch2010Xml()
     {
-        if (this.Filters.length == 0)
+        if (this.Filters.length === 0)
         {
             return "";
         }
@@ -308,7 +308,7 @@ class SobyFilter implements ISobyFilter {
         var additionalFieldRefAttributes = "";
         var equvialentString = "";
         var valueString = "";
-        if (this.LookupID == true) {
+        if (this.LookupID === true) {
             additionalFieldRefAttributes = "LookupId=\"True\"";
         }
 
@@ -354,11 +354,11 @@ class SobyFilter implements ISobyFilter {
         }
 
         var value = this.FilterValue;
-        if (value == "[*ME*]")
+        if (value === "[*ME*]")
         {
             valueString = "<Value Type='" + valueTypeString + "'><UserID /></Value>";
         }
-        else if (this.FieldType == SobyFieldTypes.DateTime || this.FieldType == SobyFieldTypes.Number)
+        else if (this.FieldType === SobyFieldTypes.DateTime || this.FieldType === SobyFieldTypes.Number)
         {
             valueString = "<Value Type='" + valueTypeString + "'>" + this.FilterValue + "</Value>";
         }
@@ -409,7 +409,7 @@ class SobyFilter implements ISobyFilter {
                 valueString = "<Values>";
                 for (var i = 0; i < values.length; i++) {
                     valueString += "<Value Type='" + valueTypeString + "'>";
-                    if (this.FieldType != SobyFieldTypes.DateTime && this.FieldType != SobyFieldTypes.Number)
+                    if (this.FieldType !== SobyFieldTypes.DateTime && this.FieldType !== SobyFieldTypes.Number)
                     {
                         valueString += "<![CDATA[" + values[i] + "]]></Value>";
                     }
@@ -421,7 +421,7 @@ class SobyFilter implements ISobyFilter {
                 valueString += "</Values>";
                 break;
         }
-        return "<" + equvialentString + (this.FilterType == SobyFilterTypes.Membership ? " Type='" + valueTypeString + "'" : "") + "><FieldRef Name='" + this.FieldName + "' " + additionalFieldRefAttributes + " />" + valueString + "</" + equvialentString + ">";
+        return "<" + equvialentString + (this.FilterType === SobyFilterTypes.Membership ? " Type='" + valueTypeString + "'" : "") + "><FieldRef Name='" + this.FieldName + "' " + additionalFieldRefAttributes + " />" + valueString + "</" + equvialentString + ">";
     }
 
     ToSearch2010Xml(): string
@@ -450,11 +450,11 @@ class SobyFilter implements ISobyFilter {
         var valueFilterString = "";
         switch (this.FilterType) {
             case SobyFilterTypes.Equal:
-                if (this.FieldType == SobyFieldTypes.Text)
+                if (this.FieldType === SobyFieldTypes.Text)
                 {
                     valueFilterString = this.FieldName + " eq '" + value + "'";
                 }
-                else if (this.FieldType == SobyFieldTypes.DateTime)
+                else if (this.FieldType === SobyFieldTypes.DateTime)
                 {
                     valueFilterString = this.FieldName + " eq datetime'" + value + "'";
                 }
@@ -465,16 +465,16 @@ class SobyFilter implements ISobyFilter {
                 break;
             case SobyFilterTypes.NotEqual:
                 var comparisionText = "neq";
-                if (_type == 1)
+                if (_type === 1)
                 {
                     comparisionText = "ne"
                 }
 
-                if (this.FieldType == SobyFieldTypes.Text)
+                if (this.FieldType === SobyFieldTypes.Text)
                 {
                     valueFilterString = this.FieldName + " " + comparisionText + " '" + value + "'";
                 }
-                else if (this.FieldType == SobyFieldTypes.DateTime)
+                else if (this.FieldType === SobyFieldTypes.DateTime)
                 {
                     valueFilterString = this.FieldName + " " + comparisionText + " datetime'" + value + "'";
                 }
@@ -485,7 +485,7 @@ class SobyFilter implements ISobyFilter {
 
                 break;
             case SobyFilterTypes.Greater:
-                if (this.FieldType == SobyFieldTypes.DateTime)
+                if (this.FieldType === SobyFieldTypes.DateTime)
                 {
                     valueFilterString = this.FieldName + " gt datetime'" + value + "'";
                 }
@@ -496,7 +496,7 @@ class SobyFilter implements ISobyFilter {
 
                 break;
             case SobyFilterTypes.Lower:
-                if (this.FieldType == SobyFieldTypes.DateTime)
+                if (this.FieldType === SobyFieldTypes.DateTime)
                 {
                     valueFilterString = this.FieldName + " lt datetime'" + value + "'";
                 }
@@ -507,7 +507,7 @@ class SobyFilter implements ISobyFilter {
 
                 break;
             case SobyFilterTypes.GreaterEqual:
-                if (this.FieldType == SobyFieldTypes.DateTime)
+                if (this.FieldType === SobyFieldTypes.DateTime)
                 {
                     valueFilterString = this.FieldName + " geq datetime'" + value + "'";
                 }
@@ -518,7 +518,7 @@ class SobyFilter implements ISobyFilter {
 
                 break;
             case SobyFilterTypes.LowerEqual:
-                if (this.FieldType == SobyFieldTypes.DateTime)
+                if (this.FieldType === SobyFieldTypes.DateTime)
                 {
                     valueFilterString = this.FieldName + " leq datetime'" + value + "'";
                 }
@@ -533,7 +533,7 @@ class SobyFilter implements ISobyFilter {
                 break;
             case SobyFilterTypes.IsNotNull:
                 var comparisionText = "neq";
-                if (_type == 1)
+                if (_type === 1)
                 {
                     comparisionText = "ne"
                 }
@@ -541,7 +541,7 @@ class SobyFilter implements ISobyFilter {
                 valueFilterString = this.FieldName + " " + comparisionText + " null ";
                 break;
             case SobyFilterTypes.Contains:
-                if (_type == 0)
+                if (_type === 0)
                 {
                     valueFilterString = "contains(" + this.FieldName + ", '" + value + "')";
                 }
@@ -552,7 +552,7 @@ class SobyFilter implements ISobyFilter {
 
                 break;
             case SobyFilterTypes.BeginsWith:
-                if (_type == 0)
+                if (_type === 0)
                 {
                     valueFilterString = "beginswith";
                 }
@@ -587,16 +587,16 @@ class SobySchemaFields extends Array<SobySchemaField> {
         var expandString = "";
         for (var i = 0; i < this.length; i++) {
             webAPIString += "," + this[i].FieldName;
-            if (this[i].FieldType == SobyFieldTypes.Lookup) {
+            if (this[i].FieldType === SobyFieldTypes.Lookup) {
                 expandString += "," + this[i].Args.ModelName;
             }
-            else if (this[i].FieldType == SobyFieldTypes.User)
+            else if (this[i].FieldType === SobyFieldTypes.User)
             {
                 expandString += "," + this[i].Args.ModelName;
             }
         }
 
-        if (expandString != "")
+        if (expandString !== "")
         {
             expandString = "$expand=" + expandString.substr(1) + "&";
         }
@@ -637,7 +637,7 @@ class SobyOrderByFields extends Array<SobyOrderByField> {
 
     GetOrderFieldByName(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
-            if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+            if (this[i].FieldName.toLowerCase() === fieldName.toLowerCase())
             {
                 return this[i];
             }
@@ -647,7 +647,7 @@ class SobyOrderByFields extends Array<SobyOrderByField> {
     }
     ContainsField(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
-            if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+            if (this[i].FieldName.toLowerCase() === fieldName.toLowerCase())
             {
                 return true;
             }
@@ -657,7 +657,7 @@ class SobyOrderByFields extends Array<SobyOrderByField> {
     }
     ContainsFieldAsAsc(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
-            if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+            if (this[i].FieldName.toLowerCase() === fieldName.toLowerCase())
             {
                 return this[0].IsAsc;
             }
@@ -687,7 +687,7 @@ class SobyAggregateFields extends Array<SobyAggregateField> {
 
     ContainsField(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
-            if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+            if (this[i].FieldName.toLowerCase() === fieldName.toLowerCase())
             {
                 return true;
             }
@@ -711,7 +711,7 @@ class SobyKeyFields extends Array<SobyKeyField> {
 
     ContainsField(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
-            if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase()) {
+            if (this[i].FieldName.toLowerCase() === fieldName.toLowerCase()) {
                 return true;
             }
         }
@@ -744,7 +744,7 @@ class SobyGroupByFields extends Array<SobyGroupByField> {
 
     ContainsField(fieldName: string) {
         for (var i = 0; i < this.length; i++) {
-            if (this[i].FieldName.toLowerCase() == fieldName.toLowerCase())
+            if (this[i].FieldName.toLowerCase() === fieldName.toLowerCase())
             {
                 return true;
             }
@@ -860,7 +860,7 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
     ViewName: string;
     RowLimit: number;
     ItemCount: number;
-    PageIndex: number;
+    PageIndex: number=0;
     NextPageString: string;
     NextPageExist:boolean = false;
     Filters: SobyFilters = new SobyFilters(false);
@@ -868,10 +868,10 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
     OrderByFields: SobyOrderByFields = new SobyOrderByFields();
     Arguments: SobyArguments = new SobyArguments();
     Headers: SobyHeaders = new SobyHeaders();
-
+    constructor() { }
     GetViewField(fieldName: string) {
         for (var i = 0; i < this.SchemaFields.length; i++) {
-            if (this.SchemaFields[i].FieldName == fieldName)
+            if (this.SchemaFields[i].FieldName === fieldName)
             {
                 return this.SchemaFields[i];
             }
@@ -881,7 +881,7 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
     }
     GetViewFieldByPropertyName(propertyName: string) {
         for (var i = 0; i < this.SchemaFields.length; i++) {
-            if (this.SchemaFields[i].FieldName == propertyName)
+            if (this.SchemaFields[i].FieldName === propertyName)
             {
                 return this.SchemaFields[i];
             }
@@ -947,10 +947,8 @@ class soby_Item {
 // ********************* HELPER METHODS *****************************
 class soby_WebServiceService implements soby_ServiceInterface {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
-    DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
     constructor(dataSourceBuilder: soby_DataSourceBuilderAbstract) {
         this.DataSourceBuilder = dataSourceBuilder;
-        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
         this.NextPageStrings = new Array<string>();
         this.NextPageStrings[0] = "";
         this.Transport = new soby_Transport();
@@ -970,39 +968,42 @@ class soby_WebServiceService implements soby_ServiceInterface {
     ItemBeingPopulated = function () { };
     SetRowLimit(rowLimit: number) {
         this.DataSourceBuilder.RowLimit = rowLimit;
-        this.DataSourceBuilderTemp.RowLimit = rowLimit;
     }
     PopulateNavigationInformation() {
-        if (this.NavigationInformationBeingPopulated != null)
+        if (this.NavigationInformationBeingPopulated !== null)
         {
             this.NavigationInformationBeingPopulated();
         }
 
+        const dataSourceBuilder = this.GetQueriesAppliedDataSourceBuilder();
+
         var service = this;
+        service.DataSourceBuilder.PageIndex = this.PageIndex;
+        service.DataSourceBuilder.NextPageString = this.NextPageString;
         var requestMethod = this.Transport.Read.Type;
         var dataType = this.Transport.Read.DataType;
         var contentType = this.Transport.Read.ContentType;
 
-        var countServiceUrl = this.DataSourceBuilderTemp.GetCountQuery(this.Transport.Read);
-        if (countServiceUrl === null || countServiceUrl === "") {
-            service.NextPageExist = this.DataSourceBuilderTemp.NextPageExist;
-            service.EndIndex = service.StartIndex + this.DataSourceBuilderTemp.ItemCount;
+        var countServiceUrl = dataSourceBuilder.GetCountQuery(this.Transport.Read);
+        if (countServiceUrl === null || countServiceUrl === undefined || countServiceUrl === "") {
+            service.NextPageExist = this.DataSourceBuilder.NextPageExist;
+            service.EndIndex = service.StartIndex + this.DataSourceBuilder.ItemCount-1;
             service.NavigationInformationPopulated();
             return;
         }
 
         var data = "";
-        var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read, false);
+        var mainQuery = dataSourceBuilder.GetMainQuery(this.Transport.Read, false);
 
-        if (mainQuery != null && mainQuery != "")
+        if (mainQuery !== null && mainQuery !== "")
         {
-            if (requestMethod.toLowerCase() == "post")
+            if (requestMethod.toLowerCase() === "post")
             {
                 data = mainQuery;
             }
             else
             {
-                if (countServiceUrl.indexOf("?") == -1)
+                if (countServiceUrl.indexOf("?") === -1)
                 {
                     countServiceUrl += "?";
                 }
@@ -1014,14 +1015,12 @@ class soby_WebServiceService implements soby_ServiceInterface {
             }
         }
 
-        this.DataSourceBuilderTemp.GetData(data,
+        dataSourceBuilder.GetData(data,
             function (result) {
-                const totalItemCount = parseInt(result);
-                soby_LogMessage("Total item count:" + totalItemCount);
-
-                let startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
-                let endIndex = ((service.DataSourceBuilderTemp.PageIndex+1) * service.DataSourceBuilderTemp.RowLimit);
-                if (service.DataSourceBuilderTemp.RowLimit === 0) {
+                const totalItemCount = result.length;
+                let startIndex = (service.DataSourceBuilder.PageIndex * service.DataSourceBuilder.RowLimit) + 1;
+                let endIndex = ((service.DataSourceBuilder.PageIndex+1) * service.DataSourceBuilder.RowLimit);
+                if (service.DataSourceBuilder.RowLimit === 0) {
                     startIndex = 0;
                     endIndex = 0;
                 }
@@ -1032,7 +1031,6 @@ class soby_WebServiceService implements soby_ServiceInterface {
                     service.NextPageExist = false;
                     endIndex = totalItemCount;
                 }
-                soby_LogMessage("NextPageExist:" + service.NextPageExist);
 
                 service.StartIndex = startIndex;
                 service.EndIndex = endIndex;
@@ -1040,14 +1038,14 @@ class soby_WebServiceService implements soby_ServiceInterface {
             },
             function (XMLHttpRequest, textStatus, errorThrown) {
                 var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
-                if (service.ErrorThrown != null)
+                if (service.ErrorThrown !== null)
                 {
                     service.ErrorThrown(errorMessage, null);
                 }
 
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, countServiceUrl, service.DataSourceBuilder.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     }
     NavigationInformationBeingPopulated() { }
     NavigationInformationPopulated() { }
@@ -1069,7 +1067,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
         this.NextPageString = "";
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
-        if (clearOtherFilters == true)
+        if (clearOtherFilters === true)
         {
             this.Filters = new SobyFilters(filters.IsOr);
         }
@@ -1087,7 +1085,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
-        if (clearOtherFilters == true)
+        if (clearOtherFilters === true)
         {
             this.Filters = new SobyFilters(filters.IsOr);
         }
@@ -1100,7 +1098,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
         this.PopulateItems(null);
     }
     GoToPage(pageIndex:number) {
-        this.DataSourceBuilderTemp.PageIndex = pageIndex;
+        this.DataSourceBuilder.PageIndex = pageIndex;
         this.PageIndex = pageIndex;
 
         this.PopulateItems(null);
@@ -1114,7 +1112,7 @@ class soby_WebServiceService implements soby_ServiceInterface {
         return true;
     };
     CanNavigateToPreviousPage() {
-        if (this.DataSourceBuilderTemp.PageIndex === 0)
+        if (this.DataSourceBuilder.PageIndex === 0)
         {
             return false;
         }
@@ -1122,30 +1120,39 @@ class soby_WebServiceService implements soby_ServiceInterface {
         return true;
     };
 
+    GetQueriesAppliedDataSourceBuilder() {
+        const dataSourceBuilder = this.DataSourceBuilder.Clone();
+        for (var i = 0; i < this.GroupByFields.length; i++) {
+            dataSourceBuilder.AddOrderField(this.GroupByFields[i].FieldName, this.GroupByFields[i].IsAsc);
+
+        }
+        if (this.OrderByFields.length > 0) {
+            dataSourceBuilder.AddOrderFields(this.OrderByFields);
+        }
+
+        if (this.Filters.Filters.length > 0) {
+            dataSourceBuilder.Filters.AddFilterCollection(this.Filters);
+        }
+
+        dataSourceBuilder.PageIndex = this.PageIndex;
+        dataSourceBuilder.NextPageString = this.NextPageString;
+
+        return dataSourceBuilder;
+    }
+
     PopulateItems(args: Array<any>)
     {
         this.Args = args;
-        if (this.ItemBeingPopulated != null)
+        if (this.ItemBeingPopulated !== null)
         {
             this.ItemBeingPopulated();
         }
 
-        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
-        for (var i = 0; i < this.GroupByFields.length; i++) {
-            this.DataSourceBuilderTemp.AddOrderField(this.GroupByFields[i].FieldName, this.GroupByFields[i].IsAsc);
-
-        }
-        if (this.OrderByFields.length > 0)
-        {
-            this.DataSourceBuilderTemp.AddOrderFields(this.OrderByFields);
-        }
-
-        if (this.Filters.Filters.length > 0) {
-            this.DataSourceBuilderTemp.Filters.AddFilterCollection(this.Filters);
-        }
-
-        this.DataSourceBuilderTemp.PageIndex = this.PageIndex;
-        this.DataSourceBuilderTemp.NextPageString = this.NextPageString;
+        soby_LogMessage("this.DataSourceBuilder.PageIndex:" + this.DataSourceBuilder.PageIndex);
+        soby_LogMessage("this.DataSourceBuilder.RowLimit:" + this.DataSourceBuilder.RowLimit);
+        const dataSourceBuilder = this.GetQueriesAppliedDataSourceBuilder();
+        soby_LogMessage("dataSourceBuilder.PageIndex:" + dataSourceBuilder.PageIndex);
+        soby_LogMessage("dataSourceBuilder.RowLimit:" + dataSourceBuilder.RowLimit);
 
         var service = this;
         var serviceUrl = this.Transport.Read.Url;
@@ -1153,15 +1160,15 @@ class soby_WebServiceService implements soby_ServiceInterface {
         var dataType = this.Transport.Read.DataType;
         var contentType = this.Transport.Read.ContentType;
         var data = "";
-        var mainQuery = service.DataSourceBuilderTemp.GetMainQuery(this.Transport.Read, false);
-        if (mainQuery != null && mainQuery != "")
+        var mainQuery = dataSourceBuilder.GetMainQuery(this.Transport.Read, false);
+        if (mainQuery !== null && mainQuery !== "")
         {
-            if (requestMethod.toLowerCase() == "post")
+            if (requestMethod.toLowerCase() === "post")
             {
                 data = mainQuery;
             }
             else {
-                if (serviceUrl.indexOf("?") == -1)
+                if (serviceUrl.indexOf("?") === -1)
                 {
                     serviceUrl += "?";
                 }
@@ -1173,17 +1180,24 @@ class soby_WebServiceService implements soby_ServiceInterface {
             }
         }
         
-        this.DataSourceBuilderTemp.GetData(data,
+        dataSourceBuilder.GetData(data,
             function (result) {
                 soby_LogMessage(result);
-                var items = service.DataSourceBuilderTemp.ParseData(result);
+                var items = service.DataSourceBuilder.ParseData(result);
+                //soby_LogMessage("Total item count:" + totalItemCount);
+                soby_LogMessage("service.DataSourceBuilder.PageIndex:" + service.DataSourceBuilder.PageIndex);
+                soby_LogMessage("service.DataSourceBuilder.RowLimit:" + service.DataSourceBuilder.RowLimit);
+                soby_LogMessage("service.DataSourceBuilder.ItemCount :" + service.DataSourceBuilder.ItemCount );
+
                 soby_LogMessage(items);
 
                 soby_LogMessage(service);
 
-                var startIndex = (service.DataSourceBuilderTemp.PageIndex * service.DataSourceBuilderTemp.RowLimit) + 1;
-                var endIndex = startIndex + service.DataSourceBuilderTemp.ItemCount - 1;
-                if (service.DataSourceBuilderTemp.ItemCount == 0) {
+                var startIndex = (service.DataSourceBuilder.PageIndex * service.DataSourceBuilder.RowLimit) + 1;
+                var endIndex = startIndex + service.DataSourceBuilder.ItemCount - 1;
+                soby_LogMessage("startIndex :" + startIndex);
+                soby_LogMessage("endIndex :" + endIndex);
+                if (service.DataSourceBuilder.ItemCount === 0) {
                     startIndex = 0;
                     endIndex = 0;
                 }
@@ -1193,14 +1207,14 @@ class soby_WebServiceService implements soby_ServiceInterface {
             },
             function (XMLHttpRequest, textStatus, errorThrown) {
                 var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
-                if (service.ErrorThrown != null)
+                if (service.ErrorThrown !== null)
                 {
                     service.ErrorThrown(errorMessage, null);
                 }
 
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilderTemp.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilder.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     }
 
     Parse() {
@@ -1209,8 +1223,8 @@ class soby_WebServiceService implements soby_ServiceInterface {
 
     GetFieldNames() {
         var fieldNames = new Array();
-        for (var i = 0; i < this.DataSourceBuilderTemp.SchemaFields.length; i++) {
-            fieldNames[fieldNames.length] = { FieldName: this.DataSourceBuilderTemp.SchemaFields[i].FieldName }
+        for (var i = 0; i < this.DataSourceBuilder.SchemaFields.length; i++) {
+            fieldNames[fieldNames.length] = { FieldName: this.DataSourceBuilder.SchemaFields[i].FieldName }
         }
 
         return fieldNames;
@@ -1283,13 +1297,13 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
             builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
         }
 
-        builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
+        builder.Arguments = this.Arguments !== null ? this.Arguments.Clone() : null;
 
         return builder;
     }
 
     GetPagingQuery(transport: soby_TransportRequest) {
-        if (transport.Type == "POST")
+        if (transport.Type === "POST")
         {
             return "'pageIndex': " + this.PageIndex + "," + "'pageItemCount': " + this.RowLimit;
         }
@@ -1298,7 +1312,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         }
     }
     GetViewFieldsQuery(transport: soby_TransportRequest) {
-        if (transport.Type == "POST")
+        if (transport.Type === "POST")
         {
             return this.SchemaFields.toWebAPIString();
         }
@@ -1310,24 +1324,24 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
     GetOrderByFieldsQuery(transport: soby_TransportRequest) {
         var jsonString = "";
         for (var i = 0; i < this.OrderByFields.length; i++) {
-            jsonString += this.OrderByFields[i].FieldName + " " + (this.OrderByFields[i].IsAsc == true ? "asc" : "desc") + ",";
+            jsonString += this.OrderByFields[i].FieldName + " " + (this.OrderByFields[i].IsAsc === true ? "asc" : "desc") + ",";
         }
 
-        if (jsonString != "")
+        if (jsonString !== "")
         {
             jsonString = jsonString.substr(0, jsonString.length - 1);
         }
 
-        if (transport.Type == "POST")
+        if (transport.Type === "POST")
         {
-            if (jsonString == "")
+            if (jsonString === "")
             {
                 jsonString = "null";
             }
 
             jsonString = "'orderByString': \"" + jsonString + "\"";
         }
-        else if (jsonString != "")
+        else if (jsonString !== "")
         {
             jsonString = "$orderby=" + jsonString;
         }
@@ -1336,12 +1350,12 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
     }
     GetWhereQuery(transport: soby_TransportRequest) {
         var query = "";
-        if (transport.Type == "POST") {
+        if (transport.Type === "POST") {
             query = this.Filters.ToJson();
         }
         else {
             query = this.Filters.ToQueryString(0);
-            if (query != "")
+            if (query !== "")
             {
                 query = "$filter=" + query;
             }
@@ -1355,36 +1369,36 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         var whereQuery = this.GetWhereQuery(transport);
         var orderByFieldsQuery = this.GetOrderByFieldsQuery(transport);
         var pagingQuery = "";
-        if (excludePagingQuery == false)
+        if (excludePagingQuery === false)
         {
             pagingQuery = this.GetPagingQuery(transport);
         }
 
-        if (transport.Type == "POST")
+        if (transport.Type === "POST")
         {
-            if (excludePagingQuery == true)
+            if (excludePagingQuery === true)
             {
                 pagingQuery = "''";
             }
 
-            return "{" + (whereQuery != "" ? whereQuery + ", " : "") + (orderByFieldsQuery != "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
+            return "{" + (whereQuery !== "" ? whereQuery + ", " : "") + (orderByFieldsQuery !== "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
         }
         else {
             var envelope = whereQuery;
-            if (envelope != "" && selectFieldsEnvelope != "")
+            if (envelope !== "" && selectFieldsEnvelope !== "")
             {
                 envelope += "&";
             }
 
             envelope += selectFieldsEnvelope;
 
-            if (envelope != "" && orderByFieldsQuery != "")
+            if (envelope !== "" && orderByFieldsQuery !== "")
             {
                 envelope += "&";
             }
 
             envelope += orderByFieldsQuery;
-            if (envelope != "" && pagingQuery != "")
+            if (envelope !== "" && pagingQuery !== "")
             {
                 envelope += "&";
             }
@@ -1397,7 +1411,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         this.CountQueryBeingGenerated();
         var mainQuery = this.GetMainQuery(transport, true);
         var countServiceUrl = transport.Url + "/$count?" + mainQuery;
-        if (transport.Type == "POST") {
+        if (transport.Type === "POST") {
             return "{" + mainQuery + "}";
         }
         else {
@@ -1408,11 +1422,11 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         var result = (result.value !=null?result.value:result);
         for (var i = 0; i < result.length; i++) {
             for (var x = 0; x < this.SchemaFields.length; x++) {
-                if (this.SchemaFields[x].FieldType == SobyFieldTypes.DateTime)
+                if (this.SchemaFields[x].FieldType === SobyFieldTypes.DateTime)
                 {
                     var propertyName = this.SchemaFields[x].FieldName;
                     var value = result[i][propertyName];
-                    if (value != null && value != "")
+                    if (value !== null && value !== "")
                     {
                         result[i][propertyName] = new Date(value.match(/\d+/)[0] * 1);
                     }
@@ -1425,12 +1439,12 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         if (requestMethod === null || requestMethod === "") {
             requestMethod = "POST";
         }
-        if (includeCredentials == null) {
+        if (includeCredentials === null) {
             includeCredentials = false;
         }
 
         $.ajax({
-            async: (async != null ? async : true),
+            async: (async !== null ? async : true),
             url: wsUrl,
             type: requestMethod,
             dataType: dataType,
@@ -1450,7 +1464,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
             },
             success: function (data) {
                 var data = data;
-                if (data.d != null)
+                if (data.d !== null)
                 {
                     data = data.d;
                 }
@@ -1461,7 +1475,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
                 }
             },
             beforeSend: function (xhr) {
-                if (headers == null)
+                if (headers === null)
                 {
                     return;
                 }
@@ -1487,7 +1501,7 @@ class soby_StaticDataService implements soby_ServiceInterface {
             dataSourceBuilder.AddSchemaField(fields[i].FieldName, fields[i].FieldType, fields[i].Args);
         }
         this.DataSourceBuilder = dataSourceBuilder;
-        this.DataSourceBuilderTemp = this.DataSourceBuilder.Clone();
+        this.DataSourceBuilder = this.DataSourceBuilder.Clone();
         this.NextPageStrings = new Array<string>();
         this.NextPageStrings[0] = "";
     }
@@ -1520,7 +1534,6 @@ class soby_StaticDataService implements soby_ServiceInterface {
     ItemDeleted(args) { }
     SetRowLimit(rowLimit:number) {
         this.DataSourceBuilder.RowLimit = rowLimit;
-        this.DataSourceBuilderTemp.RowLimit = rowLimit;
     }
 
     PopulateNavigationInformation() {
@@ -1530,9 +1543,9 @@ class soby_StaticDataService implements soby_ServiceInterface {
         }
 
         const totalItemCount = this.Items.length;
-        let startIndex = (this.DataSourceBuilderTemp.PageIndex * this.DataSourceBuilderTemp.RowLimit) + 1;
-        let endIndex = ((this.DataSourceBuilderTemp.PageIndex + 1) * this.DataSourceBuilderTemp.RowLimit);
-        if (this.DataSourceBuilderTemp.RowLimit === 0) {
+        let startIndex = (this.DataSourceBuilder.PageIndex * this.DataSourceBuilder.RowLimit) + 1;
+        let endIndex = ((this.DataSourceBuilder.PageIndex + 1) * this.DataSourceBuilder.RowLimit);
+        if (this.DataSourceBuilder.RowLimit === 0) {
             startIndex = 0;
             endIndex = 0;
         }
@@ -1564,7 +1577,7 @@ class soby_StaticDataService implements soby_ServiceInterface {
         this.NextPageString = "";
         this.NextPageStrings = new Array();
         this.NextPageStrings[0] = "";
-        if (clearOtherFilters == true)
+        if (clearOtherFilters === true)
         {
             this.Filters = new SobyFilters(filters.IsOr);
         }
@@ -1593,7 +1606,7 @@ class soby_StaticDataService implements soby_ServiceInterface {
     }
 
     GoToPage(pageIndex: number) {
-        this.DataSourceBuilderTemp.PageIndex = pageIndex;
+        this.DataSourceBuilder.PageIndex = pageIndex;
         this.PageIndex = pageIndex;
 
         this.PopulateItems(null);
@@ -1606,7 +1619,7 @@ class soby_StaticDataService implements soby_ServiceInterface {
         return true;
     };
     CanNavigateToPreviousPage() {
-        if (this.DataSourceBuilderTemp.PageIndex === 0) {
+        if (this.DataSourceBuilder.PageIndex === 0) {
             return false;
         }
 
@@ -1618,8 +1631,8 @@ class soby_StaticDataService implements soby_ServiceInterface {
         {
             this.ItemBeingPopulated();
         }
-        this.DataSourceBuilderTemp.PageIndex = this.PageIndex;
-        this.DataSourceBuilderTemp.NextPageString = this.NextPageString;
+        this.DataSourceBuilder.PageIndex = this.PageIndex;
+        this.DataSourceBuilder.NextPageString = this.NextPageString;
 
         var items = JSON.parse(JSON.stringify(this.Items));
         if (this.Filters.Filters.length > 0) {
@@ -1759,13 +1772,13 @@ class soby_StaticDataService implements soby_ServiceInterface {
         for (var i = 0; i < this.Items.length; i++) {
             var matchItem = true;
             for (var x = 0; x < keyNames.length; x++) {
-                if (this.Items[i][keyNames[x]] != keyValues[keyNames[x]]) {
+                if (this.Items[i][keyNames[x]] !== keyValues[keyNames[x]]) {
                     matchItem = false;
                     break;
                 }
             }
 
-            if (matchItem == true)
+            if (matchItem === true)
             {
                 this.Items[i] = objectInstance;
             }
@@ -1777,13 +1790,13 @@ class soby_StaticDataService implements soby_ServiceInterface {
         for (var i = this.Items.length - 1; i > -1; i--) {
             var isAllEqual = true;
             for (var t = 0; t < keyNames.length; t++) {
-                if (this.Items[i][keyNames[t]] != keyValues[t])
+                if (this.Items[i][keyNames[t]] !== keyValues[t])
                 {
                     isAllEqual = false;
                 }
             }
 
-            if (isAllEqual == false)
+            if (isAllEqual === false)
             {
                 newArray[newArray.length] = this.Items[i];
             }
@@ -1819,8 +1832,13 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
 
     Clone() {
         var builder = new soby_WSBuilder();
+        for (var attribut in this) {
+            if (typeof this[attribut] === "function")
+                builder[attribut.toString()] = this[attribut];
+        }
         builder.RowLimit = this.RowLimit;
         builder.PageIndex = this.PageIndex;
+        builder.NextPageExist = this.NextPageExist;
 
         for (var i = 0; i < this.SchemaFields.length; i++) {
             var viewField = this.SchemaFields[i];
@@ -1839,7 +1857,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
             builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
         }
 
-        if (this.Arguments != null) {
+        if (this.Arguments !== null) {
             builder.Arguments = new SobyArguments();
             for (var i = 0; i < this.Arguments.length; i++) {
                 var argument = this.Arguments[i];
@@ -1859,10 +1877,10 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
 
     GetPagingQuery(transport: soby_TransportRequest)
     {
-        if (this.WebServiceDataTypes == SobyWebServiceDataTypes.Soap)
+        if (this.WebServiceDataTypes === SobyWebServiceDataTypes.Soap)
         {
         }
-        else if (transport.Type == "POST")
+        else if (transport.Type === "POST")
         {
             return "'pageIndex': " + this.PageIndex + "," + "'pageItemCount': " + this.RowLimit;
         }
@@ -1879,7 +1897,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
         }
     }
     GetViewFieldsQuery(transport: soby_TransportRequest) {
-        if (transport.Type == "POST")
+        if (transport.Type === "POST")
         {
             return this.SchemaFields.toWebAPIString();
         }
@@ -1891,24 +1909,24 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
     GetOrderByFieldsQuery(transport: soby_TransportRequest) {
         var jsonString = "";
         for (var i = 0; i < this.OrderByFields.length; i++) {
-            jsonString += this.OrderByFields[i].FieldName + " " + (this.OrderByFields[i].IsAsc == true ? "asc" : "desc") + ",";
+            jsonString += this.OrderByFields[i].FieldName + " " + (this.OrderByFields[i].IsAsc === true ? "asc" : "desc") + ",";
         }
 
-        if (jsonString != "")
+        if (jsonString !== "")
         {
             jsonString = jsonString.substr(0, jsonString.length - 1);
         }
 
-        if (transport.Type == "POST")
+        if (transport.Type === "POST")
         {
-            if (jsonString == "")
+            if (jsonString === "")
             {
                 jsonString = "null";
             }
 
             jsonString = "'orderByString': \"" + jsonString + "\"";
         }
-        else if (jsonString != "")
+        else if (jsonString !== "")
         {
             jsonString = "$orderby=" + jsonString;
         }
@@ -1917,16 +1935,16 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
     }
     GetWhereQuery(transport: soby_TransportRequest) {
         var query = "";
-        if (this.WebServiceDataTypes == SobyWebServiceDataTypes.Soap)
+        if (this.WebServiceDataTypes === SobyWebServiceDataTypes.Soap)
         {
             query = this.Filters.ToXml();
         }
-        if (transport.Type == "POST") {
+        if (transport.Type === "POST") {
             query = this.Filters.ToJson();
         }
         else {
             query = this.Filters.ToQueryString(0);
-            if (query != "")
+            if (query !== "")
             {
                 query = "$filter=" + query;
             }
@@ -1936,7 +1954,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
     GetMainQuery(transport: soby_TransportRequest, excludePagingQuery: boolean)
     {
         this.MainQueryBeingGenerated();
-        if (this.WebServiceDataTypes == SobyWebServiceDataTypes.Soap)
+        if (this.WebServiceDataTypes === SobyWebServiceDataTypes.Soap)
         {
             var envelope = "<?xml version= '1.0' encoding= 'utf-8' ?>" +
                 "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>" +
@@ -1955,35 +1973,35 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
         var whereQuery = this.GetWhereQuery(transport);
         var orderByFieldsQuery = this.GetOrderByFieldsQuery(transport);
         var pagingQuery = "";
-        if (excludePagingQuery == false)
+        if (excludePagingQuery === false)
         {
             pagingQuery = this.GetPagingQuery(transport);
         }
 
-        if (transport.Type == "POST")
+        if (transport.Type === "POST")
         {
-            if (excludePagingQuery == true)
+            if (excludePagingQuery === true)
             {
                 pagingQuery = "''";
             }
 
-            return "{" + (whereQuery != "" ? whereQuery + ", " : "") + (orderByFieldsQuery != "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
+            return "{" + (whereQuery !== "" ? whereQuery + ", " : "") + (orderByFieldsQuery !== "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
         }
         else {
             var envelope = whereQuery;
-            if (envelope != "" && selectFieldsEnvelope != "")
+            if (envelope !== "" && selectFieldsEnvelope !== "")
             {
                 envelope += "&";
             }
 
             envelope += selectFieldsEnvelope;
-            if (envelope != "" && orderByFieldsQuery != "")
+            if (envelope !== "" && orderByFieldsQuery !== "")
             {
                 envelope += "&";
             }
 
             envelope += orderByFieldsQuery;
-            if (envelope != "" && pagingQuery != "")
+            if (envelope !== "" && pagingQuery !== "")
             {
                 envelope += "&";
             }
@@ -1994,13 +2012,13 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
     }
     GetCountQuery(transport: soby_TransportRequest)
     {
-        if (this.CountQuerySupported == false)
+        if (this.CountQuerySupported === false)
             return "";
 
         this.CountQueryBeingGenerated();
         var mainQuery = this.GetMainQuery(transport, true);
         var countServiceUrl = transport.Url + "/$count?";// + mainQuery;
-        if (transport.Type == "POST") {
+        if (transport.Type === "POST") {
             return "{" + mainQuery + "}";
         }
         else {
@@ -2009,22 +2027,22 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
     }
     ParseData(result1)
     {
-        var result = (result1.value != null ? result1.value : result1);
+        var result = ((result1.value !== null && result1.value !== undefined) ? result1.value : result1);
         var parseCompleted:boolean = false;
         result = this.DataBeingParsed(result, parseCompleted);
 
-        if (parseCompleted == false) {
+        if (parseCompleted === false) {
             for (var i = 0; i < result.length; i++) {
                 for (var x = 0; x < this.SchemaFields.length; x++) {
-                    if (this.SchemaFields[x].FieldType == SobyFieldTypes.DateTime) {
+                    if (this.SchemaFields[x].FieldType === SobyFieldTypes.DateTime) {
                         var propertyName = this.SchemaFields[x].FieldName;
                         var value = result[i][propertyName];
-                        if (value != null) {
-                            if (value instanceof Date == true) {
+                        if (value !== null) {
+                            if (value instanceof Date === true) {
                                 result[i][propertyName] = value;
                             }
-                            else if (value != "") {
-                                if (value.indexOf("20") == 0 || value.indexOf("19") == 0) {
+                            else if (value !== "") {
+                                if (value.indexOf("20") === 0 || value.indexOf("19") === 0) {
                                     result[i][propertyName] = new Date(value);
                                 }
                                 else {
@@ -2040,21 +2058,21 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
         return result;
     }
     GetData(data, callback, errorcallback, completecallback, async, wsUrl, headers, requestMethod, dataType, contentType, includeCredentials) {
-        if (requestMethod == null || requestMethod == "")
+        if (requestMethod === null || requestMethod === "")
         {
             requestMethod = "POST";
         }
-        if (contentType == null || contentType == "")
+        if (contentType === null || contentType === "")
         {
             contentType = "application/json; charset=utf-8";
         }
 
-        if (requestMethod == "GET") {
+        if (requestMethod === "GET") {
             contentType = "";
         }
 
         $.ajax({
-            async: (async != null ? async : true),
+            async: (async !== null ? async : true),
             url: wsUrl,
             type: requestMethod,
             dataType: dataType,
@@ -2076,12 +2094,12 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
             {
                 sobyLastReturnData = data;
                 var data = data;
-                if (data.d != null)
+                if (data.d !== null && data.d !== undefined)
                 {
                     data = data.d;
                 }
 
-                if (data.results != null)
+                if (data.results !== null && data.results !== undefined)
                 {
                     data = data.results;
                 }
@@ -2092,7 +2110,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
                 }
             },
             beforeSend: function (xhr) {
-                if (headers == null)
+                if (headers === null)
                 {
                     return;
                 }
@@ -2182,7 +2200,7 @@ function soby_DateFromISO(d) {
 }
 function soby_GetFormatedDateString(date) {
     var dateOptions = { year: "numeric", month: "short", day: "numeric" };
-    return (date != null ? date.toLocaleDateString("en-gb", dateOptions) : "")
+    return (date !== null ? date.toLocaleDateString("en-gb", dateOptions) : "")
 }
 function soby_GetDateWithFormat(dateString, format): Date {
     var delimiter:string = "";
@@ -2199,7 +2217,7 @@ function soby_GetDateWithFormat(dateString, format): Date {
         delimiter = "-";
     }
 
-    if (delimiter == "")
+    if (delimiter === "")
         return null;
 
     var formatLowerCase:string = format.toLowerCase();
@@ -2209,11 +2227,11 @@ function soby_GetDateWithFormat(dateString, format): Date {
     var dayIndex = formatItems.indexOf("dd");
     var yearIndex = formatItems.indexOf("yyyy");
 
-    if (dayIndex == -1)
+    if (dayIndex === -1)
         return null;
-    if (monthIndex == -1)
+    if (monthIndex === -1)
         return null;
-    if (yearIndex == -1)
+    if (yearIndex === -1)
         return null;
 
     var d = dateItems[dayIndex];
@@ -2221,4 +2239,12 @@ function soby_GetDateWithFormat(dateString, format): Date {
     var formatedDate: Date = new Date(dateItems[yearIndex], month, d);
     return formatedDate;
 };
+
+function soby_TicksFromDate(date): number {
+    return ((date.getTime() * 10000) + 621355968000000000);
+}
+
+function soby_DateFromTicks(ticks): Date {
+    return new Date((ticks - 621355968000000000)/10000);
+}
 // ************************************************************

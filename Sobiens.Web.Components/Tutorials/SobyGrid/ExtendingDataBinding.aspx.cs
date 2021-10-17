@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Sobiens.Web.Components.Tutorials.SobyRangeSelection
+namespace Sobiens.Web.Components.Tutorials.SobyGrid
 {
-    public partial class GettingStarted : System.Web.UI.Page
+    public partial class ExtendingDataBinding : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

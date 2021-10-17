@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Sobiens.Web.Components.Tutorials.SobyRangeSelection
+namespace Sobiens.Web.Components.Tutorials.SobyGrid
 {
     public partial class GettingStarted : System.Web.UI.Page
     {

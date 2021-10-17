@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="SPDataBinding.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.SPDataBinding" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="SPDataBinding.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.SPDataBinding" Title="DataGrid - SP Data Binding Implementation" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 

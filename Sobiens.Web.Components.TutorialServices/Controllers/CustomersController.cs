@@ -18,7 +18,7 @@ namespace Sobiens.Web.Components.TutorialServices.Controllers
             ServiceResult<List<Customer>> result = new ServiceResult<List<Customer>>(null);
 
             List<Customer> customers = db.Customers.ToList();
-
+            int skipCount = pageIndex * pageItemCount;
             if (string.IsNullOrEmpty(sort) == false)
             {
                 string[] sortsValues = sort.Split(new char[] { ',' });
@@ -39,7 +39,10 @@ namespace Sobiens.Web.Components.TutorialServices.Controllers
                         customers = customers.OrderByDescending(x => propertyInfo.GetValue(x, null)).ToList();
                 }
             }
+            result.TotalItemCount = customers.Count;
+            customers = customers.Skip(skipCount).Take(pageItemCount).ToList();
 
+            result.NextPageExist = result.TotalItemCount > ((pageIndex + 1) * pageItemCount) ? true : false;
             result.Data = customers;
             result.Succeed = true;
             return result;

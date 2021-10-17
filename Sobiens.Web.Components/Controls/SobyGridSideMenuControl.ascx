@@ -16,6 +16,7 @@
             <li><a href="/Tutorials/SobyGrid/StaticDataBinding.aspx">Static Data Binding</a></li>
             <li><a href="/Tutorials/SobyGrid/WebAPIOData.aspx">Web API and OData Implementation</a></li>
             <li><a href="/Tutorials/SobyGrid/SPDataBinding.aspx">SP Data Binding</a></li>
+            <li><a href="/Tutorials/SobyGrid/ExtendingDataBinding.aspx">Extending Data Binding</a></li>
             <li><a href="/Tutorials/SobyGrid/CustomDataBinding.aspx">Custom Data Binding</a></li>
         </ul></li>
     <li><a href="/Tutorials/SobyGrid/RefreshData.aspx">Refresh Data</a></li>
@@ -34,7 +35,7 @@
     <li><a href="/Tutorials/SobyGrid/NestedGrids.aspx">Nested Grids</a></li>
     <li><a href="/Tutorials/SobyGrid/Master-Details.aspx">Master-Details</a></li>
     <li style="display:none"><a href="/Tutorials/SobyGrid/ContextMenu.aspx">Context Menu</a></li>
-    <li style="display:none"><a href="/Tutorials/SobyGrid/KeyboardNavigation.aspx">Keyboard Navigation</a></li>
+    <li><a href="/Tutorials/SobyGrid/KeyboardNavigation.aspx">Keyboard Navigation</a></li>
     <li><a href="/Tutorials/SobyGrid/Themes.aspx">Themes</a></li>
     <li>Labs<ul><li><a href="/Tutorials/SobyGrid/Customer Orders.aspx">Customer Orders</a></li></ul></li>
 </ul>

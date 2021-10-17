@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Sorting.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Sorting" Title="Grid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Sorting.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Sorting" Title="DataGrid - Sorting Example" %>
 
 <%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 

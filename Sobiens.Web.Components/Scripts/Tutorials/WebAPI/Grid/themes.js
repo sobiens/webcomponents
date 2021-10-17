@@ -9,6 +9,7 @@ function soby_PopulateGridThemes() {
     bookDataSourceBuilder.AddSchemaField("Year", SobyFieldTypes.Number, null);
     bookDataSourceBuilder.AddSchemaField("Price", SobyFieldTypes.Number, null);
     bookDataSourceBuilder.AddSchemaField("Genre", SobyFieldTypes.Text, null);
+    bookDataSourceBuilder.RowLimit = 3;
     var bookService = new soby_WebServiceService(bookDataSourceBuilder);
     bookService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
     var bookGrid = new soby_WebGrid("#soby_BooksDiv", "Books", bookService, "There is no record found.");

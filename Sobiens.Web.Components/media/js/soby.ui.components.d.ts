@@ -1179,6 +1179,64 @@ declare class SobyItemSelectorTypeObject {
 declare let SobyItemSelectorTypes: SobyItemSelectorTypeObject;
 declare function soby_GetItemSelectionByContentDivSelector(contentDivSelector: any): soby_ItemSelection;
 declare function soby_GetAllItemSelections(): any[];
+declare enum SobyRangeSelectionViewTypes {
+    NumericRange = 0,
+    DateRange = 1
+}
+declare let soby_RangeSelections: any[];
+declare class soby_RangeSelection {
+    constructor(contentDivSelector: any, title: any, viewType: SobyRangeSelectionViewTypes, width: number, height: number, startValue: any, endValue: any, minorRangeInterval: any, minorRangeCountInAMajorRange: any, selectedRange: any);
+    RangeSelectionID: string;
+    RangeSelectionTooltipID: string;
+    ViewType: number;
+    Title: string;
+    ContentDivSelector: string;
+    Width: number;
+    Height: number;
+    PaddingLeft: number;
+    PaddingRight: number;
+    PaddingBottom: number;
+    PaddingTop: number;
+    LabelHeight: number;
+    RangeBarHeight: number;
+    SelectedRangeBarHeight: number;
+    AdditionalLabelSectionHeight: number;
+    StartNumericValue: number;
+    EndNumericValue: number;
+    MinorRangeInterval: any;
+    MinorRangeCountInAMajorRange: any;
+    MinimumValue: any;
+    MaximumValue: any;
+    PageItemCount: any;
+    SelectedRange: any;
+    DragDirection: string;
+    IsBeingDragged: boolean;
+    MonthNames: Array<string>;
+    EnsureRangeSelectionsExistency(): void;
+    RePaint(): void;
+    Clear(): void;
+    Initialize(): void;
+    HandleMouseDown(e: MouseEvent): void;
+    HandleMouseUp(e: MouseEvent): void;
+    HandleMouseMove(e: MouseEvent): void;
+    CheckMouseHitSelectedRangeLeftResize(x: number, y: number): boolean;
+    CheckMouseHitSelectedRangeRightResize(x: number, y: number): boolean;
+    CheckMouseHitSelectedRange(x: number, y: number): boolean;
+    RePaintOnMouseMove(offsetX: number, mouseUp: boolean): void;
+    DrawPane(): void;
+    GetValueLabel(value: number): string;
+    GetContext(): any;
+    GetCanvas(): any;
+    GetTooltipContext(): any;
+    GetTooltipCanvas(): any;
+    DrawSelectedRange(): void;
+    GetRangeItemCount(): number;
+    GetRangeValueWidth(): number;
+    GetValueFromOffsetX(offsetX: any): number;
+    GetOffsetXFromValue(value: any): number;
+    GetSelectedRangeLeft(): number;
+    GetSelectedRangeRight(): number;
+}
 declare class soby_ItemSelection {
     constructor(contentDivSelector: any, title: any, itemSelectorType: number, autoCompleteDataService: any, advancedSearchDataService: any, advancedSearchChildrenDataService: any, emptyDataHtml: any, dialogID: any, selectorUrl: any, valueFieldName: any, textFieldName: any, parentFieldName: any);
     ItemSelectorType: number;
