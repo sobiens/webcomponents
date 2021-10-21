@@ -6,6 +6,7 @@
     <li><a href="/Tutorials/SobyChart/ColumnChart.aspx">Column Chart</a></li>
     <li><a href="/Tutorials/SobyChart/LineChart.aspx">Line Chart</a></li>
     <li><a href="/Tutorials/SobyChart/PieChart.aspx">Pie Chart</a></li>
+    <li><a href="/Tutorials/SobyChart/DoughnutChart.aspx">Doughnut Chart</a></li>
     <li><a href="/Tutorials/SobyChart/BarChart.aspx">Bar Chart</a></li>
 <%--    <li><a href="/Tutorials/SobyChart/RadarChart.aspx">Radar Chart</a></li>--%>
    <li><a href="/Tutorials/SobyChart/PolarAreaChart.aspx">Polar Area Chart</a></li>

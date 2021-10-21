@@ -834,6 +834,7 @@
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CalendarView\calendarview.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\columnchart.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\doughnutchart.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\piechart.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\radarchart.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\polarareachart.ts" />
@@ -860,6 +861,7 @@
     <Content Include="sitemap.xml" />
     <Content Include="Tutorials\SobyCalendarView\Getting Started.aspx" />
     <Content Include="Tutorials\SobyChart\ColumnChart.aspx" />
+    <Content Include="Tutorials\SobyChart\DoughnutChart.aspx" />
     <Content Include="Tutorials\SobyChart\PolarAreaChart.aspx" />
     <Content Include="Tutorials\SobyChart\RadarChart.aspx" />
     <Content Include="Tutorials\SobyChart\PieChart.aspx" />
@@ -876,6 +878,7 @@
     <Content Include="Tutorials\SobyGrid\ActionBar.aspx" />
     <Content Include="Tutorials\SobyGrid\Cell Styles.aspx" />
     <Content Include="Tutorials\SobyGrid\CustomDataBinding.aspx" />
+    <Content Include="Tutorials\SobyGrid\Sales Report Sample.aspx" />
     <Content Include="Tutorials\SobyGrid\ResponsiveDesign.aspx" />
     <Content Include="Tutorials\SobyGrid\ExportToExcel.aspx" />
     <Content Include="Tutorials\SobyGrid\RefreshData.aspx" />
@@ -1218,6 +1221,13 @@
     <Compile Include="Tutorials\SobyChart\ColumnChart.aspx.designer.cs">
       <DependentUpon>ColumnChart.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tutorials\SobyChart\DoughnutChart.aspx.cs">
+      <DependentUpon>DoughnutChart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\DoughnutChart.aspx.designer.cs">
+      <DependentUpon>DoughnutChart.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tutorials\SobyChart\PolarAreaChart.aspx.cs">
       <DependentUpon>PolarAreaChart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1336,6 +1346,13 @@
     </Compile>
     <Compile Include="Tutorials\SobyGrid\CustomDataBinding.aspx.designer.cs">
       <DependentUpon>CustomDataBinding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Sales Report Sample.aspx.cs">
+      <DependentUpon>Sales Report Sample.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\Sales Report Sample.aspx.designer.cs">
+      <DependentUpon>Sales Report Sample.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\ResponsiveDesign.aspx.cs">
       <DependentUpon>ResponsiveDesign.aspx</DependentUpon>

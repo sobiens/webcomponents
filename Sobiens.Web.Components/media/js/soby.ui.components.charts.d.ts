@@ -43,15 +43,19 @@ declare class soby_Chart implements soby_ChartInterface {
     SeriesVerticalAligment: SobyChartVerticalAligment;
     SeriesHorizontalAligment: SobyChartHorizontalAligment;
     Colours: Array<string>;
+    MouseOverDotIndex: number;
     CalculatedValues: soby_ChartCalculatedValues;
     constructor(type: SobyChartTypes, contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
     GetContext(): any;
     GetCanvas(): any;
-    GetTooltipContext(): any;
-    GetTooltipCanvas(): any;
+    GetTooltipContainer(): any;
     EnsureItemSelectionExistency(): void;
+    RenderTooltip(tooltipContainer: any, dataItem: any, x: any, y: any): void;
+    TransformLightenDarkenColor(col: any, amt: any): string;
+    RestoreDotColours(): void;
+    SetMouseOverColour(mouseOverDotIndex: number): void;
     HandleMouseMove(e: MouseEvent): void;
-    CheckMouseHit(mouseX: number, mouseY: number, dot: soby_ChartDotValue): boolean;
+    CheckMouseHit(mouseX: number, mouseY: number, dot: soby_ChartDotValue): any;
     RoundedRect(x: any, y: any, width: any, height: any, color: any, radius: any): void;
     Initialize(): void;
     PopulateItems(): void;
@@ -66,19 +70,16 @@ declare class soby_Chart implements soby_ChartInterface {
 declare class soby_LineChart extends soby_Chart {
     constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
     PopulateItems(): void;
-    CheckMouseHit(mouseX: number, mouseY: number, dot: soby_ChartDotValue): boolean;
 }
 declare class soby_ColumnChart extends soby_Chart {
     ColumnWidth: number;
     constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
     PopulateItems(): void;
-    CheckMouseHit(mouseX: number, mouseY: number, dot: soby_ChartDotValue): boolean;
 }
 declare class soby_BarChart extends soby_Chart {
     BarHeight: number;
     constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
     PopulateItems(): void;
-    CheckMouseHit(mouseX: number, mouseY: number, dot: soby_ChartDotValue): boolean;
 }
 declare class soby_RadarChart extends soby_Chart {
     constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
@@ -91,6 +92,9 @@ declare class soby_PieChart extends soby_Chart {
     PopulateItems(): void;
 }
 declare class soby_PolarAreaChart extends soby_PieChart {
+    constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
+}
+declare class soby_DoughnutChart extends soby_PieChart {
     constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
 }
 declare class soby_SeriesPanel {
@@ -116,11 +120,13 @@ declare class soby_ChartDotValue {
     Value: number;
     DatasetTitle: string;
     Colour: string;
+    CurrentColour: string;
     X: number;
     Y: number;
     r: number;
     rXr: number;
-    constructor(label: string, value: number, datasetTitle: string, colour: string, x: number, y: number, r: number, rXr: number);
+    Path2D: Path2D;
+    constructor(label: string, value: number, datasetTitle: string, colour: string, x: number, y: number, r: number, rXr: number, path2D: any);
 }
 declare enum SobyChartTypes {
     LineChart = 0,
@@ -128,7 +134,8 @@ declare enum SobyChartTypes {
     RadarChart = 2,
     PieChart = 3,
     PolarAreaChart = 4,
-    ColumnChart = 5
+    ColumnChart = 5,
+    DoughnutChart = 6
 }
 declare enum SobyChartElementPosition {
     Left = 0,

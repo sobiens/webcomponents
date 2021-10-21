@@ -25,12 +25,11 @@
             <div class='soby_CodeDiv'>
                 <div class="htmlcode">&lt;div id='fruittable'&gt;&lt;/div&gt;</div>
                 <div class="csscode">.fruit { color:red; }</div>
-                <div class="jscode">var fruits = ["Banana", "Orange", "Apple", "Mango"];
-document.getElementById("fruittable").innerHTML = "";
+                <div class="jscode">document.getElementById("fruittable").innerHTML = "";
 for(var i=0;i&lt;fruits.length;i++){
     document.getElementById("fruittable").innerHTML += '&lt;div class="fruit"&gt;' + fruits[i] + '&lt;/div&gt;';
 }
-</div><div class="codedescription">This example displays all array values</div><div class="resultdescription"></div></div>
+</div><div class="datacode">var fruits = ["Banana", "Orange", "Apple", "Mango"];</div><div class="codedescription">This example displays all array values</div><div class="resultdescription"></div></div>
         <a href="javascript:void(0)" onclick="soby_ShowHideViewSource()">
             <img src="/Images/viewsource.png" border="0" width="20px" /> View source
         </a>

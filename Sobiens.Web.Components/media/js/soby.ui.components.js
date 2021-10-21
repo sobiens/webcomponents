@@ -4418,8 +4418,6 @@ var soby_RangeSelection = /** @class */ (function () {
     soby_RangeSelection.prototype.HandleMouseDown = function (e) {
         e.preventDefault();
         var rangeSelection = soby_RangeSelections[eval("e.target.id")];
-        var ctx = rangeSelection.GetTooltipContext();
-        var canvas = rangeSelection.GetTooltipCanvas();
         var canvasOffset = $("#" + rangeSelection.RangeSelectionID).offset();
         var canvasOffsetX = canvasOffset.left - $(window).scrollLeft();
         var canvasOffsetY = canvasOffset.top - $(window).scrollTop();
@@ -4429,22 +4427,26 @@ var soby_RangeSelection = /** @class */ (function () {
             rangeSelection.GetCanvas().style.cursor = "e-resize";
             rangeSelection.IsBeingDragged = true;
             rangeSelection.DragDirection = "leftresize";
+            rangeSelection.RangeBeingChanged();
         }
         else if (rangeSelection.CheckMouseHitSelectedRangeRightResize(mouseX, mouseY) === true) {
             rangeSelection.GetCanvas().style.cursor = "e-resize";
             rangeSelection.IsBeingDragged = true;
             rangeSelection.DragDirection = "rightresize";
+            rangeSelection.RangeBeingChanged();
         }
         else if (rangeSelection.CheckMouseHitSelectedRange(mouseX, mouseY) === true) {
             rangeSelection.GetCanvas().style.cursor = "pointer";
             rangeSelection.IsBeingDragged = true;
             rangeSelection.DragDirection = "moveposition";
+            rangeSelection.RangeBeingChanged();
         }
     };
     soby_RangeSelection.prototype.HandleMouseUp = function (e) {
         e.preventDefault();
         var rangeSelection = soby_RangeSelections[eval("e.target.id")];
         rangeSelection.RePaintOnMouseMove(e.offsetX, true);
+        rangeSelection.RangeChanged();
     };
     soby_RangeSelection.prototype.HandleMouseMove = function (e) {
         e.preventDefault();
@@ -4460,8 +4462,6 @@ var soby_RangeSelection = /** @class */ (function () {
             }
             return;
         }
-        var ctx = rangeSelection.GetTooltipContext();
-        var canvas = rangeSelection.GetTooltipCanvas();
         var canvasOffset = $("#" + rangeSelection.RangeSelectionID).offset();
         var tooltipOffsetX = canvasOffset.left - $(window).scrollLeft();
         var tooltipOffsetY = canvasOffset.top - $(window).scrollTop();
@@ -4553,7 +4553,6 @@ var soby_RangeSelection = /** @class */ (function () {
     soby_RangeSelection.prototype.DrawPane = function () {
         var rangeItemCount = this.GetRangeItemCount();
         var rangeValueWidth = this.GetRangeValueWidth();
-        console.log("rangeItemCount:" + rangeItemCount);
         var ctx = this.GetContext();
         ctx.fillStyle = "gray";
         ctx.strokeStyle = "gray";
@@ -4592,19 +4591,22 @@ var soby_RangeSelection = /** @class */ (function () {
                     ctx.moveTo(currentX_2, this.Height - this.PaddingBottom - this.AdditionalLabelSectionHeight + 4);
                     ctx.lineTo(currentX_2, this.Height - this.PaddingBottom);
                     ctx.stroke();
-                    ctx.fillText(this.MonthNames[currentDate.getMonth()], currentX_2 + 6, this.Height - this.PaddingBottom - 4);
+                    ctx.fillText(this.MonthNames[currentDate.getMonth()] + (currentDate.getMonth() === 0 ? " " + currentDate.getFullYear() : ""), currentX_2 + 6, this.Height - this.PaddingBottom - 4);
                     if (startDate.getDate() < 25) {
                         var yesterdayOfCurrentDate = new Date(currentDate.getTime());
                         yesterdayOfCurrentDate.setDate(yesterdayOfCurrentDate.getDate() - 1);
                         if (yesterdayOfCurrentDate.getMonth() === startDate.getMonth() && yesterdayOfCurrentDate.getFullYear() === startDate.getFullYear()) {
                             var startDateX = this.GetOffsetXFromValue(this.StartNumericValue);
-                            ctx.fillText(this.MonthNames[yesterdayOfCurrentDate.getMonth()], startDateX + 4, this.Height - this.PaddingBottom - 4);
+                            ctx.fillText(this.MonthNames[yesterdayOfCurrentDate.getMonth()] + " " + yesterdayOfCurrentDate.getFullYear(), startDateX + 4, this.Height - this.PaddingBottom - 4);
                         }
                     }
                 }
                 currentDate.setDate(currentDate.getDate() + 1);
             }
         }
+    };
+    soby_RangeSelection.prototype.GetSelectedDateRanges = function () {
+        return [soby_DateFromTicks(this.SelectedRange[0]), soby_DateFromTicks(this.SelectedRange[1])];
     };
     soby_RangeSelection.prototype.GetValueLabel = function (value) {
         if (this.ViewType === SobyRangeSelectionViewTypes.DateRange) {
@@ -4683,6 +4685,8 @@ var soby_RangeSelection = /** @class */ (function () {
     soby_RangeSelection.prototype.GetSelectedRangeRight = function () {
         return this.GetOffsetXFromValue(this.SelectedRange[1]);
     };
+    soby_RangeSelection.prototype.RangeBeingChanged = function () { };
+    soby_RangeSelection.prototype.RangeChanged = function () { };
     return soby_RangeSelection;
 }());
 var soby_ItemSelection = /** @class */ (function () {

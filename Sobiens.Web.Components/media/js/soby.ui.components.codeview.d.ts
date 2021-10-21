@@ -18,6 +18,8 @@ declare class soby_CodeView {
     CodeViewType: SobyCodeViewTypes;
     TemplateHtml: string;
     ActiveView: SobyCodeViews;
+    AdditionalTabTitles: Array<string>;
+    AdditionalTabClasses: Array<string>;
     constructor(contentDivSelector: any, title: any, codeViewType: SobyCodeViewTypes);
     Initialize(): void;
     RunCode(): void;

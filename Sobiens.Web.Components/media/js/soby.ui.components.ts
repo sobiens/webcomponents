@@ -5423,7 +5423,7 @@ class soby_RangeSelection {
     RangeBarHeight: number = 20;
     SelectedRangeBarHeight: number = 40;
     AdditionalLabelSectionHeight: number = 0;
-    StartNumericValue:number = null;
+    StartNumericValue: number = null;
     EndNumericValue: number = null;
     MinorRangeInterval = null;
     MinorRangeCountInAMajorRange = null;
@@ -5471,8 +5471,6 @@ class soby_RangeSelection {
     HandleMouseDown(e: MouseEvent) {
         e.preventDefault();
         var rangeSelection = soby_RangeSelections[eval("e.target.id")];
-        const ctx = rangeSelection.GetTooltipContext();
-        const canvas = rangeSelection.GetTooltipCanvas();
         var canvasOffset = $("#" + rangeSelection.RangeSelectionID).offset();
         var canvasOffsetX = canvasOffset.left - $(window).scrollLeft();
         var canvasOffsetY = canvasOffset.top - $(window).scrollTop();
@@ -5483,16 +5481,19 @@ class soby_RangeSelection {
             rangeSelection.GetCanvas().style.cursor = "e-resize";
             rangeSelection.IsBeingDragged = true;
             rangeSelection.DragDirection = "leftresize";
+            rangeSelection.RangeBeingChanged();
         }
         else if (rangeSelection.CheckMouseHitSelectedRangeRightResize(mouseX, mouseY) === true) {
             rangeSelection.GetCanvas().style.cursor = "e-resize";
             rangeSelection.IsBeingDragged = true;
             rangeSelection.DragDirection = "rightresize";
+            rangeSelection.RangeBeingChanged();
         }
         else if (rangeSelection.CheckMouseHitSelectedRange(mouseX, mouseY) === true) {
             rangeSelection.GetCanvas().style.cursor = "pointer";
             rangeSelection.IsBeingDragged = true;
             rangeSelection.DragDirection = "moveposition";
+            rangeSelection.RangeBeingChanged();
         }
     }
 
@@ -5500,6 +5501,7 @@ class soby_RangeSelection {
         e.preventDefault();
         var rangeSelection = soby_RangeSelections[eval("e.target.id")];
         rangeSelection.RePaintOnMouseMove(e.offsetX, true);
+        rangeSelection.RangeChanged();
     }
 
     HandleMouseMove(e: MouseEvent) {
@@ -5518,8 +5520,6 @@ class soby_RangeSelection {
             return;
         }
 
-        const ctx = rangeSelection.GetTooltipContext();
-        const canvas = rangeSelection.GetTooltipCanvas();
         var canvasOffset = $("#" + rangeSelection.RangeSelectionID).offset();
         var tooltipOffsetX = canvasOffset.left - $(window).scrollLeft();
         var tooltipOffsetY = canvasOffset.top - $(window).scrollTop();
@@ -5544,8 +5544,8 @@ class soby_RangeSelection {
     }
 
     CheckMouseHitSelectedRangeLeftResize(x: number, y: number) {
-        const selectedRangeLeft: number = this.GetSelectedRangeLeft()-2;
-        const selectedRangeRight: number = selectedRangeLeft+4;
+        const selectedRangeLeft: number = this.GetSelectedRangeLeft() - 2;
+        const selectedRangeRight: number = selectedRangeLeft + 4;
         const selectedRangeBottom: number = this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom;
         const selectedRangeTop: number = selectedRangeBottom - this.SelectedRangeBarHeight;
         if (selectedRangeLeft < x && selectedRangeRight > x && selectedRangeBottom > y && selectedRangeTop < y)
@@ -5555,8 +5555,8 @@ class soby_RangeSelection {
     }
 
     CheckMouseHitSelectedRangeRightResize(x: number, y: number) {
-        const selectedRangeRight: number = this.GetSelectedRangeRight()+2;
-        const selectedRangeLeft: number = selectedRangeRight-4;
+        const selectedRangeRight: number = this.GetSelectedRangeRight() + 2;
+        const selectedRangeLeft: number = selectedRangeRight - 4;
         const selectedRangeBottom: number = this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom;
         const selectedRangeTop: number = selectedRangeBottom - this.SelectedRangeBarHeight;
         if (selectedRangeLeft < x && selectedRangeRight > x && selectedRangeBottom > y && selectedRangeTop < y)
@@ -5579,7 +5579,7 @@ class soby_RangeSelection {
 
     RePaintOnMouseMove(offsetX: number, mouseUp: boolean) {
         if (this.IsBeingDragged === true) {
-            let direction = this.DragDirection;
+            const direction = this.DragDirection;
             const mousePositionValue = this.GetValueFromOffsetX(offsetX);
             let newStartValue: number = this.SelectedRange[0];
             let newEndValue: number = this.SelectedRange[1];
@@ -5615,7 +5615,7 @@ class soby_RangeSelection {
 
             if (mouseUp === true) {
                 this.GetCanvas().style.cursor = "default"
-                var dragingImageObjectId = this.RangeSelectionID + "_DragingImageObject";
+                const dragingImageObjectId = this.RangeSelectionID + "_DragingImageObject";
                 if ($("#" + dragingImageObjectId).length > 0) {
                     $("#" + dragingImageObjectId).remove();
                 }
@@ -5628,19 +5628,18 @@ class soby_RangeSelection {
     DrawPane() {
         const rangeItemCount: number = this.GetRangeItemCount();
         const rangeValueWidth = this.GetRangeValueWidth();
-        console.log("rangeItemCount:" + rangeItemCount);
         const ctx = this.GetContext();
         ctx.fillStyle = "gray";
         ctx.strokeStyle = "gray";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(this.PaddingLeft, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.RangeBarHeight / 2);
-        ctx.lineTo(this.Width - (this.PaddingRight), this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.RangeBarHeight/2);
+        ctx.lineTo(this.Width - (this.PaddingRight), this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom - this.RangeBarHeight / 2);
         ctx.stroke();
 
         for (let i = 0; i < rangeItemCount; i = i + this.MinorRangeCountInAMajorRange) {
 
-            const currentX = this.PaddingLeft + i*rangeValueWidth;
+            const currentX = this.PaddingLeft + i * rangeValueWidth;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(currentX, this.Height - this.LabelHeight - this.AdditionalLabelSectionHeight - this.PaddingBottom);
@@ -5675,22 +5674,27 @@ class soby_RangeSelection {
                     ctx.lineTo(currentX, this.Height - this.PaddingBottom);
                     ctx.stroke();
 
-                    ctx.fillText(this.MonthNames[currentDate.getMonth()], currentX + 6, this.Height - this.PaddingBottom-4);
+                    ctx.fillText(this.MonthNames[currentDate.getMonth()] + (currentDate.getMonth() === 0 ? " " + currentDate.getFullYear() : ""), currentX + 6, this.Height - this.PaddingBottom - 4);
 
                     if (startDate.getDate() < 25) {
                         const yesterdayOfCurrentDate: Date = new Date(currentDate.getTime());
                         yesterdayOfCurrentDate.setDate(yesterdayOfCurrentDate.getDate() - 1);
                         if (yesterdayOfCurrentDate.getMonth() === startDate.getMonth() && yesterdayOfCurrentDate.getFullYear() === startDate.getFullYear()) {
                             const startDateX: number = this.GetOffsetXFromValue(this.StartNumericValue);
-                            ctx.fillText(this.MonthNames[yesterdayOfCurrentDate.getMonth()], startDateX + 4, this.Height - this.PaddingBottom-4);
+                            ctx.fillText(this.MonthNames[yesterdayOfCurrentDate.getMonth()] + " " + yesterdayOfCurrentDate.getFullYear(), startDateX + 4, this.Height - this.PaddingBottom - 4);
                         }
                     }
                 }
 
-                currentDate.setDate(currentDate.getDate() +1);
+                currentDate.setDate(currentDate.getDate() + 1);
             }
         }
     }
+
+    GetSelectedDateRanges(): Array<Date> {
+        return [soby_DateFromTicks(this.SelectedRange[0]), soby_DateFromTicks(this.SelectedRange[1])];
+    }
+
 
     GetValueLabel(value: number): string {
         if (this.ViewType === SobyRangeSelectionViewTypes.DateRange) {
@@ -5789,6 +5793,8 @@ class soby_RangeSelection {
         return this.GetOffsetXFromValue(this.SelectedRange[1]);
     }
 
+    RangeBeingChanged() { }
+    RangeChanged() { }
 }
 
 class soby_ItemSelection {

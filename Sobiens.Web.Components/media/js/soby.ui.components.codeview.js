@@ -23,31 +23,14 @@ var soby_CodeView = /** @class */ (function () {
         this.CodeViewType = null;
         this.TemplateHtml = "";
         this.ActiveView = SobyCodeViews.Js;
+        this.AdditionalTabTitles = [];
+        this.AdditionalTabClasses = [];
         this.OnTemplateRendered = null;
         this.CodeViewID = "soby_codeview_" + soby_guid();
         this.ContentDivSelector = contentDivSelector;
         this.Title = title;
         this.CodeViewType = codeViewType;
         this.EnsureItemSelectionExistency();
-        this.TemplateHtml = "<div style='border: 1px solid lightgray;padding: 5px;'>" +
-            "<div id='" + this.CodeViewID + "_codeeditor' class='codeeditors'>" +
-            "<ul>" +
-            (this.CodeViewType === SobyCodeViewTypes.SingleHtml ? "<li><a href='#" + this.CodeViewID + "_singlecodeeditor'>Single</a></li > " : "") +
-            (this.CodeViewType === SobyCodeViewTypes.HtmlParts ?
-                "<li><a href='#" + this.CodeViewID + "_jscodeeditor'>JS</a></li>" : "") +
-            "<li><a href='#" + this.CodeViewID + "_htmlcodeeditor'>Html</a></li>" +
-            "<li><a href='#" + this.CodeViewID + "_csscodeeditor'>CSS</a></li>" +
-            "</ul>" +
-            (this.CodeViewType === SobyCodeViewTypes.SingleHtml ? "<div id='" + this.CodeViewID + "_singlecodeeditor' class='singlecodeeditor'></div>" : "") +
-            (this.CodeViewType === SobyCodeViewTypes.HtmlParts ?
-                "<div id='" + this.CodeViewID + "_jscodeeditor' class='jscodeeditor'></div>" : "") +
-            "<div id='" + this.CodeViewID + "_htmlcodeeditor' class='htmlcodeeditor'></div>" +
-            "<div id='" + this.CodeViewID + "_csscodeeditor' class='csscodeeditor'></div>" +
-            "</div>" +
-            "<div class='actionbuttons'></div>" +
-            "<p class='codedescription'></p>" +
-            "<div class='result'> </div><br><p class='resultdescription'></p>" +
-            "</div>";
         if (this.CodeViewType === SobyCodeViewTypes.SingleHtml) {
             this.ActiveView = SobyCodeViews.SinglePage;
         }
@@ -59,11 +42,41 @@ var soby_CodeView = /** @class */ (function () {
         }
     }
     soby_CodeView.prototype.Initialize = function () {
+        this.TemplateHtml = "<div style='border: 1px solid lightgray;padding: 5px;'>" +
+            "<div id='" + this.CodeViewID + "_codeeditor' class='codeeditors'>" +
+            "<ul>" +
+            (this.CodeViewType === SobyCodeViewTypes.SingleHtml ? "<li><a href='#" + this.CodeViewID + "_singlecodeeditor'>Single</a></li > " : "") +
+            (this.CodeViewType === SobyCodeViewTypes.HtmlParts ?
+                "<li><a href='#" + this.CodeViewID + "_jscodeeditor'>JS</a></li>" : "") +
+            "<li><a href='#" + this.CodeViewID + "_htmlcodeeditor'>Html</a></li>" +
+            "<li><a href='#" + this.CodeViewID + "_csscodeeditor'>CSS</a></li>";
+        for (var i = 0; i < this.AdditionalTabTitles.length; i++) {
+            this.TemplateHtml += "<li><a href='#" + this.CodeViewID + "_additionaltab" + i + "codeeditor'>" + this.AdditionalTabTitles[i] + "</a></li>";
+        }
+        this.TemplateHtml += "</ul>" +
+            (this.CodeViewType === SobyCodeViewTypes.SingleHtml ? "<div id='" + this.CodeViewID + "_singlecodeeditor' class='singlecodeeditor'></div>" : "") +
+            (this.CodeViewType === SobyCodeViewTypes.HtmlParts ?
+                "<div id='" + this.CodeViewID + "_jscodeeditor' class='jscodeeditor'></div>" : "") +
+            "<div id='" + this.CodeViewID + "_htmlcodeeditor' class='htmlcodeeditor'></div>" +
+            "<div id='" + this.CodeViewID + "_csscodeeditor' class='csscodeeditor'></div>";
+        for (var i = 0; i < this.AdditionalTabTitles.length; i++) {
+            this.TemplateHtml += "<div id='" + this.CodeViewID + "_additionaltab" + i + "codeeditor' class='additionaltab" + i + "codeeditor'></div>";
+        }
+        this.TemplateHtml +=
+            "</div>" +
+                "<div class='actionbuttons'></div>" +
+                "<p class='codedescription'></p>" +
+                "<div class='result'> </div><br><p class='resultdescription'></p>" +
+                "</div>";
         $(this.ContentDivSelector).addClass("soby_codeview");
         var singleCodeContent = $(this.ContentDivSelector).find(".singlecode").html();
         var htmlCodeContent = $(this.ContentDivSelector).find(".htmlcode").html();
         var jsCodeContent = $(this.ContentDivSelector).find(".jscode").html();
         var cssCodeContent = $(this.ContentDivSelector).find(".csscode").html();
+        var additionaltabCodeContents = [];
+        for (var i = 0; i < this.AdditionalTabTitles.length; i++) {
+            additionaltabCodeContents.push($(this.ContentDivSelector).find("." + this.AdditionalTabClasses[i]).html());
+        }
         var codeDescription = $(this.ContentDivSelector).find(".codedescription").html();
         var resultDescription = $(this.ContentDivSelector).find(".resultdescription").html();
         $(this.ContentDivSelector).html(this.TemplateHtml);
@@ -72,6 +85,9 @@ var soby_CodeView = /** @class */ (function () {
             "<textarea class='defaultjscodecontainer' style='height: 0px;width: 0px;overflow: hidden;border: 0px;resize: none;'></textarea>" +
             "<textarea class='defaulthtmlcodecontainer' style='height: 0px;width: 0px;overflow: hidden;border: 0px;resize: none;'></textarea>" +
             "<textarea class='defaultcsscodecontainer' style='height: 0px;width: 0px;overflow: hidden;border: 0px;resize: none;'></textarea>");
+        for (var i = 0; i < this.AdditionalTabTitles.length; i++) {
+            $(this.ContentDivSelector).prepend("<textarea class='defaultadditionaltab" + i + "codecontainer' style='height: 0px;width: 0px;overflow: hidden;border: 0px;resize: none;'></textarea>");
+        }
         if (this.CodeViewType === SobyCodeViewTypes.SingleHtml) {
             $(this.ContentDivSelector).find(".singlecodeeditor").html("<div id='" + this.CodeViewID + "__singlecodeeditor' class='singlecode codeeditor'></div>");
             $(this.ContentDivSelector).find(".singlecode").html(singleCodeContent.replace(/<br \/ >/gi, "\n").replace(/<br>/gi, "\n"));
@@ -83,6 +99,11 @@ var soby_CodeView = /** @class */ (function () {
             $(this.ContentDivSelector).find(".htmlcode").html(htmlCodeContent.replace(/<br \/ >/gi, "\n").replace(/<br>/gi, "\n"));
             $(this.ContentDivSelector).find(".jscode").html(jsCodeContent.replace(/<br \/ >/gi, "\n").replace(/<br>/gi, "\n"));
             $(this.ContentDivSelector).find(".csscode").html(cssCodeContent.replace(/<br \/ >/gi, "\n").replace(/<br>/gi, "\n"));
+        }
+        for (var i = 0; i < this.AdditionalTabTitles.length; i++) {
+            var additionaltabCodeContent = additionaltabCodeContents[i];
+            $(this.ContentDivSelector).find(".additionaltab" + i + "editor").html("<div id='" + this.CodeViewID + "__additionaltab" + i + "codeeditor' class='" + this.AdditionalTabClasses[i] + " codeeditor'></div>");
+            $(this.ContentDivSelector).find("." + this.AdditionalTabClasses[i]).html(additionaltabCodeContent.replace(/<br \/ >/gi, "\n").replace(/<br>/gi, "\n"));
         }
         $(this.ContentDivSelector).find(".defaultsinglecodecontainer").html(singleCodeContent);
         $(this.ContentDivSelector).find(".defaultjscodecontainer").html(jsCodeContent);
@@ -122,6 +143,14 @@ var soby_CodeView = /** @class */ (function () {
         eval("var editor = ace.edit('" + this.CodeViewID + "__htmlcodeeditor');");
         eval("editor.setTheme('ace/theme/monokai');");
         eval("editor.session.setMode('ace/mode/html');");
+        for (var i = 0; i < this.AdditionalTabTitles.length; i++) {
+            var additionaltabCodeContent = additionaltabCodeContents[i];
+            $(this.ContentDivSelector).find(".additionaltab" + i + "codeeditor").html("<div id='" + this.CodeViewID + "__additionaltab" + i + "codeeditor' class='" + this.AdditionalTabClasses[i] + " codeeditor'></div>");
+            $(this.ContentDivSelector).find("." + this.AdditionalTabClasses[i]).html(additionaltabCodeContent.replace(/<br \/ >/gi, "\n").replace(/<br>/gi, "\n"));
+            eval("var editor = ace.edit('" + this.CodeViewID + "__additionaltab" + i + "codeeditor');");
+            eval("editor.setTheme('ace/theme/monokai');");
+            eval("editor.session.setMode('ace/mode/html');");
+        }
         $(".ace_editor").css("height", "200px");
         if (this.OnTemplateRendered !== null) {
             this.OnTemplateRendered();
@@ -142,6 +171,9 @@ var soby_CodeView = /** @class */ (function () {
         else if (this.CodeViewType === SobyCodeViewTypes.HtmlParts) {
             html = eval("ace.edit('" + this.CodeViewID + "__htmlcodeeditor').getValue()");
             html += "<style type='text/css'>" + eval("ace.edit('" + this.CodeViewID + "__csscodeeditor').getValue()") + "</style>";
+            for (var i = 0; i < this.AdditionalTabTitles.length; i++) {
+                html += "<script language='javascript'>" + eval("ace.edit('" + this.CodeViewID + "__additionaltab" + i + "codeeditor').getValue()") + "</script>";
+            }
             html += "<script language='javascript'>" + eval("ace.edit('" + this.CodeViewID + "__jscodeeditor').getValue()") + "</script>";
         }
         var iframe = $(this.ContentDivSelector).find(".resultiframe")[0];

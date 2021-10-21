@@ -1224,6 +1224,7 @@ declare class soby_RangeSelection {
     CheckMouseHitSelectedRange(x: number, y: number): boolean;
     RePaintOnMouseMove(offsetX: number, mouseUp: boolean): void;
     DrawPane(): void;
+    GetSelectedDateRanges(): Array<Date>;
     GetValueLabel(value: number): string;
     GetContext(): any;
     GetCanvas(): any;
@@ -1236,6 +1237,8 @@ declare class soby_RangeSelection {
     GetOffsetXFromValue(value: any): number;
     GetSelectedRangeLeft(): number;
     GetSelectedRangeRight(): number;
+    RangeBeingChanged(): void;
+    RangeChanged(): void;
 }
 declare class soby_ItemSelection {
     constructor(contentDivSelector: any, title: any, itemSelectorType: number, autoCompleteDataService: any, advancedSearchDataService: any, advancedSearchChildrenDataService: any, emptyDataHtml: any, dialogID: any, selectorUrl: any, valueFieldName: any, textFieldName: any, parentFieldName: any);
