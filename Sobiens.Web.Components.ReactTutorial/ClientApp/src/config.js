@@ -1,0 +1,4 @@
+﻿export const config = {
+    JSFOLDERPATH: process.env.REACT_APP_SOBYJSFOLDERPATH,
+    CSSFOLDERPATH: process.env.REACT_APP_SOBYCSSFOLDERPATH
+};

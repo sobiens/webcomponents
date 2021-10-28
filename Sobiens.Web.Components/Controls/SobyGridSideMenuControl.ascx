@@ -37,5 +37,8 @@
     <li style="display:none"><a href="/Tutorials/SobyGrid/ContextMenu.aspx">Context Menu</a></li>
     <li><a href="/Tutorials/SobyGrid/KeyboardNavigation.aspx">Keyboard Navigation</a></li>
     <li><a href="/Tutorials/SobyGrid/Themes.aspx">Themes</a></li>
-    <li>Labs<ul><li><a href="/Tutorials/SobyGrid/Customer Orders.aspx">Customer Orders</a></li></ul></li>
+    <li>Labs<ul>
+        <li><a href="/Tutorials/SobyGrid/Sales Report Sample.aspx">Sales Report</a></li>
+        <li><a href="/Tutorials/SobyGrid/Customer Orders.aspx">Customer Orders</a></li>
+            </ul></li>
 </ul>

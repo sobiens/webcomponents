@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobiens.Web.Components", "Sobiens.Web.Components\Sobiens.Web.Components.csproj", "{AD99CDA2-C2EA-4082-A3C7-C975CD70F9E4}"
 EndProject
@@ -17,6 +17,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobiens.Web.Components.MVCTutorial", "Sobiens.Web.Components.MVCTutorial\Sobiens.Web.Components.MVCTutorial.csproj", "{6486BE66-C4ED-4A4D-8CDC-67EFBC108EDA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobiens.Web.Components.CodeGenerator", "Sobiens.Web.Components.CodeGenerator\Sobiens.Web.Components.CodeGenerator.csproj", "{322EAC17-16EB-495A-8364-216924D24D49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobiens.Web.Components.ReactTutorial", "Sobiens.Web.Components.ReactTutorial\Sobiens.Web.Components.ReactTutorial.csproj", "{94637585-72B6-4B90-8F5E-4152E605BA62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,8 +46,15 @@ Global
 		{322EAC17-16EB-495A-8364-216924D24D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{322EAC17-16EB-495A-8364-216924D24D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{322EAC17-16EB-495A-8364-216924D24D49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94637585-72B6-4B90-8F5E-4152E605BA62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94637585-72B6-4B90-8F5E-4152E605BA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94637585-72B6-4B90-8F5E-4152E605BA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94637585-72B6-4B90-8F5E-4152E605BA62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC64FC47-E766-49CD-8622-356BAF74A927}
 	EndGlobalSection
 EndGlobal

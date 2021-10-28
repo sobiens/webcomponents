@@ -1,0 +1,110 @@
+.soby_calendarview {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+}
+
+.soby_calendarview .soby_maintable {
+    border-color:#9999CC !important; border-width:1px !important; padding:3px !important; border-spacing: 0 !important; border-style: solid;
+    COLOR: #000000;
+    margin:0px;
+    width:100%;
+}
+
+.soby_calendarview .viewtypeheader a {
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration:none;
+}
+    .soby_calendarview .weekday a, .soby_calendarview .saturday a, .soby_calendarview .sunday a{
+        font-size: 13px;
+    }
+    .soby_calendarview .weeklyviewdaynameheader a, .soby_calendarview .hourlabel, .soby_calendarview .weekdayheader, .soby_calendarview .saturdayheader, .soby_calendarview .sundayheader, .soby_calendarview .currentdaterange {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .soby_calendarview .weekday a, .soby_calendarview .saturday a, .soby_calendarview .sunday a {
+        text-decoration:none;
+    }
+
+    .soby_calendarview .soby_calendarview{
+        vertical-align:top;
+    }
+    .soby_calendarview .viewtypetabs {
+        border-left: 1px #9999CC solid !important;
+        border-right: 1px #9999CC solid !important;
+        border-top: 1px #9999CC solid !important;
+    }
+    .soby_calendarview .currentdaterange {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 10px;
+    }
+    .soby_calendarview .prevmonthday, .soby_calendarview .nextmonthday, .soby_calendarview .weekday, .soby_calendarview .saturday, .soby_calendarview .sunday, .soby_calendarview .today, .soby_calendarview .weekdayheader, .soby_calendarview .saturdayheader, .soby_calendarview .sundayheader, .soby_calendarview .hourlabel, .soby_calendarview .hourdata, .soby_calendarview .weeklyviewdaynameheader, .soby_calendarview .weeklyviewdaydateheader {
+        border-color: #9999CC !important;
+        border-width: 1px !important;
+        padding: 3px !important;
+        border-spacing: 0 !important;
+        border-style: solid;
+    }
+
+.soby_calendarview .weekdayheader{
+    BACKGROUND-COLOR: #dde7fd;
+}
+
+.soby_calendarview .prevmonthday, .soby_calendarview .nextmonthday, .soby_calendarview .viewtypeheader:hover, .soby_calendarview .viewtypeheader a:hover{
+    BACKGROUND-COLOR: #b8e6fe;
+}
+.soby_calendarview .viewtypeheader a:hover{
+    text-decoration:none;
+}
+.soby_calendarview .weekday, .soby_calendarview .hourlabel, .soby_calendarview .hourdata, .soby_calendarview .viewtypeheader{
+    BACKGROUND-COLOR: #edf2fd;
+}
+.soby_calendarview .today, .soby_calendarview .viewtypeheader.selected{
+    BACKGROUND-COLOR: #ffcc99;
+}
+
+.soby_calendarview .viewtypepanel{
+}
+
+.soby_calendarview .saturday, .soby_calendarview .saturdayheader{BACKGROUND-COLOR: #ffecd9;}
+.soby_calendarview .sunday, .soby_calendarview .sundayheader{BACKGROUND-COLOR: #ccf2cc;}
+
+.soby_calendarview .hourlabel{text-align:center;}
+.soby_calendarview .hourdata{}
+
+.soby_calendarview .weeklyviewdaynameheader, .soby_calendarview .weeklyviewdaydateheader{
+    text-align:center;
+    font-weight:bold;
+}
+
+.soby_calendarview .tasklist {
+    padding-left: 0px;
+    list-style: none;
+}
+
+    .soby_calendarview .tasklist li {
+        background-color: rgb(122, 117, 116);
+        border: solid 1px #c8c6c4;
+        padding:2px;
+    }
+    .soby_calendarview .tasklist li a{
+        color: white;
+    }
+
+.soby_calendarview A:link {
+    COLOR: #000000;
+    TEXT-DECORATION: none cursor: hand
+}
+.soby_calendarview A:visited {
+    COLOR: #000000;
+    TEXT-DECORATION: none cursor: hand
+}
+.soby_calendarview A:Active {
+    COLOR: #000000;
+    TEXT-DECORATION: none cursor: hand
+}
+.soby_calendarview A:hover {
+    COLOR: red;
+    TEXT-DECORATION: none cursor: hand
+}
