@@ -14,49 +14,197 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <script language="javascript">
-        function sobyApplyFiltering() {
-            var filterFieldName = $("#SortBySelectBox").val();
-            var filterValue = $("#FilterValueTextBox").val();
-            
-            bookGrid.FilterResult(filterFieldName, filterValue, SobyFieldTypes.Text, SobyFilterTypes.Contains);
+    <div class="article col-md-9">
+                                        <div class="article" style="float: left;width: 100%;">
+                        <div id='soby_CodeLanguagesTabsDiv'>
+                <ul>
+                    <li><a href="#tabs-1">Javascript</a></li>
+                    <li><a href="#tabs-2">jQuery</a></li>
+                    <li><a href="#tabs-3">VueJS</a></li>
+                    <li><a href="#tabs-4">AngularJS</a></li>
+                    <li><a href="#tabs-5">ReactJS</a></li>
+                </ul>
+                <div id="tabs-1">
+                    <div class='soby_JavascriptCodeDiv'>
+                        <div class="htmlcode">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+    &lt;title&gt;Soby Radar Chart Demo&lt;/title&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge" /&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /&gt;
+    &lt;script src="/media/js/jquery-3.1.0.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
+    &lt;script src="/media/js/soby.ui.components.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="soby_ChartDiv" &gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                        <div class="csscode"></div>
+                        <div class="jscode">    var dataSet1 = new soby_ChartDataset();
+    dataSet1.Title = "Chart1";
+    dataSet1.Data = [1, 10, 70, 35, 50, 100];
 
-        }
-    </script>    <div class="article col-md-9">
+    var radarChart = new soby_RadarChart("#soby_ChartDiv", "Doughnut Chart", [dataSet1], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+    radarChart.Width = 600;
+    radarChart.Height = 300;
+    radarChart.SeriesPosition = SobyChartElementPosition.Top;
+    radarChart.SeriesVerticalAligment = SobyChartVerticalAligment.Bottom;
+    radarChart.SeriesHorizontalAligment = SobyChartHorizontalAligment.Right;
+    radarChart.Initialize();
+                        </div>
+                        <div class="codedescription">This example displays all array values</div>
+                        <div class="resultdescription"></div>
+                    </div>
+                </div>
+                <div id="tabs-2">
+                    <div class='soby_JQueryCodeDiv'>
+                        <div class="htmlcode">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+    &lt;title&gt;Soby Radar Chart Demo&lt;/title&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge" /&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /&gt;
+    &lt;script src="/media/js/jquery-3.1.0.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
+    &lt;script src="/media/js/soby.ui.components.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="soby_ChartDiv" data-width="600" data-height="300"&gt;
+        &lt;div class='dataset' data-type="RadarChart" data-title="Chart1" data-data="1;#10;#70;#35;#50;#100"&gt;&lt;/div&gt;
+        &lt;div class='labels' data-labels="January;#February;#March;#April;#May;#June"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                        <div class="csscode"></div>
+                        <div class="jscode">$("#soby_ChartDiv").sobychart();
+                        </div>
+                        <div class="codedescription">This example displays all array values</div>
+                        <div class="resultdescription"></div>
+                    </div>
+                </div>
+                <div id="tabs-3">
+                    <div class='soby_VueCodeDiv'>
+                        <div class="htmlcode">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+    &lt;title&gt;Soby Radar Chart Demo&lt;/title&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge" /&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /&gt;
+    &lt;script src="/media/js/jquery-3.1.0.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;script src="https://cdn.jsdelivr.net/npm/vue@2" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
+    &lt;script src="/media/js/soby.ui.components.min.js"&gt;&lt;/script&gt;
+    &lt;script src="/media/js/soby.ui.components.extension.vue.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="soby_ChartVueDiv"&gt;
+    &lt;soby-chart id="soby_ChartDiv" width="600" height="300"&gt;
+        &lt;dataset type="RadarChart" title="Chart1" data="1;#10;#70;#35;#50;#100"&gt;&lt;/dataset&gt;
+        &lt;labels labels="January;#February;#March;#April;#May;#June"&gt;&lt;/labels&gt;
+    &lt;/soby-chart&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                        <div class="csscode"></div>
+                        <div class="jscode">var app = new Vue({ el: '#soby_ChartVueDiv' })
+                        </div>
+                        <div class="codedescription">This example displays all array values</div>
+                        <div class="resultdescription"></div>
+                    </div>
+                </div>
+                <div id="tabs-4">
+                                        <div class='soby_AngularCodeDiv'>
+                        <div class="htmlcode">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+    &lt;title&gt;Soby Radar Chart Demo&lt;/title&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge" /&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /&gt;
+    &lt;script src="/media/js/jquery-3.1.0.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
+    &lt;script src="/media/js/soby.ui.components.min.js"&gt;&lt;/script&gt;
+    &lt;script language="javascript"&gt;
+          (function (angular) {
+              'use strict';
+              angular.module('sobyChartApp', []).controller('MainCtrl', function MainCtrl($scope) {
+                  this.chart = {
+                      id: 'sobyChartDiv_' + soby_guid(),
+                      width: 400,
+                      height: 200,
+                      datasets: [{ type: "RadarChart", title: "Chart1", data: "1;#10;#70;#35;#50;#100" }],
+                      labels: "January;#February;#March;#April;#May;#June"
+                  };
 
-<%--    <p>This example demonstrates how to use filtering in the Soby Data Grid. <br />
-        "AddFilterField" method takes four parameters. First one is the name of the field. Second one is filter value. Third one is type of the field. Fourth one is type of the filter. This method does not trigger data population, it just adds the filterfield which will be used on population.
-        <pre class="js">bookGrid.AddFilterField("Genre", "Picaresque", SobyFieldTypes.Text, SobyFilterTypes.Equal); </pre>
-    </p>
-    <p>        Below functionality uses "FilterResult" method which takes four parameters. First one is the name of the field. Second one is filter value. Third one is type of the field. Fourth one is type of the filter. This method triggers the data population.
-        <pre class="js">bookGrid.FilterResult("Genre", "Picaresque", SobyFieldTypes.Text, SobyFilterTypes.Equal); </pre>
-</p>
-    <p>Filter by 
-        <select id="SortBySelectBox"><option value="Title">Title</option><option value="Year" style="display:none">Year</option><option value="Price" style="display:none">Price</option><option value="Genre">Genre</option></select>
-         as contains <input type="text" id="FilterValueTextBox" />
-        <input type="button" value="Apply" onclick="sobyApplyFiltering()" />
-    </p>--%>
+                  var chartId = this.chart.id;
+                  setTimeout(function () {
+                      sobyGenerateChartFromHtmlElement(chartId);
+                  }, 1000);
+              });
+          })(window.angular);
+    &lt;/script&gt;
+    &lt;script src="/media/js/soby.ui.components.extension.angular.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body ng-app="sobyChartApp" &gt;
+&lt;div ng-controller="MainCtrl as ctrl" &gt;
+  &lt;soby-chart chart="ctrl.chart"&gt;&lt;/soby-chart&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                        <div class="csscode"></div>
+                        <div class="jscode"></div>
+                        <div class="codedescription">This example displays all array values</div>
+                        <div class="resultdescription"></div>
+                    </div>
 
-        <div class="article" style="float: left;width: 74%;">
+
+
+                </div>
+                <div id="tabs-5">Not implemented yet</div>
+                            </div>
+
+
+            <script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
             <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
-            <script src="/media/js/soby.ui.components.charts.js"></script>
-            <script src="/Scripts/Tutorials/WebAPI/Chart/radarchart.js"></script>
-            <div id='soby_ChartDiv'></div>
-        <a href="javascript:void(0)" onclick="soby_ShowHideViewSource()">
-            <img src="/Images/viewsource.png" border="0" width="20px" /> View source
-        </a>
-        <pre id="ViewSourceDiv" class="viewsource html" codefile="/Scripts/Tutorials/WebAPI/Chart/radarchart.js" style="display:none;background-color:ivory">
-<span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/jquery-3.1.0.js"</span> <span class="attr_name">type</span>=<span class="attr_value">"text/javascript"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
-<span class="tag_start">&lt;link</span> <span class="attr_name">href</span>=<span class="attr_value">"/media/css/soby.ui.components.css"</span> <span class="attr_name">rel</span>=<span class="attr_value">"stylesheet"</span> <span class="attr_name">type</span>=<span class="attr_value">"text/css"</span> <span class="attr_name">media</span>=<span class="attr_value">"all"</span> <span class="tag_start">/&gt;</span>
-<span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/soby.service.js"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
-<span class="tag_start">&lt;script</span> <span class="attr_name">src</span>=<span class="attr_value">"/media/js/soby.ui.components.charts.js"</span> <span class="tag_start">&gt;&lt;/script&gt;</span>
-<span class="tag_start">&lt;div</span> <span class="attr_name">id</span>=<span class="attr_value">'soby_ChartDiv'</span> <span class="tag_start">&gt;&lt;/div&gt;</span>
-            <div class="viewsourcecodefileoutput"></div>
-        </pre>
-        <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
+            <script src="/media/js/soby.ui.components.js"></script>
+            <script src="/media/js/soby.ui.components.codeview.js"></script>
+            <script language="javascript">
+                $(function () {
+                    soby_PopulateCustomizedCodeView();
+                });
+
+                function soby_PopulateCustomizedCodeView() {
+                    var codeView1 = new soby_CodeView(".soby_JQueryCodeDiv", "jQuery Examples", SobyCodeViewTypes.HtmlParts);
+                    codeView1.ActiveView = SobyCodeViews.Js;
+                    codeView1.Initialize();
+
+                    var codeView2 = new soby_CodeView(".soby_JavascriptCodeDiv", "javascript Examples", SobyCodeViewTypes.HtmlParts);
+                    codeView2.ActiveView = SobyCodeViews.Js;
+                    codeView2.Initialize();
+
+                    var codeView3 = new soby_CodeView(".soby_VueCodeDiv", "VueJS Examples", SobyCodeViewTypes.HtmlParts);
+                    codeView3.ActiveView = SobyCodeViews.Html;
+                    codeView3.Initialize();
+
+                    var codeView4 = new soby_CodeView(".soby_AngularCodeDiv", "AngularJS Examples", SobyCodeViewTypes.HtmlParts);
+                    codeView4.ActiveView = SobyCodeViews.Html;
+                    codeView4.Initialize();
+
+                    var tabs = new soby_Tab("#soby_CodeLanguagesTabsDiv");
+                    tabs.Initialize();
+                }
+            </script>
+
+        <br />Want to learn more about the chart component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
+
         </div>
     <div class="col-md-3">
         <uc1:SobyChartSideMenuControl runat="server" ID="SobyChartSideMenuControl" />

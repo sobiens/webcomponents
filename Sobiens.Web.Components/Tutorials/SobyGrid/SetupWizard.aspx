@@ -261,7 +261,6 @@
             var columnSelectionService = new soby_StaticDataService(columnSelectionDataSourceBuilder, items);
 
             columnSelectionGrid = new soby_WebGrid("#ColumnSelectionGrid", "Column Selection", columnSelectionService, "There is no record found.");
-            columnSelectionGrid.ImagesFolderUrl = "/media/images";
             columnSelectionGrid.IsEditable = false;
             columnSelectionGrid.IsSelectable = true;
             columnSelectionGrid.AddKeyField("Name");
@@ -326,7 +325,6 @@
             var groupingSelectionService = new soby_StaticDataService(groupingSelectionDataSourceBuilder, items);
 
             groupingSelectionGrid = new soby_WebGrid("#GroupingGrid", "Grouping Selection", groupingSelectionService, "There is no record found.");
-            groupingSelectionGrid.ImagesFolderUrl = "/media/images";
             groupingSelectionGrid.IsEditable = true;
             groupingSelectionGrid.IsSelectable = true;
             groupingSelectionGrid.AddKeyField("Name");
@@ -355,7 +353,6 @@
             var aggregateSelectionService = new soby_StaticDataService(aggregateSelectionDataSourceBuilder, items);
 
             aggregateSelectionGrid = new soby_WebGrid("#AggregatesGrid", "Aggregate Selection", aggregateSelectionService, "There is no record found.");
-            aggregateSelectionGrid.ImagesFolderUrl = "/media/images";
             aggregateSelectionGrid.IsEditable = true;
             aggregateSelectionGrid.IsSelectable = true;
             aggregateSelectionGrid.AddKeyField("Name");
@@ -378,7 +375,6 @@ bookDataSourceBuilder.Filters = new SobyFilters(false);\n";
 bookService.Transport.Read = new soby_TransportRequest('" + soby_GetTutorialWebAPIUrl() + "/Books', 'json', 'application/json; charset=utf-8', 'GET');\n \
 bookGrid = new soby_WebGrid('#soby_BooksGridDiv', 'Items', bookService, 'There is no record found.');\n \
 bookGrid.IsEditable = false;\n \
-bookGrid.ImagesFolderUrl = '/media/images';\n";
 
             for (var i = 0; i < columnSelectionGrid.Items.length;i++){
                 var item = columnSelectionGrid.Items[i];
@@ -415,7 +411,7 @@ bookGrid.ImagesFolderUrl = '/media/images';\n";
         }
     </script><br />
 
-        <div>Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
+        <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
     <aside>

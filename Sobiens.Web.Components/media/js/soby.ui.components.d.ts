@@ -19,19 +19,6 @@ interface ISobyEditControlInterface {
 interface ISobySelectorControlInterface {
     GetSelectedDataItems(): any[];
 }
-declare enum SobyPaginationViewTypes {
-    PageNumbers = 0,
-    BasicButtons = 1,
-    BasicButtons_PageNumbers = 2,
-    AdvancedButtons = 3,
-    AdvancedButtons_PageNumbers = 4,
-    QuickButtons_PageNumbers = 5
-}
-declare enum SobyPaginationVerticalAlign {
-    Left = 0,
-    Center = 1,
-    Right = 2
-}
 declare class SobyListItem {
     constructor(value: string, text: string);
     Value: string;
@@ -1271,6 +1258,47 @@ declare class soby_ItemSelection {
     EnsureItemSelectionExistency(): void;
     OnSelectionChanged: any;
     EventBeforeAutoCompleteQuery: any;
+}
+declare var soby_TreeViews: any[];
+declare var soby_TreeViewItems: any[];
+interface soby_TreeViewInterface {
+    RootDataBeingParsed(data: any): Array<soby_Item>;
+    ChildDataBeingParsed(data: any): Array<soby_Item>;
+    RootNodesDataServiceBeingQueried(): any;
+    ChildNodesDataServiceBeingQueried(node: soby_Item): any;
+}
+declare class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInterface {
+    constructor(contentDivSelector: any, title: any, rootNodesDataService: any, childNodesDataService: any, emptyDataHtml: any, parentFieldName: any, valueFieldName: any, textFieldName: any);
+    RootDataBeingParsed(data: any): Array<soby_Item>;
+    ChildDataBeingParsed(data: any): Array<soby_Item>;
+    RootNodesDataServiceBeingQueried(): void;
+    ChildNodesDataServiceBeingQueried(node: soby_Item): void;
+    TreeViewID: string;
+    ContentDivSelector: string;
+    Title: string;
+    RootNodesDataService: soby_ServiceInterface;
+    ChildNodesDataService: soby_ServiceInterface;
+    AllowMultipleSelections: boolean;
+    AllowCheckBoxes: boolean;
+    EmptyDataHtml: string;
+    ParentFieldName: string;
+    ValueFieldName: string;
+    TextFieldName: string;
+    SVGImages: soby_SVGImages;
+    Initialize(): void;
+    GetItemData(treeviewItemId: any): any;
+    GetRootNodeId(treeviewItemId: any): any;
+    GetParentNodeId(treeviewItemId: any): string;
+    GetRootNodeItemData(treeviewItemId: any): any;
+    GetParentNodeItemData(treeviewItemId: any): any;
+    ExpandNode(treeviewItemId: any): void;
+    PopulateNodes(contentDivSelector: any, items: any): void;
+    GetSelectedDataItems(): any[];
+    ClickNode(treeViewItemId: any): void;
+    CheckNode(treeViewItemId: any): void;
+    EnsureItemSelectionExistency(): void;
+    OnSelectionChanged: any;
+    OnClick: any;
 }
 declare function ShowCommonDialog(url: any, title: any, dialogID: any, onCloseCallback: any): void;
 declare function ShowDialog(url: any, title: any, dialogID: any, onCloseCallback: any): void;

@@ -227,7 +227,7 @@ class soby_CodeView
         }
     }
     CopyToClipboard() {
-        const html = $(this.ContentDivSelector).find(".code").val();
+        const html:string = $(this.ContentDivSelector).find(".code").val().toString();
         const copyToClipboardTextarea = $(this.ContentDivSelector).find(".copytoclipboardtextarea");
         copyToClipboardTextarea.text(html);
 

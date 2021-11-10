@@ -104,7 +104,6 @@ class soby_Scheduler
     SchedulerTableTotalDays: number = 1;
     LinkFieldName: string = "";
     ImageFieldName: string = "";
-    ImagesFolderUrl: string = "/_layouts/1033/images";
     MinuteWidthWeight: number = 1;
     CellHeight: number = 32;
     //SingleCellLengthAsMinute: number = 15;

@@ -22,6 +22,6 @@ export class SobySeries extends Component {
     componentDidMount() {
     }
     render(props) {
-        return (<div >{this.props.title}</div>)
+        return (<div className='series'>{this.props.title}</div>)
     }
 }

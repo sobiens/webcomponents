@@ -98,7 +98,7 @@ bookGrid.AddColumn("Year", "Description", SobyShowFieldsOn.All, null, cellTempla
         codeView.Initialize();
     }
 </script>
-        <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
+        <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
     <div class="col-md-3">

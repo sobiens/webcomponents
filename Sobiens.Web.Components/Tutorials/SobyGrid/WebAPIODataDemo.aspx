@@ -41,7 +41,6 @@
             bookService.Transport.Update = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Tasks(#key)", "json", "application/json; charset=utf-8", "PUT");
             bookService.Transport.Delete = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Tasks(#key)", "json", "application/json; charset=utf-8", "DELETE");
             var bookGrid = new soby_WebGrid("#soby_TasksDiv", "Tasks", bookService, "There is no record found.");
-            bookGrid.ImagesFolderUrl = "/media/images";
             bookGrid.AddKeyField("Id");
             bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null);
             //            bookGrid.AddColumn("DueDate", "Due date", SobyShowFieldsOn.All, null, null, true, true, true, null);
@@ -60,7 +59,7 @@
         }
     </script>
 
-    <br />Want to learn more about the grid component? Check out the <a href="/API Documentation/Grid/Grid.aspx">API documentation</a>.
+        <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
 
     <aside>
         <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />

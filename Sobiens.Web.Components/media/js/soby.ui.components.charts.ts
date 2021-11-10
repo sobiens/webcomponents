@@ -46,7 +46,6 @@ class soby_Chart implements soby_ChartInterface {
     Labels: Array<string>;
     Datasets: Array<soby_ChartDataset> = null;
     EmptyDataHtml: string = "";
-    ImagesFolderUrl: string = "/_layouts/1033/images";
     Type: SobyChartTypes = null;
     LabelPosition: SobyChartElementPosition = SobyChartElementPosition.Bottom;
     SeriesPosition: SobyChartElementPosition = SobyChartElementPosition.Top;
@@ -864,6 +863,7 @@ class soby_SeriesPanel {
 
 class soby_ChartDataset {
     Title: string = "";
+    Type: SobyChartTypes = SobyChartTypes.BarChart;
     Data: Array<number>;
 }
 class soby_ChartDotValue {
@@ -924,5 +924,55 @@ enum SobyChartHorizontalAligment {
     Left = 0,
     Center = 1,
     Right = 2
+}
+
+
+function sobyGenerateChartFromHtmlElement(containerId){
+    var _this = $("#" + containerId);
+    var datasets = [];
+
+    var datasetElements = _this.find(".dataset");
+    var chartType = "";
+    for (var i = 0; i < datasetElements.length; i++) {
+        var datasetElement = $(datasetElements[i]);
+        var dataSet = new soby_ChartDataset();
+        dataSet.Title = datasetElement.data("title");
+        chartType = datasetElement.data("type");
+        var data = new Array();
+        var dataStringArray = datasetElement.data("data").split(";#");
+        for (var x = 0; x < dataStringArray.length; x++) {
+            var numberData = 0;
+            if (dataStringArray[x] !== null || dataStringArray[x] !== undefined || dataStringArray[x] !== "")
+                numberData = parseFloat(dataStringArray[x]);
+            data.push(numberData);
+        }
+        dataSet.Data = data;
+        datasets.push(dataSet);
+    }
+
+    var labels = _this.find(".labels").data("labels").split(";#");
+    var chart = null;
+    if (chartType === "PieChart") {
+        chart = new soby_PieChart("#" + _this.attr("id"), "Pie Chart", datasets, "There is no record found.", labels);
+    }
+    else if (chartType === "ColumnChart") {
+        chart = new soby_ColumnChart("#" + _this.attr("id"), "Column Chart", datasets, "There is no record found.", labels);
+    }
+    else if (chartType === "LineChart") {
+        chart = new soby_LineChart("#" + _this.attr("id"), "Line Chart", datasets, "There is no record found.", labels);
+    }
+    else if (chartType === "DoughnutChart") {
+        chart = new soby_DoughnutChart("#" + _this.attr("id"), "Doughnut Chart", datasets, "There is no record found.", labels);
+    }
+    else if (chartType === "BarChart") {
+        chart = new soby_BarChart("#" + _this.attr("id"), "Bar Chart", datasets, "There is no record found.", labels);
+    }
+    else if (chartType === "PolarAreaChart") {
+        chart = new soby_PolarAreaChart("#" + _this.attr("id"), "Polar Area Chart", datasets, "There is no record found.", labels);
+    }
+
+    chart.Width = _this.data("width");
+    chart.Height = _this.data("height");
+    chart.Initialize();
 }
 // ************************************************************

@@ -30,7 +30,7 @@
 <div class="viewsourcecodefileoutput"></div>
 &lt;/script&gt;
 </pre>
-    <br />Want to learn more about the grid component? Check out the <a href="/API Documentation/Grid/Grid.aspx">API documentation</a>.
+        <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
         </p>
         </div>
     <div class="article col-md-3">

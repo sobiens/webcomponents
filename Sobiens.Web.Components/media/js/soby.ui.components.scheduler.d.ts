@@ -45,7 +45,6 @@ declare class soby_Scheduler {
     SchedulerTableTotalDays: number;
     LinkFieldName: string;
     ImageFieldName: string;
-    ImagesFolderUrl: string;
     MinuteWidthWeight: number;
     CellHeight: number;
     SingleTimeHeadingDurationAsMinute: number;

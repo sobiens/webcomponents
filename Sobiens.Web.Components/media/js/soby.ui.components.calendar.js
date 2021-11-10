@@ -45,7 +45,7 @@ var soby_CalendarView = /** @class */ (function () {
         this.EndDateFieldName = "";
         this.LinkFieldName = "";
         this.ImageFieldName = "";
-        this.ImagesFolderUrl = "/_layouts/1033/images";
+        this.SVGImages = new soby_SVGImages();
         this.ShowNavigation = true;
         this.OnSelectionChanged = null;
         this.OnClick = null;
@@ -235,7 +235,7 @@ var soby_CalendarView = /** @class */ (function () {
     soby_CalendarView.prototype.ShowYearlyView = function () {
         var sTable = "";
         sTable = "<table border=2 width='100%' cellspacing=0 cellpadding=3 bordercolor='#9999CC'><tr>";
-        sTable += "<tr><td class='currentdaterange' colspan='3'><a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpYear(-1)\"><img src='" + this.ImagesFolderUrl + "/prev.gif' border='0' alt='Next' style='vertical-align: middle;'></a> <a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpYear(1)\"><img src='" + this.ImagesFolderUrl + "/next.gif' border='0' alt='Next' style='vertical-align: middle;'></a><font size=2>&nbsp;" + this.Year + "</font></td></tr>";
+        sTable += "<tr><td class='currentdaterange' colspan='3'><a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpYear(-1)\">" + this.SVGImages.GetLeftCircle() + "</a> <a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpYear(1)\">" + this.SVGImages.GetRightCircle() + "</a><font size=2>&nbsp;" + this.Year + "</font></td></tr>";
         sTable += "</tr></table>";
         sTable += "<table border=2 width='100%' height='100%' cellspacing=0 cellpadding=3 bordercolor='#9999CC'><tr>";
         sTable += "<td id='idCalendar1'></td>";
@@ -263,9 +263,8 @@ var soby_CalendarView = /** @class */ (function () {
             calendarDataSourceBuilder.AddSchemaField("Title", SobyFieldTypes.Text, null);
             calendarDataSourceBuilder.Filters.AddFilter("ParentId", "0", SobyFieldTypes.Number, SobyFilterTypes.Equal, false, false);
             var calendarDataService = new soby_WebServiceService(calendarDataSourceBuilder);
-            calendarDataService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Premises", "json", "application/json; charset=utf-8", "GET");
+            calendarDataService.Transport.Read = this.DataService.Transport.Read;
             var calendarView = new soby_CalendarView("#idCalendar" + nX, "Premises", calendarDataService, this.Year, nX, this.Day, "No record", this.IdFieldName, this.TitleFieldName, this.DescriptionFieldName, this.StartDateFieldName, this.EndDateFieldName, this.LinkFieldName, this.ImageFieldName, '100%', '100%');
-            calendarView.ImagesFolderUrl = this.ImagesFolderUrl;
             calendarView.ShowNavigation = false;
             calendarView.Initialize();
             //calendarView.fnSetDayName("Pzt", "Sl", "Çrş", "Prş", "Cm", "Cmt", "Pzr");
@@ -309,7 +308,7 @@ var soby_CalendarView = /** @class */ (function () {
         var nLastDay = lastDate.getDate();
         var sDue = "<a style='display:none' href=\"#\" onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].ViewType=4;soby_CalendarViews['" + this.CalendarViewID + "'].GenerateCalendar()\">^</a>";
         if (this.ShowNavigation) {
-            table.append("<tr><td class='currentdaterange'><a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpMonth(-1)\"><img src='" + this.ImagesFolderUrl + "/prev.gif' border='0' alt='Next' style='vertical-align: middle;'></a> <a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpMonth(1)\"><img src='" + this.ImagesFolderUrl + "/next.gif' border='0' alt='Next' style='vertical-align: middle;'></a>" + sDue + "<font size=2>&nbsp;" + this.MonthNames[currentStartDate.getMonth()] + " " + currentStartDate.getFullYear() + "</font></td></tr>");
+            table.append("<tr><td class='currentdaterange'><a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpMonth(-1)\">" + this.SVGImages.GetLeftCircle() + "</a> <a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpMonth(1)\">" + this.SVGImages.GetRightCircle() + "</a>" + sDue + "<font size=2>&nbsp;" + this.MonthNames[currentStartDate.getMonth()] + " " + currentStartDate.getFullYear() + "</font></td></tr>");
         }
         else {
             table.append("<tr><td colspan=7 nowrap class='currentdaterange'><font size=2>" + this.MonthNames[currentStartDate.getMonth()] + " " + currentStartDate.getFullYear() + "</font></td></tr>");
@@ -389,7 +388,7 @@ var soby_CalendarView = /** @class */ (function () {
         var table = $("<table width= " + this.Width + " height= " + this.Height + " class='soby_maintable' ></table>");
         $(this.ContentDivSelector + " .calendarviewpanel").html("");
         $(this.ContentDivSelector + " .calendarviewpanel").append(table);
-        table.append("<tr><td class='currentdaterange' colspan='6'><a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpWeek(-1)\"><img src='" + this.ImagesFolderUrl + "/prev.gif' border='0' alt='Next' style='vertical-align: middle;'></a> <a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpWeek(1)\"><img src='" + this.ImagesFolderUrl + "/next.gif' border='0' alt='Next' style='vertical-align: middle;'></a><font size=2>&nbsp;" + soby_GetFormatedDateString(firstDateOfTheWeek) + " - " + soby_GetFormatedDateString(lastDateOfTheWeek) + "</font></td></tr>");
+        table.append("<tr><td class='currentdaterange' colspan='6'><a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpWeek(-1)\">" + this.SVGImages.GetLeftCircle() + "</a> <a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpWeek(1)\">" + this.SVGImages.GetRightCircle() + "</a><font size=2>&nbsp;" + soby_GetFormatedDateString(firstDateOfTheWeek) + " - " + soby_GetFormatedDateString(lastDateOfTheWeek) + "</font></td></tr>");
         var row = $("<tr></tr>");
         row.append("<td>&nbsp;</td>");
         for (var i = 0; i < 7; i++) {
@@ -427,7 +426,7 @@ var soby_CalendarView = /** @class */ (function () {
     soby_CalendarView.prototype.ShowDailyView = function () {
         var date = new Date(this.Year, this.Month, this.Day);
         var table = $("<table width= " + this.Width + " height= " + this.Height + " class='soby_maintable' ></table>");
-        table.append("<tr><td class='currentdaterange' colspan='3'><a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpDay(-1)\"><img src='" + this.ImagesFolderUrl + "/prev.gif' border='0' alt='Next' style='vertical-align: middle;'></a> <a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpDay(1)\"><img src='" + this.ImagesFolderUrl + "/next.gif' border='0' alt='Next' style='vertical-align: middle;'></a><font size=2>&nbsp;" + soby_GetFormatedDateString(date) + "</font></td></tr>");
+        table.append("<tr><td class='currentdaterange' colspan='3'><a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpDay(-1)\">" + this.SVGImages.GetLeftCircle() + "</a> <a href='javascript:void(0)' onclick=\"javascript:soby_CalendarViews['" + this.CalendarViewID + "'].JumpDay(1)\">" + this.SVGImages.GetRightCircle() + "</a><font size=2>&nbsp;" + soby_GetFormatedDateString(date) + "</font></td></tr>");
         for (var i = 0; i < 24; i++) {
             var currentStartDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), i, 0, 0, 0);
             var currentEndDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), i + 1, 0, 0, -1);

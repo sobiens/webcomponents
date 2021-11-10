@@ -1,0 +1,17 @@
+{
+
+  "compilerOptions": {
+    "target": "es2015",
+    "jsx": "react",
+    "noEmit": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "lib": ["es2015","es2016", "dom"],
+    "allowSyntheticDefaultImports": true,
+	"skipLibCheck":true
+  }
+  , "typedocOptions": {
+        "entryPoints": ["soby.service.ts"],
+        "out": "docs"
+    }
+}

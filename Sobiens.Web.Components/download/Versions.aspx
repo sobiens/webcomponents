@@ -7,13 +7,12 @@
         <h2>Sobiens web components is available for download in a zip file, which can be downloaded below.</h2>
     </hgroup>
     <br />
-    <div class="article" style="float: left;width: 74%;">
+   <div class="article col-md-9">
         <ul>
-            <li><a href="Sobiens.Web.Components 1.0.9.3.zip">Sobiens.Web.Components 1.0.9.3</a></li>
+            <li><a href="Sobiens.Web.Components 1.0.9.4.zip">Sobiens.Web.Components 1.0.9.4</a></li>
         </ul>
     </div>
-
-    <aside>
+   <div class="col-md-3">
         <uc1:SobyGridSideMenuControl runat="server" id="SobyGridSideMenuControl" />
-    </aside>
+    </div>
 </asp:Content>

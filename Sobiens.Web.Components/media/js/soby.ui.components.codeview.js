@@ -194,7 +194,7 @@ var soby_CodeView = /** @class */ (function () {
         }
     };
     soby_CodeView.prototype.CopyToClipboard = function () {
-        var html = $(this.ContentDivSelector).find(".code").val();
+        var html = $(this.ContentDivSelector).find(".code").val().toString();
         var copyToClipboardTextarea = $(this.ContentDivSelector).find(".copytoclipboardtextarea");
         copyToClipboardTextarea.text(html);
         var copyText = copyToClipboardTextarea[0];

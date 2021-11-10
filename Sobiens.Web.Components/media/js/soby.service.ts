@@ -1,7 +1,7 @@
 ﻿// VERSION 1.0.8.1
 if (!Object.setPrototypeOf) {
     // Only works in Chrome and FireFox, does not work in IE:
-    Object.prototype.setPrototypeOf = function (obj, proto) {
+    (<any>Object.prototype).setPrototypeOf = function (obj, proto) {
         if (obj.__proto__) {
             obj.__proto__ = proto;
             return obj;
@@ -33,6 +33,21 @@ function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
     }).done(function (item) {
         successCallback(item, args);
     });
+}
+
+enum SobyPaginationViewTypes {
+    PageNumbers = 0,
+    BasicButtons = 1,
+    BasicButtons_PageNumbers = 2,
+    AdvancedButtons = 3,
+    AdvancedButtons_PageNumbers = 4,
+    QuickButtons_PageNumbers = 5,
+}
+
+enum SobyPaginationVerticalAlign {
+    Left = 0,
+    Center = 1,
+    Right = 2
 }
 // ********************* TRANSPORT *****************************
 class soby_Transport {

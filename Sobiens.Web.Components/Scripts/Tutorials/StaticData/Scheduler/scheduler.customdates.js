@@ -11,7 +11,6 @@ function soby_PopulateSchedulerCustomDates() {
     scheduler.ViewType = SobySchedulerTypes.CustomDates;
     scheduler.SchedulerTableStartDate = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate(), 0, 0, 0, 0);
     scheduler.SchedulerTableEndDate = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() + 15, 0, 0, 0, 0);
-    scheduler.ImagesFolderUrl = "/media/images";
     var category1 = scheduler.AddCategory("1", "Fiat");
     category1.CanContainScheduleItems = false;
     var category2 = scheduler.AddCategory("2", "Ford");

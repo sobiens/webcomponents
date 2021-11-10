@@ -966,7 +966,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
 
             if (viewFields.length === 0)
             {
-                $.each(this.attributes, function (i, attrib)
+                $.each((this as any).attributes, function (i, attrib)
                 {
                     var name = attrib.name.substring(4);
                     var value = attrib.value;

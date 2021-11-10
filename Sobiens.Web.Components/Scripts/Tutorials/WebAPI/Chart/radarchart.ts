@@ -12,7 +12,6 @@ function soby_PopulateRadarChartRefreshData()
     var radarChart = new soby_RadarChart("#soby_ChartDiv", "Radar Chart", [dataSet], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     radarChart.Width = 600;
     radarChart.Height = 300;
-    radarChart.ImagesFolderUrl = "/media/images";
     radarChart.Initialize();
 }
 

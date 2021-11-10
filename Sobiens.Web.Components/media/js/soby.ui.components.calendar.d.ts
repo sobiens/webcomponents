@@ -27,7 +27,7 @@ declare class soby_CalendarView {
     EndDateFieldName: string;
     LinkFieldName: string;
     ImageFieldName: string;
-    ImagesFolderUrl: string;
+    SVGImages: soby_SVGImages;
     Year: number;
     Month: number;
     Day: number;

@@ -47,6 +47,21 @@ function ajaxHelper(uri, method, data, args, successCallback, errorCallback) {
         successCallback(item, args);
     });
 }
+var SobyPaginationViewTypes;
+(function (SobyPaginationViewTypes) {
+    SobyPaginationViewTypes[SobyPaginationViewTypes["PageNumbers"] = 0] = "PageNumbers";
+    SobyPaginationViewTypes[SobyPaginationViewTypes["BasicButtons"] = 1] = "BasicButtons";
+    SobyPaginationViewTypes[SobyPaginationViewTypes["BasicButtons_PageNumbers"] = 2] = "BasicButtons_PageNumbers";
+    SobyPaginationViewTypes[SobyPaginationViewTypes["AdvancedButtons"] = 3] = "AdvancedButtons";
+    SobyPaginationViewTypes[SobyPaginationViewTypes["AdvancedButtons_PageNumbers"] = 4] = "AdvancedButtons_PageNumbers";
+    SobyPaginationViewTypes[SobyPaginationViewTypes["QuickButtons_PageNumbers"] = 5] = "QuickButtons_PageNumbers";
+})(SobyPaginationViewTypes || (SobyPaginationViewTypes = {}));
+var SobyPaginationVerticalAlign;
+(function (SobyPaginationVerticalAlign) {
+    SobyPaginationVerticalAlign[SobyPaginationVerticalAlign["Left"] = 0] = "Left";
+    SobyPaginationVerticalAlign[SobyPaginationVerticalAlign["Center"] = 1] = "Center";
+    SobyPaginationVerticalAlign[SobyPaginationVerticalAlign["Right"] = 2] = "Right";
+})(SobyPaginationVerticalAlign || (SobyPaginationVerticalAlign = {}));
 // ********************* TRANSPORT *****************************
 var soby_Transport = /** @class */ (function () {
     function soby_Transport() {

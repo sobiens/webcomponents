@@ -12,7 +12,6 @@ function soby_PopulatePieChartRefreshData()
     var pieChart = new soby_PieChart("#soby_ChartDiv", "Pie Chart", [dataSet], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     pieChart.Width = 600;
     pieChart.Height = 300;
-    pieChart.ImagesFolderUrl = "/media/images";
     pieChart.Initialize();
 }
 

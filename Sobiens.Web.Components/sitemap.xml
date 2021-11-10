@@ -1,349 +1,349 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+      xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://www.sitemaps.org/schemas/sitemap/0.9
+            https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
 
   <url>
-    <loc>http://webcomponents.sobiens.com/</loc>
+    <loc>https://webcomponents.sobiens.com/</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Getting%20Started</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Getting%20Started</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Getting%20Started</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Getting%20Started</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Getting%20Started</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Getting%20Started</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyTreeView/Getting%20Started</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyTreeView/Getting%20Started</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyChart/Getting%20Started</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/Getting%20Started</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyCalendarView/Getting%20Started</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyCalendarView/Getting%20Started</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyCarousel/Getting%20Started</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyCarousel/Getting%20Started</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyWizard/General</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyWizard/General</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyCheckBoxList/Getting%20Started</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyCheckBoxList/Getting%20Started</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobySelectBox/Getting%20Started</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobySelectBox/Getting%20Started</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyValidator/Getting%20Started</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/Getting%20Started</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/Setting%20Up</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/Setting%20Up</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/download/Versions</loc>
+    <loc>https://webcomponents.sobiens.com/download/Versions</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/Grid</loc>
+    <loc>https://webcomponents.sobiens.com/API%20Documentation/Grid/Grid</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Grouping</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Grouping</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Aggregates</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Aggregates</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/SetupWizard</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/SetupWizard</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ModifyRecords</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ModifyRecords</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Localization</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Localization</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Sorting</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Sorting</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Filtering</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Filtering</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Paging</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Paging</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Editing</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Editing</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ActionBar</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ActionBar</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/StaticDataBinding</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/StaticDataBinding</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/WebAPIOData</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/WebAPIOData</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/SPDataBinding</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/SPDataBinding</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ExtendingDataBinding</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ExtendingDataBinding</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/CustomDataBinding</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/CustomDataBinding</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/RefreshData</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/RefreshData</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ExportToExcel</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ExportToExcel</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/MVCSample</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/MVCSample</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ResponsiveDesign</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ResponsiveDesign</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Columns</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Columns</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Selection</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Selection</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/DragDrop</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/DragDrop</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/CellTemplate</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/CellTemplate</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Cell%20Styles</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Cell%20Styles</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/NestedGrids</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/NestedGrids</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Master-Details</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Master-Details</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/ContextMenu</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ContextMenu</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/KeyboardNavigation</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/KeyboardNavigation</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Themes</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Themes</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyGrid/Customer%20Orders</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Customer%20Orders</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Custom%20Format</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Custom%20Format</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Paging</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Paging</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Single%20Selection</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Single%20Selection</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Treeview%20Selection</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Treeview%20Selection</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Autocomplete%20watermark</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Autocomplete%20watermark</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyChart/ColumnChart</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/ColumnChart</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyChart/LineChart</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/LineChart</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyChart/PieChart</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/PieChart</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyChart/BarChart</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/BarChart</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyChart/PolarAreaChart</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/PolarAreaChart</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobySelectBox/SearchOnDemand</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobySelectBox/SearchOnDemand</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyValidator/FormValidation</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/FormValidation</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueDateValidation</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueDateValidation</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueEmailValidation</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueEmailValidation</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueExclusionValidation</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueExclusionValidation</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyValidator/ValuePresenceValidation</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValuePresenceValidation</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueNumericValidation</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueNumericValidation</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueTextValidation</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueTextValidation</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueURLValidation</loc>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueURLValidation</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/Default</loc>
+    <loc>https://webcomponents.sobiens.com/Default</loc>
     <lastmod>2021-10-12T19:10:54+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/soby.ui.components.js.html</loc>
+    <loc>https://webcomponents.sobiens.com/API%20Documentation/Grid/soby.ui.components.js.html</loc>
     <lastmod>2021-10-06T14:54:08+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/index.html</loc>
+    <loc>https://webcomponents.sobiens.com/API%20Documentation/Grid/index.html</loc>
     <lastmod>2019-07-01T19:43:48+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://webcomponents.sobiens.com/API%20Documentation/Grid/soby_WebGrid.html</loc>
+    <loc>https://webcomponents.sobiens.com/API%20Documentation/Grid/soby_WebGrid.html</loc>
     <lastmod>2019-07-01T19:43:48+00:00</lastmod>
     <priority>0.51</priority>
   </url>

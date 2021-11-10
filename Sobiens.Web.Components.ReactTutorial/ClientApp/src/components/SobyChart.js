@@ -7,8 +7,6 @@ let sobyMainLibrary = new SobyMainLibrary();
 export class SobyChart extends Component {
     constructor(props) {
         super(props);
-        console.log("config.JSFOLDERPATHx:");
-        console.log(config.JSFOLDERPATH);
         const jsCode = "$(function () { \n " +
             "     soby_PopulatePieChartRefreshData(); \n " +
             "    }); \n " +
@@ -19,11 +17,13 @@ export class SobyChart extends Component {
             "     var pieChart = new soby_PieChart('#soby_ChartDiv', 'Pie Chart', [dataSet], 'There is no record found.', ['January', 'February', 'March', 'April', 'May', 'June']); \n " +
                 "     pieChart.Width = 600; \n " +
                 "     pieChart.Height = 300; \n " +
-                "     pieChart.Initialize(); \n " +
-        "}";
+                //"     pieChart.Initialize(); \n " +
+            "}";
+        const jsCode1 = "$(function () { \n " +
+            "     $('#soby_ChartDiv').sobychart() \n " +
+            "    }); \n " +
         sobyMainLibrary.IncludeChartLibrary(function () {
-            console.log("loading script....")
-            sobyMainLibrary.IncludeJSSection('chartscript', jsCode);
+            sobyMainLibrary.IncludeJSSection('chartscript', jsCode1);
         });
     }
 

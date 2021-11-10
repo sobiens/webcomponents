@@ -15,21 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 var testObj = null;
 // ********************* SOBY EDIT CONTROLS *****************************
 var soby_EditControls = new Array();
-var SobyPaginationViewTypes;
-(function (SobyPaginationViewTypes) {
-    SobyPaginationViewTypes[SobyPaginationViewTypes["PageNumbers"] = 0] = "PageNumbers";
-    SobyPaginationViewTypes[SobyPaginationViewTypes["BasicButtons"] = 1] = "BasicButtons";
-    SobyPaginationViewTypes[SobyPaginationViewTypes["BasicButtons_PageNumbers"] = 2] = "BasicButtons_PageNumbers";
-    SobyPaginationViewTypes[SobyPaginationViewTypes["AdvancedButtons"] = 3] = "AdvancedButtons";
-    SobyPaginationViewTypes[SobyPaginationViewTypes["AdvancedButtons_PageNumbers"] = 4] = "AdvancedButtons_PageNumbers";
-    SobyPaginationViewTypes[SobyPaginationViewTypes["QuickButtons_PageNumbers"] = 5] = "QuickButtons_PageNumbers";
-})(SobyPaginationViewTypes || (SobyPaginationViewTypes = {}));
-var SobyPaginationVerticalAlign;
-(function (SobyPaginationVerticalAlign) {
-    SobyPaginationVerticalAlign[SobyPaginationVerticalAlign["Left"] = 0] = "Left";
-    SobyPaginationVerticalAlign[SobyPaginationVerticalAlign["Center"] = 1] = "Center";
-    SobyPaginationVerticalAlign[SobyPaginationVerticalAlign["Right"] = 2] = "Right";
-})(SobyPaginationVerticalAlign || (SobyPaginationVerticalAlign = {}));
 var SobyListItem = /** @class */ (function () {
     function SobyListItem(value, text) {
         this.Value = value;
@@ -45,13 +30,10 @@ var SobyTextBox = /** @class */ (function () {
     }
     SobyTextBox.prototype.PopulateChoiceItems = function () { };
     SobyTextBox.prototype.GetValue = function () {
-        var value = $("#" + this.ContainerClientId + " input.sobytextbox").val();
+        var value = parseInt($("#" + this.ContainerClientId + " input.sobytextbox").val().toString());
         if (this.FieldType === SobyFieldTypes.Number) {
             if (isNaN(value) === true) {
                 value = null;
-            }
-            else {
-                value = parseInt(value);
             }
         }
         return value;
@@ -343,7 +325,7 @@ var SobySPViewFilterCheckBoxList = /** @class */ (function (_super) {
                         if (option.text() === "(All)") {
                             continue;
                         }
-                        var listItem = new SobyListItem(option.val(), option.text());
+                        var listItem = new SobyListItem(option.val().toString(), option.text());
                         editControl.ListItems.push(listItem);
                     }
                     editControl.DrawChoiceItems();
@@ -481,7 +463,7 @@ var SobySelectBox = /** @class */ (function () {
                     $("#" + selectbox.ContainerClientId + " .selectbox a:visible:last").focus();
                     break;
                 case 37: //Left
-                    var keyword = $("#" + this.ContainerClientId + " .searchtextbox").val();
+                    var keyword = $("#" + selectbox.ContainerClientId + " .searchtextbox").val();
                     if (keyword === null || keyword === undefined || keyword === "") {
                         event.preventDefault();
                         $("#" + selectbox.ContainerClientId + " .selecteditemsandsearchpanel .selecteditem:last a").focus();
@@ -3799,7 +3781,7 @@ var soby_Carousel = /** @class */ (function () {
             carousel.PopulateGridData(items);
         };
         this.DataService.ItemBeingPopulated = function () {
-            $("#" + carouselDivID).html(this.SVGImages.GetLoading() + " Loading...");
+            $("#" + carouselDivID).html(carousel.SVGImages.GetLoading() + " Loading...");
         };
         if (populateItems === true) {
             this.DataService.PopulateItems();
@@ -4857,7 +4839,7 @@ var soby_ItemSelection = /** @class */ (function () {
         commonCloseDialog(this.DialogID, selectedValuesString);
     };
     soby_ItemSelection.prototype.GetItemArray = function () {
-        var text = $(this.ContentDivSelector + " .selecteditemvalues").val();
+        var text = $(this.ContentDivSelector + " .selecteditemvalues").val().toString();
         if (text === null || text === "") {
             return new Array();
         }
@@ -4935,6 +4917,184 @@ var soby_ItemSelection = /** @class */ (function () {
         soby_ItemSelections[this.ItemSelectionID] = this;
     };
     return soby_ItemSelection;
+}());
+// ************************************************************
+// VERSION 1.0.8.1
+// ********************* TREE VIEW *****************************
+var soby_TreeViews = new Array();
+var soby_TreeViewItems = new Array();
+var soby_TreeView = /** @class */ (function () {
+    function soby_TreeView(contentDivSelector, title, rootNodesDataService, childNodesDataService, emptyDataHtml, parentFieldName, valueFieldName, textFieldName) {
+        this.TreeViewID = "";
+        this.ContentDivSelector = "";
+        this.Title = "";
+        this.RootNodesDataService = null;
+        this.ChildNodesDataService = null;
+        this.AllowMultipleSelections = true;
+        this.AllowCheckBoxes = true;
+        this.EmptyDataHtml = "";
+        this.ParentFieldName = "";
+        this.ValueFieldName = "";
+        this.TextFieldName = "";
+        this.SVGImages = new soby_SVGImages();
+        this.OnSelectionChanged = null;
+        this.OnClick = null;
+        this.TreeViewID = "soby_itemselection_" + soby_guid();
+        this.ContentDivSelector = contentDivSelector;
+        this.Title = title;
+        this.RootNodesDataService = rootNodesDataService;
+        this.ChildNodesDataService = childNodesDataService;
+        this.EmptyDataHtml = emptyDataHtml;
+        this.ParentFieldName = parentFieldName;
+        this.ValueFieldName = valueFieldName;
+        this.TextFieldName = textFieldName;
+        this.EnsureItemSelectionExistency();
+        var treeview = this;
+        this.RootNodesDataService.ItemPopulated = function (items) {
+            soby_TreeViewItems = new Array();
+            items = treeview.RootDataBeingParsed(items);
+            treeview.PopulateNodes(treeview.ContentDivSelector, items);
+        };
+    }
+    soby_TreeView.prototype.RootDataBeingParsed = function (data) {
+        return data;
+    };
+    soby_TreeView.prototype.ChildDataBeingParsed = function (data) {
+        return data;
+    };
+    soby_TreeView.prototype.RootNodesDataServiceBeingQueried = function () {
+    };
+    soby_TreeView.prototype.ChildNodesDataServiceBeingQueried = function (node) {
+    };
+    soby_TreeView.prototype.Initialize = function () {
+        $(this.ContentDivSelector).addClass("soby_treeview");
+        this.RootNodesDataServiceBeingQueried();
+        this.RootNodesDataService.PopulateItems(null);
+    };
+    soby_TreeView.prototype.GetItemData = function (treeviewItemId) {
+        for (var i = 0; i < soby_TreeViewItems.length; i++) {
+            if (soby_TreeViewItems[i]["SobyTreeViewItemId"] === treeviewItemId) {
+                return soby_TreeViewItems[i];
+            }
+        }
+        return null;
+    };
+    soby_TreeView.prototype.GetRootNodeId = function (treeviewItemId) {
+        var rootNodeId = treeviewItemId;
+        var currentParentNodeId = treeviewItemId;
+        while (currentParentNodeId != null) {
+            currentParentNodeId = this.GetParentNodeId(currentParentNodeId);
+            if (currentParentNodeId != null) {
+                rootNodeId = currentParentNodeId;
+            }
+        }
+        return rootNodeId;
+    };
+    soby_TreeView.prototype.GetParentNodeId = function (treeviewItemId) {
+        var parentNode = $("#" + treeviewItemId).parent().parent();
+        if (parentNode.hasClass("soby_treeviewnode") === true) {
+            return parentNode.attr("id");
+        }
+        return;
+    };
+    soby_TreeView.prototype.GetRootNodeItemData = function (treeviewItemId) {
+        var rootNodeId = this.GetRootNodeId(treeviewItemId);
+        return this.GetItemData(rootNodeId);
+    };
+    soby_TreeView.prototype.GetParentNodeItemData = function (treeviewItemId) {
+        var parentNodeId = this.GetParentNodeId(treeviewItemId);
+        if (parentNodeId != null) {
+            return this.GetItemData(parentNodeId);
+        }
+        return;
+    };
+    soby_TreeView.prototype.ExpandNode = function (treeviewItemId) {
+        var isExpanded = $("#" + treeviewItemId).attr("isexpanded");
+        var isLoaded = $("#" + treeviewItemId).attr("isloaded");
+        if (isExpanded === "0") {
+            $("#" + treeviewItemId + " > ul").show();
+            $("#" + treeviewItemId).attr("isexpanded", "1");
+            $("#" + treeviewItemId + " > a > span > img").attr("isexpanded", "1").removeClass("soby-list-expand").addClass("soby-list-collapse");
+        }
+        else {
+            $("#" + treeviewItemId + " > ul").hide();
+            $("#" + treeviewItemId).attr("isexpanded", "0");
+            $("#" + treeviewItemId + " > a > span > img").attr("isexpanded", "1").removeClass("soby-list-collapse").addClass("soby-list-expand");
+        }
+        if (isLoaded === "0") {
+            $("#" + treeviewItemId).attr("isloaded", "1");
+            var itemData = this.GetItemData(treeviewItemId);
+            var treeview = this;
+            var value = itemData[this.ValueFieldName];
+            this.ChildNodesDataService.DataSourceBuilder.Filters.Clear();
+            this.ChildNodesDataService.DataSourceBuilder.Filters.AddFilter(this.ParentFieldName, value, SobyFieldTypes.Number, SobyFilterTypes.Equal, false, false);
+            this.ChildNodesDataService.ItemPopulated = function (items) {
+                items = treeview.ChildDataBeingParsed(items);
+                treeview.PopulateNodes("#" + treeviewItemId, items);
+                $("#" + treeviewItemId + " > ul").show();
+                $("#" + treeviewItemId).attr("isexpanded", "1");
+            };
+            this.ChildNodesDataServiceBeingQueried(itemData);
+            this.ChildNodesDataService.PopulateItems([treeviewItemId, value]);
+        }
+    };
+    soby_TreeView.prototype.PopulateNodes = function (contentDivSelector, items) {
+        var ul = $("<ul></ul>");
+        for (var i = 0; i < items.length; i++) {
+            var treeViewItemId = soby_guid();
+            items[i]["SobyTreeViewItemId"] = treeViewItemId;
+            soby_TreeViewItems.push(items[i]);
+            var value = items[i][this.ValueFieldName];
+            var text = items[i][this.TextFieldName];
+            var li = $("<li class='soby_treeviewnode'></li>");
+            li.attr("id", treeViewItemId);
+            li.attr("isloaded", "0");
+            li.attr("isexpanded", "0");
+            var checkBox = $("<input type='checkbox' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].CheckNode('" + treeViewItemId + "')\">");
+            checkBox.val(treeViewItemId);
+            checkBox.attr("name", "checkbox_" + this.TreeViewID);
+            var expandLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ExpandNode('" + treeViewItemId + "')\">" + this.SVGImages.GetArrowDown() + "</a>");
+            var selectLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ClickNode('" + treeViewItemId + "')\"></a>");
+            selectLink.text(text);
+            li.append(expandLink);
+            if (this.AllowCheckBoxes === true) {
+                li.append(checkBox);
+            }
+            li.append(selectLink);
+            ul.append(li);
+        }
+        $(contentDivSelector).append(ul);
+    };
+    soby_TreeView.prototype.GetSelectedDataItems = function () {
+        var selectedItems = new Array();
+        var selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");
+        if (this.AllowCheckBoxes === false) {
+            selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");
+        }
+        for (var i = 0; i < selectedInputs.length; i++) {
+            selectedItems[selectedItems.length] = this.GetItemData($(selectedInputs[i]).val());
+        }
+        return selectedItems;
+    };
+    soby_TreeView.prototype.ClickNode = function (treeViewItemId) {
+        if (this.OnClick != null) {
+            this.OnClick(this.TreeViewID, treeViewItemId);
+        }
+    };
+    soby_TreeView.prototype.CheckNode = function (treeViewItemId) {
+        if (this.OnSelectionChanged != null) {
+            this.OnSelectionChanged(this.TreeViewID);
+        }
+    };
+    soby_TreeView.prototype.EnsureItemSelectionExistency = function () {
+        for (var key in soby_TreeViews) {
+            if (key === this.TreeViewID) {
+                return;
+            }
+        }
+        soby_TreeViews[this.TreeViewID] = this;
+    };
+    return soby_TreeView;
 }());
 // ************************************************************
 // ********************* COMMON FUNCTIONS *****************************

@@ -20,7 +20,6 @@ function soby_PopulateLineChartRefreshData()
     var lineChart = new soby_LineChart("#soby_ChartDiv", "Line Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     lineChart.Width = 600;
     lineChart.Height = 300;
-    lineChart.ImagesFolderUrl = "/media/images";
     lineChart.Initialize();
 }
 

@@ -1,5 +1,18 @@
 declare var sobyLastReturnData: any;
 declare function ajaxHelper(uri: any, method: any, data: any, args: any, successCallback: any, errorCallback: any): JQueryPromise<any>;
+declare enum SobyPaginationViewTypes {
+    PageNumbers = 0,
+    BasicButtons = 1,
+    BasicButtons_PageNumbers = 2,
+    AdvancedButtons = 3,
+    AdvancedButtons_PageNumbers = 4,
+    QuickButtons_PageNumbers = 5
+}
+declare enum SobyPaginationVerticalAlign {
+    Left = 0,
+    Center = 1,
+    Right = 2
+}
 declare class soby_Transport {
     Read: soby_TransportRequest;
     Add: soby_TransportRequest;

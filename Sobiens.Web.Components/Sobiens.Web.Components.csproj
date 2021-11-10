@@ -142,23 +142,6 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
-    <Content Include="API Documentation\Grid\Grid.aspx" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Bold-webfont.svg" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-BoldItalic-webfont.svg" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Italic-webfont.svg" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Light-webfont.svg" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-LightItalic-webfont.svg" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Regular-webfont.svg" />
-    <Content Include="API Documentation\Grid\index.html" />
-    <Content Include="API Documentation\Grid\scripts\linenumber.js" />
-    <Content Include="API Documentation\Grid\scripts\prettify\Apache-License-2.0.txt" />
-    <Content Include="API Documentation\Grid\scripts\prettify\lang-css.js" />
-    <Content Include="API Documentation\Grid\scripts\prettify\prettify.js" />
-    <Content Include="API Documentation\Grid\soby.ui.components.js.html" />
-    <Content Include="API Documentation\Grid\soby_WebGrid.html" />
-    <Content Include="API Documentation\Grid\styles\jsdoc-default.css" />
-    <Content Include="API Documentation\Grid\styles\prettify-jsdoc.css" />
-    <Content Include="API Documentation\Grid\styles\prettify-tomorrow.css" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -750,10 +733,12 @@
     <Content Include="media\js\soby.service.js" />
     <Content Include="media\js\soby.spservice.js" />
     <Content Include="media\js\soby.ui.components.calendar.js" />
+    <Content Include="media\js\soby.ui.components.extension.angular.js" />
+    <Content Include="media\js\soby.ui.components.extension.vue.js" />
     <Content Include="media\js\soby.ui.components.codeview.js" />
     <Content Include="media\js\soby.ui.components.js" />
+    <Content Include="media\js\soby.ui.components.min.js" />
     <Content Include="media\js\soby.ui.components.scheduler.js" />
-    <Content Include="media\js\soby.ui.components.treeview.js" />
     <Content Include="media\js\soby.validator.js" />
     <Content Include="packages.config" />
     <Content Include="Css\bootstrap-theme.css.map" />
@@ -764,18 +749,6 @@
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Bold-webfont.eot" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Bold-webfont.woff" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-BoldItalic-webfont.eot" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-BoldItalic-webfont.woff" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Italic-webfont.eot" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Italic-webfont.woff" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Light-webfont.eot" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Light-webfont.woff" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-LightItalic-webfont.eot" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-LightItalic-webfont.woff" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Regular-webfont.eot" />
-    <Content Include="API Documentation\Grid\fonts\OpenSans-Regular-webfont.woff" />
     <Content Include="Css\bootstrap-grid.css.map" />
     <Content Include="Css\bootstrap-grid.min.css.map" />
     <Content Include="Css\bootstrap-grid.rtl.css.map" />
@@ -796,7 +769,7 @@
     <Content Include="js\bootstrap.esm.min.js.map" />
     <Content Include="js\bootstrap.js.map" />
     <Content Include="js\bootstrap.min.js.map" />
-    <Content Include="download\Sobiens.Web.Components 1.0.9.3.zip" />
+    <Content Include="download\Sobiens.Web.Components 1.0.9.4.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-3.1.0.js" />
@@ -809,13 +782,13 @@
     <TypeScriptCompile Include="media\js\soby.service.ts" />
     <TypeScriptCompile Include="media\js\soby.spservice.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.calendar.ts" />
+    <Content Include="media\js\soby.ui.components.extension.jquery.js" />
     <TypeScriptCompile Include="media\js\soby.ui.components.codeview.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.scheduler.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.charts.ts" />
-    <TypeScriptCompile Include="media\js\soby.ui.components.treeview.ts" />
     <TypeScriptCompile Include="media\js\soby.ui.components.ts" />
     <TypeScriptCompile Include="media\js\soby.validator.ts" />
-    <TypeScriptCompile Include="Scripts\SPContext.d.ts" />
+    <TypeScriptCompile Include="media\js\SPContext.d.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\customizedtemplate2.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\customizedtemplate1.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\CodeView\codeview.ts" />
@@ -862,6 +835,9 @@
     <Content Include="Tutorials\SobyCalendarView\Getting Started.aspx" />
     <Content Include="Tutorials\SobyChart\ColumnChart.aspx" />
     <Content Include="Tutorials\SobyChart\DoughnutChart.aspx" />
+    <Content Include="Tutorials\SobyChart\PieChart-Angular.aspx" />
+    <Content Include="Tutorials\SobyChart\PieChart-Vue.aspx" />
+    <Content Include="Tutorials\SobyChart\PieChart-JQuery.aspx" />
     <Content Include="Tutorials\SobyChart\PolarAreaChart.aspx" />
     <Content Include="Tutorials\SobyChart\RadarChart.aspx" />
     <Content Include="Tutorials\SobyChart\PieChart.aspx" />
@@ -998,13 +974,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API Documentation\Grid\Grid.aspx.cs">
-      <DependentUpon>Grid.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="API Documentation\Grid\Grid.aspx.designer.cs">
-      <DependentUpon>Grid.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -1227,6 +1196,27 @@
     </Compile>
     <Compile Include="Tutorials\SobyChart\DoughnutChart.aspx.designer.cs">
       <DependentUpon>DoughnutChart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\PieChart-Angular.aspx.cs">
+      <DependentUpon>PieChart-Angular.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\PieChart-Angular.aspx.designer.cs">
+      <DependentUpon>PieChart-Angular.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\PieChart-Vue.aspx.cs">
+      <DependentUpon>PieChart-Vue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\PieChart-Vue.aspx.designer.cs">
+      <DependentUpon>PieChart-Vue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\PieChart-JQuery.aspx.cs">
+      <DependentUpon>PieChart-JQuery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\PieChart-JQuery.aspx.designer.cs">
+      <DependentUpon>PieChart-JQuery.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyChart\PolarAreaChart.aspx.cs">
       <DependentUpon>PolarAreaChart.aspx</DependentUpon>
@@ -1768,6 +1758,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="API Documentation\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
@@ -1775,8 +1766,8 @@
     <Content Include="Site.Master" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\jqueryui.d.ts" />
-    <TypeScriptCompile Include="Scripts\jquery.d.ts" />
+    <TypeScriptCompile Include="media\js\jqueryui.d.ts" />
+    <TypeScriptCompile Include="media\js\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\test.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.carousel.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\SP\soby.customers.ts" />
@@ -1813,7 +1804,7 @@
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
-    <TypeScriptJsxEmit>None</TypeScriptJsxEmit>
+    <TypeScriptJsxEmit>React</TypeScriptJsxEmit>
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
     <TypeScriptOutFile />
@@ -1851,9 +1842,18 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <PropertyGroup>
+    <PostBuildEvent>rmdir /s /q "$(TargetDir)\..\API Documentation"
+XCOPY "$(TargetDir)..\media\js\*.ts" "$(TargetDir)" /S /Y
+XCOPY "$(TargetDir)..\media\js\*.json" "$(TargetDir)" /S /Y
+typedoc --out "$(TargetDir)\..\API Documentation" soby.service.ts soby.spservice.ts soby.ui.components.ts soby.ui.components.charts.ts soby.ui.components.scheduler.ts soby.ui.components.codeview.ts soby.ui.components.calendar.ts
+uglifyjs --compress --mangle --output ../media/js/soby.ui.components.min.js -- ../media/js/soby.service.js ../media/js/soby.spservice.js ../media/js/soby.ui.components.js ../media/js/soby.ui.components.calendar.js ../media/js/soby.ui.components.charts.js ../media/js/soby.ui.components.codeview.js ../media/js/soby.ui.components.scheduler.js ../media/js/soby.validator.js ../media/js/soby.ui.components.extension.jquery.js
+</PostBuildEvent>
+  </PropertyGroup>
+  <!--
+  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+    <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
   </Target>

@@ -20,7 +20,6 @@ function soby_PopulateColumnChartRefreshData()
     var columnChart = new soby_ColumnChart("#soby_ChartDiv", "Column Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     columnChart.Width = 600;
     columnChart.Height = 300;
-    columnChart.ImagesFolderUrl = "/media/images";
     columnChart.SeriesPosition = SobyChartElementPosition.Top;
     columnChart.SeriesVerticalAligment = SobyChartVerticalAligment.Bottom;
     columnChart.SeriesHorizontalAligment = SobyChartHorizontalAligment.Right;

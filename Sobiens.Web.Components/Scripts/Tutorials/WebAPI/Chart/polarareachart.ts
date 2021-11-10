@@ -12,7 +12,6 @@ function soby_PopulatePolarAreaChartRefreshData()
     var polarAreaChart = new soby_PolarAreaChart("#soby_ChartDiv", "Polar Area Chart", [dataSet], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     polarAreaChart.Width = 600;
     polarAreaChart.Height = 300;
-    polarAreaChart.ImagesFolderUrl = "/media/images";
     polarAreaChart.Initialize();
 }
 

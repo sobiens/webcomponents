@@ -52,7 +52,6 @@ var soby_Chart = /** @class */ (function () {
         this.Width = 200;
         this.Datasets = null;
         this.EmptyDataHtml = "";
-        this.ImagesFolderUrl = "/_layouts/1033/images";
         this.Type = null;
         this.LabelPosition = SobyChartElementPosition.Bottom;
         this.SeriesPosition = SobyChartElementPosition.Top;
@@ -504,9 +503,9 @@ var soby_LineChart = /** @class */ (function (_super) {
 var soby_ColumnChart = /** @class */ (function (_super) {
     __extends(soby_ColumnChart, _super);
     function soby_ColumnChart(contentDivSelector, title, datasets, emptyDataHtml, labels) {
-        var _this = _super.call(this, SobyChartTypes.ColumnChart, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
-        _this.ColumnWidth = null;
-        return _this;
+        var _this_1 = _super.call(this, SobyChartTypes.ColumnChart, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
+        _this_1.ColumnWidth = null;
+        return _this_1;
     }
     soby_ColumnChart.prototype.PopulateItems = function () {
         _super.prototype.PopulateItems.call(this);
@@ -540,10 +539,10 @@ var soby_ColumnChart = /** @class */ (function (_super) {
 var soby_BarChart = /** @class */ (function (_super) {
     __extends(soby_BarChart, _super);
     function soby_BarChart(contentDivSelector, title, datasets, emptyDataHtml, labels) {
-        var _this = _super.call(this, SobyChartTypes.BarChart, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
-        _this.BarHeight = null;
-        _this.LabelPosition = SobyChartElementPosition.Left;
-        return _this;
+        var _this_1 = _super.call(this, SobyChartTypes.BarChart, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
+        _this_1.BarHeight = null;
+        _this_1.LabelPosition = SobyChartElementPosition.Left;
+        return _this_1;
     }
     soby_BarChart.prototype.PopulateItems = function () {
         _super.prototype.PopulateItems.call(this);
@@ -603,10 +602,10 @@ var soby_RadarChart = /** @class */ (function (_super) {
 var soby_PieChart = /** @class */ (function (_super) {
     __extends(soby_PieChart, _super);
     function soby_PieChart(contentDivSelector, title, datasets, emptyDataHtml, labels) {
-        var _this = _super.call(this, SobyChartTypes.PieChart, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
-        _this.Offset = 0;
-        _this.Radius = 0;
-        return _this;
+        var _this_1 = _super.call(this, SobyChartTypes.PieChart, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
+        _this_1.Offset = 0;
+        _this_1.Radius = 0;
+        return _this_1;
     }
     soby_PieChart.prototype.PopulateItems = function () {
         _super.prototype.PopulateItems.call(this);
@@ -663,20 +662,20 @@ var soby_PieChart = /** @class */ (function (_super) {
 var soby_PolarAreaChart = /** @class */ (function (_super) {
     __extends(soby_PolarAreaChart, _super);
     function soby_PolarAreaChart(contentDivSelector, title, datasets, emptyDataHtml, labels) {
-        var _this = _super.call(this, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
-        _this.Type = SobyChartTypes.PolarAreaChart;
-        _this.Offset = 3;
-        return _this;
+        var _this_1 = _super.call(this, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
+        _this_1.Type = SobyChartTypes.PolarAreaChart;
+        _this_1.Offset = 3;
+        return _this_1;
     }
     return soby_PolarAreaChart;
 }(soby_PieChart));
 var soby_DoughnutChart = /** @class */ (function (_super) {
     __extends(soby_DoughnutChart, _super);
     function soby_DoughnutChart(contentDivSelector, title, datasets, emptyDataHtml, labels) {
-        var _this = _super.call(this, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
-        _this.Type = SobyChartTypes.DoughnutChart;
-        _this.Offset = 0;
-        return _this;
+        var _this_1 = _super.call(this, contentDivSelector, title, datasets, emptyDataHtml, labels) || this;
+        _this_1.Type = SobyChartTypes.DoughnutChart;
+        _this_1.Offset = 0;
+        return _this_1;
     }
     return soby_DoughnutChart;
 }(soby_PieChart));
@@ -753,6 +752,7 @@ var soby_SeriesPanel = /** @class */ (function () {
 var soby_ChartDataset = /** @class */ (function () {
     function soby_ChartDataset() {
         this.Title = "";
+        this.Type = SobyChartTypes.BarChart;
     }
     return soby_ChartDataset;
 }());
@@ -811,5 +811,50 @@ var SobyChartHorizontalAligment;
     SobyChartHorizontalAligment[SobyChartHorizontalAligment["Center"] = 1] = "Center";
     SobyChartHorizontalAligment[SobyChartHorizontalAligment["Right"] = 2] = "Right";
 })(SobyChartHorizontalAligment || (SobyChartHorizontalAligment = {}));
+function sobyGenerateChartFromHtmlElement(containerId) {
+    var _this = $("#" + containerId);
+    var datasets = [];
+    var datasetElements = _this.find(".dataset");
+    var chartType = "";
+    for (var i = 0; i < datasetElements.length; i++) {
+        var datasetElement = $(datasetElements[i]);
+        var dataSet = new soby_ChartDataset();
+        dataSet.Title = datasetElement.data("title");
+        chartType = datasetElement.data("type");
+        var data = new Array();
+        var dataStringArray = datasetElement.data("data").split(";#");
+        for (var x = 0; x < dataStringArray.length; x++) {
+            var numberData = 0;
+            if (dataStringArray[x] !== null || dataStringArray[x] !== undefined || dataStringArray[x] !== "")
+                numberData = parseFloat(dataStringArray[x]);
+            data.push(numberData);
+        }
+        dataSet.Data = data;
+        datasets.push(dataSet);
+    }
+    var labels = _this.find(".labels").data("labels").split(";#");
+    var chart = null;
+    if (chartType === "PieChart") {
+        chart = new soby_PieChart("#" + _this.attr("id"), "Pie Chart", datasets, "There is no record found.", labels);
+    }
+    else if (chartType === "ColumnChart") {
+        chart = new soby_ColumnChart("#" + _this.attr("id"), "Column Chart", datasets, "There is no record found.", labels);
+    }
+    else if (chartType === "LineChart") {
+        chart = new soby_LineChart("#" + _this.attr("id"), "Line Chart", datasets, "There is no record found.", labels);
+    }
+    else if (chartType === "DoughnutChart") {
+        chart = new soby_DoughnutChart("#" + _this.attr("id"), "Doughnut Chart", datasets, "There is no record found.", labels);
+    }
+    else if (chartType === "BarChart") {
+        chart = new soby_BarChart("#" + _this.attr("id"), "Bar Chart", datasets, "There is no record found.", labels);
+    }
+    else if (chartType === "PolarAreaChart") {
+        chart = new soby_PolarAreaChart("#" + _this.attr("id"), "Polar Area Chart", datasets, "There is no record found.", labels);
+    }
+    chart.Width = _this.data("width");
+    chart.Height = _this.data("height");
+    chart.Initialize();
+}
 // ************************************************************
 //# sourceMappingURL=soby.ui.components.charts.js.map

@@ -7,7 +7,6 @@ function soby_PopulateScheduler()
 {
     var dateNow = new Date();
     scheduler = new soby_Scheduler("#soby_SchedulerDiv", "Premises", "Arabalar", dateNow.getFullYear(), dateNow.getMonth()+1, dateNow.getDate(), "No record", "Id", "Title", "Description", "DueDate", "", "Title", "Title", 1000, 800);
-    scheduler.ImagesFolderUrl = "/media/images";
     var category1 = scheduler.AddCategory("1", "Fiat");
     var category2 = scheduler.AddCategory("2", "Ford");
     var category3 = scheduler.AddCategory("3", "Honda");

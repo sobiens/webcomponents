@@ -102,7 +102,7 @@ Update-Database</pre><br />
             <li>You can now hit F5 to run and play with your Task Management web application.</li>
         </ul>
 
-    <br />Want to learn more about the grid component? Check out the <a href="/API Documentation/Grid/Grid.aspx">API documentation</a>.
+        <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
 
     <aside>
         <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />

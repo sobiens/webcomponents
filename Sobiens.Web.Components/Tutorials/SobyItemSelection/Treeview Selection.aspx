@@ -19,7 +19,6 @@
         Setting item selector type as "SobyItemSelectorTypes.TreeView" will make it work as treeview selection. 
         <pre class="js">itemSelection = new soby_ItemSelection("#soby_BooksDiv", "Meters", <strong>SobyItemSelectorTypes.TreeView</strong>, autoCompleteBookDataService, advancedSearchBookDataService, advancedSearchBookChildDataService, "No record", "BookSelectionDialog", "/Management/CustomerSelection.html", "Id", "Title", "ParentId"); 
             itemSelection.AllowMultipleSelections = false;
-            itemSelection.ImagesFolderUrl = "/media/images";
             itemSelection.Initialize();
         </pre>
     </p>
@@ -44,7 +43,7 @@
 <span class="tag_start">&lt;div</span> <span class="attr_name">id</span>=<span class="attr_value">'soby_BooksDiv'</span> <span class="tag_start">&gt;&lt;/div&gt;</span>
             <div class="viewsourcecodefileoutput"></div>
         </pre>
-        <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/Grid/Grid.aspx">API documentation</a>.
+        <br />Want to learn more about the item selection component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 </div>
     <div class="col-md-3">

@@ -167,13 +167,11 @@
             var lineChart = new soby_LineChart("#homeLineChartDiv", "Line Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
             lineChart.Width = 600;
             lineChart.Height = 300;
-            lineChart.ImagesFolderUrl = "/media/images";
             lineChart.Initialize();
 
             var barChart = new soby_BarChart("#homeBarChartDiv", "Bar Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
             barChart.Width = 600;
             barChart.Height = 300;
-            barChart.ImagesFolderUrl = "/media/images";
             barChart.Initialize();
         }
 
@@ -190,7 +188,6 @@
             bookService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
             bookDataSourceBuilder.RowLimit = 40;
             bookGrid = new soby_WebGrid("#homeDataGridDiv", "Books", bookService, "There is no record found.");
-            bookGrid.ImagesFolderUrl = "/media/images";
             bookGrid.IsGroupable = true;
             bookGrid.IsEditable = false;
             bookGrid.AddKeyField("Id", "Id");
@@ -427,7 +424,6 @@
             var bookGrid = new soby_DataRepeater("#homeDataRepeaterDiv", "Books", bookService, "There is no record found.");
             bookGrid.ShowHeader = false;
             bookGrid.MaxCellCount = 3;
-            bookGrid.ImagesFolderUrl = "/media/images";
             bookGrid.AddKeyField("Id", "Id");
             bookGrid.AddOrderByField("Title", true);
             //    bookGrid.AddGroupByField("Genre", true);
@@ -464,7 +460,6 @@
             premisesChildrenDataService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Premises", "json", "application/json; charset=utf-8", "GET");
 
             treeView = new soby_TreeView("#homeTreeViewDiv", "Premises", premisesRootDataService, premisesChildrenDataService, "No record", "ParentId", "Id", "Title");
-            treeView.ImagesFolderUrl = "/media/images";
             treeView.Initialize();
             treeView.OnClick = function (treeViewID, treeViewItemId) {
                 var itemData = soby_TreeViews[treeViewID].GetItemData(treeViewItemId);
@@ -491,7 +486,6 @@
             calendarDataService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Tasks", "json", "application/json; charset=utf-8", "GET");
 
             calendarView = new soby_CalendarView("#homeCalendarViewDiv", "Premises", calendarDataService, 2019, 1, 6, "No record", "Id", "Title", "Description", "DueDate", "", "Title", "Title", "500px", "500px");
-            calendarView.ImagesFolderUrl = "/media/images";
             calendarView.Initialize();
             calendarView.OnClick = function (calendarViewID, calendarViewItemId) {
                 var itemData = soby_CalendarViews[calendarViewID].GetItemData(calendarViewItemId);
@@ -528,7 +522,6 @@
             advancedSearchBookDataService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Books", "json", "application/json; charset=utf-8", "GET");
 
             itemSelection = new soby_ItemSelection("#homeItemSelectionDiv", "Meters", SobyItemSelectorTypes.GridView, autoCompleteBookDataService, advancedSearchBookDataService, null, "No record", "BookSelectionDialog", "/Management/CustomerSelection.html", "Id", "Title", "");
-            itemSelection.ImagesFolderUrl = "/media/images";
             itemSelection.Initialize();
 
         }

@@ -20,7 +20,6 @@ function soby_PopulateTreeView() {
     premisesChildrenDataService.Transport.Read = new soby_TransportRequest(soby_GetTutorialWebAPIUrl() + "/Premises", "json", "application/json; charset=utf-8", "GET");
 
     treeView = new soby_TreeView("#soby_PremisesDiv", "Premises", premisesRootDataService, premisesChildrenDataService, "No record", "ParentId", "Id", "Title");
-    treeView.ImagesFolderUrl = "/media/images";
     treeView.Initialize();
     treeView.OnClick = function (treeViewID, treeViewItemId)
     {

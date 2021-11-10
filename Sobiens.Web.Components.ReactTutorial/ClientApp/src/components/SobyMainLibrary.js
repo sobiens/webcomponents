@@ -48,8 +48,10 @@ export class SobyMainLibrary {
         library.IncludeJSLibrary("jquery-3.1.0.js", function () {
             library.IncludeJSLibrary("soby.service.js", function () {
                 library.IncludeJSLibrary("soby.ui.components.charts.js", function () {
-                    callback();
-                    library.IncludeCSSLibrary("soby.ui.components.css", function () {
+                    library.IncludeJSLibrary("soby.ui.components.charts.jquery.js", function () {
+                        callback();
+                        library.IncludeCSSLibrary("soby.ui.components.css", function () {
+                        });
                     });
                 });
             });

@@ -81,7 +81,6 @@ var soby_Scheduler = /** @class */ (function () {
         this.SchedulerTableTotalDays = 1;
         this.LinkFieldName = "";
         this.ImageFieldName = "";
-        this.ImagesFolderUrl = "/_layouts/1033/images";
         this.MinuteWidthWeight = 1;
         this.CellHeight = 32;
         //SingleCellLengthAsMinute: number = 15;

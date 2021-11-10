@@ -30,9 +30,6 @@
             <li>All the components require container id as a parameter. As an example usage of it in grid component is below<br />
                 <pre class="js"><span class="code_keyword">var</span> sampleGrid = <span class="code_keyword">new</span> soby_WebGrid("#soby_ComponentContainer", "Sample Title", sampleService, "There is no record found."); </pre>
             </li>
-            <li>Also components require image folder url. As an example usage of it in grid component is below. This is where you copy the image folder in your project.<br />
-                <pre class="js">sampleGrid.ImagesFolderUrl = "/media/images"; </pre>
-            </li>
             <li>Now you are ready to have some fun with our data components. Please check the <a href="/Default.aspx">Tutorials and documentations</a></li>
         </ul>
     </div>

@@ -36,7 +36,6 @@ declare class soby_Chart implements soby_ChartInterface {
     Labels: Array<string>;
     Datasets: Array<soby_ChartDataset>;
     EmptyDataHtml: string;
-    ImagesFolderUrl: string;
     Type: SobyChartTypes;
     LabelPosition: SobyChartElementPosition;
     SeriesPosition: SobyChartElementPosition;
@@ -113,6 +112,7 @@ declare class soby_SeriesPanel {
 }
 declare class soby_ChartDataset {
     Title: string;
+    Type: SobyChartTypes;
     Data: Array<number>;
 }
 declare class soby_ChartDotValue {
@@ -158,3 +158,4 @@ declare enum SobyChartHorizontalAligment {
     Center = 1,
     Right = 2
 }
+declare function sobyGenerateChartFromHtmlElement(containerId: any): void;

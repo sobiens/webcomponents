@@ -15,7 +15,6 @@ namespace Sobiens.Web.Components.Mvc.SobyGrid
         internal string _Width = string.Empty;
         internal string _Height = string.Empty;
         internal string _PrimaryKey = string.Empty;
-        internal string _ImageUrl = string.Empty;
         
         public Transport _DataSource = null;
         public Columns _Columns = null;
@@ -63,7 +62,6 @@ namespace Sobiens.Web.Components.Mvc.SobyGrid
             }
 
             sb.Append("var bookGrid = new soby_WebGrid(\"#" + gridContainerId + "\", \"Books\", bookService, \"There is no record found.\");" + Environment.NewLine);
-            sb.Append("bookGrid.ImagesFolderUrl = \"" + this._ImageUrl + "\";" + Environment.NewLine);
             sb.Append("bookGrid.AddKeyField(\"Id\");" + Environment.NewLine);
             foreach (Column c in this._Columns)
             {
@@ -95,11 +93,6 @@ namespace Sobiens.Web.Components.Mvc.SobyGrid
             return this;
         }
 
-        public SobyGrid ImageUrl(string imageUrl)
-        {
-            this._ImageUrl = imageUrl;
-            return this;
-        }
 
         public SobyGrid PrimaryKey(string primaryKey)
         {
