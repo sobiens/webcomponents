@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Admin.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Admin" Title="DataGrid - Admin Example" %>
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
@@ -13,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
             <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
@@ -34,7 +33,4 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" id="SobyGridSideMenuControl" />
-    </div>
 </asp:Content>

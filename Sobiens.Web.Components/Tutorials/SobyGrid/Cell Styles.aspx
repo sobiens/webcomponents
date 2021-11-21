@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Cell Styles.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.CellStyles" Title="DataGrid - Cell Styles Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
     <p>This example demonstrates how to use cell style in the Soby Data Grid. <br />
                 Cell style can be passed into "AddColumn" method. Parameter should be given as standart style property on an html element.
         <pre class="js">bookGrid.AddColumn("Title", "Title", SobyShowFieldsOn.All, null, null, true, true, true, null, "font-size:15px", null);</pre>
@@ -92,7 +90,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+ 
 </asp:Content>

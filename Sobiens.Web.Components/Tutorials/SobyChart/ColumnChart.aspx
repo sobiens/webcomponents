@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ColumnChart.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyChart.ColumnChart" Title="Column Chart" %>
 
-<%@ Register Src="~/Controls/SobyChartSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyChartSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
- <div class="article col-md-9">
+ <div>
 
 
                 <div class="article" style="float: left;width: 100%;">
@@ -44,24 +42,27 @@
 &lt;/body&gt;
 &lt;/html&gt;</div>
                         <div class="csscode"></div>
-                        <div class="jscode">    var dataSet1 = new soby_ChartDataset();
+                        <div class="jscode">    var dataSet1 = new SobyChartDataset();
     dataSet1.Title = "Chart1";
+    dataSet1.Type=SobyChartTypes.ColumnChart;
     dataSet1.Data = [1, 10, 70, 35, 50, 100];
 
-    var dataSet2 = new soby_ChartDataset();
+    var dataSet2 = new SobyChartDataset();
     dataSet2.Title = "Chart2";
+    dataSet2.Type=SobyChartTypes.ColumnChart;
     dataSet2.Data = [12, 15, 17, 71, 22, 50];
 
-    var dataSet3 = new soby_ChartDataset();
+    var dataSet3 = new SobyChartDataset();
     dataSet3.Title = "Chart3";
+    dataSet3.Type=SobyChartTypes.ColumnChart;
     dataSet3.Data = [21, 51, 31, 6, 62, 24];
 
-    var columnChart = new soby_ColumnChart("#soby_ChartDiv", "Column Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+    var columnChart = new SobyChart("#soby_ChartDiv", "Column Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     columnChart.Width = 600;
     columnChart.Height = 300;
-    columnChart.SeriesPosition = SobyChartElementPosition.Top;
-    columnChart.SeriesVerticalAligment = SobyChartVerticalAligment.Bottom;
-    columnChart.SeriesHorizontalAligment = SobyChartHorizontalAligment.Right;
+    columnChart.Legend.Position = SobyChartElementPosition.Top;
+    columnChart.Legend.VerticalAligment = SobyChartVerticalAligment.Bottom;
+    columnChart.Legend.HorizontalAligment = SobyChartHorizontalAligment.Right;
     columnChart.Initialize();
                         </div>
                         <div class="codedescription">This example displays all array values</div>
@@ -195,11 +196,11 @@
                 });
 
                 function soby_PopulateCustomizedCodeView() {
-                    var codeView1 = new soby_CodeView(".soby_JQueryCodeDiv", "jQuery Examples", SobyCodeViewTypes.HtmlParts);
+                    var codeView1 = new soby_CodeView(".soby_JavascriptCodeDiv", "javascript Examples", SobyCodeViewTypes.HtmlParts);
                     codeView1.ActiveView = SobyCodeViews.Js;
                     codeView1.Initialize();
 
-                    var codeView2 = new soby_CodeView(".soby_JavascriptCodeDiv", "javascript Examples", SobyCodeViewTypes.HtmlParts);
+                    var codeView2 = new soby_CodeView(".soby_JQueryCodeDiv", "jQuery Examples", SobyCodeViewTypes.HtmlParts);
                     codeView2.ActiveView = SobyCodeViews.Js;
                     codeView2.Initialize();
 
@@ -220,7 +221,5 @@
     </div>
 
         </div>
-    <div class="col-md-3">
-        <uc1:SobyChartSideMenuControl runat="server" ID="SobyChartSideMenuControl" />
-    </div>
+
 </asp:Content>

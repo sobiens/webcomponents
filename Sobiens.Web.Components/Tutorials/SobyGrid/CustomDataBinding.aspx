@@ -1,8 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="CustomDataBinding.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.CustomDataBinding" Title="DataGrid - WSBuilder Usage Example" %>
 
-
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -15,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
             <p>This example demonstrates how to use soby_WSBuilder class to apply custom api. <br />
         "soby_WSBuilder" class can be initialized and "GetPagingQuery", "GetOrderByFieldsQuery", "GetViewFieldsQuery", "GetWhereQuery", "GetMainQuery", "DataBeingParsed" functions can be overwritten to apply parameters required for your custom api. You can check the following code;
 
@@ -265,7 +262,4 @@ soby_PopulateGridWCFDataBinding();
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" id="SobyGridSideMenuControl" />
-    </div>
 </asp:Content>

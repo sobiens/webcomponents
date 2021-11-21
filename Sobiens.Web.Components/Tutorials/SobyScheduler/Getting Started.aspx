@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Getting Started.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Scheduler" Title="Calendar View" %>
 
-<%@ Register Src="~/Controls/SobySchedulerSideMenuControl.ascx" TagPrefix="uc1" TagName="SobySchedulerSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -15,8 +13,7 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 <br />
-        <uc1:SobySchedulerSideMenuControl runat="server" ID="SobySchedulerSideMenuControl1" />
-    <div class="article">
+    <div>
             <script src="/media/js/jquery-ui-1.12.0.min.js" type="text/javascript"></script>
 
             <link href="/media/css/soby.ui.components.scheduler.css" rel="stylesheet" type="text/css" media="all" />

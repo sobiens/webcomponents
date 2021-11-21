@@ -1,9 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="General.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyWizard.General" %>
 
-<%@ Register Src="~/Controls/SobyWizardSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyWizardSideMenuControl" %>
-
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
         <p>
             This example demonstrates how to use Soby Wizard control.
         </p>
@@ -105,7 +103,5 @@
             Want to learn more about the grid component? Check out the <a href="../../API Documentation/Wizard/Wizard.aspx">API documentation</a>.
         </div>
     </div>
-    <div class="col-md-3">
-        <uc1:SobyWizardSideMenuControl runat="server" ID="SobyWizardSideMenuControl" />
-    </div>
+
 </asp:Content>

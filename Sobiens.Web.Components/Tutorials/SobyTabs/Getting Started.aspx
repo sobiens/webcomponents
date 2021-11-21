@@ -1,9 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Getting Started.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyTabs.GettingStarted" %>
 
-<%@ Register Src="~/Controls/SobyTabsSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyTabsSideMenuControl" %>
-
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
         <p>
             This example demonstrates how to use Soby Tabs control.
         </p>
@@ -99,7 +97,5 @@
             Want to learn more about the grid component? Check out the <a href="../../API Documentation/Tabs/Wizard.aspx">API documentation</a>.
         </div>
     </div>
-    <div class="col-md-3">
-        <uc1:SobyTabsSideMenuControl runat="server" ID="SobyTabsSideMenuControl" />
-    </div>
+
 </asp:Content>

@@ -315,14 +315,37 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
     /************************************ END MEMBERS ********************************/
     /************************************ EVENTS *************************************/
     /**
-     * Item creation event.
+     * Item added event.
      *
-     * @event soby_WebGrid#ItemCreated
+     * @event soby_WebGrid#ItemAdded
      * @type {object}
      * @property {object} rowID - Identifier of the row.
      * @property {object} item - Data item related with the row.
      */
-    ItemCreated: any;
+    OnItemAdded: any;
+    /**
+     * Item update event.
+     *
+     * @event soby_WebGrid#ItemUpdated
+     * @type {object}
+     * @property {object} item - Data item related with the row.
+     */
+    OnItemUpdated: any;
+    /**
+     * Items delete event.
+     *
+     * @event soby_WebGrid#OnItemsDeleted
+     * @type {object}
+     * @property {object} items - Data items related with the row.
+     */
+    OnItemsDeleted: any;
+    /**
+     * Grid row population event.
+     *
+     * @event soby_WebGrid#OnGridRowPopulated
+     * @type {object}
+     */
+    OnGridRowPopulated: any;
     /**
      * Grid population event.
      *
@@ -1135,28 +1158,62 @@ declare class soby_Tab {
     HideTabPanels: () => void;
     ShowTabPanels: () => void;
 }
-declare let soby_Menus: any[];
-declare class soby_Menu {
-    constructor(contentDivSelector: any, dataService: any, displayNameField: any, idField: any, parentIdField: any);
+declare enum SobyMenuItemTypes {
+    Toggler = 0,
+    Standard = 1,
+    HtmlContent = 3,
+    Divider = 2
+}
+declare enum SobyMenuViewTypes {
+    LeftSideBar = 0,
+    TopBar = 1
+}
+declare let SobyMenus: any[];
+declare class SobyMenuItem {
+    constructor(parentMenuItem: SobyMenuItem, title: string, link: string, iconSrc: string, tooltip: string);
+    MenuItemID: string;
+    Type: SobyMenuItemTypes;
+    IconSrc: string;
+    Title: string;
+    Tooltip: string;
+    Link: string;
+    ParentMenuItem: SobyMenuItem;
+    Items: Array<SobyMenuItem>;
+    /************************************ EVENTS *************************************/
+    /**
+     * Menu item click event.
+     *
+     * @event SobyMenu#OnMenuItemClicked
+     * @type {object}
+     */
+    OnMenuItemClicked: any;
+}
+declare class SobyMenu {
+    constructor(contentDivSelector: any, viewType: SobyMenuViewTypes);
     MenuID: string;
+    ViewType: SobyMenuViewTypes;
     ContentDivSelector: string;
-    DisplayNameField: string;
-    IDField: string;
-    ParentIDField: string;
-    DataService: any;
     MaxWidth: any;
     TileWidth: string;
     TileHeight: string;
     Width: string;
-    Items: any;
+    Items: Array<SobyMenuItem>;
+    SVGImages: soby_SVGImages;
+    AutoSelectCurrentPageLink: boolean;
     EnsureMenusExistency: () => void;
-    GetItemById: (id: any) => any;
-    ActivateMenuTab: (linkId: any) => void;
-    EventBeforeTabChange: any;
-    EventAfterTabChange: any;
-    PopulateGridData: (items: any) => void;
-    Initialize: () => void;
+    GetItemById: (id: any, menuItem: SobyMenuItem) => SobyMenuItem;
+    GetItemByLink: (link: string, menuItem: SobyMenuItem) => SobyMenuItem;
+    SelectCurrentPageLink(): void;
+    Add(parentMenuItem: SobyMenuItem, title: string, link: string, iconSrc: string, tooltip: string): SobyMenuItem;
+    AddToggler(parentMenuItem: SobyMenuItem, title: string, iconSrc: string, tooltip: string): SobyMenuItem;
+    AddDivider(parentMenuItem: SobyMenuItem): SobyMenuItem;
+    PopulateItems: (menuItem: SobyMenuItem, shouldGenerateHtml: boolean) => void;
+    ExpandCollapseMenu(): void;
+    ExpandCollapseSubMenuItems(parentMenuItemId: any, parentMenuItemTitle: any): void;
+    Initialize: (shouldGenerateHtml: boolean) => void;
 }
+declare function sobyGenerateMenuFromHtmlElement(containerId: any): SobyMenu;
+declare function sobyParseMenuItemsFromHtmlElement(menu: any, menuMenuElement: any, parentMenuItem: any): void;
 declare let soby_ItemSelections: any[];
 declare class SobyItemSelectorTypeObject {
     GridView: number;

@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="CustomizedTemplate1.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.CustomizedTemplate1" Title="CodeEditor" %>
 
-<%@ Register Src="~/Controls/SobyCodeViewSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyCodeViewSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
     <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
     <script src="/media/js/soby.service.js"></script>
@@ -39,7 +37,4 @@ document.write(fruits);&lt;/script&gt;</div><div class="codedescription">This ex
         </pre>
     </div>
 
-    <div class="article col-md-3">
-        <uc1:SobyCodeViewSideMenuControl runat="server" ID="SobyCodeViewSideMenuControl" />
-    </div>
 </asp:Content>

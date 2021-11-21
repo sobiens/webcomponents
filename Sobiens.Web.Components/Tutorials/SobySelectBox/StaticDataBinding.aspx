@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="StaticDataBinding.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobySelectBox.StaticDataBinding" Title="Select Box" %>
 
-<%@ Register Src="~/Controls/SobySelectBoxSideMenuControl.ascx" TagPrefix="uc1" TagName="SobySelectBoxSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
             <script src="/media/js/jquery-ui-1.12.0.min.js" type="text/javascript"></script>
 
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
@@ -35,7 +33,5 @@
             <div class="viewsourcecodefileoutput"></div>
         </pre>
     </div>
-    <div class="col-md-3">
-        <uc1:SobySelectBoxSideMenuControl runat="server" ID="SobySelectBoxSideMenuControl1" />
-    </div>
+
 </asp:Content>

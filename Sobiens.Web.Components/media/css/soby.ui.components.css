@@ -1,9 +1,20 @@
-﻿/*********************** SOBY GRID *****************************/
-.soby_grid {
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+﻿/*********************** START THEMES *****************************/
+:root {
+    --border-bg-color: #0278b3;
+    --heading-bg-color: #486e98;
+    --heading-text-color: #ffffff;
+    --selecteditem-bg-color: #3a5879;
+    --selecteditem-text-color: #ffffff;
+    --main-font-family: "Helvetica Neue", "Segoe UI", helvetica, verdana, sans-serif;
 }
+/*********************** END THEMES *****************************/
+
+/*********************** SOBY GRID *****************************/
+    .soby_grid {
+        font-family: var(--main-font-family);
+    }
     .soby_grid .soby_gridcell {
-        font-size: 12px;
+        font-size: 14px;
     }
     .soby_grid .soby_gridgroupbycell {
         font-size: 16px;
@@ -13,41 +24,68 @@
         font-size: 14px;
         font-weight: 600;
     }
-    /**************** Classic Theme **************/
-    .soby_grid.classic.active {
-        border: solid 1px blue
-    } 
-    .soby_grid.classic .soby_griddatarow.alt {  } 
-    .soby_grid.classic .soby_griddatarow.selected { background-color: rgba( 123,179,211,0.5 ); color:white;}
-    .soby_grid.classic tbody { border: 1px solid rgba( 156,206,240,0.5 ); }
-    .soby_grid.classic .soby_gridcell
-        , .soby_grid.classic .soby_gridaggregatecell
-        , .soby_grid.classic .soby_selectitemcell {
-            overflow: hidden;    border-bottom: 1px solid rgba( 156,206,240,0.5 );    border-right: 1px solid rgba( 156,206,240,0.5 );    border-top-width: 0;    border-left-width: 0;    padding: 3px 6px;
+    .soby_grid .soby_gridgroupbycell .toggler {
+        color:#000000;
     }
-    .soby_grid.classic .soby_gridcell.selected, .soby_grid.classic .soby_dataitem.selected { background-color: #0072c6; color:white;} 
-    .soby_grid.classic .soby_tabletitle { color:#0072C6; } 
-    .soby_grid.classic .soby_tabheader { background-color:#e6e6e6;border:1px solid #aaaaaa } 
-    .soby_grid.classic .soby_tabheader.active {background-color:white;} 
-    .soby_grid.classic .soby_tabcontent {border:1px solid #aaaaaa} 
-    .soby_grid.classic .soby_gridheadercell:hover, .soby_grid.classic .soby_gridheadercell:hover a { background-color:rgba( 205,230,247,0.5 ); }
-/*    .soby_grid.classic .soby-itmHoverEnabled:hover { background-color:rgba( 205,230,247,0.5 );}
-.soby_grid.classic .soby_griddatarow.selected .soby-itmHoverEnabled:hover {
-    background-color: rgba( 156,206,240,0.5);
-    color: red !important;
-}*/
-    .soby_grid.classic .soby_gridgroupbycell, .soby_grid.classic .soby-groupby-heading a {
+    /**************** Classic Theme **************/
+        .soby_grid.classic.active {
+            border: solid 1px var(--selecteditem-bg-color);
+        } 
+    .soby_grid .soby_griddatarow.alt {  }
+    .soby_grid .soby_griddatarow.selected {
+        background-color: var(--selecteditem-bg-color);
+        color: var(--selecteditem-text-color);
+    }
+    .soby_grid tbody {
+        border: 1px solid var(--heading-bg-color);
+    }
+        .soby_grid .soby_gridcell, .soby_grid .soby_gridaggregatecell, .soby_grid .soby_selectitemcell {
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-bg-color);
+            border-right: 1px solid var(--border-bg-color);
+            border-top-width: 0;
+            border-left-width: 0;
+            padding: 3px 6px;
+        }
+        .soby_grid .soby_gridcell.selected, .soby_grid .soby_dataitem.selected {
+            background-color: var(--selecteditem-bg-color);
+            color: var(--selecteditem-text-color);
+        }
+    .soby_grid .soby_tabletitle {
+        color: var(--heading-bg-color);
+    } 
+    .soby_grid .soby_tabheader { background-color:#e6e6e6;border:1px solid #aaaaaa }
+        .soby_grid .soby_tabheader.active {
+            background-color: var(--heading-text-color);
+        } 
+    .soby_grid .soby_tabcontent {border:1px solid #aaaaaa}
+    .soby_grid .soby_gridheadercell:hover, .soby_grid .soby_gridheadercell:hover a {
+        background-color: var(--selecteditem-bg-color);
+        color: var(--selecteditem-text-color);
+    }
+    .soby_grid .soby_gridgroupbycell, .soby_grid .soby-groupby-heading a {
         color: rgb(50, 49, 48);
     }
-.soby_grid.classic .soby_griddatarow.selected .soby_selectitemcell, .soby_grid.classic .soby_gridheadercell {
-    background-color: #0072c6;
-}
-    .soby_grid.classic .soby_gridheaderlink { color:white}
-    .sobygridmenu.classic{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
-    .sobyitemdialog.classic { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    .soby_grid .soby_gridheadercell {
+        background-color: var(--heading-bg-color);
+        color: var(--heading-text-color);
+    }
+    .soby_grid .soby_griddatarow.selected .soby_selectitemcell {
+        background-color: var(--selecteditem-bg-color);
+    }
+    .soby_grid .soby_gridheaderlink { color:var(--heading-text-color)}
+    .sobygridmenu{position:absolute;display:none;background-color: white;color:black;border: 1px solid;padding:10px;}
+    .sobyitemdialog { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
     /*********************************************/
 
     /**************** Winter Snow Theme **************/
+:root .snow {
+    --heading-bg-color: #9cb6d9;
+    --heading-text-color: #ffffff;
+    --selecteditem-bg-color: #3b82bf;
+    --selecteditem-text-color: #ffffff;
+}
+/*
     .soby_grid.snow.active{border:solid 1px blue } 
     .soby_grid.snow .soby_griddatarow.alt {  } 
     .soby_grid.snow .soby_griddatarow.selected { background-color: #3b82bf; color:white;}
@@ -65,9 +103,17 @@
     .soby_grid.snow .soby_gridheaderlink { color:white}
     .sobygridmenu.snow{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
     .sobyitemdialog.snow { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    */
     /*********************************************/
 
     /**************** Sunrise Theme **************/
+    :root .sunrise {
+        --heading-bg-color: #fcb796;
+        --heading-text-color: #ffffff;
+        --selecteditem-bg-color: #ba7284;
+        --selecteditem-text-color: #ffffff;
+    }
+/*
     .soby_grid.sunrise.active{border:solid 1px blue } 
     .soby_grid.sunrise .soby_griddatarow.alt {  } 
     .soby_grid.sunrise .soby_griddatarow.selected { background-color: #4666a6; color:white;}
@@ -85,13 +131,22 @@
     .soby_grid.sunrise .soby_gridheaderlink { color:white}
     .sobygridmenu.sunrise{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
     .sobyitemdialog.sunrise { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    */
     /*********************************************/
 
     /**************** Forest Theme **************/
+    :root .forest {
+        --heading-bg-color: #4c7c20;
+        --heading-text-color: #ffffff;
+        --selecteditem-bg-color: #304f15;
+        --selecteditem-text-color: #ffffff;
+    }
+
+
+/*
     .soby_grid.forest.active{border:solid 1px blue } 
     .soby_grid.forest .soby_griddatarow.alt {  } 
     .soby_grid.forest .soby_griddatarow.selected { background-color: #1d2f0c; color:white;}
-    .soby_grid.forest tbody { border: 1px solid #4c7c20; }
     .soby_grid.forest .soby_gridcell, .soby_grid.forest .soby_selectitemcell {    overflow: hidden;    border-bottom: 1px solid #4c7c20;    border-right: 1px solid #4c7c20;    border-top-width: 0;    border-left-width: 0;    padding: 3px 6px;}
     .soby_grid.forest .soby_gridcell.selected { background-color: #384928; color:white;} 
     .soby_grid.forest .soby_tabletitle { color:#384928; } 
@@ -105,9 +160,17 @@
     .soby_grid.forest .soby_gridheaderlink { color:white}
     .sobygridmenu.forest{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
     .sobyitemdialog.forest { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    */
     /*********************************************/
 
     /**************** Raspberry Theme **************/
+:root .raspberry {
+    --heading-bg-color: #b20064;
+    --heading-text-color: #ffffff;
+    --selecteditem-bg-color: #7d0347;
+    --selecteditem-text-color: #ffffff;
+}
+/*
     .soby_grid.raspberry.active{border:solid 1px blue } 
     .soby_grid.raspberry .soby_griddatarow.alt {  } 
     .soby_grid.raspberry .soby_griddatarow.selected { background-color: #b1c1c5; color:white;}
@@ -125,9 +188,17 @@
     .soby_grid.raspberry .soby_gridheaderlink { color:white}
     .sobygridmenu.raspberry{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
     .sobyitemdialog.raspberry { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    */
     /*********************************************/
 
     /**************** Autumn Theme **************/
+:root .autumn {
+    --heading-bg-color: #d3cfb6;
+    --heading-text-color: #ffffff;
+    --selecteditem-bg-color: #999685;
+    --selecteditem-text-color: #ffffff;
+}
+/*
     .soby_grid.autumn.active{border:solid 1px blue } 
     .soby_grid.autumn .soby_griddatarow.alt {  } 
     .soby_grid.autumn .soby_griddatarow.selected { background-color: #bedcf5; color:white;}
@@ -146,6 +217,7 @@
     .soby_grid.autumn .soby-itmHoverEnabled:hover a, .soby_grid.autumn .soby_gridheaderlink:hover { color:white}
     .sobygridmenu.autumn{position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
     .sobyitemdialog.autumn { position:absolute;display:none;background-color: white;border: 1px solid;padding:10px;}
+    */
     /*********************************************/
 
 .soby_grid{border-collapse: initial; text-align: left; width: 100%;}
@@ -489,7 +561,87 @@
 }
 /***************************************************************/
 /*********************** SOBY MENU *****************************/
-.sobymenu {} 
+.sobymenu.leftsidebar {
+    flex-direction: column !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    width: 232px;
+    overflow-y: auto;
+}
+
+.sobymenu .menu .toggler {
+    display:none;
+}
+
+@media (max-width:768px) {
+    .sobymenu.leftsidebar {
+        width: 100%;
+        height:36px
+    }
+
+    .sobymenu .menu .toggler {
+        display: block;
+        color: #fff;
+        background-color: var(--heading-bg-color);
+    }
+
+    .sobymenu .menu .toggler a{
+        color: #fff;
+    }
+}
+
+.sobymenu.leftsidebar > ul.menu {
+    margin-bottom: auto !important;
+    flex-direction: column !important;
+    padding-left:0px;
+}
+
+.sobymenu ul.menu.collapse {
+    display: block;
+}
+.sobymenu ul.menu.expand {
+    display: none;
+}
+.sobymenu ul.menu > li {
+    list-style: none;
+    line-height: 24px;
+    margin-bottom: 0.25rem !important;
+}
+
+.sobymenu .menu .menu {
+    padding-left: 20px;
+}
+.sobymenu .menu .divider {
+    opacity: .25;
+    height: 1px;
+    background-color: rgb(33, 37, 41);
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.sobymenu .menu li > a {
+    text-decoration: none;
+}
+
+.sobymenu .menu li .menutoggler {
+    cursor: pointer;
+    border: 0px;
+}
+.sobymenu .menuitem.active a, .sobymenu .menuitem a:hover {
+    color: #fff;
+    background-color: var(--heading-bg-color);
+}
+.sobymenu .menuitem a {
+    border-radius: 0.25rem;
+    color: #000000;
+    padding: 0.5rem 1rem;
+}
+
+.sobymenu .menuitem {
+    padding: 0.5rem 0rem;
+}
+/*
 .sobymenu > ul > li:not(:first-child) {padding-left: 30px;} 
 .sobymenu > ul {padding-left: 0px;} 
 .sobymenu > ul > li {list-style:none;float:left;padding: 5px;} 
@@ -503,10 +655,12 @@
 .sobymenu > ul > li:first-child .sobymenutablink:before, .sobymenu > li:last-child .sobymenutablink:after {    border: none; } 
 .sobymenutablink.active:after {border-left: 30px solid orange;} 
 .sobymenunavigationbar { clear: both; text-align: center; } 
-/***************************************************************/
-
-/*********************** SOBY TREE VIEW *****************************/
-.soby_treeviewnode { list-style:none; }
+    */
+    /***************************************************************/
+    /*********************** SOBY TREE VIEW *****************************/
+    .soby_treeviewnode {
+    list-style: none;
+}
 /***************************************************************/
 
 /*********************** SOBY Chart *****************************/

@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Getting Started.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.CodeView" Title="CodeEditor" %>
 
-<%@ Register Src="~/Controls/SobyCodeViewSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyCodeViewSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div >
         <script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
         <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
@@ -43,7 +41,4 @@ for(var i=0;i&lt;fruits.length;i++){
         </pre>
     </div>
 
-    <div class="article col-md-3">
-        <uc1:SobyCodeViewSideMenuControl runat="server" ID="SobyCodeViewSideMenuControl" />
-    </div>
 </asp:Content>

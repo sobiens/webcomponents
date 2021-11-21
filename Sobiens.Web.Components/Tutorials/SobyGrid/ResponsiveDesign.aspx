@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ResponsiveDesign.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.ResponsiveDesign" Title="DataGrid - Responsive Design Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
     <p>This example demonstrates how to use responsive design in the Soby Data Grid. <br />
         "sobyResponsiveCondition" class should be used to define condition. This needs to be added into "ResponsiveConditions" property of the grid. Passing this condition into "AddColumn" method will state the visibility of the column on different screen resolution. 
         <pre class="js">    var responsiveCondition1 = new sobyResponsiveCondition(function (width, height) {
@@ -128,7 +126,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

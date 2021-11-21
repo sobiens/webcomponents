@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Aggregates.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Aggregates" Title="DataGrid - Aggregates Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -22,7 +20,7 @@
             bookGrid.AggregateBy(aggregateFieldName, aggregateType);
 
         }
-    </script>    <div class="article col-md-9">
+    </script>    <div>
 
     <p>This example demonstrates how to use aggregation in the Soby Data Grid. <br />
         "AddAggregateField" method takes two parameters. First one is the name of the field. Second one is type of the aggregation. This method does not trigger data population, it just adds the orderbyfield which will be used on population.
@@ -110,7 +108,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
         </div>
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Custom Format.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyDataRepeater.CustomFormat" Title="DataRepeater" %>
 
-<%@ Register Src="~/Controls/SobyDataRepeaterSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyDataRepeaterSideMenuControl" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
@@ -14,7 +13,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
@@ -32,9 +31,5 @@
             <div class="viewsourcecodefileoutput"></div>
         </pre>
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
-    </div>
-
-    <div class="col-md-3">
-        <uc1:SobyDataRepeaterSideMenuControl runat="server" ID="SobyDataRepeaterSideMenuControl" />
     </div>
 </asp:Content>

@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master"  CodeBehind="General.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyMetroStyleGrid.General" %>
-<%@ Register Src="~/Controls/SobyCarouselSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyCarouselSideMenuControl" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
         <hgroup class="title">
@@ -8,7 +7,7 @@
         <h2>General Example</h2>
             <p>We have just started to develop, so there will be lots of features soon.</p>
     </hgroup>
-    <div class="article col-md-9">
+    <div>
             <link href="/Css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/Scripts/soby.service.js"></script>
             <script src="/Scripts/soby.ui.components.js"></script>
@@ -26,7 +25,5 @@
         </div>
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyCarouselSideMenuControl runat="server" id="SobyCarouselSideMenuControl" />
-    </div>
+
 </asp:Content>

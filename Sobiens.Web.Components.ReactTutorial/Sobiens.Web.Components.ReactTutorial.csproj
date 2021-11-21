@@ -26,11 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\public\soby\js\soby.ui.components.charts.jquery.js" />
+    <None Remove="ClientApp\public\soby\js\soby.ui.components.min.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ClientApp\public\soby\js\soby.ui.components.charts.jquery.js" />
+    <Content Include="ClientApp\public\soby\js\soby.ui.components.min.js" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

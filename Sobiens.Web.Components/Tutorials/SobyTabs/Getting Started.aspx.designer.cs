@@ -13,14 +13,5 @@ namespace Sobiens.Web.Components.Tutorials.SobyTabs
 
     public partial class GettingStarted
     {
-
-        /// <summary>
-        /// SobyTabsSideMenuControl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Sobiens.Web.Components.Controls.SobyTabsSideMenuControl SobyTabsSideMenuControl;
     }
 }

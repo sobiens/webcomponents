@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Getting Started.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyValidator.GettingStarted" Title="Soby Validator" %>
 
-<%@ Register Src="~/Controls/SobyValidatorViewSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyValidatorViewSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -30,7 +28,7 @@
 
         }
     </script>
-    <div class="article col-md-9">
+    <div>
         <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
         <link href="/media/css/soby.ui.components.validator.css" rel="stylesheet" type="text/css" media="all" />
         <script src="/media/js/soby.service.js"></script>
@@ -122,7 +120,5 @@
             <div class="viewsourcecodefileoutput"></div>
         </pre>
     </div>
-    <div class="col-md-3">
-        <uc1:SobyValidatorViewSideMenuControl runat="server" ID="SobyValidatorViewSideMenuControl" />
-    </div>
+
 </asp:Content>

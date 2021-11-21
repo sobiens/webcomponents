@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Sorting.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Sorting" Title="DataGrid - Sorting Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -23,7 +21,7 @@
             bookGrid.SortResult(sortFieldName, isAsc);
 
         }
-    </script>    <div class="article col-md-9">
+    </script>    <div>
     <p>This example demonstrates how to use sorting in the Soby Data Grid. <br />
         "AddOrderByField" method takes two parameters. First one is the name of the field. Second one is a boolean value to state whether it should be sorted as ascending or descending. This method does not trigger data population, it just adds the orderbyfield which will be used on population.
         <pre class="js">bookGrid.AddOrderByField("Title", true); </pre>
@@ -120,8 +118,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
         </div>
-        <div class="col-md-3">
 
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
 </asp:Content>

@@ -7,18 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sobiens.Web.Components.Tutorials.SobyCheckBoxList {
-    
-    
-    public partial class GettingStarted {
-        
-        /// <summary>
-        /// SobyCheckBoxListSideMenuControl1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Sobiens.Web.Components.Controls.SobyCheckBoxListSideMenuControl SobyCheckBoxListSideMenuControl1;
+namespace Sobiens.Web.Components.Tutorials.SobyCheckBoxList
+{
+
+
+    public partial class GettingStarted
+    {
     }
 }

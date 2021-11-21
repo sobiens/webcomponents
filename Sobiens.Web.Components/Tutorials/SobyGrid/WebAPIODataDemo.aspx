@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="WebAPIODataDemo.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.WebAPIODataDemo" Title="Grid - Web API and OData Implementation" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -61,7 +59,5 @@
 
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
 
-    <aside>
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </aside>
+
 </asp:Content>

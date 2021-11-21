@@ -13,14 +13,5 @@ namespace Sobiens.Web.Components.Tutorials.SobySelectBox
 
     public partial class StaticDataBinding
     {
-
-        /// <summary>
-        /// SobySelectBoxSideMenuControl1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Sobiens.Web.Components.Controls.SobySelectBoxSideMenuControl SobySelectBoxSideMenuControl1;
     }
 }

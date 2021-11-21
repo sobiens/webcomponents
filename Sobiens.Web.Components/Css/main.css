@@ -1,72 +1,41 @@
-﻿body {
-    padding-top: 90px
+﻿.maincontentcolumn {
+    flex-direction: column !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    width: calc(100% - 250px);
 }
-
-@media (min-width:768px) {
-    body {
-        padding-top: 0
-    }
+main {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    clear: both;
 }
-
-@media (min-width:768px) {
-    body {
-        margin-left: 232px
-    }
-}
-
-.navbar.fixed-left {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1030
-}
-
-@media (min-width:768px) {
-    .navbar.fixed-left {
-        bottom: 0;
-        width: 232px;
-        flex-flow: column nowrap;
-        align-items: flex-start
+@media (max-width:768px) {
+    main {
+        display: block;
+        max-height: unset;
     }
 
-        .navbar.fixed-left .navbar-collapse {
-            flex-grow: 0;
-            flex-direction: column;
-            width: 100%
-        }
-
-            .navbar.fixed-left .navbar-collapse .navbar-nav {
-                flex-direction: column;
-                width: 100%
-            }
-
-                .navbar.fixed-left .navbar-collapse .navbar-nav .nav-item {
-                    width: 100%
-                }
-
-                    .navbar.fixed-left .navbar-collapse .navbar-nav .nav-item .dropdown-menu {
-                        top: 0
-                    }
-}
-
-@media (min-width:768px) {
-    .navbar.fixed-left {
-        right: auto
+    .headerrow{
+        display:none;
     }
 
-        .navbar.fixed-left .navbar-nav .nav-item .dropdown-toggle:after {
-            border-top: .3em solid transparent;
-            border-left: .3em solid;
-            border-bottom: .3em solid transparent;
-            border-right: none;
-            vertical-align: baseline
-        }
+    .maincontentcolumn {
+        width: calc(100%);
+    }
 
-        .navbar.fixed-left .navbar-nav .nav-item .dropdown-menu {
-            left: 100%
-        }
 }
+
+.headerrowcol1{
+    width:232px;
+    float:left;
+}
+.headerrowcol2 {
+    width: calc(100% - 232px);
+    float: left;
+}
+
 
 .mainnavbar .navbar-collapse.collapse {
 /*    background-color: lightblue !important;*/
@@ -82,86 +51,23 @@
 .mainnavbar .navbar-toggler {
     background-color: lightblue !important;
 }
-/*
-.api-information-table div[class*="col-"]{border:1px solid #bbb}
-.api-information-headerrow div{background-color:#ededed}
-.api-information-headerrow div[class*="col-"]{font-weight:bold}
-.soby-apidocumentation article, .soby-apidocumentation .prettyprint{ width:100%}    
-.soby-apidocumentation section{ background-color:transparent;border-bottom:none}
-.soby-apidocumentation { background-color:white}    
-.soby-apidocumentation h4{ padding-top:10px;}    
-.html .tag_start{
-    color: maroon;
-    font-weight: bold;
-}
-.html .attr_name{
-    color: red;
-}
-.html .attr_value{
-    color: #3A3AFF;
-}
-.js .code_keyword{
-    color: #00f;
-}
-.css .class_name{
-    color: maroon;
-    font-weight: bold;
-}
-.css .attr_name{
-    color: red;
-}
-.css .attr_value{
-    color: #3A3AFF;
-}
-.css .code_comment{
-    color: green;
+
+header {
+    color: #fff;
+    border-radius: 0.25rem;
+    background-color: #486e98;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    font-size: 2.5rem;
 }
 
-dl.details{display:none}
-
-.featured + .main-content {
-    background: none;
+header h1 {
+    font-weight: 400;
 }
 
-.featured .content-wrapper {
-    background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-    background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-    background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-    background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+.btn-primary {
+    color: #fff;
+    background-color: #486e98;
+    border-color: #486e98;
 }
-header{
-    height:100px;
-}
-header .content-wrapper {
-    padding-top: 5px;
-}
-.main-content, html, #body, footer {
-    background-color:white;
-}
-.main-content {
-    padding-top: 0px; 
-}
-
-a.navbar-brand {
-    padding:0px;
-}
-
-@media (min-width:768px) {
-    .nav_center {
-        width: 960px 
-    }
-}
-
-body{
- font-family:"Segoe UI", Helvetica, Verdana, sans-serif !important;
-}
-h1{font-size: 34px !important;}
-hgroup.title {
-    margin-bottom: 0px;
-}
-header{
-    height:initial;
-}
-nav.navbar-default{
-}
-*/

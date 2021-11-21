@@ -24,6 +24,15 @@ namespace Sobiens.Web.Components
         protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
 
         /// <summary>
+        /// SobySidebarMenuControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Sobiens.Web.Components.Controls.SobySidebarMenuControl SobySidebarMenuControl;
+
+        /// <summary>
         /// FeaturedContent control.
         /// </summary>
         /// <remarks>

@@ -185,22 +185,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="Controls\SobyRangeSelectionSideMenuControl.ascx" />
-    <Content Include="Controls\SobyGridSideMenuControl.ascx" />
-    <Content Include="Controls\SobyChartSideMenuControl.ascx" />
-    <Content Include="Controls\SobyTabsSideMenuControl.ascx" />
-    <Content Include="Controls\SobyWizardSideMenuControl.ascx" />
-    <Content Include="Controls\SobyValidatorViewSideMenuControl.ascx" />
-    <Content Include="Controls\SobyCheckBoxListSideMenuControl.ascx" />
-    <Content Include="Controls\SobySelectBoxSideMenuControl.ascx" />
-    <Content Include="Controls\SobySchedulerSideMenuControl.ascx" />
-    <Content Include="Controls\SobyCalendarViewSideMenuControl.ascx" />
-    <Content Include="Controls\SobyDataRepeaterSideMenuControl.ascx" />
-    <Content Include="Controls\SobyTreeViewSideMenuControl.ascx" />
-    <Content Include="Controls\SobyItemSelectionSideMenuControl.ascx" />
-    <Content Include="Controls\SobyMetroStyleGridSideMenuControl.ascx" />
-    <Content Include="Controls\SobyCarouselSideMenuControl.ascx" />
-    <Content Include="Controls\SobyCodeViewSideMenuControl.ascx" />
+    <Content Include="Controls\SobySidebarMenuControl.ascx" />
     <Content Include="Css\all.min.css" />
     <Content Include="Css\bootstrap-grid.css" />
     <Content Include="Css\bootstrap-grid.min.css" />
@@ -695,15 +680,8 @@
     <Content Include="Images\Carousel\Tom Jones.jpg" />
     <Content Include="Images\Carousel\Vanity Fair.jpg" />
     <Content Include="media\css\soby.ui.components.calendarview.css" />
-    <Content Include="media\images\bizpicker.gif" />
-    <Content Include="media\images\ecbarw.png" />
-    <Content Include="media\images\filter.gif" />
-    <Content Include="media\images\filteroff.gif" />
-    <Content Include="media\images\formatmap16x16.png" />
     <Content Include="Images\heroAccent.png" />
-    <Content Include="media\images\loading16.gif" />
     <Content Include="Images\Logo\Sobiens_Logo.gif" />
-    <Content Include="media\images\next.gif" />
     <Content Include="Images\orderedList0.png" />
     <Content Include="Images\orderedList1.png" />
     <Content Include="Images\orderedList2.png" />
@@ -717,17 +695,24 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Tutorials\Soby_WebGrid_Grouping.png" />
+    <Content Include="Images\viewsource.png" />
+    <Content Include="js\bootstrap.js" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\npm.js" />
+    <Content Include="media\images\bizpicker.gif" />
+    <Content Include="media\images\ecbarw.png" />
+    <Content Include="media\images\filter.gif" />
+    <Content Include="media\images\filteroff.gif" />
+    <Content Include="media\images\formatmap16x16.png" />
+    <Content Include="media\images\loading16.gif" />
+    <Content Include="media\images\next.gif" />
     <Content Include="media\images\prev.gif" />
     <Content Include="media\images\rsort.gif" />
     <Content Include="media\images\sort.gif" />
     <Content Include="media\images\SORTAZLang.gif" />
     <Content Include="media\images\SORTZALang.gif" />
     <Content Include="media\images\spcommon.png" />
-    <Content Include="Images\Tutorials\Soby_WebGrid_Grouping.png" />
-    <Content Include="Images\viewsource.png" />
-    <Content Include="js\bootstrap.js" />
-    <Content Include="js\bootstrap.min.js" />
-    <Content Include="js\npm.js" />
     <Content Include="media\js\jquery-3.1.0.js" />
     <Content Include="media\js\jquery-ui-1.12.0.min.js" />
     <Content Include="media\js\soby.service.js" />
@@ -769,7 +754,7 @@
     <Content Include="js\bootstrap.esm.min.js.map" />
     <Content Include="js\bootstrap.js.map" />
     <Content Include="js\bootstrap.min.js.map" />
-    <Content Include="download\Sobiens.Web.Components 1.0.9.4.zip" />
+    <Content Include="download\Sobiens.Web.Components 1.0.9.6.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-3.1.0.js" />
@@ -806,13 +791,6 @@
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\valuedatevalidation.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\Validator\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CalendarView\calendarview.ts" />
-    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\columnchart.ts" />
-    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\doughnutchart.ts" />
-    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\piechart.ts" />
-    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\radarchart.ts" />
-    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\polarareachart.ts" />
-    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\barchart.ts" />
-    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\Chart\linechart.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\CheckBoxList\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\customformat.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\DataRepeater\paging.ts" />
@@ -833,6 +811,7 @@
     <Content Include="Scripts\Tutorials\WebAPI\Grid\themes.js" />
     <Content Include="sitemap.xml" />
     <Content Include="Tutorials\SobyCalendarView\Getting Started.aspx" />
+    <Content Include="Tutorials\SobyChart\MixedChartTypes.aspx" />
     <Content Include="Tutorials\SobyChart\ColumnChart.aspx" />
     <Content Include="Tutorials\SobyChart\DoughnutChart.aspx" />
     <Content Include="Tutorials\SobyChart\PieChart-Angular.aspx" />
@@ -858,11 +837,13 @@
     <Content Include="Tutorials\SobyGrid\ResponsiveDesign.aspx" />
     <Content Include="Tutorials\SobyGrid\ExportToExcel.aspx" />
     <Content Include="Tutorials\SobyGrid\RefreshData.aspx" />
+    <Content Include="Tutorials\SobyGrid\MultipleSelection.aspx" />
     <Content Include="Tutorials\SobyGrid\SPSearch2010DataBinding.aspx" />
     <Content Include="Tutorials\SobyGrid\SPDataBinding.aspx" />
     <Content Include="Tutorials\SobyItemSelection\Treeview Selection.aspx" />
     <Content Include="Tutorials\SobyItemSelection\Autocomplete watermark.aspx" />
     <Content Include="Tutorials\SobyItemSelection\Single Selection.aspx" />
+    <Content Include="Tutorials\SobyMenu\SidebarMenu.aspx" />
     <Content Include="Tutorials\SobyRangeSelection\DateRangeSelection.aspx" />
     <Content Include="Tutorials\SobyRangeSelection\Getting Started.aspx" />
     <Content Include="Tutorials\SobyScheduler\Custom Dates.aspx" />
@@ -913,7 +894,7 @@
     <Content Include="Tutorials\SobyCarousel\Getting Started.aspx" />
     <Content Include="Tutorials\Setting Up.aspx" />
     <Content Include="Tutorials\SobyGrid\Admin.aspx" />
-    <Content Include="Tutorials\SobyGrid\SetupWizard.aspx" />
+    <Content Include="Tutorials\SobyGrid\CodeGenerationWizard.aspx" />
     <Content Include="Tutorials\SobyGrid\StaticDataBinding.aspx" />
     <Content Include="Tutorials\SobyGrid\WebAPIODataDemo.aspx" />
     <Content Include="Tutorials\SobyGrid\WebAPIOData.aspx" />
@@ -925,7 +906,7 @@
     <Content Include="Tutorials\SobyGrid\ContextMenu.aspx" />
     <Content Include="Tutorials\SobyGrid\NestedGrids.aspx" />
     <Content Include="Tutorials\SobyGrid\DragDrop.aspx" />
-    <Content Include="Tutorials\SobyGrid\Selection.aspx" />
+    <Content Include="Tutorials\SobyGrid\SingleSelection.aspx" />
     <Content Include="Tutorials\SobyGrid\Columns.aspx" />
     <Content Include="Tutorials\SobyGrid\CellTemplate.aspx" />
     <Content Include="Tutorials\SobyGrid\Aggregates.aspx" />
@@ -1025,117 +1006,12 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SobyRangeSelectionSideMenuControl.ascx.cs">
-      <DependentUpon>SobyRangeSelectionSideMenuControl.ascx</DependentUpon>
+    <Compile Include="Controls\SobySidebarMenuControl.ascx.cs">
+      <DependentUpon>SobySidebarMenuControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\SobyRangeSelectionSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyRangeSelectionSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyGridSideMenuControl.ascx.cs">
-      <DependentUpon>SobyGridSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyGridSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyGridSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyChartSideMenuControl.ascx.cs">
-      <DependentUpon>SobyChartSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyChartSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyChartSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyTabsSideMenuControl.ascx.cs">
-      <DependentUpon>SobyTabsSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyTabsSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyTabsSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyWizardSideMenuControl.ascx.cs">
-      <DependentUpon>SobyWizardSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyWizardSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyWizardSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyValidatorViewSideMenuControl.ascx.cs">
-      <DependentUpon>SobyValidatorViewSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyValidatorViewSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyValidatorViewSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyCheckBoxListSideMenuControl.ascx.cs">
-      <DependentUpon>SobyCheckBoxListSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyCheckBoxListSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyCheckBoxListSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobySelectBoxSideMenuControl.ascx.cs">
-      <DependentUpon>SobySelectBoxSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobySelectBoxSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobySelectBoxSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobySchedulerSideMenuControl.ascx.cs">
-      <DependentUpon>SobySchedulerSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobySchedulerSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobySchedulerSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyCalendarViewSideMenuControl.ascx.cs">
-      <DependentUpon>SobyCalendarViewSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyCalendarViewSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyCalendarViewSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyDataRepeaterSideMenuControl.ascx.cs">
-      <DependentUpon>SobyDataRepeaterSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyDataRepeaterSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyDataRepeaterSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyTreeViewSideMenuControl.ascx.cs">
-      <DependentUpon>SobyTreeViewSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyTreeViewSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyTreeViewSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyItemSelectionSideMenuControl.ascx.cs">
-      <DependentUpon>SobyItemSelectionSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyItemSelectionSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyItemSelectionSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyMetroStyleGridSideMenuControl.ascx.cs">
-      <DependentUpon>SobyMetroStyleGridSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyMetroStyleGridSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyMetroStyleGridSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyCarouselSideMenuControl.ascx.cs">
-      <DependentUpon>SobyCarouselSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyCarouselSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyCarouselSideMenuControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SobyCodeViewSideMenuControl.ascx.cs">
-      <DependentUpon>SobyCodeViewSideMenuControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\SobyCodeViewSideMenuControl.ascx.designer.cs">
-      <DependentUpon>SobyCodeViewSideMenuControl.ascx</DependentUpon>
+    <Compile Include="Controls\SobySidebarMenuControl.ascx.designer.cs">
+      <DependentUpon>SobySidebarMenuControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -1182,6 +1058,13 @@
     </Compile>
     <Compile Include="Tutorials\SobyCalendarView\Getting Started.aspx.designer.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\MixedChartTypes.aspx.cs">
+      <DependentUpon>MixedChartTypes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyChart\MixedChartTypes.aspx.designer.cs">
+      <DependentUpon>MixedChartTypes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyChart\ColumnChart.aspx.cs">
       <DependentUpon>ColumnChart.aspx</DependentUpon>
@@ -1358,12 +1241,19 @@
     <Compile Include="Tutorials\SobyGrid\RefreshData.aspx.designer.cs">
       <DependentUpon>RefreshData.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Tutorials\SobyGrid\SetupWizard.aspx.cs">
-      <DependentUpon>SetupWizard.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyGrid\MultipleSelection.aspx.cs">
+      <DependentUpon>MultipleSelection.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Tutorials\SobyGrid\SetupWizard.aspx.designer.cs">
-      <DependentUpon>SetupWizard.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyGrid\MultipleSelection.aspx.designer.cs">
+      <DependentUpon>MultipleSelection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\CodeGenerationWizard.aspx.cs">
+      <DependentUpon>CodeGenerationWizard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyGrid\CodeGenerationWizard.aspx.designer.cs">
+      <DependentUpon>CodeGenerationWizard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\ExportToExcel.aspx.cs">
       <DependentUpon>ExportToExcel.aspx</DependentUpon>
@@ -1463,12 +1353,12 @@
     <Compile Include="Tutorials\SobyGrid\DragDrop.aspx.designer.cs">
       <DependentUpon>DragDrop.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Tutorials\SobyGrid\Selection.aspx.cs">
-      <DependentUpon>Selection.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyGrid\SingleSelection.aspx.cs">
+      <DependentUpon>SingleSelection.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Tutorials\SobyGrid\Selection.aspx.designer.cs">
-      <DependentUpon>Selection.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyGrid\SingleSelection.aspx.designer.cs">
+      <DependentUpon>SingleSelection.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Columns.aspx.cs">
       <DependentUpon>Columns.aspx</DependentUpon>
@@ -1580,6 +1470,13 @@
     </Compile>
     <Compile Include="Tutorials\SobyItemSelection\Getting Started.aspx.designer.cs">
       <DependentUpon>Getting Started.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tutorials\SobyMenu\SidebarMenu.aspx.cs">
+      <DependentUpon>SidebarMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tutorials\SobyMenu\SidebarMenu.aspx.designer.cs">
+      <DependentUpon>SidebarMenu.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyMetroStyleGrid\General.aspx.cs">
       <DependentUpon>General.aspx</DependentUpon>
@@ -1760,6 +1657,7 @@
   <ItemGroup>
     <Folder Include="API Documentation\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\Tutorials\WebAPI\Chart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />

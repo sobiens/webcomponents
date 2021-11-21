@@ -30,8 +30,9 @@ var SobyTextBox = /** @class */ (function () {
     }
     SobyTextBox.prototype.PopulateChoiceItems = function () { };
     SobyTextBox.prototype.GetValue = function () {
-        var value = parseInt($("#" + this.ContainerClientId + " input.sobytextbox").val().toString());
+        var value = $("#" + this.ContainerClientId + " input.sobytextbox").val().toString();
         if (this.FieldType === SobyFieldTypes.Number) {
+            value = parseInt(value);
             if (isNaN(value) === true) {
                 value = null;
             }
@@ -108,6 +109,8 @@ var SobyLookupSelectBox = /** @class */ (function () {
         return this.ListItems[itemIndex];
     };
     SobyLookupSelectBox.prototype.SetValue = function (value) {
+        console.log("----SetValue-----");
+        console.log("value:" + value);
         $("#" + this.ContainerClientId + " select.sobylookupselectbox").val(value);
     };
     SobyLookupSelectBox.prototype.PopulateChoiceItems = function () {
@@ -1142,14 +1145,37 @@ var soby_WebGrid = /** @class */ (function () {
         /************************************ END MEMBERS ********************************/
         /************************************ EVENTS *************************************/
         /**
-         * Item creation event.
+         * Item added event.
          *
-         * @event soby_WebGrid#ItemCreated
+         * @event soby_WebGrid#ItemAdded
          * @type {object}
          * @property {object} rowID - Identifier of the row.
          * @property {object} item - Data item related with the row.
          */
-        this.ItemCreated = null;
+        this.OnItemAdded = null;
+        /**
+         * Item update event.
+         *
+         * @event soby_WebGrid#ItemUpdated
+         * @type {object}
+         * @property {object} item - Data item related with the row.
+         */
+        this.OnItemUpdated = null;
+        /**
+         * Items delete event.
+         *
+         * @event soby_WebGrid#OnItemsDeleted
+         * @type {object}
+         * @property {object} items - Data items related with the row.
+         */
+        this.OnItemsDeleted = null;
+        /**
+         * Grid row population event.
+         *
+         * @event soby_WebGrid#OnGridRowPopulated
+         * @type {object}
+         */
+        this.OnGridRowPopulated = null;
         /**
          * Grid population event.
          *
@@ -1298,7 +1324,19 @@ var soby_WebGrid = /** @class */ (function () {
      * grid.GetItemFieldValue(1, 'Title');
      */
     soby_WebGrid.prototype.GetItemFieldValue = function (rowIndex, fieldName) {
-        return this.Items[rowIndex][fieldName];
+        var viewFields = this.DataService.DataSourceBuilder.SchemaFields;
+        var viewField = viewFields.GetByFieldName(fieldName);
+        if (viewField !== null && viewField !== undefined && viewField.Args !== null && viewField.Args !== undefined && viewField.Args.ModelName !== null && viewField.Args.ModelName !== undefined) {
+            var objectValue = this.Items[rowIndex][viewField.Args.ModelName];
+            if (objectValue === null || objectValue === undefined)
+                return null;
+            if (viewField.Args.ValueFieldName !== undefined) {
+                return objectValue[viewField.Args.ValueFieldName];
+            }
+        }
+        else {
+            return this.Items[rowIndex][fieldName];
+        }
     };
     /**
      * Hides edit/new item form dialog.
@@ -1427,17 +1465,24 @@ var soby_WebGrid = /** @class */ (function () {
         var dbInstance = {};
         var viewFields = this.DataService.DataSourceBuilder.SchemaFields;
         for (var i = 0; i < viewFields.length; i++) {
-            dbInstance[viewFields[i].FieldName] = null;
+            var viewField = viewFields[i];
+            var propertyName = viewField.FieldName;
+            if (viewField !== null && viewField !== undefined && viewField.Args !== null && viewField.Args !== undefined && viewField.Args.ModelName !== null && viewField.Args.ModelName !== undefined) {
+                propertyName = viewField.Args.ModelName;
+            }
+            dbInstance[propertyName] = null;
             if (rowId !== null && rowId !== "") {
                 var row = $("#" + rowId);
                 var rowIndex = parseInt(row.attr("rowindex"));
-                dbInstance[viewFields[i].FieldName] = this.Items[rowIndex][viewFields[i].FieldName];
+                dbInstance[propertyName] = this.Items[rowIndex][viewField.FieldName];
             }
         }
         var dbInstanceIds = new Array();
         var parameterNames = new Array();
         for (var i = 0; i < this.KeyFields.length; i++) {
-            dbInstanceIds.push(dbInstance[this.KeyFields[i].FieldName]);
+            var dbInstanceIdObject = {};
+            dbInstanceIdObject[this.KeyFields[i].ParameterName] = dbInstance[this.KeyFields[i].FieldName];
+            dbInstanceIds.push(dbInstanceIdObject);
             parameterNames.push(this.KeyFields[i].ParameterName);
         }
         for (var i = 0; i < this.Columns.length; i++) {
@@ -1455,16 +1500,39 @@ var soby_WebGrid = /** @class */ (function () {
             //            let fieldOldValue = this.GetItemFieldValue(rowIndex, column.FieldName);
             var editControl = sobyEditControlFactory.GetEditControl(cellId);
             var fieldNewValue = editControl.GetValue();
-            if (fieldNewValue !== null && fieldNewValue.Value !== null)
-                fieldNewValue = fieldNewValue.Value;
+            if (fieldNewValue !== null !== null && fieldNewValue.Value !== undefined) {
+                var viewField = viewFields.GetByFieldName(column.FieldName);
+                if (viewField !== null && viewField !== undefined && viewField.Args !== null && viewField.Args !== undefined && viewField.Args.ModelName !== null && viewField.Args.ModelName !== undefined) {
+                    var objectValue = dbInstance[viewField.Args.ModelName];
+                    if (objectValue === null || objectValue === undefined)
+                        objectValue = {};
+                    if (viewField.Args.ValueFieldName !== undefined) {
+                        objectValue[viewField.Args.ValueFieldName] = fieldNewValue.Value;
+                    }
+                    if (viewField.Args.TitleFieldName !== undefined) {
+                        objectValue[viewField.Args.TitleFieldName] = fieldNewValue.Text;
+                    }
+                    dbInstance[viewField.Args.ModelName] = objectValue;
+                    break;
+                }
+                else {
+                    fieldNewValue = fieldNewValue.Value;
+                }
+            }
             dbInstance[column.FieldName] = fieldNewValue;
         }
         if (rowId !== null && rowId !== "") {
             this.DataService.UpdateItem(parameterNames, dbInstanceIds, dbInstance);
+            if (this.OnItemUpdated !== null) {
+                this.OnItemUpdated(rowId, dbInstance);
+            }
         }
         else {
             //dbInstance[this.KeyFields[0]] = 0;
             this.DataService.AddItem(dbInstance);
+            if (this.OnItemAdded !== null) {
+                this.OnItemAdded(dbInstance);
+            }
         }
     };
     /**
@@ -1478,10 +1546,15 @@ var soby_WebGrid = /** @class */ (function () {
             return;
         }
         var selectedRowIDs = this.GetSelectedRowIDs();
+        var deletedItems = [];
         for (var i = 0; i < selectedRowIDs.length; i++) {
             var row = $("#" + selectedRowIDs[i]);
             var rowIndex = parseInt(row.attr("rowindex"));
             var dbInstance = this.Items[rowIndex];
+            deletedItems.push(dbInstance);
+        }
+        for (var i = 0; i < deletedItems.length; i++) {
+            var dbInstance = deletedItems[i];
             var keyValues = new Array();
             var dbInstanceIds = new Array();
             var parameterNames = new Array();
@@ -1490,6 +1563,9 @@ var soby_WebGrid = /** @class */ (function () {
                 parameterNames.push(this.KeyFields[x].ParameterName);
             }
             this.DataService.DeleteItem(parameterNames, dbInstanceIds);
+        }
+        if (this.OnItemsDeleted !== null) {
+            this.OnItemsDeleted(deletedItems);
         }
     };
     /**
@@ -3104,7 +3180,7 @@ var soby_WebGrid = /** @class */ (function () {
                     }
                 }
                 var groupByCell = $("<td class='soby_gridgroupbycell'></td>");
-                groupByCell.html("<a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].ExpandGroupBy('" + groupByRowID + "')\"> " + this.SVGImages.GetCollapse() + "</a>");
+                groupByCell.html("<a class='toggler' href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].ExpandGroupBy('" + groupByRowID + "')\"> " + this.SVGImages.GetCollapse() + "</a>");
                 var groupByCellColspan = this.Columns.length - x;
                 if (this.IsSelectable === true || this.DataRelations.length > 0) {
                     groupByCellColspan++;
@@ -3469,8 +3545,8 @@ var soby_WebGrid = /** @class */ (function () {
             else {
                 currentRowToAddDataRowsAfter.after(row);
             }
-            if (this.ItemCreated !== null) {
-                this.ItemCreated(rowID, item);
+            if (this.OnGridRowPopulated !== null) {
+                this.OnGridRowPopulated(rowID, item);
             }
             this.PopulateDetailRow(rowID);
         }
@@ -3655,8 +3731,8 @@ var soby_DataRepeater = /** @class */ (function (_super) {
             else {
                 currentRowToAddDataRowsAfter.after(currentRow);
             }
-            if (this.ItemCreated !== null) {
-                this.ItemCreated(currentRowID, item);
+            if (this.OnGridRowPopulated !== null) {
+                this.OnGridRowPopulated(currentRowID, item);
             }
             this.PopulateDetailRow(currentRowID);
         }
@@ -4211,75 +4287,305 @@ var soby_Tab = /** @class */ (function () {
     return soby_Tab;
 }());
 // ************************************************************
-// ********************* CAML BUILDER MENU TEMPLATE *****************************
-var soby_Menus = new Array();
-var soby_Menu = /** @class */ (function () {
-    function soby_Menu(contentDivSelector, dataService, displayNameField, idField, parentIdField) {
+// ********************* SOBY MENU  *****************************
+var SobyMenuItemTypes;
+(function (SobyMenuItemTypes) {
+    SobyMenuItemTypes[SobyMenuItemTypes["Toggler"] = 0] = "Toggler";
+    SobyMenuItemTypes[SobyMenuItemTypes["Standard"] = 1] = "Standard";
+    SobyMenuItemTypes[SobyMenuItemTypes["HtmlContent"] = 3] = "HtmlContent";
+    SobyMenuItemTypes[SobyMenuItemTypes["Divider"] = 2] = "Divider";
+})(SobyMenuItemTypes || (SobyMenuItemTypes = {}));
+var SobyMenuViewTypes;
+(function (SobyMenuViewTypes) {
+    SobyMenuViewTypes[SobyMenuViewTypes["LeftSideBar"] = 0] = "LeftSideBar";
+    SobyMenuViewTypes[SobyMenuViewTypes["TopBar"] = 1] = "TopBar";
+})(SobyMenuViewTypes || (SobyMenuViewTypes = {}));
+var SobyMenus = new Array();
+var SobyMenuItem = /** @class */ (function () {
+    function SobyMenuItem(parentMenuItem, title, link, iconSrc, tooltip) {
+        this.MenuItemID = "";
+        this.Type = SobyMenuItemTypes.Standard;
+        this.IconSrc = "";
+        this.Title = "";
+        this.Tooltip = "";
+        this.Link = "";
+        this.ParentMenuItem = null;
+        this.Items = null;
+        /************************************ EVENTS *************************************/
+        /**
+         * Menu item click event.
+         *
+         * @event SobyMenu#OnMenuItemClicked
+         * @type {object}
+         */
+        this.OnMenuItemClicked = null;
+        this.MenuItemID = "soby_menuitem_" + soby_guid();
+        this.ParentMenuItem = parentMenuItem;
+        this.Title = title;
+        this.Link = link;
+        this.IconSrc = iconSrc;
+        this.Tooltip = tooltip !== null ? tooltip : title;
+        this.Items = new Array();
+    }
+    return SobyMenuItem;
+}());
+var SobyMenu = /** @class */ (function () {
+    function SobyMenu(contentDivSelector, viewType) {
         this.MenuID = "";
+        this.ViewType = null;
         this.ContentDivSelector = "";
-        this.DisplayNameField = "";
-        this.IDField = "";
-        this.ParentIDField = "";
-        this.DataService = null;
         this.MaxWidth = null;
         this.TileWidth = "150";
         this.TileHeight = "120";
         this.Width = "600";
         this.Items = null;
+        this.SVGImages = new soby_SVGImages();
+        this.AutoSelectCurrentPageLink = true;
         this.EnsureMenusExistency = function () {
-            for (var key in soby_Menus) {
+            for (var key in SobyMenus) {
                 if (key === this.MenuID) {
                     return;
                 }
             }
-            soby_Menus[this.MenuID] = this;
+            SobyMenus[this.MenuID] = this;
         };
-        this.GetItemById = function (id) {
-            for (var i = 0; i < this.Items.length; i++) {
-                if (this.Items[i].LinkId === id) {
-                    return this.Items[i];
+        this.GetItemById = function (id, menuItem) {
+            var items = (menuItem === null ? this.Items : menuItem.Items);
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].MenuItemID === id) {
+                    return items[i];
                 }
+                var matchMenuItem = this.GetItemById(id, items[i]);
+                if (matchMenuItem !== null)
+                    return matchMenuItem;
             }
             return null;
         };
-        this.ActivateMenuTab = function (linkId) {
-            var item = this.GetItemById(linkId);
-            $(this.ContentDivSelector + " a.sobymenutablink").removeClass("active");
-            $(this.ContentDivSelector + " > ul > li a[linkid='" + linkId + "']").addClass("active");
-            $(".sobymenutabcontent[menuid='" + this.MenuID + "']").hide();
-            $(item.ContainerId).show();
+        this.GetItemByLink = function (link, menuItem) {
+            var items = (menuItem === null ? this.Items : menuItem.Items);
+            for (var i = 0; i < items.length; i++) {
+                var currentItemLink = unescape(window.location.origin.toLowerCase() + items[i].Link.toLowerCase());
+                if (unescape(link.toLowerCase()) === currentItemLink) {
+                    return items[i];
+                }
+                var matchMenuItem = this.GetItemByLink(link, items[i]);
+                if (matchMenuItem !== null)
+                    return matchMenuItem;
+            }
+            return null;
         };
-        this.EventBeforeTabChange = null;
-        this.EventAfterTabChange = null;
-        this.PopulateGridData = function (items) {
+        this.PopulateItems = function (menuItem, shouldGenerateHtml) {
+            var containerId = (menuItem === null ? this.ContentDivSelector : "#" + menuItem.MenuItemID);
+            var items = (menuItem === null ? this.Items : menuItem.Items);
+            var ul = null;
             for (var i = 0; i < items.length; i++) {
                 var item = items[i];
-                var displayName = item[this.DisplayNameField];
-                var id = item[this.IDField];
-                var parentId = item[this.ParentIDField];
-                var linkId = "soby_menulink_" + i;
-                var menuItem = $("<a></a>").text(displayName);
-                $(this.ContentDivSelector).append(menuItem);
+                if (shouldGenerateHtml === true) {
+                    if (item.Type === SobyMenuItemTypes.Standard) {
+                        if (ul === null) {
+                            ul = $("<ul class='menu" + (menuItem === null ? "" : " expand") + "'></ul>");
+                            $(containerId).append(ul);
+                        }
+                        var li = $("<li class='menuitem'></li>");
+                        li.attr("id", item.MenuItemID);
+                        if (item.Items.length > 0) {
+                            var menuItemSubItemsToggler = $("<a class='menutoggler' onclick=\"SobyMenus['" + this.MenuID + "'].ExpandCollapseSubMenuItems('" + item.MenuItemID + "', '" + item.Title + "')\"></a>");
+                            menuItemSubItemsToggler.append(this.SVGImages.GetExpand());
+                            menuItemSubItemsToggler.append(item.Title);
+                            li.append(menuItemSubItemsToggler);
+                            ul.append(li);
+                            this.PopulateItems(item);
+                        }
+                        else {
+                            var menuItemLink = $("<a></a>");
+                            if (item.Link !== null && item.Link !== undefined) {
+                                menuItemLink.attr("href", item.Link);
+                            }
+                            if (item.IconSrc !== null && item.IconSrc !== undefined) {
+                                if (item.IconSrc.indexOf(">") > -1) {
+                                    menuItemLink.append(item.IconSrc);
+                                }
+                                else {
+                                    var icon = $("<img></img>");
+                                    icon.attr("src", item.IconSrc);
+                                    menuItemLink.append(icon);
+                                }
+                                menuItemLink.append("&nbsp;");
+                            }
+                            menuItemLink.append(item.Title);
+                            menuItemLink.attr("title", item.Tooltip);
+                            li.append(menuItemLink);
+                            ul.append(li);
+                        }
+                    }
+                    else if (item.Type === SobyMenuItemTypes.Divider) {
+                        var li = $("<li class='divider'></li>");
+                        li.attr("id", item.MenuItemID);
+                        ul.append(li);
+                    }
+                    else if (item.Type === SobyMenuItemTypes.Toggler) {
+                        var div = $("<div class='toggler'></div>");
+                        div.attr("id", item.MenuItemID);
+                        var menuItemLink = $("<a></a>");
+                        if (item.Link !== null && item.Link !== undefined) {
+                            menuItemLink.attr("href", item.Link);
+                        }
+                        if (item.IconSrc !== null && item.IconSrc !== undefined) {
+                            var icon = $("<img></img>");
+                            icon.attr("src", item.IconSrc);
+                            menuItemLink.append(icon);
+                            menuItemLink.append("&nbsp;");
+                        }
+                        menuItemLink.append(item.Title);
+                        menuItemLink.attr("title", item.Tooltip);
+                        div.append(menuItemLink);
+                        $(containerId).append(div);
+                    }
+                }
+                else {
+                    if (item.Type === SobyMenuItemTypes.Standard) {
+                        var menutogglerButton = $("#" + item.MenuItemID + " > a.menutoggler");
+                        if (menutogglerButton.length > 0) {
+                            menutogglerButton.attr("href", "javascript:void(0)");
+                            menutogglerButton.attr("onclick", "SobyMenus['" + this.MenuID + "'].ExpandCollapseSubMenuItems('" + item.MenuItemID + "', '" + item.Title + "')");
+                            menutogglerButton.html(this.SVGImages.GetExpand());
+                            menutogglerButton.append(item.Title);
+                        }
+                        this.PopulateItems(item, false);
+                    }
+                    else if (item.Type === SobyMenuItemTypes.Toggler) {
+                        var togglerButton = $("#" + item.MenuItemID + " > a");
+                        togglerButton.attr("href", "javascript:void(0)");
+                        togglerButton.attr("onclick", "SobyMenus['" + this.MenuID + "'].ExpandCollapseMenu()");
+                    }
+                }
             }
         };
-        this.Initialize = function () {
-            var menu = this;
-            this.DataService.ItemPopulated = function (items) {
-                menu.PopulateGridData(items);
-            };
-            this.DataService.PopulateItems();
+        this.Initialize = function (shouldGenerateHtml) {
+            if (shouldGenerateHtml === null || shouldGenerateHtml === undefined)
+                shouldGenerateHtml = true;
+            this.PopulateItems(null, shouldGenerateHtml);
             $(this.ContentDivSelector).addClass("sobymenu");
+            if (this.ViewType === SobyMenuViewTypes.LeftSideBar) {
+                $(this.ContentDivSelector).addClass("leftsidebar");
+            }
+            else if (this.ViewType === SobyMenuViewTypes.TopBar) {
+                $(this.ContentDivSelector).addClass("topbar");
+            }
+            if (this.AutoSelectCurrentPageLink === true)
+                this.SelectCurrentPageLink();
         };
-        this.MenuID = "soby_menugrid_" + soby_guid();
+        this.MenuID = "soby_menu_" + soby_guid();
         this.ContentDivSelector = contentDivSelector;
-        this.DisplayNameField = displayNameField;
-        this.IDField = idField;
-        this.ParentIDField = parentIdField;
-        this.DataService = dataService;
+        this.ViewType = viewType;
+        this.Items = new Array();
         this.EnsureMenusExistency();
     }
-    return soby_Menu;
+    SobyMenu.prototype.SelectCurrentPageLink = function () {
+        var menuItem = this.GetItemByLink(window.location.href, null);
+        if (menuItem !== null) {
+            $("#" + menuItem.MenuItemID).addClass("active");
+            var parentMenuItem = menuItem.ParentMenuItem;
+            while (parentMenuItem !== null) {
+                this.ExpandCollapseSubMenuItems(parentMenuItem.MenuItemID, parentMenuItem.Title);
+                parentMenuItem = parentMenuItem.ParentMenuItem;
+            }
+        }
+    };
+    SobyMenu.prototype.Add = function (parentMenuItem, title, link, iconSrc, tooltip) {
+        var items = (parentMenuItem === null ? this.Items : parentMenuItem.Items);
+        var menuItem = new SobyMenuItem(parentMenuItem, title, link, iconSrc, tooltip);
+        items.push(menuItem);
+        return menuItem;
+    };
+    SobyMenu.prototype.AddToggler = function (parentMenuItem, title, iconSrc, tooltip) {
+        var items = (parentMenuItem === null ? this.Items : parentMenuItem.Items);
+        var menuItem = new SobyMenuItem(parentMenuItem, title, "", iconSrc, tooltip);
+        menuItem.Type = SobyMenuItemTypes.Toggler;
+        items.push(menuItem);
+        return menuItem;
+    };
+    SobyMenu.prototype.AddDivider = function (parentMenuItem) {
+        var items = (parentMenuItem === null || parentMenuItem === undefined ? this.Items : parentMenuItem.Items);
+        var menuItem = new SobyMenuItem(parentMenuItem, "", "", "", "");
+        menuItem.Type = SobyMenuItemTypes.Divider;
+        items.push(menuItem);
+        return menuItem;
+    };
+    SobyMenu.prototype.ExpandCollapseMenu = function () {
+        var menuHeight = $("#soby_MenuDiv").height();
+        if (menuHeight < 40) {
+            $("#soby_MenuDiv").css("height", "unset");
+        }
+        else {
+            $("#soby_MenuDiv").css("height", "30px");
+        }
+    };
+    SobyMenu.prototype.ExpandCollapseSubMenuItems = function (parentMenuItemId, parentMenuItemTitle) {
+        var menu = $("#" + parentMenuItemId + " > ul.menu");
+        var hasCollapsed = menu.hasClass("collapse");
+        menu.removeClass("expand");
+        menu.removeClass("collapse");
+        $("#" + parentMenuItemId + " > .menutoggler").html("");
+        if (hasCollapsed === true) {
+            menu.addClass("expand");
+            $("#" + parentMenuItemId + " > .menutoggler").append(this.SVGImages.GetExpand());
+        }
+        else {
+            menu.addClass("collapse");
+            $("#" + parentMenuItemId + " > .menutoggler").append(this.SVGImages.GetCollapse());
+        }
+        $("#" + parentMenuItemId + " > .menutoggler").append(parentMenuItemTitle);
+    };
+    return SobyMenu;
 }());
+function sobyGenerateMenuFromHtmlElement(containerId) {
+    var _this = $("#" + containerId);
+    var viewType = SobyMenuViewTypes.LeftSideBar;
+    if (_this.hasClass("topbar") === true)
+        viewType = SobyMenuViewTypes.TopBar;
+    var menu = new SobyMenu("#" + containerId, viewType);
+    var menuElement = _this.find("> ul.menu");
+    sobyParseMenuItemsFromHtmlElement(menu, menuElement, null);
+    menu.Initialize(false);
+    return menu;
+}
+function sobyParseMenuItemsFromHtmlElement(menu, menuMenuElement, parentMenuItem) {
+    if (parentMenuItem === undefined)
+        parentMenuItem = null;
+    var menuItems = menuMenuElement.find("> li");
+    for (var i = 0; i < menuItems.length; i++) {
+        var menuItemElement = $(menuItems[i]);
+        var menuItem = null;
+        if (menuItemElement.hasClass("divider") === true) {
+            menuItem = menu.AddDivider(parentMenuItem);
+        }
+        else if (menuItemElement.hasClass("menuitem") === true) {
+            var menuItemText = "";
+            var menuItemLink = "";
+            var menutogglerButton = menuItemElement.find("> a.menutoggler");
+            if (menutogglerButton.length > 0) {
+                menuItemText = menutogglerButton.text();
+            }
+            else {
+                menuItemText = menuItemElement.text();
+                menuItemLink = menuItemElement.find("> a").attr("href");
+            }
+            menuItem = menu.Add(parentMenuItem, menuItemText, menuItemLink, "", "");
+            var menuElement = menuItemElement.find("> ul.menu");
+            if (menuElement.length > 0) {
+                sobyParseMenuItemsFromHtmlElement(menu, menuElement, menuItem);
+            }
+        }
+        else if (menuItemElement.hasClass("toggler") === true) {
+            var menuItemText_1 = menuItemElement.text();
+            menuItem = menu.AddToggler(parentMenuItem, menuItemText_1, "", "");
+        }
+        if (menuItem !== null) {
+            menuItemElement.attr("id", menuItem.MenuItemID);
+        }
+    }
+}
 // ************************************************************
 // ********************* ITEM SELECTION *****************************
 var soby_ItemSelections = new Array();
@@ -5015,11 +5321,13 @@ var soby_TreeView = /** @class */ (function () {
             $("#" + treeviewItemId + " > ul").show();
             $("#" + treeviewItemId).attr("isexpanded", "1");
             $("#" + treeviewItemId + " > a > span > img").attr("isexpanded", "1").removeClass("soby-list-expand").addClass("soby-list-collapse");
+            $("#" + treeviewItemId + " > a.toggler").html(this.SVGImages.GetCollapse());
         }
         else {
             $("#" + treeviewItemId + " > ul").hide();
             $("#" + treeviewItemId).attr("isexpanded", "0");
             $("#" + treeviewItemId + " > a > span > img").attr("isexpanded", "1").removeClass("soby-list-collapse").addClass("soby-list-expand");
+            $("#" + treeviewItemId + " > a.toggler").html(this.SVGImages.GetExpand());
         }
         if (isLoaded === "0") {
             $("#" + treeviewItemId).attr("isloaded", "1");
@@ -5053,7 +5361,7 @@ var soby_TreeView = /** @class */ (function () {
             var checkBox = $("<input type='checkbox' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].CheckNode('" + treeViewItemId + "')\">");
             checkBox.val(treeViewItemId);
             checkBox.attr("name", "checkbox_" + this.TreeViewID);
-            var expandLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ExpandNode('" + treeViewItemId + "')\">" + this.SVGImages.GetArrowDown() + "</a>");
+            var expandLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ExpandNode('" + treeViewItemId + "')\" class='toggler'>" + this.SVGImages.GetExpand() + "</a>");
             var selectLink = $("<a href='javascript:void(0)' onclick=\"soby_TreeViews['" + this.TreeViewID + "'].ClickNode('" + treeViewItemId + "')\"></a>");
             selectLink.text(text);
             li.append(expandLink);
@@ -5212,7 +5520,7 @@ var soby_SVGImages = /** @class */ (function () {
         return "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-filter-circle-fill' viewBox='0 0 16 16'><path d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM3.5 5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zM5 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z' /></svg>";
     };
     soby_SVGImages.prototype.GetCheck = function () {
-        return "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-check' viewBox='0 0 16 16'><path d='M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z' /></svg>";
+        return "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'  fill='white' class='bi bi-check' viewBox='0 0 16 16'><path d='M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z' /></svg>";
     };
     soby_SVGImages.prototype.GetCardView = function () {
         return "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-card-list' viewBox='0 0 16 16'><path d='M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z' /><path d='M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z' /></svg>";
@@ -5224,10 +5532,12 @@ var soby_SVGImages = /** @class */ (function () {
         return "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-arrow-right-circle-fill' viewBox='0 0 16 16'><path d='M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z' /></svg>";
     };
     soby_SVGImages.prototype.GetCollapse = function () {
-        return "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' class='svg-triangle' width='16' height='16' fill='currentColor'><polygon points='0,0 8,12 16,0' /></svg>";
+        return "<svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' width = '16' height = '16' viewBox='0 0 24 24' > <path d='M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z' /> </svg>";
+        //return "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' class='svg-triangle' width='16' height='16' fill='currentColor'><polygon points='0,0 8,12 16,0' /></svg>";
     };
     soby_SVGImages.prototype.GetExpand = function () {
-        return "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' class='svg-triangle' width='16' height='16' fill='currentColor'><polygon points='12,8 0,16 0,0' /></svg>";
+        return "<svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='16' height='16' viewBox='0 0 24 24'><path d='M7.293 4.707 14.586 12l-7.293 7.293 1.414 1.414L17.414 12 8.707 3.293 7.293 4.707z'/></svg>";
+        //return "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' class='svg-triangle' width='16' height='16' fill='currentColor'><polygon points='12,8 0,16 0,0' /></svg>";
     };
     soby_SVGImages.prototype.GetPicker = function () {
         return "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-journal-plus' viewBox='0 0 16 16'><path fill-rule='evenodd' d = 'M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z' /><path d='M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z' /><path d='M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z' /></svg>";
@@ -5245,7 +5555,7 @@ var soby_SVGImages = /** @class */ (function () {
         return "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-clipboard' viewBox='0 0 16 16'><path d='M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z' /><path d='M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z' /></svg>";
     };
     soby_SVGImages.prototype.GetLoading = function () {
-        return "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' style='margin:auto;background:#fff;display:block;' width='16px' height='16px' viewBox='0 0 100 100' preserveAspectRatio='xMidYMid'>" +
+        return "<svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' xmlns:xlink='http://www.w3.org/1999/xlink' style='margin:auto;background:#fff;display:block;' width='16px' height='16px' viewBox='0 0 100 100' preserveAspectRatio='xMidYMid'>" +
             "<g transform='translate(80,50)'><g transform='rotate(0)'><circle cx='0' cy='0' r='6' fill='#ff727d' fill-opacity='1'><animateTransform attributeName='transform' type='scale' begin='-0.875s' values='1.5 1.5;1 1' keyTimes='0;1' dur='1s' repeatCount='indefinite'></animateTransform>  <animate attributeName='fill-opacity' keyTimes='0;1' dur='1s' repeatCount='indefinite' values='1;0' begin='-0.875s'></animate></circle></g></g>" +
             "<g transform='translate(71.21320343559643,71.21320343559643)'><g transform='rotate(45)'><circle cx='0' cy='0' r='6' fill='#ff727d' fill-opacity='0.875'>  <animateTransform attributeName='transform' type='scale' begin='-0.75s' values='1.5 1.5;1 1' keyTimes='0;1' dur='1s' repeatCount='indefinite'></animateTransform>  <animate attributeName='fill-opacity' keyTimes='0;1' dur='1s' repeatCount='indefinite' values='1;0' begin='-0.75s'></animate></circle></g></g>" +
             "<g transform='translate(50,80)'><g transform='rotate(90)'><circle cx='0' cy='0' r='6' fill='#ff727d' fill-opacity='0.75'>  <animateTransform attributeName='transform' type='scale' begin='-0.625s' values='1.5 1.5;1 1' keyTimes='0;1' dur='1s' repeatCount='indefinite'></animateTransform>  <animate attributeName='fill-opacity' keyTimes='0;1' dur='1s' repeatCount='indefinite' values='1;0' begin='-0.625s'></animate></circle></g></g>" +

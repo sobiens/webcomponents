@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ActionBar.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.ActionBar" Title="DataGrid - ActionBar Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
     <p>This example demonstrates how to use action bar panel in the Soby Data Grid. <br />
         "ActionPaneButtons.Add" method takes the following parameters. <br />
         <strong>1. key:</strong> Key string<br />
@@ -139,7 +137,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
         </div>
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

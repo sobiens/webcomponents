@@ -7,18 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sobiens.Web.Components.download {
-    
-    
-    public partial class Versions {
-        
-        /// <summary>
-        /// SobyGridSideMenuControl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Sobiens.Web.Components.Controls.SobyGridSideMenuControl SobyGridSideMenuControl;
+namespace Sobiens.Web.Components.download
+{
+
+
+    public partial class Versions
+    {
     }
 }

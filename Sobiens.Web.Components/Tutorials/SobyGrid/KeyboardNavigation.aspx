@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="KeyboardNavigation.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.KeyboardNavigation" Title="DataGrid - Keyboard integration" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -15,7 +13,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
 
-    <div class="article col-md-9">
+    <div>
         <script src="../../Scripts/soby.service.js"></script>
         <script src="../../Scripts/soby.ui.components.js"></script>
         <script src="../../Scripts/Tutorials/WebAPI/soby.customers.js"></script>
@@ -71,7 +69,5 @@
         </ul>
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

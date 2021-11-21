@@ -618,6 +618,14 @@ class SobySchemaFields extends Array<SobySchemaField> {
 
         return expandString + "$select=" + webAPIString.substr(1);
     }
+    GetByFieldName(fieldName:string): SobySchemaField {
+        for (let i = 0; i < this.length; i++) {
+            if (this[i].FieldName === fieldName)
+                return this[i];
+        }
+
+        return null;
+    }
 }
 class SobySchemaField {
     FieldName: string;
@@ -1784,10 +1792,14 @@ class soby_StaticDataService implements soby_ServiceInterface {
         return fieldNames;
     }
     UpdateItem(keyNames: Array<string>, keyValues: Array<string>, objectInstance) {
+        console.log("Match item CHECKING...")
+        if (keyValues === null || keyValues === undefined || keyValues.length === 0)
+            return;
+
         for (var i = 0; i < this.Items.length; i++) {
             var matchItem = true;
             for (var x = 0; x < keyNames.length; x++) {
-                if (this.Items[i][keyNames[x]] !== keyValues[keyNames[x]]) {
+                if (this.Items[i][keyNames[x]] !== keyValues[0][keyNames[x]]) {
                     matchItem = false;
                     break;
                 }
@@ -1795,10 +1807,16 @@ class soby_StaticDataService implements soby_ServiceInterface {
 
             if (matchItem === true)
             {
+                console.log(this.Items[i])
+                console.log(objectInstance)
+
+                console.log("Match item FOUND")
                 this.Items[i] = objectInstance;
             }
         }
-        this.ItemPopulated(this.Items);
+        console.log("Match item ENDED")
+        this.ItemUpdated(null);
+        //this.ItemPopulated(this.Items);
     }
     DeleteItem(keyNames: Array<string>, keyValues: Array<string>) {
         var newArray = new Array();
@@ -1817,11 +1835,13 @@ class soby_StaticDataService implements soby_ServiceInterface {
             }
         }
         this.Items = newArray;
-        this.ItemPopulated(this.Items);
+        this.ItemDeleted(null);
+        //this.ItemPopulated(this.Items);
     }
     AddItem(objectInstance) {
         this.Items[this.Items.length] = objectInstance;
-        this.ItemPopulated(this.Items);
+        this.ItemAdded(null);
+        //this.ItemPopulated(this.Items);
     }
 }
 // ******************************************************************

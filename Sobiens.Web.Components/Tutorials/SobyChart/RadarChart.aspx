@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="RadarChart.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyChart.RadarChart" Title="Radar Chart" %>
 
-<%@ Register Src="~/Controls/SobyChartSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyChartSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
                                         <div class="article" style="float: left;width: 100%;">
                         <div id='soby_CodeLanguagesTabsDiv'>
                 <ul>
@@ -42,16 +40,17 @@
 &lt;/body&gt;
 &lt;/html&gt;</div>
                         <div class="csscode"></div>
-                        <div class="jscode">    var dataSet1 = new soby_ChartDataset();
+                        <div class="jscode">    var dataSet1 = new SobyChartDataset();
     dataSet1.Title = "Chart1";
+    dataSet1.Type=SobyChartTypes.RadarChart;
     dataSet1.Data = [1, 10, 70, 35, 50, 100];
 
-    var radarChart = new soby_RadarChart("#soby_ChartDiv", "Doughnut Chart", [dataSet1], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+    var radarChart = new SobyChart("#soby_ChartDiv", "Doughnut Chart", [dataSet1], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     radarChart.Width = 600;
     radarChart.Height = 300;
-    radarChart.SeriesPosition = SobyChartElementPosition.Top;
-    radarChart.SeriesVerticalAligment = SobyChartVerticalAligment.Bottom;
-    radarChart.SeriesHorizontalAligment = SobyChartHorizontalAligment.Right;
+    radarChart.Legend.Position = SobyChartElementPosition.Top;
+    radarChart.Legend.VerticalAligment = SobyChartVerticalAligment.Bottom;
+    radarChart.Legend.HorizontalAligment = SobyChartHorizontalAligment.Right;
     radarChart.Initialize();
                         </div>
                         <div class="codedescription">This example displays all array values</div>
@@ -206,7 +205,5 @@
     </div>
 
         </div>
-    <div class="col-md-3">
-        <uc1:SobyChartSideMenuControl runat="server" ID="SobyChartSideMenuControl" />
-    </div>
+
 </asp:Content>

@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="RefreshData.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.RefreshData" Title="DataGrid - Refresh Data Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -22,7 +20,7 @@
             bookGrid.FilterResult(filterFieldName, filterValue, SobyFieldTypes.Text, SobyFilterTypes.Contains);
 
         }
-    </script>    <div class="article col-md-9">
+    </script>    <div>
 
     <p>This example demonstrates how to use refresh button in the Soby Data Grid. <br />
         "ShowRefreshButton" property states whether refresh button should be visible or not.
@@ -44,6 +42,7 @@
     &lt;meta http-equiv="X-UA-Compatible" content="IE=edge" /&gt;
     &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /&gt;
+    &lt;script src="/Scripts/main.js" type="text/javascript"&gt;&lt;/script&gt;
     &lt;script src="/media/js/jquery-3.1.0.js" type="text/javascript"&gt;&lt;/script&gt;
     &lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
     &lt;script src="/media/js/soby.service.js"&gt;&lt;/script&gt;
@@ -93,7 +92,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 </div>
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

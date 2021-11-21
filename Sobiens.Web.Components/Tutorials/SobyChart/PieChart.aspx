@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="PieChart.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyChart.PieChart" Title="Pie Chart" %>
 
-<%@ Register Src="~/Controls/SobyChartSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyChartSideMenuControl" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
@@ -14,7 +13,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-   <div class="article col-md-9">
+   <div>
         <div class="article" style="float: left;width: 100%;">
                         <div id='soby_CodeLanguagesTabsDiv'>
                 <ul>
@@ -35,18 +34,22 @@
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /&gt;
     &lt;script src="/media/js/jquery-3.1.0.js" type="text/javascript"&gt;&lt;/script&gt;
     &lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
-    &lt;script src="/media/js/soby.ui.components.min.js"&gt;&lt;/script&gt;
+    &lt;script src="/media/js/soby.service.js"&gt;&lt;/script&gt;
+    &lt;script src="/media/js/soby.ui.components.js"&gt;&lt;/script&gt;
+    &lt;script src="/media/js/soby.ui.components.charts.js"&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
     &lt;div id="soby_ChartDiv" &gt;&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;</div>
                         <div class="csscode"></div>
-                        <div class="jscode">    var dataSet = new soby_ChartDataset();
+                        <div class="jscode">    var dataSet = new SobyChartDataset();
     dataSet.Title = "Chart1";
+    dataSet.Type=SobyChartTypes.PieChart;
     dataSet.Data = [14, 10, 17, 35, 50, 20];
 
-    var pieChart = new soby_PieChart("#soby_ChartDiv", "Pie Chart", [dataSet], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+    var pieChart = new SobyChart("#soby_ChartDiv", "Pie Chart", [dataSet], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+    pieChart.Label.Format = "$label - $value$ - $percentage%";
     pieChart.Width = 600;
     pieChart.Height = 300;
     pieChart.Initialize();
@@ -66,7 +69,9 @@
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /&gt;
     &lt;script src="/media/js/jquery-3.1.0.js" type="text/javascript"&gt;&lt;/script&gt;
     &lt;link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" /&gt;
-    &lt;script src="/media/js/soby.ui.components.min.js"&gt;&lt;/script&gt;
+    &lt;script src="/media/js/soby.service.js"&gt;&lt;/script&gt;
+    &lt;script src="/media/js/soby.ui.components.js"&gt;&lt;/script&gt;
+    &lt;script src="/media/js/soby.ui.components.charts.js"&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
     &lt;div id="soby_ChartDiv" data-width="600" data-height="300"&gt;
@@ -178,11 +183,12 @@
                 });
 
                 function soby_PopulateCustomizedCodeView() {
-                    var codeView1 = new soby_CodeView(".soby_JQueryCodeDiv", "jQuery Examples", SobyCodeViewTypes.HtmlParts);
+                    var codeView1 = new soby_CodeView(".soby_JavascriptCodeDiv", "javascript Examples", SobyCodeViewTypes.HtmlParts);
                     codeView1.ActiveView = SobyCodeViews.Js;
                     codeView1.Initialize();
 
-                    var codeView2 = new soby_CodeView(".soby_JavascriptCodeDiv", "javascript Examples", SobyCodeViewTypes.HtmlParts);
+                    /*
+                    var codeView2 = new soby_CodeView(".soby_JQueryCodeDiv", "jQuery Examples", SobyCodeViewTypes.HtmlParts);
                     codeView2.ActiveView = SobyCodeViews.Js;
                     codeView2.Initialize();
 
@@ -193,7 +199,7 @@
                     var codeView4 = new soby_CodeView(".soby_AngularCodeDiv", "AngularJS Examples", SobyCodeViewTypes.HtmlParts);
                     codeView4.ActiveView = SobyCodeViews.Html;
                     codeView4.Initialize();
-
+                    */
 
                     var tabs = new soby_Tab("#soby_CodeLanguagesTabsDiv");
                     tabs.Initialize();
@@ -203,7 +209,5 @@
         <br />Want to learn more about the chart component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
         </div>
-    <div class="col-md-3">
-        <uc1:SobyChartSideMenuControl runat="server" ID="SobyChartSideMenuControl" />
-    </div>
+
 </asp:Content>

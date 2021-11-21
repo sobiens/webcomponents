@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="SPSearch2010DataBinding.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.SPSearch2010DataBinding" Title="DataGrid - SP Search 2010 Data Binding Implementation" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
     <p>This example demonstrates how to use SharePoint Search 2010 Service in the Soby Data Grid. <br />
     <br /><strong>SP Data Binding</strong>
     <a href="javascript:void(0)" onclick="soby_ShowHideViewCode('SPDataBindingViewSourceDiv', '/Scripts/Tutorials/WebAPI/Grid/spsearch2010databinding.js')"><img src="/Images/viewsource.png" border="0" width="20px" /> View code</a>
@@ -33,7 +31,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
         </p>
         </div>
-    <div class="article col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

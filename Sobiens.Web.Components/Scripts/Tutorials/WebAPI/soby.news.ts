@@ -33,7 +33,7 @@ function soby_PopulateWebNews() {
         return content.html();
     }, null, true, true, false, null, null, null);
 
-    newsGrid.ItemCreated = function (rowID, item)
+    newsGrid.OnGridRowPopulated = function (rowID, item)
     {
         soby_PopulateWebNewsImages(item.ID);
     };

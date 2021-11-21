@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Paging.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Paging" Title="DataGrid - Paging Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
             <p>This example demonstrates how to use paging in the Soby Data Grid. <br />
         The DataGrid limits the number of records displayed on the pages. This feature improves the performance on both client side (number of records rendered) and server side (if paging enabled api is in used on the datagrid).
                 "RowLimit" property takes states the number of records will be rendered on the each and number of record will be retrieved from server api.
@@ -98,7 +96,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

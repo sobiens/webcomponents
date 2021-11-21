@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Editing.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Editing" Title="DataGrid - Editing Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
             <p>This example demonstrates how to use editing in the Soby Data Grid. <br />
                 "IsEditable" property allows/disallows editing on the DataGrid. Pressing "F2" will open an edit form for the selected row.
         The DataGrid limits the number of records displayed on the pages. This feature improves the performance on both client side (number of records rendered) and server side (if paging enabled api is in used on the datagrid).
@@ -23,6 +21,23 @@
         <pre class="js">grid.EditNewRow(); </pre>
                 Following code will open a edit record form for the selected row.
         <pre class="js">grid.EditSelectedRow();</pre>
+        The following events can be used to send changes to another system via calling an API or taking necessary actions
+        <pre class="js">
+        bookGrid.OnItemAdded = function(dataItem){
+            $("#soby_EventDescriptionDiv").html("&lt;strong&gt;Event:&lt;/strong&gt;" + dataItem["Title"] + " has been added");
+        }
+        bookGrid.OnItemUpdated = function(rowId, dataItem){
+            $("#soby_EventDescriptionDiv").html("&lt;strong&gt;Event:&lt;/strong&gt;" + dataItem["Title"] + " has been updated");
+        }
+        bookGrid.OnItemsDeleted = function(dataItems){
+            var deletedItemTitles = "";
+            for(var i=0;i&lt;dataItems.length;i++){
+                deletedItemTitles += dataItems[i]["Title"] + "; ";
+            }
+        
+            $("#soby_EventDescriptionDiv").html("&lt;strong&gt;Event:&lt;/strong&gt;" + deletedItemTitles + " has been deleted");
+        }
+        </pre>
     </p>
         <script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
             <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
@@ -44,24 +59,26 @@
     &lt;script src="/media/js/soby.ui.components.js"&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
+    &lt;div id='soby_EventDescriptionDiv'&gt;&lt;/div&gt;
+    &lt;br /&gt;
     &lt;div id='soby_BooksDiv'&gt;&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;</div>
                 <div class="csscode"></div>
                 <div class="jscode">var items = [
-        { ID: 16, Title: "Northanger Abbey", Year: 1817, Price: 1295, Genre: "Gothic parody", ImageUrl:"", WebSiteUrl:"", Author:{Id:1,Name:"Benjamin Disraeli"} },
-        { ID: 17, Title: "David Copperfield", Year: 1850, Price: 1500, Genre: "Bildungsroman", ImageUrl:"/Images/Carousel/David Copperfield.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/David_Copperfield", Author:{Id:2,Name:"Charles Dickens"} },
-        { ID: 18, Title: "Don Quixote", Year: 1617, Price: 895, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Don Quixote.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Don_Quixote", Author:{Id:3,Name:"Miguel de Cervantes"} },
-        { ID: 19, Title: "Moby Dick", Year: 1851, Price: 725, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Moby Dick.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Moby-Dick", Author:{Id:4,Name:"Elizabeth Hardwick"} },
-        { ID: 20, Title: "Robinson Crusoe", Year: 1719, Price: 1250, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Robinson Crusoe.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Robinson_Crusoe", Author:{Id:5,Name:"Daniel Defoe"} },
-        { ID: 21, Title: "Gulliver’s Travels", Year: 1726, Price: 2150, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Gulliver’s Travels.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Gulliver%27s_Travels", Author:{Id:6,Name:"Jonathan Swift"} },
-        { ID: 22, Title: "Clarissa", Year: 1748, Price: 475, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Clarissa.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Clarissa", Author:{Id:7,Name:"Samuel Richardson"} },
-        { ID: 23, Title: "Tom Jones", Year: 1749, Price: 880, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Tom Jones.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Tom_Jones", Author:{Id:8,Name:"Henry Fielding"} },
-        { ID: 24, Title: "Frankenstein", Year: 1818, Price: 740, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Frankenstein.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Frankenstein", Author:{Id:9,Name:"Mary Shelley"} },
-        { ID: 25, Title: "Nightmare Abbey", Year: 1818, Price: 895, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Nightmare Abbey.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Nightmare_Abbey", Author:{Id:10,Name:"Thomas Love Peacock "} },
-        { ID: 26, Title: "Sybil", Year: 1845, Price: 720, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Sybil.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Sybil_(novel)", Author:{Id:11,Name:"Benjamin Disraeli"} },
-        { ID: 27, Title: "Jane Eyre", Year: 1847, Price: 990, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Jane Eyre.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Jane_Eyre", Author:{Id:12,Name:"Charlotte Brontë"} },
-        { ID: 28, Title: "Vanity Fair", Year: 1848, Price: 500, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Vanity Fair.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Vanity_Fair_(novel)", Author:{Id:13,Name:"William Thackeray"} }
+        { Id: 16, Title: "Northanger Abbey", Year: 1817, Price: 1295, Genre: "Gothic parody", ImageUrl:"", WebSiteUrl:"", Author:{Id:1,Name:"Benjamin Disraeli"} },
+        { Id: 17, Title: "David Copperfield", Year: 1850, Price: 1500, Genre: "Bildungsroman", ImageUrl:"/Images/Carousel/David Copperfield.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/David_Copperfield", Author:{Id:2,Name:"Charles Dickens"} },
+        { Id: 18, Title: "Don Quixote", Year: 1617, Price: 895, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Don Quixote.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Don_Quixote", Author:{Id:3,Name:"Miguel de Cervantes"} },
+        { Id: 19, Title: "Moby Dick", Year: 1851, Price: 725, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Moby Dick.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Moby-Dick", Author:{Id:4,Name:"Elizabeth Hardwick"} },
+        { Id: 20, Title: "Robinson Crusoe", Year: 1719, Price: 1250, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Robinson Crusoe.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Robinson_Crusoe", Author:{Id:5,Name:"Daniel Defoe"} },
+        { Id: 21, Title: "Gulliver’s Travels", Year: 1726, Price: 2150, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Gulliver’s Travels.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Gulliver%27s_Travels", Author:{Id:6,Name:"Jonathan Swift"} },
+        { Id: 22, Title: "Clarissa", Year: 1748, Price: 475, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Clarissa.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Clarissa", Author:{Id:7,Name:"Samuel Richardson"} },
+        { Id: 23, Title: "Tom Jones", Year: 1749, Price: 880, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Tom Jones.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Tom_Jones", Author:{Id:8,Name:"Henry Fielding"} },
+        { Id: 24, Title: "Frankenstein", Year: 1818, Price: 740, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Frankenstein.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Frankenstein", Author:{Id:9,Name:"Mary Shelley"} },
+        { Id: 25, Title: "Nightmare Abbey", Year: 1818, Price: 895, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Nightmare Abbey.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Nightmare_Abbey", Author:{Id:10,Name:"Thomas Love Peacock "} },
+        { Id: 26, Title: "Sybil", Year: 1845, Price: 720, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Sybil.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Sybil_(novel)", Author:{Id:11,Name:"Benjamin Disraeli"} },
+        { Id: 27, Title: "Jane Eyre", Year: 1847, Price: 990, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Jane Eyre.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Jane_Eyre", Author:{Id:12,Name:"Charlotte Brontë"} },
+        { Id: 28, Title: "Vanity Fair", Year: 1848, Price: 500, Genre: "Picaresque", ImageUrl:"/Images/Carousel/Vanity Fair.jpg", WebSiteUrl:"https://en.wikipedia.org/wiki/Vanity_Fair_(novel)", Author:{Id:13,Name:"William Thackeray"} }
     ];
 
     var authors = [
@@ -111,6 +128,25 @@
     }, function (grid) {
         return grid.GetSelectedRowIDs().length === 1 ? true : false;
     });
+    bookGrid.ActionPaneButtons.Add("CustomActionDelete", "delete", 0, "/media/images/formatmap16x16.png?rev=43", "soby-list-delete", true, function (grid) {
+                    grid.DeleteSelectedRows();
+    }, function (grid) {
+        return grid.GetSelectedRowIDs().length &gt; 0 ? true : false;
+    });
+    bookGrid.OnItemAdded = function(dataItem){
+        $("#soby_EventDescriptionDiv").html("&lt;strong&gt;Event:&lt;/strong&gt;" + dataItem["Title"] + " has been added");
+    }
+    bookGrid.OnItemUpdated = function(rowId, dataItem){
+        $("#soby_EventDescriptionDiv").html("&lt;strong&gt;Event:&lt;/strong&gt;" + dataItem["Title"] + " has been updated");
+    }
+    bookGrid.OnItemsDeleted = function(dataItems){
+        var deletedItemTitles = "";
+        for(var i=0;i&lt;dataItems.length;i++){
+            deletedItemTitles += dataItems[i]["Title"] + "; ";
+        }
+        
+        $("#soby_EventDescriptionDiv").html("&lt;strong&gt;Event:&lt;/strong&gt;" + deletedItemTitles + " has been deleted");
+    }
     bookGrid.Initialize(true);
 
 </div><div class="codedescription">This example displays all array values</div><div class="resultdescription"></div></div>
@@ -128,7 +164,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

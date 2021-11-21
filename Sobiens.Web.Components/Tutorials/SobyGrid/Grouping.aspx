@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Grouping.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Grouping" Title="DataGrid - Grouping Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -24,7 +22,7 @@
 
         }
     </script>
-    <div class="article col-md-9">
+    <div>
 
         <p>
             This example demonstrates how to use grouping in the Soby Data Grid.
@@ -122,7 +120,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
         </div>
     </div>
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

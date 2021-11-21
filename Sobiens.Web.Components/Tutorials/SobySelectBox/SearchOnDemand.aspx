@@ -1,7 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="SearchOnDemand.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobySelectBox.SearchOnDemand" Title="Select Box" %>
-
-<%@ Register Src="~/Controls/SobySelectBoxSideMenuControl.ascx" TagPrefix="uc1" TagName="SobySelectBoxSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +11,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
             <script src="/media/js/jquery-ui-1.12.0.min.js" type="text/javascript"></script>
 
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
@@ -34,8 +31,5 @@
 <span class="tag_start">&lt;div</span> <span class="attr_name">id</span>=<span class="attr_value">'soby_CalendarDiv'</span> <span class="tag_start">&gt;&lt;/div&gt;</span>
             <div class="viewsourcecodefileoutput"></div>
         </pre>
-    </div>
-    <div class="col-md-3">
-        <uc1:SobySelectBoxSideMenuControl runat="server" ID="SobySelectBoxSideMenuControl1" />
     </div>
 </asp:Content>

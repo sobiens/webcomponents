@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="PieChart-Angular.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyChart.PieChartAngular" Title="Pie Chart" %>
 
-<%@ Register Src="~/Controls/SobyChartSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyChartSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
         <div class="article" style="float: left; width: 74%;">
             <!doctype html>
 <html>
@@ -96,7 +94,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
         </div>
     </div>
-    <div class="col-md-3">
-        <uc1:SobyChartSideMenuControl runat="server" ID="SobyChartSideMenuControl" />
-    </div>
+
 </asp:Content>

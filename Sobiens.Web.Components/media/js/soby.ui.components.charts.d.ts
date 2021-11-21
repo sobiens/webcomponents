@@ -1,50 +1,80 @@
-declare var soby_Charts: any[];
-interface soby_ChartInterface {
-}
-declare class soby_ChartCalculatedValues {
-    Dots: Array<soby_ChartDotValue>;
+declare var sobyCharts: any[];
+declare class SobyChartCalculatedValues {
+    Chart: SobyChart;
     ValueLabelCount: number;
-    yLabelXStartPoint: number;
-    yLabelYStartPoint: number;
-    xLabelXStartPoint: number;
-    xLabelYStartPoint: number;
-    xInnerPaneStartPixel: number;
-    yInnerPaneStartPixel: number;
-    yLabelHeight: number;
-    xLabelWidth: number;
-    xLabelHeight: number;
-    yLabelWidth: number;
-    yLabelPieceValue: number;
-    xLabelPieceValue: number;
+    VerticalAxisLabelHeight: number;
+    VerticalAxisTitleWidth: number;
+    HorizontalAxisLabelWidth: number;
+    HorizontalAxisLabelHeight: number;
+    HorizontalAxisTitleHeight: number;
+    VerticalAxisLabelWidth: number;
+    VerticalAxisLabelPieceValue: number;
+    HorizontalAxisLabelPieceValue: number;
     Padding: number;
-    InnerPaneWidth: number;
-    InnerPaneHeight: number;
-    SeriesPanelWidth: number;
-    SeriesPanelHeight: number;
+    PlotAreaWidth: number;
+    PlotAreaHeight: number;
+    LegendPanelWidth: number;
+    LegendPanelHeight: number;
     MaxValue: number;
     MinValue: number;
     TotalValue: number;
+    VerticalAxisLabelXStartPoint: number;
+    VerticalAxisLabelYStartPoint: number;
+    HorizontalAxisLabelXStartPoint: number;
+    HorizontalAxisLabelYStartPoint: number;
+    VerticalAxisTitleXStartPoint: number;
+    VerticalAxisTitleYStartPoint: number;
+    HorizontalAxisTitleXStartPoint: number;
+    HorizontalAxisTitleYStartPoint: number;
+    xPlotAreaStartPixel: number;
+    yPlotAreaStartPixel: number;
+    constructor(chart: SobyChart);
+    Calculate(): void;
 }
-declare class soby_Chart implements soby_ChartInterface {
+declare class SobyAxisSettings {
+    Title: string;
+    TitleFont: string;
+    TitleColour: string;
+    LabelFont: string;
+    LabelColour: string;
+}
+declare class SobyPlotAreaSettings {
+    Colour: string;
+    LineWidth: number;
+}
+declare class SobyTitleSettings {
+    Title: string;
+    Font: string;
+    Colour: string;
+}
+declare class SobyLabelSettings {
+    LabelPosition: SobyChartElementPosition;
+    Labels: Array<string>;
+    Colours: Array<string>;
+    Font: string;
+    DialogTextColour: string;
+    Format: string;
+}
+declare class SobyChart {
     ChartID: string;
     ChartTooltipID: string;
     ChartClassName: string;
     ContentDivSelector: string;
-    Title: string;
+    Title: SobyTitleSettings;
     Height: number;
     Width: number;
-    Labels: Array<string>;
-    Datasets: Array<soby_ChartDataset>;
+    Datasets: Array<SobyChartDataset>;
     EmptyDataHtml: string;
     Type: SobyChartTypes;
-    LabelPosition: SobyChartElementPosition;
-    SeriesPosition: SobyChartElementPosition;
-    SeriesVerticalAligment: SobyChartVerticalAligment;
-    SeriesHorizontalAligment: SobyChartHorizontalAligment;
-    Colours: Array<string>;
-    MouseOverDotIndex: number;
-    CalculatedValues: soby_ChartCalculatedValues;
-    constructor(type: SobyChartTypes, contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
+    Legend: SobyLegendPanel;
+    Label: SobyLabelSettings;
+    PlotAreaSettings: SobyPlotAreaSettings;
+    VerticalAxisSettings: SobyAxisSettings;
+    HorizontalAxisSettings: SobyAxisSettings;
+    ChartParts: Array<SobyChartPart>;
+    CalculatedValues: SobyChartCalculatedValues;
+    MouseOverDotIndex: Array<number>;
+    constructor(contentDivSelector: any, title: any, datasets: Array<SobyChartDataset>, emptyDataHtml: any, labels: Array<string>);
     GetContext(): any;
     GetCanvas(): any;
     GetTooltipContainer(): any;
@@ -52,9 +82,7 @@ declare class soby_Chart implements soby_ChartInterface {
     RenderTooltip(tooltipContainer: any, dataItem: any, x: any, y: any): void;
     TransformLightenDarkenColor(col: any, amt: any): string;
     RestoreDotColours(): void;
-    SetMouseOverColour(mouseOverDotIndex: number): void;
     HandleMouseMove(e: MouseEvent): void;
-    CheckMouseHit(mouseX: number, mouseY: number, dot: soby_ChartDotValue): any;
     RoundedRect(x: any, y: any, width: any, height: any, color: any, radius: any): void;
     Initialize(): void;
     PopulateItems(): void;
@@ -66,56 +94,77 @@ declare class soby_Chart implements soby_ChartInterface {
     OnSelectionChanged: any;
     OnClick: any;
 }
-declare class soby_LineChart extends soby_Chart {
-    constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
+declare class SobyChartPartFactory {
+    GetChartPart(chart: SobyChart, dataset: SobyChartDataset): SobyChartPart;
+}
+declare class SobyChartPart {
+    Chart: SobyChart;
+    Type: SobyChartTypes;
+    Dataset: SobyChartDataset;
+    Dots: Array<SobyChartDotValue>;
+    constructor(chart: SobyChart, dataset: SobyChartDataset);
+    GetContext(): any;
+    GetCalculatedValues(): SobyChartCalculatedValues;
+    RestoreDotColours(): void;
+    SetMouseOverColour(mouseOverDotDatasetIndex: number, mouseOverDotIndex: number): void;
+    CheckMouseHit(mouseX: number, mouseY: number, dot: SobyChartDotValue): any;
+    HandleMouseMove(mouseX: any, mouseY: any): boolean;
+    GenerateLabelFromFormat(label: string, value: number, percentage: number): string;
     PopulateItems(): void;
 }
-declare class soby_ColumnChart extends soby_Chart {
+declare class SobyLineChartPart extends SobyChartPart {
+    constructor(chart: SobyChart, dataset: SobyChartDataset);
+    PopulateItems(): void;
+}
+declare class SobyColumnChartPart extends SobyChartPart {
     ColumnWidth: number;
-    constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
+    constructor(chart: SobyChart, dataset: SobyChartDataset);
     PopulateItems(): void;
 }
-declare class soby_BarChart extends soby_Chart {
+declare class SobyBarChartPart extends SobyChartPart {
     BarHeight: number;
-    constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
+    constructor(chart: SobyChart, dataset: SobyChartDataset);
     PopulateItems(): void;
 }
-declare class soby_RadarChart extends soby_Chart {
-    constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
+declare class SobyRadarChartPart extends SobyChartPart {
+    constructor(chart: SobyChart, dataset: SobyChartDataset);
     PopulateItems(): void;
 }
-declare class soby_PieChart extends soby_Chart {
+declare class SobyPieChartPart extends SobyChartPart {
     Offset: number;
     Radius: number;
-    constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
+    constructor(chart: SobyChart, dataset: SobyChartDataset);
     PopulateItems(): void;
 }
-declare class soby_PolarAreaChart extends soby_PieChart {
-    constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
+declare class SobyPolarAreaChartPart extends SobyPieChartPart {
+    constructor(chart: SobyChart, dataset: SobyChartDataset);
 }
-declare class soby_DoughnutChart extends soby_PieChart {
-    constructor(contentDivSelector: any, title: any, datasets: Array<soby_ChartDataset>, emptyDataHtml: any, labels: Array<string>);
+declare class SobyDoughnutChartPart extends SobyPieChartPart {
+    constructor(chart: SobyChart, dataset: SobyChartDataset);
 }
-declare class soby_SeriesPanel {
-    CTX: any;
+declare class SobyLegendPanel {
+    Chart: SobyChart;
     Height: number;
     Width: number;
     X: number;
     Y: number;
     Titles: Array<string>;
     Colours: Array<string>;
+    Position: SobyChartElementPosition;
     TitleAligment: SobyChartAligment;
     VerticalAligment: SobyChartVerticalAligment;
     HorizontalAligment: SobyChartHorizontalAligment;
-    constructor(ctx: any, titleAligment: SobyChartAligment, verticalAligment: SobyChartVerticalAligment, horizontalAligment: SobyChartHorizontalAligment, height: number, width: number, x: number, y: number, titles: Array<string>, colours: Array<string>);
+    constructor(chart: SobyChart, titles: Array<string>, colours: Array<string>);
     Paint(): void;
 }
-declare class soby_ChartDataset {
+declare class SobyChartDataset {
     Title: string;
     Type: SobyChartTypes;
     Data: Array<number>;
+    Colour: string;
+    Index: number;
 }
-declare class soby_ChartDotValue {
+declare class SobyChartDotValue {
     Label: string;
     Value: number;
     DatasetTitle: string;
@@ -159,3 +208,4 @@ declare enum SobyChartHorizontalAligment {
     Right = 2
 }
 declare function sobyGenerateChartFromHtmlElement(containerId: any): void;
+declare let sobyChartPartFactory: SobyChartPartFactory;

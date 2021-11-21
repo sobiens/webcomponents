@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="CellTemplate.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.CellTemplate" Title="DataGrid - Cell Template Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -15,7 +13,7 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
-    <div class="article col-md-9">
+    <div>
     <p>This example demonstrates how to use cell template in the Soby Data Grid. <br />
                 Cell template can be passed into "AddColumn" method. There are two types of cell template;
         1. CellContent: This type render the template as part of datagrid cell.
@@ -101,7 +99,4 @@ bookGrid.AddColumn("Year", "Description", SobyShowFieldsOn.All, null, cellTempla
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
 </asp:Content>

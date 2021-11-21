@@ -7,18 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sobiens.Web.Components.Tutorials.SobyDataRepeater {
-    
-    
-    public partial class Editing {
-        
-        /// <summary>
-        /// SobyDataRepeaterSideMenuControl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Sobiens.Web.Components.Controls.SobyDataRepeaterSideMenuControl SobyDataRepeaterSideMenuControl;
+namespace Sobiens.Web.Components.Tutorials.SobyDataRepeater
+{
+
+
+    public partial class Editing
+    {
     }
 }

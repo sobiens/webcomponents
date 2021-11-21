@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Treeview Selection.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyItemSelection.Treeview_Selection" Title="Treeview Selection" %>
 
-<%@ Register Src="~/Controls/SobyItemSelectionSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyItemSelectionSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
     <p>This example demonstrates how to use Soby Item Selection as treeview selection. <br />
         Setting item selector type as "SobyItemSelectorTypes.TreeView" will make it work as treeview selection. 
         <pre class="js">itemSelection = new soby_ItemSelection("#soby_BooksDiv", "Meters", <strong>SobyItemSelectorTypes.TreeView</strong>, autoCompleteBookDataService, advancedSearchBookDataService, advancedSearchBookChildDataService, "No record", "BookSelectionDialog", "/Management/CustomerSelection.html", "Id", "Title", "ParentId"); 
@@ -24,8 +22,10 @@
     </p>
 
         <div class="article" style="float: left;width: 74%;">
-            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>            <script src="/media/js/jquery-ui-1.12.0.min.js" type="text/javascript"></script>
-            <link href="/media/css/jquery-ui.min.css" rel="stylesheet" />            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
+            <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
+            <script src="/media/js/jquery-ui-1.12.0.min.js" type="text/javascript"></script>
+            <link href="/media/css/jquery-ui.min.css" rel="stylesheet" />
+            <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
             <script src="/media/js/soby.ui.components.js"></script>
             <script src="/media/js/soby.ui.components.treeview.js"></script>
@@ -46,7 +46,5 @@
         <br />Want to learn more about the item selection component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 </div>
-    <div class="col-md-3">
-        <uc1:SobyItemSelectionSideMenuControl runat="server" ID="SobyItemSelectionSideMenuControl" />
-    </div>
+
 </asp:Content>

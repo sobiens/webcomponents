@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="DateRangeSelection.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyRangeSelection.DateRangeSelection" Title="Range Selection - Date Range Selection" %>
 
-<%@ Register Src="~/Controls/SobyRangeSelectionSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyRangeSelectionSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -23,7 +21,7 @@
             bookGrid.SortResult(sortFieldName, isAsc);
 
         }
-    </script>    <div class="article col-md-9">
+    </script>    <div>
     <p>This example demonstrates how to use sorting in the Soby Data Grid. <br />
         "AddOrderByField" method takes two parameters. First one is the name of the field. Second one is a boolean value to state whether it should be sorted as ascending or descending. This method does not trigger data population, it just adds the orderbyfield which will be used on population.
         <pre class="js">bookGrid.AddOrderByField("Title", true); </pre>
@@ -84,8 +82,5 @@
         <br />Want to learn more about the date range selection component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
         </div>
-        <div class="col-md-3">
 
-        <uc1:SobyRangeSelectionSideMenuControl runat="server" ID="SobyRangeSelectionSideMenuControl" />
-    </div>
 </asp:Content>

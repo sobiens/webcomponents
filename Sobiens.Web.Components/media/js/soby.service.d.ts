@@ -110,6 +110,7 @@ declare class SobyFilter implements ISobyFilter {
 declare class SobySchemaFields extends Array<SobySchemaField> {
     constructor(items?: Array<SobySchemaField>);
     toWebAPIString(): string;
+    GetByFieldName(fieldName: string): SobySchemaField;
 }
 declare class SobySchemaField {
     FieldName: string;

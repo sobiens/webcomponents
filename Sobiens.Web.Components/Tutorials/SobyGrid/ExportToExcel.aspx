@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ExportToExcel.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.ExportToExcel" Title="DataGrid - Export to Excel Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -19,7 +17,7 @@
         "AllowExportData" property states if export functionality is allowed or not.
         <pre class="js">bookGrid.AllowExportData = true; </pre>
     </p>
-    <div class="article col-md-9">
+    <div>
             <script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
             <script src="/media/js/jquery-3.1.0.js" type="text/javascript"></script>
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
@@ -97,7 +95,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="PolarAreaChart.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyChart.PolarAreaChart" Title="Polar Area Chart" %>
 
-<%@ Register Src="~/Controls/SobyChartSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyChartSideMenuControl" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
@@ -14,7 +13,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
                                                 <div class="article" style="float: left;width: 100%;">
                         <div id='soby_CodeLanguagesTabsDiv'>
                 <ul>
@@ -42,16 +41,17 @@
 &lt;/body&gt;
 &lt;/html&gt;</div>
                         <div class="csscode"></div>
-                        <div class="jscode">    var dataSet1 = new soby_ChartDataset();
+                        <div class="jscode">    var dataSet1 = new SobyChartDataset();
     dataSet1.Title = "Chart1";
+    dataSet1.Type=SobyChartTypes.PolarAreaChart;
     dataSet1.Data = [1, 10, 70, 35, 50, 100];
 
-    var polarAreaChart = new soby_PolarAreaChart("#soby_ChartDiv", "Doughnut Chart", [dataSet1], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+    var polarAreaChart = new SobyChart("#soby_ChartDiv", "Doughnut Chart", [dataSet1], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     polarAreaChart.Width = 600;
     polarAreaChart.Height = 300;
-    polarAreaChart.SeriesPosition = SobyChartElementPosition.Top;
-    polarAreaChart.SeriesVerticalAligment = SobyChartVerticalAligment.Bottom;
-    polarAreaChart.SeriesHorizontalAligment = SobyChartHorizontalAligment.Right;
+    polarAreaChart.Legend.Position = SobyChartElementPosition.Top;
+    polarAreaChart.Legend.VerticalAligment = SobyChartVerticalAligment.Bottom;
+    polarAreaChart.Legend.HorizontalAligment = SobyChartHorizontalAligment.Right;
     polarAreaChart.Initialize();
                         </div>
                         <div class="codedescription">This example displays all array values</div>
@@ -209,7 +209,5 @@
 
 
         </div>
-    <div class="col-md-3">
-        <uc1:SobyChartSideMenuControl runat="server" ID="SobyChartSideMenuControl" />
-    </div>
+ 
 </asp:Content>

@@ -7,18 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sobiens.Web.Components.Tutorials.SobyGrid {
-    
-    
-    public partial class CustomDates {
-        
-        /// <summary>
-        /// SobySchedulerSideMenuControl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Sobiens.Web.Components.Controls.SobySchedulerSideMenuControl SobySchedulerSideMenuControl;
+namespace Sobiens.Web.Components.Tutorials.SobyGrid
+{
+
+
+    public partial class CustomDates
+    {
     }
 }

@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Themes.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.Themes" Title="DataGrid - Themes Example" %>
 
-<%@ Register Src="~/Controls/SobyGridSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyGridSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -22,15 +20,15 @@
         }
     </script>
 
-    <div class="article col-md-9">
+    <div>
         <p style="color:orange;font-size: 18px;">
             <div class="row">
-                <div class="col-md-2"><div style="background-color:#0072c6;width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('classic')">&nbsp;</div></div>
-                <div class="col-md-2"><div style="background-color:#e9ebf2;width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('snow')">&nbsp;</div></div>
-                <div class="col-md-2"><div style="background-color:#fcb796;width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('sunrise')">&nbsp;</div></div>
-                <div class="col-md-2"><div style="background-color:#7bc833;width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('forest')">&nbsp;</div></div>
-                <div class="col-md-2"><div style="background-color:#b20064;width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('raspberry')">&nbsp;</div></div>
-                <div class="col-md-2"><div style="background-color:#fffadc;width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('autumn')">&nbsp;</div></div>
+                <div class="col-md-2 classic"><div style="background-color:var(--heading-bg-color);width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('classic')">&nbsp;</div></div>
+                <div class="col-md-2 snow"><div style="background-color:var(--heading-bg-color);width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('snow')">&nbsp;</div></div>
+                <div class="col-md-2 sunrise"><div style="background-color:var(--heading-bg-color);width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('sunrise')">&nbsp;</div></div>
+                <div class="col-md-2 forest"><div style="background-color:var(--heading-bg-color);width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('forest')">&nbsp;</div></div>
+                <div class="col-md-2 raspberry"><div style="background-color:var(--heading-bg-color);width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('raspberry')">&nbsp;</div></div>
+                <div class="col-md-2 autumn"><div style="background-color:var(--heading-bg-color);width:50%;margin-left: auto ;margin-right: auto ;cursor: pointer;" onclick="soby_ChangeTheme('autumn')">&nbsp;</div></div>
             </div>
             <div class="row">
                 <div class="col-md-2" style="text-align:center">Classic</div>
@@ -86,7 +84,5 @@
         <br />Want to learn more about the grid component? Check out the <a href="../../API Documentation/modules.html">API documentation</a>.
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyGridSideMenuControl runat="server" ID="SobyGridSideMenuControl" />
-    </div>
+
 </asp:Content>

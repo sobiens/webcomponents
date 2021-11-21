@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Getting Started.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyGrid.CalendarView" Title="Calendar View" %>
 
-<%@ Register Src="~/Controls/SobyCalendarViewSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyCalendarViewSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
             <link href="/media/css/soby.ui.components.css" rel="stylesheet" type="text/css" media="all" />
             <link href="/media/css/soby.ui.components.calendarview.css" rel="stylesheet" type="text/css" media="all" />
             <script src="/media/js/soby.service.js"></script>
@@ -35,7 +33,4 @@
         </pre>
     </div>
 
-    <div class="col-md-3">
-        <uc1:SobyCalendarViewSideMenuControl runat="server" ID="SobyCalendarViewSideMenuControl" />
-    </div>
 </asp:Content>

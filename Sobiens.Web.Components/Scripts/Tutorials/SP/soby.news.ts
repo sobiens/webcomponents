@@ -33,7 +33,7 @@ function soby_PopulateNews() {
         return content.html();
     }, null, true, true, false, null, null, null);
 
-    newsGrid.ItemCreated = function (rowID, item)
+    newsGrid.OnGridRowPopulated = function (rowID, item)
     {
         soby_PopulateSPNewsImages(item.ID);
     };

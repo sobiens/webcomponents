@@ -152,24 +152,43 @@
         });
 
         function soby_PopulateLineChartRefreshData() {
-            var dataSet1 = new soby_ChartDataset();
+            var dataSet1 = new SobyChartDataset();
             dataSet1.Title = "Chart1";
+            dataSet1.Type = SobyChartTypes.LineChart;
             dataSet1.Data = [1, 10, 70, 35, 50, 100];
 
-            var dataSet2 = new soby_ChartDataset();
+            var dataSet2 = new SobyChartDataset();
             dataSet2.Title = "Chart2";
+            dataSet2.Type = SobyChartTypes.LineChart;
             dataSet2.Data = [12, 15, 17, 71, 22, 50];
 
-            var dataSet3 = new soby_ChartDataset();
+            var dataSet3 = new SobyChartDataset();
             dataSet3.Title = "Chart3";
+            dataSet3.Type = SobyChartTypes.LineChart;
             dataSet3.Data = [21, 51, 31, 6, 62, 24];
 
-            var lineChart = new soby_LineChart("#homeLineChartDiv", "Line Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+
+            var lineChart = new SobyChart("#homeLineChartDiv", "Line Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
             lineChart.Width = 600;
             lineChart.Height = 300;
             lineChart.Initialize();
 
-            var barChart = new soby_BarChart("#homeBarChartDiv", "Bar Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+            var dataSet4 = new SobyChartDataset();
+            dataSet4.Title = "Chart1";
+            dataSet4.Type = SobyChartTypes.BarChart;
+            dataSet4.Data = [1, 10, 70, 35, 50, 100];
+
+            var dataSet5 = new SobyChartDataset();
+            dataSet5.Title = "Chart2";
+            dataSet5.Type = SobyChartTypes.BarChart;
+            dataSet5.Data = [12, 15, 17, 71, 22, 50];
+
+            var dataSet6 = new SobyChartDataset();
+            dataSet6.Title = "Chart3";
+            dataSet6.Type = SobyChartTypes.BarChart;
+            dataSet6.Data = [21, 51, 31, 6, 62, 24];
+
+            var barChart = new SobyChart("#homeBarChartDiv", "Bar Chart", [dataSet4, dataSet5, dataSet6], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
             barChart.Width = 600;
             barChart.Height = 300;
             barChart.Initialize();

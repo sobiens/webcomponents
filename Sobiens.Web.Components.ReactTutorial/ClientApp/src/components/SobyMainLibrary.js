@@ -22,7 +22,6 @@ export class SobyMainLibrary {
             script.id = scriptId;
             script.onreadystatechange = script.onload = function () {
                 var state = script.readyState;
-                console.log("state: " + state);
                 if (!callback.done && (!state || /loaded|complete/.test(state))) {
                     callback.done = true;
                     callback();
@@ -46,13 +45,9 @@ export class SobyMainLibrary {
     IncludeChartLibrary(callback) {
         const library = this;
         library.IncludeJSLibrary("jquery-3.1.0.js", function () {
-            library.IncludeJSLibrary("soby.service.js", function () {
-                library.IncludeJSLibrary("soby.ui.components.charts.js", function () {
-                    library.IncludeJSLibrary("soby.ui.components.charts.jquery.js", function () {
-                        callback();
-                        library.IncludeCSSLibrary("soby.ui.components.css", function () {
-                        });
-                    });
+            library.IncludeJSLibrary("soby.ui.components.min.js", function () {
+                callback();
+                library.IncludeCSSLibrary("soby.ui.components.css", function () {
                 });
             });
         });

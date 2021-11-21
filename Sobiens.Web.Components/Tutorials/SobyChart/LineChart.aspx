@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="LineChart.aspx.cs" Inherits="Sobiens.Web.Components.Tutorials.SobyChart.LineChart" Title="Line Chart" %>
 
-<%@ Register Src="~/Controls/SobyChartSideMenuControl.ascx" TagPrefix="uc1" TagName="SobyChartSideMenuControl" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -14,7 +12,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="article col-md-9">
+    <div>
 
                         <div class="article" style="float: left;width: 100%;">
                         <div id='soby_CodeLanguagesTabsDiv'>
@@ -43,24 +41,27 @@
 &lt;/body&gt;
 &lt;/html&gt;</div>
                         <div class="csscode"></div>
-                        <div class="jscode">    var dataSet1 = new soby_ChartDataset();
+                        <div class="jscode">    var dataSet1 = new SobyChartDataset();
     dataSet1.Title = "Chart1";
+    dataSet1.Type=SobyChartTypes.LineChart;
     dataSet1.Data = [1, 10, 70, 35, 50, 100];
 
-    var dataSet2 = new soby_ChartDataset();
+    var dataSet2 = new SobyChartDataset();
     dataSet2.Title = "Chart2";
+    dataSet2.Type=SobyChartTypes.LineChart;
     dataSet2.Data = [12, 15, 17, 71, 22, 50];
 
-    var dataSet3 = new soby_ChartDataset();
+    var dataSet3 = new SobyChartDataset();
     dataSet3.Title = "Chart3";
+    dataSet3.Type=SobyChartTypes.LineChart;
     dataSet3.Data = [21, 51, 31, 6, 62, 24];
 
-    var lineChart = new soby_LineChart("#soby_ChartDiv", "Line Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
+    var lineChart = new SobyChart("#soby_ChartDiv", "Line Chart", [dataSet1, dataSet2, dataSet3], "There is no record found.", ["January", "February", "March", "April", "May", "June"]);
     lineChart.Width = 600;
     lineChart.Height = 300;
-    lineChart.SeriesPosition = SobyChartElementPosition.Top;
-    lineChart.SeriesVerticalAligment = SobyChartVerticalAligment.Bottom;
-    lineChart.SeriesHorizontalAligment = SobyChartHorizontalAligment.Right;
+    lineChart.Legend.Position = SobyChartElementPosition.Top;
+    lineChart.Legend.VerticalAligment = SobyChartVerticalAligment.Bottom;
+    lineChart.Legend.HorizontalAligment = SobyChartHorizontalAligment.Right;
     lineChart.Initialize();
                         </div>
                         <div class="codedescription">This example displays all array values</div>
@@ -221,7 +222,5 @@
 
 
         </div>
-    <div class="col-md-3">
-        <uc1:SobyChartSideMenuControl runat="server" ID="SobyChartSideMenuControl" />
-    </div>
+
 </asp:Content>
