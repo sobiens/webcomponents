@@ -109,7 +109,9 @@ declare class SobySelectBox {
     SearchOnDemand: boolean;
     AllowMultipleSelections: boolean;
     SearchParameterName: string;
+    PopulateItemsOnRender: boolean;
     Items: any;
+    TempItems: any[];
     SelectedItemKeyValues: any;
     SelectedItemDisplayValues: any;
     EmptyText: string;
@@ -504,6 +506,8 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
      * grid.SaveItemDetail('soby_griddatarow_e6d7a5b4-3636-5780-f02e-c84b43ca2c6b');
      */
     SaveItemDetail(rowId: string): void;
+    AddNewRecord(dataItem: any): void;
+    UpdateRecord(parameterNames: any, dbInstanceIds: any, dbInstance: any, rowId: any): void;
     /**
     * Deletes selected rows.
     * @example

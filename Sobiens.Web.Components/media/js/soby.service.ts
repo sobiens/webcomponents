@@ -598,15 +598,18 @@ class SobySchemaFields extends Array<SobySchemaField> {
     }
 
     toWebAPIString() {
-        var webAPIString = "";
-        var expandString = "";
-        for (var i = 0; i < this.length; i++) {
+        let webAPIString = "";
+        let expandString = "";
+        for (let i = 0; i < this.length; i++) {
             webAPIString += "," + this[i].FieldName;
             if (this[i].FieldType === SobyFieldTypes.Lookup) {
                 expandString += "," + this[i].Args.ModelName;
             }
             else if (this[i].FieldType === SobyFieldTypes.User)
             {
+                expandString += "," + this[i].Args.ModelName;
+            }
+            else if (this[i].FieldType === SobyFieldTypes.Choice) {
                 expandString += "," + this[i].Args.ModelName;
             }
         }
@@ -943,6 +946,8 @@ abstract class soby_DataSourceBuilderAbstract implements soby_DataSourceBuilderI
     }
     MainQueryBeingGenerated() {
     }
+    CountQueryGenerated = null;
+    MainQueryGenerated = null;
     DataBeingParsed(data: any, parseCompleted: boolean  ): Array<soby_Item>
     {
         return data;
@@ -1396,7 +1401,7 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
         {
             pagingQuery = this.GetPagingQuery(transport);
         }
-
+        var mainEnvelope = "";;
         if (transport.Type === "POST")
         {
             if (excludePagingQuery === true)
@@ -1404,7 +1409,10 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
                 pagingQuery = "''";
             }
 
-            return "{" + (whereQuery !== "" ? whereQuery + ", " : "") + (orderByFieldsQuery !== "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
+            var envelope = "{" + (whereQuery !== "" ? whereQuery + ", " : "") + (orderByFieldsQuery !== "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
+            if (this.MainQueryGenerated !== null) {
+                mainEnvelope = this.MainQueryGenerated(envelope);
+            }
         }
         else {
             var envelope = whereQuery;
@@ -1426,9 +1434,13 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
                 envelope += "&";
             }
 
-            envelope += pagingQuery;
-            return envelope;
+            mainEnvelope += pagingQuery;
+            if (this.MainQueryGenerated !== null) {
+                mainEnvelope = this.MainQueryGenerated(envelope);
+            }
         }
+
+        return envelope;
     }
     GetCountQuery(transport: soby_TransportRequest) {
         this.CountQueryBeingGenerated();
@@ -1792,7 +1804,6 @@ class soby_StaticDataService implements soby_ServiceInterface {
         return fieldNames;
     }
     UpdateItem(keyNames: Array<string>, keyValues: Array<string>, objectInstance) {
-        console.log("Match item CHECKING...")
         if (keyValues === null || keyValues === undefined || keyValues.length === 0)
             return;
 
@@ -1807,14 +1818,9 @@ class soby_StaticDataService implements soby_ServiceInterface {
 
             if (matchItem === true)
             {
-                console.log(this.Items[i])
-                console.log(objectInstance)
-
-                console.log("Match item FOUND")
                 this.Items[i] = objectInstance;
             }
         }
-        console.log("Match item ENDED")
         this.ItemUpdated(null);
         //this.ItemPopulated(this.Items);
     }
@@ -2003,7 +2009,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
 
             return envelope;
         }
-
+        var mainEnvelope = "";
         var selectFieldsEnvelope = this.GetViewFieldsQuery(transport);
         var whereQuery = this.GetWhereQuery(transport);
         var orderByFieldsQuery = this.GetOrderByFieldsQuery(transport);
@@ -2020,7 +2026,10 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
                 pagingQuery = "''";
             }
 
-            return "{" + (whereQuery !== "" ? whereQuery + ", " : "") + (orderByFieldsQuery !== "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
+            mainEnvelope = "{" + (whereQuery !== "" ? whereQuery + ", " : "") + (orderByFieldsQuery !== "" ? orderByFieldsQuery + ", " : "") + pagingQuery + "}";
+            if (this.MainQueryGenerated !== null) {
+                mainEnvelope = this.MainQueryGenerated(mainEnvelope);
+            }
         }
         else {
             var envelope = whereQuery;
@@ -2042,8 +2051,13 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
             }
 
             envelope += pagingQuery;
-            return envelope;
+            mainEnvelope = envelope;
+            if (this.MainQueryGenerated !== null) {
+                mainEnvelope = this.MainQueryGenerated(mainEnvelope);
+            }
         }
+
+        return mainEnvelope;
     }
     GetCountQuery(transport: soby_TransportRequest)
     {
@@ -2281,5 +2295,12 @@ function soby_TicksFromDate(date): number {
 
 function soby_DateFromTicks(ticks): Date {
     return new Date((ticks - 621355968000000000)/10000);
+}
+
+function soby_IsNullOrEmpty(value): boolean {
+    if (value === null || value === undefined || value === "")
+        return true;
+    else
+        return false;
 }
 // ************************************************************

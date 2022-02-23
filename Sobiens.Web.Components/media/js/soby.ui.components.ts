@@ -164,8 +164,6 @@ class SobyLookupSelectBox implements ISobyEditControlInterface {
         return this.ListItems[itemIndex];
     }
     SetValue(value: string) {
-        console.log("----SetValue-----");
-        console.log("value:" + value);
         $("#" + this.ContainerClientId + " select.sobylookupselectbox").val(value);
     }
     PopulateChoiceItems()
@@ -479,7 +477,9 @@ class SobySelectBox
     SearchOnDemand: boolean = false;
     AllowMultipleSelections: boolean = true;
     SearchParameterName: string = "";
+    PopulateItemsOnRender = true;
     Items = null;
+    TempItems = [];
     SelectedItemKeyValues = null;
     SelectedItemDisplayValues = null;
     EmptyText: string = "Please Select";
@@ -568,7 +568,7 @@ class SobySelectBox
             "<a href='javascript:void(0)'  onclick =\"soby_EditControls['" + this.ContainerClientId + "'].ClearItems()\" class=\"soby-itmHoverEnabled soby-selectboxitem-delete-link clearitemslink hidden\">" + this.SVGImages.GetXCircle() + "</a>" +
             "</div>" +
             "<div class='expanderpanel'>" +
-            "<a href='javascript:void(0)'  onclick=\"soby_EditControls['" + this.ContainerClientId + "'].ShowHideSelectBox()\">" + this.SVGImages.GetExpand() + "</a>" +
+            "<a href='javascript:void(0)'  onclick=\"soby_EditControls['" + this.ContainerClientId + "'].ShowHideSelectBox()\">" + this.SVGImages.GetCollapse() + "</a>" +
                 "</div>" +
             "</div>" +
             "<div class='selectbox hidden'>" +
@@ -576,6 +576,7 @@ class SobySelectBox
             "</div><div><div>" +
             "</div>");
         $("#" + this.ContainerClientId + " .emptytext").text(this.EmptyText);
+
 
         $("#" + this.ContainerClientId + " .searchtextbox").keyup(function () {
             let keyword = $(this).val();
@@ -699,22 +700,28 @@ class SobySelectBox
                 editControl.HideLoadingIcon();
             };
 
-            this.ShowLoadingIcon();
-            this.DataService.PopulateItems(null);
+            if (this.PopulateItemsOnRender === true) {
+                this.ShowLoadingIcon();
+                this.DataService.PopulateItems(null);
+            }
         }
     }
 
     SearchFromService(keyword) {
         this.ShowLoadingIcon();
-
-        for (let i = this.DataService.DataSourceBuilder.Filters.Filters.length - 1; i > -1; i--) {
-            if (this.DataService.DataSourceBuilder.Filters.Filters[i].FieldName === this.SearchParameterName) {
-                this.DataService.DataSourceBuilder.Filters.Filters.splice(i, 1);
-            }
+        if (keyword === null || keyword === "") {
+            this.DataService.ItemPopulated([]);
         }
+        else {
+            for (let i = this.DataService.DataSourceBuilder.Filters.Filters.length - 1; i > -1; i--) {
+                if (this.DataService.DataSourceBuilder.Filters.Filters[i].FieldName === this.SearchParameterName) {
+                    this.DataService.DataSourceBuilder.Filters.Filters.splice(i, 1);
+                }
+            }
 
-        this.DataService.DataSourceBuilder.Filters.AddFilter(this.SearchParameterName, keyword, SobyFieldTypes.Text, SobyFilterTypes.Contains, false, true);
-        this.DataService.PopulateItems(null);
+            this.DataService.DataSourceBuilder.Filters.AddFilter(this.SearchParameterName, keyword, SobyFieldTypes.Text, SobyFilterTypes.Contains, false, true);
+            this.DataService.PopulateItems(null);
+        }
     }
 
     SearchFromPopulatedData(keyword) {
@@ -746,6 +753,7 @@ class SobySelectBox
     SelectItem(index)
     {
         let selectedItem = this.Items[index];
+        this.TempItems.push(selectedItem);
         let keyValue = selectedItem[this.ValueFieldName];
         let displayValue = selectedItem[this.TitleFieldName];
         if (this.AllowMultipleSelections === false) {
@@ -804,9 +812,9 @@ class SobySelectBox
         {
             let keyValue = this.SelectedItemKeyValues[i];
             let selectedItem = null;
-            for (let x = 0; x < this.Items.length; x++)
+            for (let x = 0; x < this.TempItems.length; x++)
             {
-                let item = this.Items[x];
+                let item = this.TempItems[x];
                 if (item[this.ValueFieldName] === keyValue)
                 {
                     selectedItem = item;
@@ -873,9 +881,9 @@ class SobySelectBox
         {
             let keyValue = this.SelectedItemKeyValues[i];
             let selectedItem = null;
-            for (let x = 0; x < this.Items.length; x++)
+            for (let x = 0; x < this.TempItems.length; x++)
             {
-                let item = this.Items[x];
+                let item = this.TempItems[x];
                 if (item[this.ValueFieldName] === keyValue)
                 {
                     selectedItem = item;
@@ -1906,21 +1914,27 @@ class soby_WebGrid implements ISobySelectorControlInterface
         }
 
         if (rowId !== null && rowId !== "") {
-            this.DataService.UpdateItem(parameterNames, dbInstanceIds, dbInstance);
-            if (this.OnItemUpdated !== null) {
-                this.OnItemUpdated(rowId, dbInstance);
-            }
-
+            this.UpdateRecord(parameterNames, dbInstanceIds, dbInstance, rowId);
         }
         else {
-            //dbInstance[this.KeyFields[0]] = 0;
-            this.DataService.AddItem(dbInstance);
-
-            if (this.OnItemAdded !== null) {
-                this.OnItemAdded(dbInstance);
-            }
+            this.AddNewRecord(dbInstance);
         }
 
+    }
+
+    AddNewRecord(dataItem) {
+        this.DataService.AddItem(dataItem);
+
+        if (this.OnItemAdded !== null) {
+            this.OnItemAdded(dataItem);
+        }
+    }
+
+    UpdateRecord(parameterNames, dbInstanceIds, dbInstance, rowId) {
+        this.DataService.UpdateItem(parameterNames, dbInstanceIds, dbInstance);
+        if (this.OnItemUpdated !== null) {
+            this.OnItemUpdated(rowId, dbInstance);
+        }
     }
 
      /**

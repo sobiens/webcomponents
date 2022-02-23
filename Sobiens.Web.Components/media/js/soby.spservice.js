@@ -1094,10 +1094,11 @@ var sobySPListsObject = /** @class */ (function () {
                 var listsXml = xmlData.find("List");
                 for (var i = 0; i < listsXml.length; i++) {
                     var listXml = $(listsXml[i]);
+                    var listTitle = listXml.attr("Title");
                     var list = {
                         ID: listXml.attr("ID"),
-                        Title: listXml.attr("Title"),
-                        Fields: soby.SPLibrary.Lists.GetListFields(siteUrl, list.Title)
+                        Title: listTitle,
+                        Fields: soby.SPLibrary.Lists.GetListFields(siteUrl, listTitle)
                     };
                     lists[lists.length] = list;
                 }
@@ -1238,6 +1239,34 @@ var sobySPListsObject = /** @class */ (function () {
             contentType: "text/xml; charset=utf-8"
         });
     };
+    sobySPListsObject.prototype.DeleteList = function (siteUrl, listName) {
+        var soapEnv = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \
+        <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance/\" \
+            xmlns:xsd=\"http://www.w3.org/2001/XMLSchema/\" \
+            xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"> \
+          <soap:Body> \
+		    <DeleteList xmlns=\"http://schemas.microsoft.com/sharepoint/soap/\"> \
+		      <listName>" + listName + "</listName> \
+		    </DeleteList> \
+	      </soap:Body> \
+	    </soap:Envelope>";
+        $.ajax({
+            async: false,
+            url: siteUrl + "/_vti_bin/lists.asmx",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("SOAPAction", "http://schemas.microsoft.com/sharepoint/soap/AddList");
+            },
+            type: "POST",
+            dataType: "xml",
+            data: soapEnv,
+            complete: function (data) {
+                var xmlData = $(data.responseText);
+            },
+            success: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
+            error: function (XMLHttpRequest, textStatus, errorThrown) { soby_LogMessage(XMLHttpRequest); },
+            contentType: "text/xml; charset=utf-8"
+        });
+    };
     sobySPListsObject.prototype.CheckOutFile = function (siteUrl, fileUrl, callbackFunction, _arguments, isAsync) {
         if (isAsync === null) {
             isAsync = true;
@@ -1312,13 +1341,20 @@ var sobySPListsObject = /** @class */ (function () {
             contentType: "text/xml; charset=utf-8"
         });
     };
-    sobySPListsObject.prototype.UpdateFieldsToList = function (addAction, siteUrl, listTemplate, fieldTemplates, successCallBack, errorCallBack) {
+    sobySPListsObject.prototype.UpdateFieldsToList = function (addAction, siteUrl, listTitle, fieldTemplates, successCallBack, errorCallBack) {
         var fieldsXml = "";
         for (var i = 0; i < fieldTemplates.length; i++) {
-            var fieldXml = "<Field DisplayName='" + (addAction === true ? fieldTemplates[i].InternalName : fieldTemplates[i].DisplayName) + "' Name='" + fieldTemplates[i].InternalName + "' ";
+            var fieldXml = "<Field " + (soby_IsNullOrEmpty(fieldTemplates[i].ID) === false ? " ID='" + fieldTemplates[i].ID + "'" : "") + " DisplayName='" + (addAction === true ? fieldTemplates[i].InternalName : fieldTemplates[i].DisplayName) + "' Name='" + fieldTemplates[i].InternalName + "' ";
             if (fieldTemplates[i].Type === "User" && fieldTemplates[i].Mult === true) {
                 fieldXml += " Type='UserMulti'";
             }
+            else if (fieldTemplates[i].Type === "Lookup") {
+                fieldXml += " Type='Lookup' List='" + fieldTemplates[i].LookupList + "' " +
+                    (soby_IsNullOrEmpty(fieldTemplates[i].FieldRef) === false ? " FieldRef='" + fieldTemplates[i].FieldRef + "'" : "") +
+                    (soby_IsNullOrEmpty(fieldTemplates[i].ShowField) === false ? " ShowField='" + fieldTemplates[i].ShowField + "'" : "") +
+                    (soby_IsNullOrEmpty(fieldTemplates[i].Mult) === false ? " Mult='" + fieldTemplates[i].Mult + "'" : "");
+            }
+            //List="Lists/MyListToLookUp"
             else {
                 fieldXml += " Type='" + fieldTemplates[i].Type + "'";
             }
@@ -1385,7 +1421,7 @@ var sobySPListsObject = /** @class */ (function () {
         var soapEnv = "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'> \
 					<soap:Body> \
 						 <UpdateList xmlns=\"http://schemas.microsoft.com/sharepoint/soap/\"> \
-							  <listName>" + listTemplate.Title + "</listName> \
+							  <listName>" + listTitle + "</listName> \
 							  <listProperties></listProperties> \
 							  " + newFieldsString + " \
 							  " + updateFieldsString + " \
@@ -1800,6 +1836,48 @@ var sobySPVersionsObject = /** @class */ (function () {
     };
     return sobySPVersionsObject;
 }());
+var sobySPWorkflowsObject = /** @class */ (function () {
+    function sobySPWorkflowsObject() {
+    }
+    sobySPWorkflowsObject.prototype.StartWorkFlow = function (siteUrl, itemUrl, templateId, parameters, callback) {
+        var parameterString = "";
+        for (var i = 0; i < parameters.length; i++) {
+            parameterString += "<" + parameters[i].Name + ">" + parameters[i].Value + "</" + parameters[i].Name + ">";
+        }
+        var soapEnv = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \
+        <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \
+            xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" \
+            xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"> \
+          <soap:Body> \
+            <StartWorkflow xmlns=\"http://schemas.microsoft.com/sharepoint/soap/workflow/\"> \
+                <item>" + itemUrl + "</item> \
+                <templateId>" + templateId + "</templateId> \
+                <workflowParameters><Data>" + parameterString + "</Data></workflowParameters> \
+            </StartWorkflow> \
+          </soap:Body> \
+        </soap:Envelope>";
+        $.ajax({
+            url: siteUrl + "/_vti_bin/workflow.asmx",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("SOAPAction", "http://schemas.microsoft.com/sharepoint/soap/workflow/StartWorkflow");
+            },
+            type: "POST",
+            dataType: "xml",
+            data: soapEnv,
+            complete: function (msg) {
+                if (callback != null)
+                    callback();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("An error occured on StartWorkFlow");
+                console.log(textStatus);
+                console.log(errorThrown);
+            },
+            contentType: "text/xml; charset=utf-8"
+        });
+    };
+    return sobySPWorkflowsObject;
+}());
 var sobySPLibraryObject = /** @class */ (function () {
     function sobySPLibraryObject() {
         this.GetData = function (soapEnv, callback, errorcallback, completecallback, async, siteUrl, argsx) {
@@ -1841,6 +1919,7 @@ var sobySPLibraryObject = /** @class */ (function () {
         this.Views = new sobySPViewsObject();
         this.WebPartPages = new sobySPWebPartPagesObject();
         this.Versions = new sobySPVersionsObject();
+        this.Workflows = new sobySPWorkflowsObject();
     }
     return sobySPLibraryObject;
 }());

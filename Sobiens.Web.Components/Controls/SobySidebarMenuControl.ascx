@@ -24,7 +24,14 @@
                     </ul>
                 </li>
                 <li class='menuitem'><a href="/Tutorials/SobyGrid/Paging">Paging</a></li>
-                <li class='menuitem'><a href="/Tutorials/SobyGrid/Editing">Editing</a></li>
+                
+                <li class='menuitem'>
+                    <a class="menutoggler">Editing</a>
+                    <ul class="menu expand">
+                        <li class='menuitem'><a href="/Tutorials/SobyGrid/Row Editing">Row Editing</a></li>
+                        <li class='menuitem'><a href="/Tutorials/SobyGrid/Custom Edit Form">Custom Edit Form</a></li>
+                    </ul>
+                </li>
                 <li class='menuitem'>
                     <a class="menutoggler">Filtering and Sorting</a>
                     <ul class="menu expand">
@@ -33,7 +40,6 @@
                     </ul>
                 </li>
 
-                <li class='menuitem' style="display: none"><a href="/Tutorials/SobyGrid/ModifyRecords">Modify records</a></li>
                 <li class='menuitem' style="display: none"><a href="/Tutorials/SobyGrid/Localization">Localization</a></li>
                 <li class='menuitem'><a href="/Tutorials/SobyGrid/Grouping">Grouping</a></li>
                 <li class='menuitem'><a href="/Tutorials/SobyGrid/ActionBar">Action Bar</a></li>

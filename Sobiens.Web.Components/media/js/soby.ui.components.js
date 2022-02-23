@@ -109,8 +109,6 @@ var SobyLookupSelectBox = /** @class */ (function () {
         return this.ListItems[itemIndex];
     };
     SobyLookupSelectBox.prototype.SetValue = function (value) {
-        console.log("----SetValue-----");
-        console.log("value:" + value);
         $("#" + this.ContainerClientId + " select.sobylookupselectbox").val(value);
     };
     SobyLookupSelectBox.prototype.PopulateChoiceItems = function () {
@@ -305,12 +303,12 @@ var SobyCheckBoxList = /** @class */ (function () {
 var SobySPViewFilterCheckBoxList = /** @class */ (function (_super) {
     __extends(SobySPViewFilterCheckBoxList, _super);
     function SobySPViewFilterCheckBoxList(containerClientId, fieldType, args, webUrl, listName, fieldName) {
-        var _this = _super.call(this, containerClientId, fieldType, args) || this;
-        _this.WebUrl = webUrl;
-        _this.ListName = listName;
-        _this.FieldName = fieldName;
-        _this.ShowSearchBox = true;
-        return _this;
+        var _this_1 = _super.call(this, containerClientId, fieldType, args) || this;
+        _this_1.WebUrl = webUrl;
+        _this_1.ListName = listName;
+        _this_1.FieldName = fieldName;
+        _this_1.ShowSearchBox = true;
+        return _this_1;
     }
     SobySPViewFilterCheckBoxList.prototype.PopulateChoiceItems = function () {
         this.ListItems = new Array();
@@ -344,7 +342,9 @@ var SobySelectBox = /** @class */ (function () {
         this.SearchOnDemand = false;
         this.AllowMultipleSelections = true;
         this.SearchParameterName = "";
+        this.PopulateItemsOnRender = true;
         this.Items = null;
+        this.TempItems = [];
         this.SelectedItemKeyValues = null;
         this.SelectedItemDisplayValues = null;
         this.EmptyText = "Please Select";
@@ -432,7 +432,7 @@ var SobySelectBox = /** @class */ (function () {
             "<a href='javascript:void(0)'  onclick =\"soby_EditControls['" + this.ContainerClientId + "'].ClearItems()\" class=\"soby-itmHoverEnabled soby-selectboxitem-delete-link clearitemslink hidden\">" + this.SVGImages.GetXCircle() + "</a>" +
             "</div>" +
             "<div class='expanderpanel'>" +
-            "<a href='javascript:void(0)'  onclick=\"soby_EditControls['" + this.ContainerClientId + "'].ShowHideSelectBox()\">" + this.SVGImages.GetExpand() + "</a>" +
+            "<a href='javascript:void(0)'  onclick=\"soby_EditControls['" + this.ContainerClientId + "'].ShowHideSelectBox()\">" + this.SVGImages.GetCollapse() + "</a>" +
             "</div>" +
             "</div>" +
             "<div class='selectbox hidden'>" +
@@ -534,19 +534,26 @@ var SobySelectBox = /** @class */ (function () {
                     editControl_1.OnSelectBoxItemsPopulated();
                 editControl_1.HideLoadingIcon();
             };
-            this.ShowLoadingIcon();
-            this.DataService.PopulateItems(null);
+            if (this.PopulateItemsOnRender === true) {
+                this.ShowLoadingIcon();
+                this.DataService.PopulateItems(null);
+            }
         }
     };
     SobySelectBox.prototype.SearchFromService = function (keyword) {
         this.ShowLoadingIcon();
-        for (var i = this.DataService.DataSourceBuilder.Filters.Filters.length - 1; i > -1; i--) {
-            if (this.DataService.DataSourceBuilder.Filters.Filters[i].FieldName === this.SearchParameterName) {
-                this.DataService.DataSourceBuilder.Filters.Filters.splice(i, 1);
-            }
+        if (keyword === null || keyword === "") {
+            this.DataService.ItemPopulated([]);
         }
-        this.DataService.DataSourceBuilder.Filters.AddFilter(this.SearchParameterName, keyword, SobyFieldTypes.Text, SobyFilterTypes.Contains, false, true);
-        this.DataService.PopulateItems(null);
+        else {
+            for (var i = this.DataService.DataSourceBuilder.Filters.Filters.length - 1; i > -1; i--) {
+                if (this.DataService.DataSourceBuilder.Filters.Filters[i].FieldName === this.SearchParameterName) {
+                    this.DataService.DataSourceBuilder.Filters.Filters.splice(i, 1);
+                }
+            }
+            this.DataService.DataSourceBuilder.Filters.AddFilter(this.SearchParameterName, keyword, SobyFieldTypes.Text, SobyFilterTypes.Contains, false, true);
+            this.DataService.PopulateItems(null);
+        }
     };
     SobySelectBox.prototype.SearchFromPopulatedData = function (keyword) {
         if (this.LastSearchKeyword === keyword)
@@ -571,6 +578,7 @@ var SobySelectBox = /** @class */ (function () {
     };
     SobySelectBox.prototype.SelectItem = function (index) {
         var selectedItem = this.Items[index];
+        this.TempItems.push(selectedItem);
         var keyValue = selectedItem[this.ValueFieldName];
         var displayValue = selectedItem[this.TitleFieldName];
         if (this.AllowMultipleSelections === false) {
@@ -615,8 +623,8 @@ var SobySelectBox = /** @class */ (function () {
         for (var i = 0; i < this.SelectedItemKeyValues.length; i++) {
             var keyValue = this.SelectedItemKeyValues[i];
             var selectedItem = null;
-            for (var x = 0; x < this.Items.length; x++) {
-                var item = this.Items[x];
+            for (var x = 0; x < this.TempItems.length; x++) {
+                var item = this.TempItems[x];
                 if (item[this.ValueFieldName] === keyValue) {
                     selectedItem = item;
                     $("#" + this.ContainerClientId + " .soby_dataitem[itemindex='" + x + "']").addClass("selected");
@@ -668,8 +676,8 @@ var SobySelectBox = /** @class */ (function () {
         for (var i = 0; i < this.SelectedItemKeyValues.length; i++) {
             var keyValue = this.SelectedItemKeyValues[i];
             var selectedItem = null;
-            for (var x = 0; x < this.Items.length; x++) {
-                var item = this.Items[x];
+            for (var x = 0; x < this.TempItems.length; x++) {
+                var item = this.TempItems[x];
                 if (item[this.ValueFieldName] === keyValue) {
                     selectedItem = item;
                     break;
@@ -905,12 +913,12 @@ function soby_RefreshAllGrids() {
 var sobyActionPaneButtons = /** @class */ (function (_super) {
     __extends(sobyActionPaneButtons, _super);
     function sobyActionPaneButtons(items) {
-        var _this = _super.call(this) || this;
+        var _this_1 = _super.call(this) || this;
         if (items) {
-            _this.push.apply(_this, items);
+            _this_1.push.apply(_this_1, items);
         }
-        Object.setPrototypeOf(_this, Object.create(sobyActionPaneButtons.prototype));
-        return _this;
+        Object.setPrototypeOf(_this_1, Object.create(sobyActionPaneButtons.prototype));
+        return _this_1;
     }
     sobyActionPaneButtons.prototype.Clone = function () {
         var buttons = new sobyActionPaneButtons();
@@ -1522,17 +1530,22 @@ var soby_WebGrid = /** @class */ (function () {
             dbInstance[column.FieldName] = fieldNewValue;
         }
         if (rowId !== null && rowId !== "") {
-            this.DataService.UpdateItem(parameterNames, dbInstanceIds, dbInstance);
-            if (this.OnItemUpdated !== null) {
-                this.OnItemUpdated(rowId, dbInstance);
-            }
+            this.UpdateRecord(parameterNames, dbInstanceIds, dbInstance, rowId);
         }
         else {
-            //dbInstance[this.KeyFields[0]] = 0;
-            this.DataService.AddItem(dbInstance);
-            if (this.OnItemAdded !== null) {
-                this.OnItemAdded(dbInstance);
-            }
+            this.AddNewRecord(dbInstance);
+        }
+    };
+    soby_WebGrid.prototype.AddNewRecord = function (dataItem) {
+        this.DataService.AddItem(dataItem);
+        if (this.OnItemAdded !== null) {
+            this.OnItemAdded(dataItem);
+        }
+    };
+    soby_WebGrid.prototype.UpdateRecord = function (parameterNames, dbInstanceIds, dbInstance, rowId) {
+        this.DataService.UpdateItem(parameterNames, dbInstanceIds, dbInstance);
+        if (this.OnItemUpdated !== null) {
+            this.OnItemUpdated(rowId, dbInstance);
         }
     };
     /**
@@ -3584,7 +3597,7 @@ $.fn.sobywebgrid = function () {
 var soby_DataRepeater = /** @class */ (function (_super) {
     __extends(soby_DataRepeater, _super);
     function soby_DataRepeater() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+        var _this_1 = _super !== null && _super.apply(this, arguments) || this;
         /**
          * Item data bound event.
          *
@@ -3593,10 +3606,10 @@ var soby_DataRepeater = /** @class */ (function (_super) {
          * @property {object} cellID - Identifier of the row.
          * @property {object} item - Data item related with the row.
          */
-        _this.ItemDataBound = null;
-        _this.MaxCellCount = 1;
-        _this.ShouldContainRowElement = true;
-        return _this;
+        _this_1.ItemDataBound = null;
+        _this_1.MaxCellCount = 1;
+        _this_1.ShouldContainRowElement = true;
+        return _this_1;
     }
     /**
      * Gets selected data items

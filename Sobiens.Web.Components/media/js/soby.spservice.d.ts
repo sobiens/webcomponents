@@ -83,9 +83,10 @@ declare class sobySPListsObject {
     GetListAndView(siteUrl: any, listName: any, viewName: any, callbackFunction: any): void;
     GetListFields(siteUrl: any, listName: any): any[];
     CreateList(siteUrl: any, listName: any, templateID: any): void;
+    DeleteList(siteUrl: any, listName: any): void;
     CheckOutFile(siteUrl: any, fileUrl: any, callbackFunction: any, _arguments: any, isAsync: any): void;
     CheckInFile(siteUrl: any, fileUrl: any, comment: any, checkinType: any, callbackFunction: any, _arguments: any, isAsync: any): void;
-    UpdateFieldsToList(addAction: any, siteUrl: any, listTemplate: any, fieldTemplates: any, successCallBack: any, errorCallBack: any): void;
+    UpdateFieldsToList(addAction: any, siteUrl: any, listTitle: any, fieldTemplates: any, successCallBack: any, errorCallBack: any): void;
     GetListItemAttachments(listName: any, listItemId: any, callbackFunction: any, webUrl: any): void;
 }
 declare class sobySPUserGroupObject {
@@ -110,6 +111,9 @@ declare class sobySPVersionsObject {
     GetVersions(siteUrl: any, filename: any, callbackFunction: any): void;
     GetVersionCollection(siteUrl: any, listID: any, itemID: any, fieldName: any, callbackFunction: any): void;
 }
+declare class sobySPWorkflowsObject {
+    StartWorkFlow(siteUrl: any, itemUrl: any, templateId: any, parameters: any, callback: any): void;
+}
 declare class sobySPLibraryObject {
     GetData: (soapEnv: any, callback: any, errorcallback: any, completecallback: any, async: any, siteUrl: any, argsx: any) => void;
     Lists: sobySPListsObject;
@@ -119,6 +123,7 @@ declare class sobySPLibraryObject {
     Views: sobySPViewsObject;
     WebPartPages: sobySPWebPartPagesObject;
     Versions: sobySPVersionsObject;
+    Workflows: sobySPWorkflowsObject;
 }
 declare class sobyObject {
     SPLibrary: sobySPLibraryObject;

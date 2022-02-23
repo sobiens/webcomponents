@@ -1,7 +1,7 @@
 $(function () {
-    soby_PopulateSelectBoxStaticDataBinding();
+    soby_PopulateDataGridWithStaticDataBinding();
 });
-function soby_PopulateSelectBoxStaticDataBinding() {
+function soby_PopulateDataGridWithStaticDataBinding() {
     var items = [
         { ID: 1, FirstName: "Serkant", LastName: "Samurkas", Age: 37, Sex: "M" },
         { ID: 2, FirstName: "Dexter", LastName: "McKenzie", Age: 39, Sex: "M" },

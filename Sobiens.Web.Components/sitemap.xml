@@ -2,1017 +2,1017 @@
   <!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
   <url>
     <loc>https://webcomponents.sobiens.com/</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>1.00</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/CodeGenerationWizard</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/StaticDataBinding</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/WebAPIOData</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/SPDataBinding</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ExtendingDataBinding</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/CustomDataBinding</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/MVCSample</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Paging</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Editing</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Row%20Editing</loc>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Custom%20Edit%20Form</loc>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Sorting</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Filtering</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ModifyRecords</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Localization</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Grouping</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ActionBar</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/RefreshData</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ExportToExcel</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Aggregates</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ResponsiveDesign</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Columns</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/SingleSelection</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/MultipleSelection</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/CellTemplate</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Cell%20Styles</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/NestedGrids</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Master-Details</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/DragDrop</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/ContextMenu</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/KeyboardNavigation</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Themes</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Sales%20Report%20Sample</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyGrid/Customer%20Orders</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Custom%20Format</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyDataRepeater/Paging</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Single%20Selection</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Treeview%20Selection</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyItemSelection/Autocomplete%20watermark</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyTreeView/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/ColumnChart</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/LineChart</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/PieChart</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/DoughnutChart</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/BarChart</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/PolarAreaChart</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyChart/MixedChartTypes</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyRangeSelection/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyRangeSelection/DateRangeSelection</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyCalendarView/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyCarousel/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyWizard/General</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyCheckBoxList/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobySelectBox/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobySelectBox/SearchOnDemand</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyTabs/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/FormValidation</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueDateValidation</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueEmailValidation</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueExclusionValidation</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValuePresenceValidation</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueNumericValidation</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueTextValidation</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyValidator/ValueURLValidation</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyScheduler/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyScheduler/Custom%20Dates</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyCodeView/Getting%20Started</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyCodeView/CustomizedTemplate1</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/SobyCodeView/CustomizedTemplate2</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Tutorials/Setting%20Up</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/download/versions</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/modules.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/download/Versions</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/Default</loc>
-    <lastmod>2021-11-18T16:08:25+00:00</lastmod>
+    <lastmod>2021-11-23T15:39:49+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/index.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/modules/soby_service.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/modules/soby_spservice.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/modules/soby_ui_components.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/modules/soby_ui_components_calendar.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/modules/soby_ui_components_charts.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/modules/soby_ui_components_codeview.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/modules/soby_ui_components_scheduler.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_service.SobyPaginationVerticalAlign.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_service.SobyPaginationViewTypes.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyAggregateField.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyAggregateFields.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyAggregateTypesObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyArgument.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyArguments.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyFieldTypesObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyFilter.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyFilterTypesObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyFilters.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyGroupByField.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyGroupByFields.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyHeader.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyHeaders.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyKeyField.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyKeyFields.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyNavigationInformation.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyOrderByField.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyOrderByFields.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobySchemaField.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobySchemaFields.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.SobyWebServiceDataTypesObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.soby_DataSourceBuilderAbstract.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.soby_Filter.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.soby_Item.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.soby_StaticDataBuilder.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.soby_StaticDataService.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.soby_Transport.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.soby_TransportRequest.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.soby_WSBuilder.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_service.soby_WebServiceService.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/interfaces/soby_service.ISobyFilter.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/interfaces/soby_service.soby_DataSourceBuilderInterface.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/interfaces/soby_service.soby_ServiceInterface.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:40+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.sobyObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.sobySPLibraryObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.sobySPListsObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.sobySPSitesObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.sobySPUserGroupObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.sobySPVersionsObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.sobySPViewsObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.sobySPWebPartPagesObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.sobySPWebsObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.soby_SPCSOMBuilder.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.soby_SPRestBuilder.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.soby_SPSearch2010Builder.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.soby_SPSearchBuilder.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_spservice.soby_SharePointService.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_ui_components.SobyMenuItemTypes.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_ui_components.SobyMenuViewTypes.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_ui_components.SobyRangeSelectionViewTypes.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobyCheckBoxList.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobyEditControlFactory.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobyGridColumn.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobyItemSelectorTypeObject.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobyListItem.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobyLookupSelectBox.html</loc>
-    <lastmod>2021-11-18T15:57:02+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobyMenu.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobyMenuItem.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobySPViewFilterCheckBoxList.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobySelectBox.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobyShowFieldsOnObject.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.SobyTextBox.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.sobyActionPaneButton.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.sobyActionPaneButtons.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.sobyResponsiveCondition.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.soby_Carousel.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.soby_DataRepeater.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.soby_ItemSelection.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.soby_MetroTilesGrid.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.soby_RangeSelection.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.soby_SVGImages.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.soby_Tab.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.soby_TreeView.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.soby_WebGrid.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components.soby_Wizard.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/interfaces/soby_ui_components.ISobyEditControlInterface.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/interfaces/soby_ui_components.ISobySelectorControlInterface.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/interfaces/soby_ui_components.soby_TreeViewInterface.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_calendar.SobyCalendarViewTypesObject.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_calendar.soby_CalendarView.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_calendar.soby_CalendarViewItem.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_calendar.soby_CalendarViewItems.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_ui_components_charts.SobyChartAligment.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_ui_components_charts.SobyChartElementPosition.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_ui_components_charts.SobyChartHorizontalAligment.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_ui_components_charts.SobyChartTypes.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_ui_components_charts.SobyChartVerticalAligment.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyAxisSettings.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyBarChartPart.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyChart.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyChartCalculatedValues.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyChartDataset.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyChartDotValue.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyChartPart.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyChartPartFactory.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyColumnChartPart.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyDoughnutChartPart.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyLabelSettings.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyLegendPanel.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyLineChartPart.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyPieChartPart.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyPlotAreaSettings.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyPolarAreaChartPart.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyRadarChartPart.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_charts.SobyTitleSettings.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_ui_components_codeview.SobyCodeViewTypes.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/enums/soby_ui_components_codeview.SobyCodeViews.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_codeview.soby_CodeView.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_scheduler.SobySchedulerDataItemStatusObject.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_scheduler.SobySchedulerViewTypesObject.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_scheduler.soby_ScheduleCategories.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_scheduler.soby_ScheduleCategory.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_scheduler.soby_ScheduleItem.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_scheduler.soby_ScheduleItems.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
   <url>
     <loc>https://webcomponents.sobiens.com/API%20Documentation/classes/soby_ui_components_scheduler.soby_Scheduler.html</loc>
-    <lastmod>2021-11-18T15:57:04+00:00</lastmod>
+    <lastmod>2021-11-23T15:18:42+00:00</lastmod>
     <priority>0.51</priority>
   </url>
 </urlset>

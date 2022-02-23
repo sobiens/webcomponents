@@ -242,6 +242,8 @@ declare abstract class soby_DataSourceBuilderAbstract implements soby_DataSource
     Clone(): soby_DataSourceBuilderAbstract;
     CountQueryBeingGenerated(): void;
     MainQueryBeingGenerated(): void;
+    CountQueryGenerated: any;
+    MainQueryGenerated: any;
     DataBeingParsed(data: any, parseCompleted: boolean): Array<soby_Item>;
     ParseData(value: string): Array<soby_Item>;
     GetData(data: any, callback: any, errorcallback: any, completecallback: any, async: any, wsUrl: any, headers: any, requestMethod: any, dataType: any, contentType: any, includeCredentials: any): void;
@@ -372,3 +374,4 @@ declare function soby_GetFormatedDateString(date: any): any;
 declare function soby_GetDateWithFormat(dateString: any, format: any): Date;
 declare function soby_TicksFromDate(date: any): number;
 declare function soby_DateFromTicks(ticks: any): Date;
+declare function soby_IsNullOrEmpty(value: any): boolean;

@@ -82,11 +82,12 @@ function soby_PopulateSaleSummariesByCountry(startDate, endDate){
          saleSummariesData.push({Country:countries[i], Total:saleSummaries[countries[i]], Percentage:percentage});
     }
 
-        var dataSet = new soby_ChartDataset();
+        var dataSet = new SobyChartDataset();
+        dataSet.Type=SobyChartTypes.PieChart;
         dataSet.Title = "Gender";
         dataSet.Data = percentages;
 
-        var pieChart = new soby_PieChart("#soby_SaleSummariesByCountryChartDiv", "Pie Chart", [dataSet], "There is no record found.", countries);
+        var pieChart = new SobyChart("#soby_SaleSummariesByCountryChartDiv", "Pie Chart", [dataSet], "There is no record found.", countries);
         pieChart.Width = 360;
         pieChart.Height = 223;
         pieChart.Initialize();

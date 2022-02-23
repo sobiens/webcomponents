@@ -1,1 +1,1 @@
-declare function soby_PopulateSelectBoxStaticDataBinding(): void;
+declare function soby_PopulateDataGridWithStaticDataBinding(): void;

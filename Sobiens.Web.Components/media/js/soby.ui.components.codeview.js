@@ -178,6 +178,7 @@ var soby_CodeView = /** @class */ (function () {
         }
         var iframe = $(this.ContentDivSelector).find(".resultiframe")[0];
         iframe.contentWindow.document.write(html);
+        iframe.contentWindow.document.close();
     };
     soby_CodeView.prototype.ResetExercise = function () {
         if (this.CodeViewType === SobyCodeViewTypes.SingleHtml) {

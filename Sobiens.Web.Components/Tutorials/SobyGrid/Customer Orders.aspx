@@ -182,7 +182,8 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
         new SobySchemaField("Id", SobyFieldTypes.Number, null),
         new SobySchemaField("Price", SobyFieldTypes.Number, null),
         new SobySchemaField("OrderId", SobyFieldTypes.Number, null),
-        new SobySchemaField("ProductId", SobyFieldTypes.Number, null)
+        new SobySchemaField("ProductId", SobyFieldTypes.Number, null),
+        new SobySchemaField("ProductTitle", SobyFieldTypes.Text, null)
     ], orderItems);
 
     var customerAddressesGrid = new soby_WebGrid("#soby_AddressesDiv", "Addresses", customerAddressesService, "There is no record found.");
@@ -215,7 +216,7 @@ function soby_PopulateCustomerAndOrderDetails(customerIds) {
     orderItemsGrid.IsSelectable = false;
     orderItemsGrid.IsEditable = false;
     orderItemsGrid.AddColumn("ProductId", "Product", SobyShowFieldsOn.All, function (item) {
-        return item.Product.Title;
+        return item.ProductTitle;
     }, null, true, true, true, null, null, null);
     orderItemsGrid.AddColumn("Price", "Price", SobyShowFieldsOn.All, null, null, true, true, true, null, null, null);
     orderGrid.AddDataRelation("Price", "Id", orderItemsGrid.GridID, "OrderId");

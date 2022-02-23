@@ -754,7 +754,7 @@
     <Content Include="js\bootstrap.esm.min.js.map" />
     <Content Include="js\bootstrap.js.map" />
     <Content Include="js\bootstrap.min.js.map" />
-    <Content Include="download\Sobiens.Web.Components 1.0.9.6.zip" />
+    <Content Include="download\Sobiens.Web.Components 1.0.9.7.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-3.1.0.js" />
@@ -911,11 +911,11 @@
     <Content Include="Tutorials\SobyGrid\CellTemplate.aspx" />
     <Content Include="Tutorials\SobyGrid\Aggregates.aspx" />
     <Content Include="Tutorials\SobyGrid\ExtendingDataBinding.aspx" />
-    <Content Include="Tutorials\SobyGrid\Editing.aspx" />
+    <Content Include="Tutorials\SobyGrid\Row Editing.aspx" />
     <Content Include="Tutorials\SobyGrid\Filtering.aspx" />
     <Content Include="Tutorials\SobyGrid\Sorting.aspx" />
     <Content Include="Tutorials\SobyGrid\Localization.aspx" />
-    <Content Include="Tutorials\SobyGrid\ModifyRecords.aspx" />
+    <Content Include="Tutorials\SobyGrid\Custom Edit Form.aspx" />
     <Content Include="Tutorials\SobyGrid\Master-Details.aspx" />
     <Content Include="Tutorials\SobyGrid\KeyboardNavigation.aspx" />
     <Content Include="Tutorials\SobyGrid\WebAPIODataCodeFiles\CategoriesController.cs.txt" />
@@ -937,6 +937,7 @@
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\treeviewselection.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\autocompletewatermark.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\ItemSelection\singleselection.ts" />
+    <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\SelectBox\staticdatabinding.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\SelectBox\searchondemand.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\SelectBox\general.ts" />
     <TypeScriptCompile Include="Scripts\Tutorials\WebAPI\TreeView\treeview.ts" />
@@ -1388,12 +1389,12 @@
     <Compile Include="Tutorials\SobyGrid\ExtendingDataBinding.aspx.designer.cs">
       <DependentUpon>ExtendingDataBinding.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Tutorials\SobyGrid\Editing.aspx.cs">
-      <DependentUpon>Editing.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyGrid\Row Editing.aspx.cs">
+      <DependentUpon>Row Editing.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Tutorials\SobyGrid\Editing.aspx.designer.cs">
-      <DependentUpon>Editing.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyGrid\Row Editing.aspx.designer.cs">
+      <DependentUpon>Row Editing.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Filtering.aspx.cs">
       <DependentUpon>Filtering.aspx</DependentUpon>
@@ -1416,12 +1417,12 @@
     <Compile Include="Tutorials\SobyGrid\Localization.aspx.designer.cs">
       <DependentUpon>Localization.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Tutorials\SobyGrid\ModifyRecords.aspx.cs">
-      <DependentUpon>ModifyRecords.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyGrid\Custom Edit Form.aspx.cs">
+      <DependentUpon>Custom Edit Form.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Tutorials\SobyGrid\ModifyRecords.aspx.designer.cs">
-      <DependentUpon>ModifyRecords.aspx</DependentUpon>
+    <Compile Include="Tutorials\SobyGrid\Custom Edit Form.aspx.designer.cs">
+      <DependentUpon>Custom Edit Form.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tutorials\SobyGrid\Master-Details.aspx.cs">
       <DependentUpon>Master-Details.aspx</DependentUpon>

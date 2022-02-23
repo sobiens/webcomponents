@@ -9,7 +9,7 @@
     <br />
    <div>
         <ul>
-            <li><a href="Sobiens.Web.Components 1.0.9.6.zip">Sobiens.Web.Components 1.0.9.6</a></li>
+            <li><a href="Sobiens.Web.Components 1.0.9.7.zip">Sobiens.Web.Components 1.0.9.7</a></li>
         </ul>
     </div>
 </asp:Content>

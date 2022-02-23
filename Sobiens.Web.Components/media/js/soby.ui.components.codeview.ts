@@ -211,6 +211,7 @@ class soby_CodeView
         }
         const iframe: HTMLIFrameElement = $(this.ContentDivSelector).find(".resultiframe")[0] as HTMLIFrameElement;
         iframe.contentWindow.document.write(html);
+        iframe.contentWindow.document.close();
     }
     ResetExercise() {
         if (this.CodeViewType === SobyCodeViewTypes.SingleHtml) {
