@@ -458,6 +458,8 @@ var soby_SPRestBuilder = /** @class */ (function (_super) {
         var builder = new soby_SPRestBuilder();
         builder.RowLimit = this.RowLimit;
         builder.PageIndex = this.PageIndex;
+        builder.NextPageExist = this.NextPageExist;
+        builder.NextPageString = this.NextPageString;
         for (var i = 0; i < this.SchemaFields.length; i++) {
             var viewField = this.SchemaFields[i];
             builder.AddSchemaField(viewField.FieldName, viewField.FieldType, viewField.Args);
@@ -471,7 +473,7 @@ var soby_SPRestBuilder = /** @class */ (function (_super) {
             var orderByField = this.OrderByFields[i];
             builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
         }
-        builder.Arguments = this.Arguments != null ? this.Arguments.Clone() : null;
+        builder.Arguments = this.Arguments !== null ? this.Arguments.Clone() : null;
         return builder;
     };
     soby_SPRestBuilder.prototype.GetWhereQuery = function (transport) {

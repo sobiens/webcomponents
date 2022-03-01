@@ -1733,7 +1733,7 @@ var soby_WSBuilder = /** @class */ (function (_super) {
             return "";
         this.CountQueryBeingGenerated();
         var mainQuery = this.GetMainQuery(transport, true);
-        var countServiceUrl = transport.Url + "/$count?"; // + mainQuery;
+        var countServiceUrl = transport.Url + "/$count?" + mainQuery;
         if (transport.Type === "POST") {
             return "{" + mainQuery + "}";
         }

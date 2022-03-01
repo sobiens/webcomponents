@@ -110,7 +110,7 @@ declare class SobySelectBox {
     AllowMultipleSelections: boolean;
     SearchParameterName: string;
     PopulateItemsOnRender: boolean;
-    Items: any;
+    Items: any[];
     TempItems: any[];
     SelectedItemKeyValues: any;
     SelectedItemDisplayValues: any;
@@ -300,6 +300,7 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
     IsEditable: boolean;
     IsDeletable: boolean;
     IsGroupable: boolean;
+    IsScrollable: boolean;
     Items: any;
     ShowRefreshButton: boolean;
     ShowHeader: boolean;
@@ -309,6 +310,7 @@ declare class soby_WebGrid implements ISobySelectorControlInterface {
     TableTagName: string;
     TBodyTagName: string;
     THeadTagName: string;
+    TFootTagName: string;
     RowTagName: string;
     CellTagName: string;
     TableAdditionalClassNames: string;

@@ -1,7 +1,7 @@
 ﻿// VERSION 1.0.8.1
 let testObj = null;
 // ********************* SOBY EDIT CONTROLS *****************************
-let soby_EditControls = new Array();
+let soby_EditControls = [];
 interface ISobyEditControlInterface {
     ContainerClientId: string;
     FieldType: number;
@@ -175,7 +175,7 @@ class SobyLookupSelectBox implements ISobyEditControlInterface {
             if (editControl.ShowEmptyOption === true)
             {
                 let listItem = new SobyListItem("", editControl.EmptyText);
-                listItem.Properties = new Array();
+                listItem.Properties = [];
                 editControl.ListItems.push(listItem);
             }
             for (let i = 0; i < items.length; i++)
@@ -272,7 +272,7 @@ class SobyCheckBoxList implements ISobyEditControlInterface
     SVGImages: soby_SVGImages = new soby_SVGImages();
     GetValue(): any
     {
-        const values = new Array();
+        const values = [];
         if (this.ShowSearchBox === true)
         {
             const searchBox = $("#" + this.ContainerClientId + " .sobycheckboxlist-searchbox");
@@ -376,7 +376,7 @@ class SobyCheckBoxList implements ISobyEditControlInterface
     }
     SaveState()
     {
-        this.SelectedValuesTempState = new Array();
+        this.SelectedValuesTempState = [];
         const selectedItems = this.GetValue();
         for (let i = 0; i < selectedItems.length; i++)
         {
@@ -478,7 +478,7 @@ class SobySelectBox
     AllowMultipleSelections: boolean = true;
     SearchParameterName: string = "";
     PopulateItemsOnRender = true;
-    Items = null;
+    Items = [];
     TempItems = [];
     SelectedItemKeyValues = null;
     SelectedItemDisplayValues = null;
@@ -553,8 +553,8 @@ class SobySelectBox
     Initialize()
     {
         let selectbox = this;
-        this.SelectedItemKeyValues = new Array();
-        this.SelectedItemDisplayValues = new Array();
+        this.SelectedItemKeyValues = [];
+        this.SelectedItemDisplayValues = [];
         $("#" + this.ContainerClientId).addClass("sobyselectbox");
         $("#" + this.ContainerClientId).css("width", this.Width);
         $("#" + this.ContainerClientId).addClass(this.ThemeClassName);
@@ -757,8 +757,8 @@ class SobySelectBox
         let keyValue = selectedItem[this.ValueFieldName];
         let displayValue = selectedItem[this.TitleFieldName];
         if (this.AllowMultipleSelections === false) {
-            this.SelectedItemKeyValues = new Array();
-            this.SelectedItemDisplayValues = new Array();
+            this.SelectedItemKeyValues = [];
+            this.SelectedItemDisplayValues = [];
         }
 
         if ($.inArray(keyValue, this.SelectedItemKeyValues) === -1)
@@ -876,7 +876,7 @@ class SobySelectBox
 
     GetSelectedItems()
     {
-        let selectedItems = new Array();
+        let selectedItems = [];
         for (let i = 0; i < this.SelectedItemKeyValues.length; i++)
         {
             let keyValue = this.SelectedItemKeyValues[i];
@@ -915,8 +915,8 @@ class SobySelectBox
     }
 
     ClearItems() {
-        this.SelectedItemKeyValues = new Array();
-        this.SelectedItemDisplayValues = new Array();
+        this.SelectedItemKeyValues = [];
+        this.SelectedItemDisplayValues = [];
         
         this.PopulateSelectedItems();
         let selectbox = this;
@@ -1048,7 +1048,7 @@ if ($("form") !== null)
 }
 /*
 function soby_RemoveNoneExistenceGrid() {
-    let newArray = new Array();
+    let newArray = [];
     for (let x in soby_WebGrids) {
         if ($(soby_WebGrids[x].ContentDivSelector + "[gridid='" + soby_WebGrids[x].GridID + "']").length > 0)
         {
@@ -1151,7 +1151,7 @@ function soby_GetActiveDataGrid(): soby_WebGrid {
 
 function soby_GetAllGrids() {
 //    soby_RemoveNoneExistenceGrid();
-    let grids = new Array();
+    let grids = [];
     for (let key in soby_WebGrids)
     {
         if ($(soby_WebGrids[key].ContentDivSelector + "[gridid='" + soby_WebGrids[key].GridID + "']").length === 0)
@@ -1161,7 +1161,7 @@ function soby_GetAllGrids() {
     }
     /*
     let keys = Object.keys(soby_WebGrids);
-    let grids = new Array();
+    let grids = [];
     for (let i = 0; i < keys.length; i++)
     {
         grids.push(soby_WebGrids[keys[i]]);
@@ -1176,7 +1176,7 @@ function soby_GetAllVisibleGrids()
  //   soby_RemoveNoneExistenceGrid();
     let visibleGridIDs = $(".soby_grid:visible")
     
-    let grids = new Array();
+    let grids = [];
     for (let i = 0; i < visibleGridIDs.length; i++)
     {
         let gridId = $(visibleGridIDs[i]).attr("id");
@@ -1384,52 +1384,54 @@ class soby_WebGrid implements ISobySelectorControlInterface
      * @property {string}                   ThemeName                   - Theme name of the grid.
      * @property {string}                   ThemeClassName              - Theme  class name of the grid.
      */
-    private ActionInProgress:boolean = false;
-    private NavigationActionInProgress: boolean = false;
-    Active: boolean = false;
+    private ActionInProgress = false;
+    private NavigationActionInProgress = false;
+    Active = false;
     AllowExportData = false;
-    AllowMultipleSelections: boolean = true;
-    GridID:string="";
-    ThemeName: string = "classic";
-    ThemeClassName: string = this.ThemeName;
-    ContentDivSelector: string = "";
-    ItemDialogClientID: string="";
-    Title:string="";
-    AltTitle: string = "";
-    DisplayTitle:boolean = true;
+    AllowMultipleSelections = true;
+    GridID="";
+    ThemeName = "classic";
+    ThemeClassName = this.ThemeName;
+    ContentDivSelector = "";
+    ItemDialogClientID="";
+    Title="";
+    AltTitle = "";
+    DisplayTitle = true;
     DataService: soby_ServiceInterface = null;
-    EmptyDataHtml: string = "";
+    EmptyDataHtml = "";
     NavigationInformation: SobyNavigationInformation = new SobyNavigationInformation();
     OrderByFields: SobyOrderByFields = new SobyOrderByFields();
     Filters: SobyFilters = new SobyFilters(false);
-    FilterControls = new Array();
+    FilterControls = [];
     GroupByFields: SobyGroupByFields = new SobyGroupByFields();
     AggregateFields: SobyAggregateFields = new SobyAggregateFields();
     ResponsiveConditions: Array<sobyResponsiveCondition> = new Array<sobyResponsiveCondition>();
     KeyFields: SobyKeyFields = new SobyKeyFields(); 
-    CellCount: number = 0;
-    DataRelations = new Array();
+    CellCount = 0;
+    DataRelations = [];
     Columns = new Array <SobyGridColumn>();
-    InitializedActionPaneButtons: boolean = false;
-    IsSelectable:boolean = true;
-    IsAddAllowed: boolean = true;
-    IsEditable: boolean = true;
-    IsDeletable: boolean = true;
-    IsGroupable: boolean = false;
+    InitializedActionPaneButtons = false;
+    IsSelectable = true;
+    IsAddAllowed = true;
+    IsEditable = true;
+    IsDeletable = true;
+    IsGroupable = false;
+    IsScrollable = false;
     Items = null;
-    ShowRefreshButton: boolean = true;
-    ShowHeader: boolean = true;
+    ShowRefreshButton = true;
+    ShowHeader = true;
     SVGImages: soby_SVGImages = new soby_SVGImages();
     ActionPaneButtons: sobyActionPaneButtons = new sobyActionPaneButtons();
-    LastGroupByValues = new Array();
-    TableTagName: string = "table";
-    TBodyTagName: string = "tbody";
-    THeadTagName: string = "thead";
-    RowTagName: string = "tr";
-    CellTagName: string = "td";
-    TableAdditionalClassNames: string = "";
-    RowAdditionalClassNames: string = "";
-    CellAdditionalClassNames: string = "";
+    LastGroupByValues = [];
+    TableTagName = "table";
+    TBodyTagName = "tbody";
+    THeadTagName = "thead";
+    TFootTagName = "tfoot";
+    RowTagName = "tr";
+    CellTagName = "td";
+    TableAdditionalClassNames = "";
+    RowAdditionalClassNames = "";
+    CellAdditionalClassNames = "";
 
 
     /************************************ END MEMBERS ********************************/
@@ -1610,6 +1612,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
         grid.TableTagName = this.TableTagName;
         grid.TBodyTagName = this.TBodyTagName;
         grid.THeadTagName = this.THeadTagName;
+        grid.TFootTagName = this.TFootTagName;
         grid.RowTagName = this.RowTagName;
         grid.CellTagName = this.CellTagName;
         grid.TableAdditionalClassNames = this.TableAdditionalClassNames;
@@ -1860,8 +1863,8 @@ class soby_WebGrid implements ISobySelectorControlInterface
             }
         }
 
-        let dbInstanceIds = new Array();
-        let parameterNames = new Array();
+        let dbInstanceIds = [];
+        let parameterNames = [];
         for (let i = 0; i < this.KeyFields.length; i++) {
             const dbInstanceIdObject = {};
             dbInstanceIdObject[this.KeyFields[i].ParameterName] = dbInstance[this.KeyFields[i].FieldName];
@@ -1959,10 +1962,10 @@ class soby_WebGrid implements ISobySelectorControlInterface
         }
         for (let i = 0; i < deletedItems.length; i++) {
             let dbInstance = deletedItems[i];
-            let keyValues = new Array();
+            let keyValues = [];
 
-            let dbInstanceIds = new Array();
-            let parameterNames = new Array();
+            let dbInstanceIds = [];
+            let parameterNames = [];
             for (let x = 0; x < this.KeyFields.length; x++) {
                 dbInstanceIds.push(dbInstance[this.KeyFields[x].FieldName]);
                 parameterNames.push(this.KeyFields[x].ParameterName);
@@ -2138,7 +2141,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
      * grid.GetRowIds()
      */
     GetRowIds() {
-        let rowIds = new Array();
+        let rowIds = [];
         let rowsSelectors = $(this.ContentDivSelector + " .soby_griddatarow");
         for (let i = 0; i < rowsSelectors.length; i++) {
             rowIds[rowIds.length] = $(rowsSelectors[i]).attr("id");
@@ -2198,7 +2201,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
      */
     GetSelectedCellIds()
     {
-        let cellIds = new Array();
+        let cellIds = [];
         let cellsSelectors = $(this.ContentDivSelector + " .soby_gridcell.selected");
         for (let i = 0; i < cellsSelectors.length; i++)
         {
@@ -2249,7 +2252,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
      */
     GetSelectedRowIDs() {
         let selectedRows = $(this.ContentDivSelector + " .soby_griddatarow.selected");
-        let selectedRowIDs = new Array();
+        let selectedRowIDs = [];
         for (let i = 0; i < selectedRows.length; i++) {
             selectedRowIDs[selectedRowIDs.length] = $(selectedRows[i]).attr("id")
         }
@@ -2265,7 +2268,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
      */
     GetSelectedDataItems() {
         let selectedRows = $(this.ContentDivSelector + " .soby_griddatarow.selected");
-        let selectedDataItems = new Array();
+        let selectedDataItems = [];
         for (let i = 0; i < selectedRows.length; i++) {
             let itemIndex = $(selectedRows[i]).attr("rowindex")
             selectedDataItems[selectedDataItems.length] = this.Items[itemIndex];
@@ -2741,11 +2744,26 @@ class soby_WebGrid implements ISobySelectorControlInterface
             tableStyle = "margin:0px;float:right";
         }
 
-        navigationPane.html("<table style='" + tableStyle + "'><tbody><tr> \
-							  " + (this.DataService.CanNavigateToPreviousPage() === true ? "<td><a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].GoToPreviousPage()\">" + this.SVGImages.GetLeftCircle() + "</a></td>" : "") + " \
-							  <td class='soby-paging'>" + this.DataService.StartIndex + " - " + this.DataService.EndIndex + "</td> \
-							  " + (this.DataService.CanNavigateToNextPage() === true ? "<td><a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].GoToNextPage()\">" + this.SVGImages.GetRightCircle() + "</a></td>" : "") + " \
-							  </tr></tbody></table>");
+        const nav = $("<nav><ul class='pagination' ></ul></nav>");
+        if (this.DataService.CanNavigateToPreviousPage() === true) {
+            nav.find("ul").append("<li class='page-item'><a class='page-link' href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].GoToPreviousPage()\" aria-label='Previous'><span aria-hidden='true'>«</span><span class='sr-only'>Previous</span></a></li>");
+        }
+        nav.find("ul").append("<li class='page-item disabled'><a class='page-link' href='#'>" + this.DataService.StartIndex + " - " + this.DataService.EndIndex + "</a></li>");
+        if (this.DataService.CanNavigateToNextPage() === true) {
+            nav.find("ul").append("<li class='page-item'><a class='page-link'  onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].GoToNextPage()\" aria-label='Next'><span aria-hidden='true'>»</span><span class='sr-only'>Next</span></a></li>");
+        }
+
+        const navContainer = $("<div style='" + tableStyle + "'></div>");
+        navContainer.append(nav)
+        navigationPane.html("");
+        navigationPane.append(navContainer);
+/*
+        navigationPane.html("<div style='" + tableStyle + "'> \
+							  " + (this.DataService.CanNavigateToPreviousPage() === true ? "<div class='soby-previouspagebutton'><a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].GoToPreviousPage()\">" + this.SVGImages.GetLeftCircle() + "</a></div>" : "") + " \
+							  <div class='soby-paging soby-currentpagetext'>" + this.DataService.StartIndex + " - " + this.DataService.EndIndex + "</div> \
+							  " + (this.DataService.CanNavigateToNextPage() === true ? "<div class='soby-nextpagebutton'><a href='javascript:void(0)' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].GoToNextPage()\">" + this.SVGImages.GetRightCircle() + "</a></div>" : "") + " \
+							  </div>");
+                              */
     }
 
     /**
@@ -2910,7 +2928,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
      * grid.ClearFiltersOn('Title')
      */
     ClearFiltersOn(fieldName) {
-        let newFilters = new Array();
+        let newFilters = [];
         for (let i = 0; i < this.Filters.Filters.length; i++) {
             if (this.Filters.Filters[i].ShouldBeClearedOnUIFilterAction === false || this.Filters.Filters[i].FieldName !== fieldName) {
                 newFilters[newFilters.length] = this.Filters.Filters[i];
@@ -2991,7 +3009,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
 
     ClearUIFilters()
     {
-        let newFilters = new Array();
+        let newFilters = [];
         for (let i = this.Filters.Filters.length - 1; i > -1; i--)
         {
             if (this.Filters.Filters[i].ShouldBeClearedOnUIFilterAction === false)
@@ -3599,11 +3617,12 @@ class soby_WebGrid implements ISobySelectorControlInterface
             cellCount++;
         }
 
-        this.CellCount = cellCount;
+         this.CellCount = cellCount;
 
-        let table = $("<" + this.TableTagName + " width='100%' id='" + this.GridID + "' class='soby_grid " + this.ThemeClassName + " " + this.TableAdditionalClassNames + "' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].Activate()\"></" + this.TableTagName + ">");
-        let tbody = $("<" + this.TBodyTagName + "></" + this.TBodyTagName + ">");
-        let thead = $("<" + this.THeadTagName + "></" + this.THeadTagName + ">");
+         let table = $("<" + this.TableTagName + " width='100%' id='" + this.GridID + "' class='soby_grid " + this.ThemeClassName + " " + this.TableAdditionalClassNames + (this.IsScrollable === true?" soby_scrollable ":"") + "' onclick=\"javascript:soby_WebGrids['" + this.GridID + "'].Activate()\"></" + this.TableTagName + ">");
+        let tbody = $("<" + this.TBodyTagName + " class='gridbody'></" + this.TBodyTagName + ">");
+         let thead = $("<" + this.THeadTagName + " class='gridhead'></" + this.THeadTagName + ">");
+         let tfoot = $("<" + this.TFootTagName + " class='gridfoot'></" + this.TFootTagName + ">");
 
         let headerRow = $("<" + this.RowTagName + " class='soby_gridheaderrow'></" + this.RowTagName + ">");
 
@@ -3625,10 +3644,11 @@ class soby_WebGrid implements ISobySelectorControlInterface
         thead.append(filterPaneRow);
         thead.append(headerRow);
         thead.append(loadingRow);
-        tbody.append(emptyDataRow);
-        tbody.append(navigationRow);
+         tbody.append(emptyDataRow);
+         tfoot.append(navigationRow);
         table.append(thead);
-        table.append(tbody);
+         table.append(tbody);
+         table.append(tfoot);
 
         $(this.ContentDivSelector).html("");
         if (this.DisplayTitle === true) {
@@ -3723,7 +3743,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
          let dataRowCount = 0;
          let aggregateRowLevel = parseInt(aggregateRow.attr("level"));
          let currentGridRow = aggregateRow.prev();
-         let aggregateValues = new Array();
+         let aggregateValues = [];
          while (currentGridRow.length > 0) {
              if (currentGridRow.hasClass("soby_griddatarow") === true) {
                  let rowIndex = parseInt(currentGridRow.attr("rowindex"));
@@ -4096,7 +4116,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
         let item = this.Items[dataItemIndex];
         let column: SobyGridColumn = this.Columns[columnIndex];
         let contentHtml = column.CellTemplate.Template;
-        let propertyNames = new Array(); //this.DataService.GetFieldNames();
+        let propertyNames = []; //this.DataService.GetFieldNames();
 
         let remainingContent = contentHtml;
         while (remainingContent.indexOf("#{") > -1) {
@@ -4287,7 +4307,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
              this.PopulateHeaderCells();
          }
 
-         this.LastGroupByValues = new Array();
+         this.LastGroupByValues = [];
          let table = $(this.ContentDivSelector + " .soby_grid");
          $(this.ContentDivSelector + " .soby_griddatarow").remove();
          $(this.ContentDivSelector + " .soby_griddetailrow").remove();
@@ -4331,7 +4351,7 @@ class soby_WebGrid implements ISobySelectorControlInterface
             this.PopulateHeaderCells();
         }
 
-        this.LastGroupByValues = new Array();
+         this.LastGroupByValues = [];
         let table = $(this.ContentDivSelector + " .soby_grid");
         $(this.ContentDivSelector + " .emptydatarow").hide();
         $(this.ContentDivSelector + " .soby_errorrow").hide();
@@ -4363,6 +4383,8 @@ class soby_WebGrid implements ISobySelectorControlInterface
             this.PopulateViewColumns(item, row, rowID, i);
             if (currentRowToAddDataRowsAfter === null)
             {
+                $(this.ContentDivSelector + " " + this.TBodyTagName).append(row);
+/*
                 if ($(this.ContentDivSelector + " .soby_gridnavigationrow").length > 0)
                 {
                     $(this.ContentDivSelector + " .soby_gridnavigationrow").before(row);
@@ -4370,7 +4392,8 @@ class soby_WebGrid implements ISobySelectorControlInterface
                 else
                 {
                     $(this.ContentDivSelector + " " + this.TBodyTagName).append(row);
-                }                
+                }               
+                */
             }
             else
             {
@@ -4446,7 +4469,7 @@ class soby_DataRepeater extends soby_WebGrid
     GetSelectedDataItems()
     {
         let selectedRows = $(this.ContentDivSelector + " .soby_griddatarow .soby_gridcell.selected");
-        let selectedDataItems = new Array();
+        let selectedDataItems = [];
         for (let i = 0; i < selectedRows.length; i++)
         {
             let itemIndex = $(selectedRows[i]).attr("cellindex")
@@ -4539,7 +4562,7 @@ class soby_DataRepeater extends soby_WebGrid
             this.PopulateHeaderCells();
         }
 
-        let lastGroupByValues = new Array();
+        let lastGroupByValues = [];
         let table = $(this.ContentDivSelector + " .soby_grid");
         $(this.ContentDivSelector + " .soby_griddatarow").remove();
         $(this.ContentDivSelector + " .soby_griddetailrow").remove();
@@ -4600,6 +4623,8 @@ class soby_DataRepeater extends soby_WebGrid
 
             if (currentRowToAddDataRowsAfter === null)
             {
+                $(this.ContentDivSelector + " " + this.TBodyTagName).append(currentRow);
+/*
                 if ($(this.ContentDivSelector + " .soby_gridnavigationrow").length > 0)
                 {
                     $(this.ContentDivSelector + " .soby_gridnavigationrow").before(currentRow);
@@ -4608,6 +4633,7 @@ class soby_DataRepeater extends soby_WebGrid
                 {
                     $(this.ContentDivSelector + " " + this.TBodyTagName).append(currentRow);
                 }
+                */
             }
             else
             {
@@ -4644,7 +4670,7 @@ class soby_DataRepeater extends soby_WebGrid
 // ************************************************************
 
 // ********************* CAML BUILDER CAROUSEL *****************************
-let soby_Carousels = new Array();
+let soby_Carousels = [];
 class soby_Carousel{
     constructor(contentDivSelector: string, title: string, dataService, emptyDataHtml: string, imageFieldName: string, captionFieldName: string, contentFieldName: string, isContentFieldUrl:boolean) {
         this.ContentDivSelector = contentDivSelector;
@@ -4792,7 +4818,7 @@ class soby_Carousel{
 // ************************************************************
 
 // ********************* CAML BUILDER METRO TILES *****************************
-let soby_MetroTileGrids = new Array();
+let soby_MetroTileGrids = [];
 class soby_MetroTilesGrid {
     constructor(contentDivSelector: string, title: string, dataService, emptyDataHtml: string, imageFieldName: string, captionFieldName: string, urlFieldName: string, openInNewWindowFieldName: string, startColorFieldName: string, endColorFieldName: string, colspanFieldName: string, rowspanFieldName: string) {
         this.ContentDivSelector = contentDivSelector;
@@ -4944,7 +4970,7 @@ class soby_MetroTilesGrid {
 // ************************************************************
 
 // ********************* CAML BUILDER WIZARD TEMPLATE *****************************
-let soby_Wizards = new Array();
+let soby_Wizards = [];
 class soby_Wizard {
     constructor(contentDivSelector: string) {
         this.WizardID = "soby_wizardgrid_" + soby_guid();
@@ -5088,7 +5114,7 @@ class soby_Wizard {
         $(this.ContentDivSelector).addClass("sobywizard");
         let wizardLinks = $(this.ContentDivSelector + " > ul > li a")
         wizardLinks.addClass("sobywizardsteplink");
-        this.Items = new Array();
+        this.Items = [];
         for (let i = 0; i < wizardLinks.length; i++)
         {
             let linkId = "soby_wizardlink_" + i;
@@ -5159,7 +5185,7 @@ class soby_Wizard {
 // ************************************************************
 
 // ********************* CAML BUILDER Tabs TEMPLATE *****************************
-let soby_Tabs = new Array();
+let soby_Tabs = [];
 class soby_Tab {
     constructor(contentDivSelector: string) {
         this.TabID = "soby_tabgrid_" + soby_guid();
@@ -5271,7 +5297,7 @@ class soby_Tab {
         $(this.ContentDivSelector).addClass("sobytab");
         let tabLinks = $(this.ContentDivSelector + " > ul > li a")
         tabLinks.addClass("sobytablink");
-        this.Items = new Array();
+        this.Items = [];
         for (let i = 0; i < tabLinks.length; i++) {
             let linkId = "soby_tablink_" + i;
             let linkSelector = $(tabLinks[i]).attr("href");
@@ -5350,7 +5376,7 @@ enum SobyMenuViewTypes {
     TopBar = 1
 }
 
-let SobyMenus = new Array();
+let SobyMenus = [];
 class SobyMenuItem {
     constructor(parentMenuItem: SobyMenuItem, title: string, link: string, iconSrc: string, tooltip: string) {
         this.MenuItemID = "soby_menuitem_" + soby_guid();
@@ -5682,7 +5708,7 @@ function sobyParseMenuItemsFromHtmlElement(menu, menuMenuElement, parentMenuItem
 // ************************************************************
 
 // ********************* ITEM SELECTION *****************************
-let soby_ItemSelections = new Array();
+let soby_ItemSelections = [];
 class SobyItemSelectorTypeObject {
     GridView: number = 0;
     TreeView: number = 1;
@@ -5700,7 +5726,7 @@ function soby_GetItemSelectionByContentDivSelector(contentDivSelector): soby_Ite
 }
 
 function soby_GetAllItemSelections() {
-    let itemSelections = new Array();
+    let itemSelections = [];
     for (let key in soby_ItemSelections) {
         itemSelections.push(soby_ItemSelections[key]);
     }
@@ -5713,7 +5739,7 @@ enum SobyRangeSelectionViewTypes {
     DateRange = 1
 }
 
-let soby_RangeSelections = new Array();
+let soby_RangeSelections = [];
 class soby_RangeSelection {
     constructor(contentDivSelector, title, viewType: SobyRangeSelectionViewTypes, width: number, height: number, startValue, endValue, minorRangeInterval, minorRangeCountInAMajorRange, selectedRange) {
         this.RangeSelectionID = "soby_rangeselection_" + soby_guid();
@@ -6203,7 +6229,7 @@ class soby_ItemSelection {
         {
             let response = itemSelection.AutoCompleteDataService.Args[0];
 
-            let autoCompleteItems = new Array();
+            let autoCompleteItems = [];
             for (let i = 0; i < items.length; i++)
             {
                 let textFieldNames = itemSelection.TextFieldName.split(";");
@@ -6333,14 +6359,14 @@ class soby_ItemSelection {
     GetItemArray() {
         let text:string = $(this.ContentDivSelector + " .selecteditemvalues").val().toString();
         if (text === null || text === "") {
-            return new Array();
+            return [];
         }
         else {
             return JSON.parse(text);
         }
     }
     AddItem(text, value) {
-        let array = new Array();
+        let array = [];
         let exist = false;
         if (this.AllowMultipleSelections === true)
         {
@@ -6365,7 +6391,7 @@ class soby_ItemSelection {
     }
     RemoveItem(value) {
         let array = this.GetItemArray();
-        let newArray = new Array();
+        let newArray = [];
         for (let i = array.length - 1; i > -1; i--) {
             if (array[i].Value !== value) {
                 newArray[newArray.length] = { "Text": array[i].Text, "Value": array[i].Value };
@@ -6424,8 +6450,8 @@ class soby_ItemSelection {
 
 // VERSION 1.0.8.1
 // ********************* TREE VIEW *****************************
-var soby_TreeViews = new Array();
-var soby_TreeViewItems = new Array();
+var soby_TreeViews = [];
+var soby_TreeViewItems = [];
 
 interface soby_TreeViewInterface {
     RootDataBeingParsed(data: any): Array<soby_Item>;
@@ -6448,7 +6474,7 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
         this.EnsureItemSelectionExistency();
         var treeview = this;
         this.RootNodesDataService.ItemPopulated = function (items) {
-            soby_TreeViewItems = new Array();
+            soby_TreeViewItems = [];
             items = treeview.RootDataBeingParsed(items);
             treeview.PopulateNodes(treeview.ContentDivSelector, items);
         };
@@ -6596,7 +6622,7 @@ class soby_TreeView implements soby_TreeViewInterface, ISobySelectorControlInter
         $(contentDivSelector).append(ul);
     }
     GetSelectedDataItems() {
-        var selectedItems = new Array();
+        var selectedItems = [];
         var selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");
         if (this.AllowCheckBoxes === false) {
             selectedInputs = $("input[name='checkbox_" + this.TreeViewID + "']:checked");

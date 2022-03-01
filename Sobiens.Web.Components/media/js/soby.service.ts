@@ -2066,7 +2066,7 @@ class soby_WSBuilder extends soby_DataSourceBuilderAbstract
 
         this.CountQueryBeingGenerated();
         var mainQuery = this.GetMainQuery(transport, true);
-        var countServiceUrl = transport.Url + "/$count?";// + mainQuery;
+        var countServiceUrl = transport.Url + "/$count?" + mainQuery;
         if (transport.Type === "POST") {
             return "{" + mainQuery + "}";
         }
