@@ -125,6 +125,7 @@ declare class SobySelectBox {
     FocusToNextItemAfterItemSelection: boolean;
     Width: string;
     LastSearchKeyword: string;
+    ShowClearAllButton: boolean;
     SVGImages: soby_SVGImages;
     SetValue(value: string): void;
     SetValueWithTitle(value: string, title: string): void;
@@ -146,7 +147,7 @@ declare class SobySelectBox {
     PopulateSelectedItems(): void;
     GetSelectedItems(): any[];
     RemoveItem(index: any): void;
-    ClearItems(): void;
+    ClearItems(showSelectBox: boolean): void;
     ShowHideSelectBox(): void;
     ShowSelectBox(): void;
     HideSelectBox(): void;

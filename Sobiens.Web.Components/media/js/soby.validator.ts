@@ -551,8 +551,13 @@ class soby_EmailValidator extends soby_PatternValidator
 
 }
 
-class soby_UrlValidator extends soby_PatternValidator
+class soby_UrlValidator extends soby_PresenceValidator
 {
+    ErrorMessage: string = "";
+    ErrorMessages = {
+        Required: "",
+        InvalidURL: ""
+    }
     constructor()
     {
         super();
@@ -566,18 +571,33 @@ class soby_UrlValidator extends soby_PatternValidator
             '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
             '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
         */
-        this.Pattern = new RegExp('(http|ftp|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?', 'i');
+        //this.Pattern = new RegExp("/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g", "i");
     }
 
     SetDefaultErrorMessages()
     {
         super.SetDefaultErrorMessages();
-        this.ErrorMessages.NotMatchingPattern = sobyValidate.ErrorMessages.Url.InvalidUrlFormat;
+        this.ErrorMessages.Required = sobyValidate.ErrorMessages.Presence.Required;
+        this.ErrorMessages.InvalidURL = sobyValidate.ErrorMessages.Url.InvalidUrlFormat;
     }
 
     Validate(value: any): boolean
     {
-        return super.Validate(value);
+        const isValid = super.Validate(value);
+        if (isValid === false) {
+            return false;
+        }
+
+        const res = value.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+        if (res === null) {
+            this.ErrorMessage = this.ErrorMessages.InvalidURL;
+        }
+
+        if (this.ErrorMessage !== "") {
+            return false;
+        }
+
+        return true;
     }
 
     Clone(): soby_ValidatorInterface
@@ -587,9 +607,9 @@ class soby_UrlValidator extends soby_PatternValidator
         validator.Required = this.Required;
         validator.Type = this.Type;
         validator.ErrorMessage = this.ErrorMessage;
-        validator.Pattern = this.Pattern;
-        validator.MinLength = this.MinLength;
-        validator.MaxLength = this.MaxLength;
+        //validator.Pattern = this.Pattern;
+        //validator.MinLength = this.MinLength;
+        //validator.MaxLength = this.MaxLength;
 
         return validator;
     }

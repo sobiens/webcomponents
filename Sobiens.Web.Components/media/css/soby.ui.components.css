@@ -841,7 +841,7 @@
             padding-left: 3px;
             color: black;
         }
-.sobyselectbox .searchtextbox {max-width: 100%;padding: 5px;border: none !important; outline: none;min-width: 2.2em;background-color:transparent;}
+.sobyselectbox .searchtextbox {max-width: 100%; width:100%; padding: 5px;border: none !important; outline: none;min-width: 2.2em;background-color:transparent;}
 .sobyselectbox .emptytext{    display: inline-block;
     position: absolute;
     top: 0;
@@ -849,7 +849,9 @@
     padding: inherit;
     margin: .45238095em 0 .45238095em 1em;
     line-height: 1.21428571em;
-    color: rgba(191,191,191,.87);}
+    color: rgba(191,191,191,.87);
+    z-index:-1;
+}
 .sobyselectbox .searchpanel {float:left;}
     .sobyselectbox .selecteditemsandsearchpanel {
         float: left;

@@ -129,6 +129,7 @@ declare class SobyOrderByFields extends Array<SobyOrderByField> {
     GetOrderFieldByName(fieldName: string): SobyOrderByField;
     ContainsField(fieldName: string): boolean;
     ContainsFieldAsAsc(fieldName: string): boolean;
+    Clone(): SobyOrderByFields;
 }
 declare class SobyOrderByField {
     constructor(fieldName: string, isAsc: boolean);
@@ -310,7 +311,6 @@ declare class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
 }
 declare class soby_StaticDataService implements soby_ServiceInterface {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
-    DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
     constructor(fields: Array<SobySchemaField>, items: Array<soby_Item>);
     Items: Array<soby_Item>;
     NextPageString: string;

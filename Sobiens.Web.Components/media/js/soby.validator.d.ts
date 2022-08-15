@@ -157,7 +157,12 @@ declare class soby_EmailValidator extends soby_PatternValidator {
     Validate(value: any): boolean;
     Clone(): soby_ValidatorInterface;
 }
-declare class soby_UrlValidator extends soby_PatternValidator {
+declare class soby_UrlValidator extends soby_PresenceValidator {
+    ErrorMessage: string;
+    ErrorMessages: {
+        Required: string;
+        InvalidURL: string;
+    };
     constructor();
     SetDefaultErrorMessages(): void;
     Validate(value: any): boolean;

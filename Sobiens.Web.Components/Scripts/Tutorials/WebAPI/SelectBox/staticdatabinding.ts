@@ -26,7 +26,7 @@ function soby_PopulateSelectBoxStaticDataBinding() {
         new SobySchemaField("Age", SobyFieldTypes.Number, null),
         new SobySchemaField("Sex", SobyFieldTypes.Text, null)
     ], items);
-    customerService.DataSourceBuilder.RowLimit = 10000;
+    customerService.DataSourceBuilder.RowLimit = 100;
     /*
     var bookDataSourceBuilder = new soby_WSBuilder();
     bookDataSourceBuilder.Filters = new SobyFilters(false);
@@ -47,10 +47,11 @@ function soby_PopulateSelectBoxStaticDataBinding() {
     var selectbox = new SobySelectBox("soby_BooksDiv");
     selectbox.DataService = customerService;
     selectbox.TitleFieldName = "FirstName";
-    selectbox.ValueFieldName = "Id";
+    selectbox.ValueFieldName = "ID";
     selectbox.FocusToNextItemAfterItemSelection = false;
-    selectbox.SearchOnDemand = true;
+    selectbox.SearchOnDemand = false;
     selectbox.SearchParameterName = "FirstName";
+    selectbox.AllowMultipleSelections = true;
     selectbox.Initialize();
 }
 

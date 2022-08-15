@@ -10,6 +10,8 @@ declare class soby_SharePointService implements soby_ServiceInterface {
     Filters: SobyFilters;
     GroupByFields: SobyGroupByFields;
     OrderByFields: SobyOrderByFields;
+    InitialFilters: SobyFilters;
+    InitialOrderByFields: SobyOrderByFields;
     NextPageExist: boolean;
     Transport: soby_Transport;
     SetRowLimit(rowLimit: number): void;
@@ -23,6 +25,7 @@ declare class soby_SharePointService implements soby_ServiceInterface {
     GoToPage(pageIndex: number): void;
     CanNavigateToNextPage(): boolean;
     CanNavigateToPreviousPage(): boolean;
+    GetDataSourceBuilderForQueries(): soby_DataSourceBuilderAbstract;
     PopulateItems(args: Array<any>): void;
     Parse(): void;
     GetFieldNames(): any[];

@@ -691,6 +691,15 @@ class SobyOrderByFields extends Array<SobyOrderByField> {
 
         return false;
     }
+    Clone(): SobyOrderByFields {
+        var orderByFields = new SobyOrderByFields();
+        for (var i = 0; i < this.length; i++) {
+            var orderByField = this[i];
+            orderByFields.push(new SobyOrderByField(orderByField.FieldName, orderByField.IsAsc));
+        }
+
+        return orderByFields;
+    }
 }
 class SobyOrderByField
 {
@@ -1217,10 +1226,6 @@ class soby_WebServiceService implements soby_ServiceInterface {
                 soby_LogMessage("service.DataSourceBuilder.RowLimit:" + service.DataSourceBuilder.RowLimit);
                 soby_LogMessage("service.DataSourceBuilder.ItemCount :" + service.DataSourceBuilder.ItemCount );
 
-                soby_LogMessage(items);
-
-                soby_LogMessage(service);
-
                 var startIndex = (service.DataSourceBuilder.PageIndex * service.DataSourceBuilder.RowLimit) + 1;
                 var endIndex = startIndex + service.DataSourceBuilder.ItemCount - 1;
                 soby_LogMessage("startIndex :" + startIndex);
@@ -1413,6 +1418,9 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
             if (this.MainQueryGenerated !== null) {
                 mainEnvelope = this.MainQueryGenerated(envelope);
             }
+            else {
+                mainEnvelope = envelope;
+            }
         }
         else {
             var envelope = whereQuery;
@@ -1434,13 +1442,16 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
                 envelope += "&";
             }
 
-            mainEnvelope += pagingQuery;
+            envelope += pagingQuery;
             if (this.MainQueryGenerated !== null) {
                 mainEnvelope = this.MainQueryGenerated(envelope);
             }
+            else {
+                mainEnvelope = envelope;
+            }
         }
 
-        return envelope;
+        return mainEnvelope;
     }
     GetCountQuery(transport: soby_TransportRequest) {
         this.CountQueryBeingGenerated();
@@ -1526,7 +1537,6 @@ class soby_StaticDataBuilder extends soby_DataSourceBuilderAbstract {
 
 class soby_StaticDataService implements soby_ServiceInterface {
     DataSourceBuilder: soby_DataSourceBuilderAbstract;
-    DataSourceBuilderTemp: soby_DataSourceBuilderAbstract;
     constructor(fields: Array<SobySchemaField>, items: Array<soby_Item>) {
         this.Items = items;
 
@@ -1673,6 +1683,13 @@ class soby_StaticDataService implements soby_ServiceInterface {
         if (this.Filters.Filters.length > 0) {
             for (let i = items.length - 1; i > -1; i--) {
                 if (this.CheckIfMatchFilters(items[i], this.Filters) === false) {
+                    items.splice(i, 1);
+                }
+            }
+        }
+        else if (this.DataSourceBuilder.Filters.Filters.length > 0) {
+            for (let i = items.length - 1; i > -1; i--) {
+                if (this.CheckIfMatchFilters(items[i], this.DataSourceBuilder.Filters) === false) {
                     items.splice(i, 1);
                 }
             }

@@ -437,8 +437,14 @@ var soby_UrlValidator = /** @class */ (function (_super) {
     __extends(soby_UrlValidator, _super);
     function soby_UrlValidator() {
         var _this = _super.call(this) || this;
+        _this.ErrorMessage = "";
+        _this.ErrorMessages = {
+            Required: "",
+            InvalidURL: ""
+        };
         _this.Name = "UrlValidator ";
         _this.Type = soby_ValidatorTypes.URL;
+        return _this;
         /*
         this.Pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
             '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
@@ -447,15 +453,26 @@ var soby_UrlValidator = /** @class */ (function (_super) {
             '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
             '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
         */
-        _this.Pattern = new RegExp('(http|ftp|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?', 'i');
-        return _this;
+        //this.Pattern = new RegExp("/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g", "i");
     }
     soby_UrlValidator.prototype.SetDefaultErrorMessages = function () {
         _super.prototype.SetDefaultErrorMessages.call(this);
-        this.ErrorMessages.NotMatchingPattern = sobyValidate.ErrorMessages.Url.InvalidUrlFormat;
+        this.ErrorMessages.Required = sobyValidate.ErrorMessages.Presence.Required;
+        this.ErrorMessages.InvalidURL = sobyValidate.ErrorMessages.Url.InvalidUrlFormat;
     };
     soby_UrlValidator.prototype.Validate = function (value) {
-        return _super.prototype.Validate.call(this, value);
+        var isValid = _super.prototype.Validate.call(this, value);
+        if (isValid === false) {
+            return false;
+        }
+        var res = value.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+        if (res === null) {
+            this.ErrorMessage = this.ErrorMessages.InvalidURL;
+        }
+        if (this.ErrorMessage !== "") {
+            return false;
+        }
+        return true;
     };
     soby_UrlValidator.prototype.Clone = function () {
         var validator = new soby_UrlValidator();
@@ -463,13 +480,13 @@ var soby_UrlValidator = /** @class */ (function (_super) {
         validator.Required = this.Required;
         validator.Type = this.Type;
         validator.ErrorMessage = this.ErrorMessage;
-        validator.Pattern = this.Pattern;
-        validator.MinLength = this.MinLength;
-        validator.MaxLength = this.MaxLength;
+        //validator.Pattern = this.Pattern;
+        //validator.MinLength = this.MinLength;
+        //validator.MaxLength = this.MaxLength;
         return validator;
     };
     return soby_UrlValidator;
-}(soby_PatternValidator));
+}(soby_PresenceValidator));
 var soby_ValidatorTypes;
 (function (soby_ValidatorTypes) {
     soby_ValidatorTypes[soby_ValidatorTypes["Date"] = 1] = "Date";

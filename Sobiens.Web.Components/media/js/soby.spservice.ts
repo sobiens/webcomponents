@@ -7,6 +7,10 @@ class soby_SharePointService implements soby_ServiceInterface
         this.NextPageStrings = new Array<string>();
         this.NextPageStrings[0] = "";
         this.Transport = new soby_Transport();
+        this.InitialFilters = dataSourceBuilder.Filters.Clone();
+        this.InitialOrderByFields = dataSourceBuilder.OrderByFields.Clone();
+        this.DataSourceBuilder.Filters = new SobyFilters(false);
+        this.DataSourceBuilder.OrderByFields = new SobyOrderByFields();
     }
     NextPageString: string = "";
     PageIndex: number = 0;
@@ -17,6 +21,8 @@ class soby_SharePointService implements soby_ServiceInterface
     Filters: SobyFilters = new SobyFilters(false);
     GroupByFields: SobyGroupByFields = new SobyGroupByFields();
     OrderByFields: SobyOrderByFields = new SobyOrderByFields();
+    InitialFilters: SobyFilters = new SobyFilters(false);
+    InitialOrderByFields: SobyOrderByFields = new SobyOrderByFields();
     NextPageExist: boolean = false;
     Transport: soby_Transport;
     SetRowLimit(rowLimit: number) {
@@ -34,9 +40,12 @@ class soby_SharePointService implements soby_ServiceInterface
         var dataType = this.Transport.Read.DataType;
         var contentType = this.Transport.Read.ContentType;
 
-        var countServiceUrl = this.DataSourceBuilder.GetCountQuery(this.Transport.Read);
-        soby_LogMessage("countServiceUrl");
-        soby_LogMessage(countServiceUrl);
+        const dataSourceBuilder = this.GetDataSourceBuilderForQueries();
+        var countServiceUrl = dataSourceBuilder.GetCountQuery(this.Transport.Read);
+        soby_LogMessage("dataSourceBuilder:");
+        soby_LogMessage(dataSourceBuilder);
+        soby_LogMessage("this.dataSourceBuilder:");
+        soby_LogMessage(this);
         if (countServiceUrl === null)
         {
             var startIndex = (service.DataSourceBuilder.PageIndex * service.DataSourceBuilder.RowLimit) + 1;
@@ -58,7 +67,7 @@ class soby_SharePointService implements soby_ServiceInterface
             return;
         }
         soby_LogMessage("querying count...");
-        this.DataSourceBuilder.GetData("",
+        dataSourceBuilder.GetData("",
             function (result) {
                 var totalItemCount = parseInt(result);
                 soby_LogMessage("Total item count:" + totalItemCount);
@@ -106,7 +115,7 @@ class soby_SharePointService implements soby_ServiceInterface
     Sort(orderByFields: SobyOrderByFields) {
         this.PageIndex = 0;
         this.NextPageString = "";
-        this.NextPageStrings = new Array();
+        this.NextPageStrings = [];
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
         
@@ -116,7 +125,7 @@ class soby_SharePointService implements soby_ServiceInterface
     Filter(filters: SobyFilters, clearOtherFilters: boolean) {
         this.PageIndex = 0;
         this.NextPageString = "";
-        this.NextPageStrings = new Array();
+        this.NextPageStrings = [];
         this.NextPageStrings[0] = "";
         if (clearOtherFilters === true)
         {
@@ -133,7 +142,7 @@ class soby_SharePointService implements soby_ServiceInterface
     {
         this.PageIndex = 0;
         this.NextPageString = "";
-        this.NextPageStrings = new Array();
+        this.NextPageStrings = [];
         this.NextPageStrings[0] = "";
         this.OrderByFields = orderByFields;
         if (clearOtherFilters === true)
@@ -172,7 +181,35 @@ class soby_SharePointService implements soby_ServiceInterface
 
         return true;
     };
+    GetDataSourceBuilderForQueries() {
+        const dataSourceBuilder = this.DataSourceBuilder.Clone();
+        for (let i = 0; i < this.GroupByFields.length; i++) {
+            dataSourceBuilder.AddOrderField(this.GroupByFields[i].FieldName, this.GroupByFields[i].IsAsc);
+        }
 
+        dataSourceBuilder.OrderByFields = new SobyOrderByFields([]);
+        if (this.OrderByFields.length > 0) {
+            dataSourceBuilder.AddOrderFields(this.OrderByFields);
+        }
+
+        dataSourceBuilder.Filters = new SobyFilters(false);
+        if (this.Filters.Filters.length > 0) {
+            dataSourceBuilder.Filters.AddFilterCollection(this.Filters);
+        }
+        if (this.InitialFilters.Filters.length > 0) {
+            dataSourceBuilder.Filters.AddFilterCollection(this.InitialFilters);
+        }
+
+        dataSourceBuilder.PageIndex = this.PageIndex;
+        if (this.PageIndex === 0) {
+            dataSourceBuilder.NextPageString = "";
+        }
+        else {
+            dataSourceBuilder.NextPageString = this.NextPageString;
+        }
+
+        return dataSourceBuilder;
+    }
     PopulateItems(args: Array<any>) {
         this.Args = args;
         if (this.ItemBeingPopulated != null)
@@ -180,36 +217,14 @@ class soby_SharePointService implements soby_ServiceInterface
             this.ItemBeingPopulated();
         }
 
-        this.DataSourceBuilder = this.DataSourceBuilder.Clone();
-        for (var i = 0; i < this.GroupByFields.length; i++) {
-            this.DataSourceBuilder.AddOrderField(this.GroupByFields[i].FieldName, this.GroupByFields[i].IsAsc);
-
-        }
-        if (this.OrderByFields.length > 0)
-        {
-            this.DataSourceBuilder.AddOrderFields(this.OrderByFields);
-        }
-
-        if (this.Filters.Filters.length > 0) {
-            this.DataSourceBuilder.Filters.AddFilterCollection(this.Filters);
-        }
-
-        this.DataSourceBuilder.PageIndex = this.PageIndex;
-        if (this.PageIndex === 0)
-        {
-            this.DataSourceBuilder.NextPageString = "";
-        }
-        else
-        {
-            this.DataSourceBuilder.NextPageString = this.NextPageString;
-        }
+        const dataSourceBuilder = this.GetDataSourceBuilderForQueries();
 
         var service = this;
         var serviceUrl = this.Transport.Read.Url;
         var requestMethod = this.Transport.Read.Type;
         var dataType = this.Transport.Read.DataType;
         var contentType = this.Transport.Read.ContentType;
-        var mainQuery = service.DataSourceBuilder.GetMainQuery(this.Transport.Read, false);
+        var mainQuery = dataSourceBuilder.GetMainQuery(this.Transport.Read, false);
         if (mainQuery != null && mainQuery != "") {
             if (serviceUrl.indexOf("?") === -1) {
                 serviceUrl += "?";
@@ -220,22 +235,25 @@ class soby_SharePointService implements soby_ServiceInterface
             serviceUrl += mainQuery;
         }
 
-        this.DataSourceBuilder.GetData("",
+        dataSourceBuilder.GetData("",
             function (result) {
                 soby_LogMessage(result);
-                var items = service.DataSourceBuilder.ParseData(result);
+                var items = dataSourceBuilder.ParseData(result);
                 soby_LogMessage(items);
                 soby_LogMessage(service);
 
-                var startIndex = (service.DataSourceBuilder.PageIndex * service.DataSourceBuilder.RowLimit) + 1;
-                var endIndex = startIndex + service.DataSourceBuilder.ItemCount - 1;
-                if (service.DataSourceBuilder.ItemCount === 0) {
+                var startIndex = (dataSourceBuilder.PageIndex * dataSourceBuilder.RowLimit) + 1;
+                var endIndex = startIndex + dataSourceBuilder.ItemCount - 1;
+                if (dataSourceBuilder.ItemCount === 0) {
                     startIndex = 0;
                     endIndex = 0;
                 }
+                service.DataSourceBuilder.NextPageExist = dataSourceBuilder.NextPageExist;
+                service.DataSourceBuilder.NextPageString = dataSourceBuilder.NextPageString;
                 service.StartIndex = startIndex;
                 service.EndIndex = endIndex;
                 service.ItemPopulated(items);
+
             },
             function (XMLHttpRequest, textStatus, errorThrown) {
                 var errorMessage = "An error occured on populating grid" + XMLHttpRequest + " --- " + textStatus + " --- " + errorThrown;
@@ -254,7 +272,7 @@ class soby_SharePointService implements soby_ServiceInterface
                 }
                 soby_LogMessage(errorMessage);
             },
-            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, service.DataSourceBuilder.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
+            function (XMLHttpRequest, textStatus, errorThrown) { }, true, serviceUrl, dataSourceBuilder.Headers, requestMethod, dataType, contentType, this.Transport.Read.IncludeCredentials);
     }
 
     Parse() {
@@ -262,7 +280,7 @@ class soby_SharePointService implements soby_ServiceInterface
     }
 
     GetFieldNames() {
-        var fieldNames = new Array();
+        var fieldNames = [];
         for (var i = 0; i < this.DataSourceBuilder.SchemaFields.length; i++) {
             fieldNames[fieldNames.length] = { FieldName: this.DataSourceBuilder.SchemaFields[i].FieldName }
         }
@@ -393,7 +411,7 @@ class soby_SPSearchBuilder extends soby_WSBuilder
     }
     ParseData(result1)
     {
-        var result = new Array();
+        var result = [];
         var items = result1.PrimaryQueryResult.RelevantResults.Table.Rows;
 
         for (var i = 0; i < items.length; i++)
@@ -511,7 +529,7 @@ class soby_SPSearch2010Builder extends soby_WSBuilder
     ParseData(result1)
     {
         var xmlString = $(result1.children[0]).html();
-        var result = new Array();
+        var result = [];
         var xml = $(xmlString.replace(/<soap:/gi, "<").replace(/<\/soap:/gi, "<\/").replace(/<xsi:/gi, "<").replace(/<\/xsi:/gi, "<\/").replace(/<xsd:/gi, "<").replace(/<\/xsd:/gi, "<\/").replace(/<xs:/gi, "<").replace(/<\/xs:/gi, "<\/"));
         var items = xml.find("Results RelevantResults");
 
@@ -561,6 +579,7 @@ class soby_SPRestBuilder extends soby_WSBuilder {
             builder.AddHeader(header.Key, header.Value);
         }
 
+        builder.OrderByFields = new SobyOrderByFields();
         for (var i = 0; i < this.OrderByFields.length; i++) {
             var orderByField = this.OrderByFields[i];
             builder.AddOrderField(orderByField.FieldName, orderByField.IsAsc);
@@ -571,7 +590,7 @@ class soby_SPRestBuilder extends soby_WSBuilder {
         return builder;
     }
     GetWhereQuery(transport: soby_TransportRequest) {
-        var query = "";
+        let query = "";
         if (transport.Type === "POST")
         {
             {
@@ -580,7 +599,7 @@ class soby_SPRestBuilder extends soby_WSBuilder {
         }
         else {
             query = this.Filters.ToQueryString(1);
-            if (query != "")
+            if (query !== "")
             {
                 query = "$filter=" + query;
             }
@@ -675,7 +694,7 @@ class soby_SPCSOMBuilder extends soby_SPRestBuilder
                 clientContext.executeQueryAsync(Function.createDelegate(this, function (arg1, arg2)
                 {
                     var position = listItems.get_listItemCollectionPosition();
-                    //Position will be null if all the items in the collection are fetched and there are no more items to be fetched.
+
                     if (position != null)
                     {
                         builder.NextPageExist = true;
@@ -686,7 +705,7 @@ class soby_SPCSOMBuilder extends soby_SPRestBuilder
                         builder.NextPageExist = false;
                     }
 
-                    var items = new Array();
+                    var items = [];
 
                     var listItemEnumerator = listItems.getEnumerator();
 
@@ -730,12 +749,12 @@ class soby_SPCSOMBuilder extends soby_SPRestBuilder
 function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
     this.WebUrl = webUrl;
     this.ActionName = listName;
-    this.SchemaFields = new Array();
+    this.SchemaFields = [];
     this.ViewName = viewName;
     this.RowLimit = rowLimit;
     this.PageIndex = 0;
     this.NextPageString = "";
-    this.OrderByFields = new Array();
+    this.OrderByFields = [];
     this.Filters = null;
     this.ItemCount = 0;
 
@@ -882,7 +901,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
 
     this.ParseData = function (result)
     {
-        var items = new Array();
+        var items = [];
         var viewFields = this.ViewFields;
         var xmlData = $(result.responseText);
         this.ItemCount = parseInt(xmlData.find("rs\\:data, data").attr("ItemCount"));
@@ -906,7 +925,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
                 switch (viewFields[i].FieldType)
                 {
                     case SobyFieldTypes.Lookup:
-                        var valueArray = new Array();
+                        var valueArray = [];
                         if (value != "" && value != null)
                         {
                             var values = value.split(";#");
@@ -922,7 +941,7 @@ function soby_CamlBuilder(listName, viewName, rowLimit, webUrl) {
                         item[propertyName] = valueArray;
                         break;
                     case SobyFieldTypes.MultiChoice:
-                        var valueArray = new Array();
+                        var valueArray = [];
                         if (value != "" && value != null)
                         {
                             var values = value.split(";#");
@@ -1366,7 +1385,7 @@ class sobySPListsObject
             data: soapEnv,
             complete: function (data)
             {
-                var lists = new Array();
+                var lists = [];
                 var xmlData = $(data.responseText);
                 var listsXml = xmlData.find("List");
                 for (var i = 0; i < listsXml.length; i++)
@@ -1418,7 +1437,7 @@ class sobySPListsObject
             complete: function (data)
             {
                 /*
-                      var lists = new Array();
+                      var lists = [];
                     var xmlData = $(data.responseText);
                     var listsXml = xmlData.find("List");
                     for(var i=0;i<listsXml.length;i++){
@@ -1453,7 +1472,7 @@ class sobySPListsObject
 	      </soap:Body> \
 	    </soap:Envelope>";
 
-        var fields = new Array();
+        var fields = [];
         $.ajax({
             async: false,
             url: siteUrl + "/_vti_bin/lists.asmx",
@@ -1826,7 +1845,7 @@ class sobySPListsObject
                 var xmlData = $(result.responseText);
                 var list = null;
                 var attachmentsArray = xmlData.find("Attachment");
-                var attachments = new Array();
+                var attachments = [];
                 for (var i = 0; i < attachmentsArray.length; i++)
                 {
                     attachments[attachments.length] = $(attachmentsArray[i]).text();
@@ -1993,7 +2012,7 @@ class sobySPUserGroupObject
             data: soapEnv,
             complete: function (data)
             {
-                var roles = new Array();
+                var roles = [];
                 var xmlData = $(data.responseText);
                 var _roles = xmlData.find("Role");
                 for (var i = 0; i < _roles.length; i++)
@@ -2037,7 +2056,7 @@ class sobySPWebsObject
             data: soapEnv,
             complete: function (data)
             {
-                var sites = new Array();
+                var sites = [];
                 var xmlData = $(data.responseText);
                 var webs = xmlData.find("Web");
                 for (var i = 0; i < webs.length; i++)
@@ -2124,7 +2143,7 @@ class sobySPViewsObject
             data: soapEnv,
             complete: function (data)
             {
-                var views = new Array();
+                var views = [];
                 var xmlData = $(data.responseText);
                 var viewsXml = xmlData.find("View");
                 for (var i = 0; i < viewsXml.length; i++)
@@ -2307,9 +2326,9 @@ class sobySPWorkflowsObject {
                     callback();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("An error occured on StartWorkFlow");
-                console.log(textStatus);
-                console.log(errorThrown);
+                soby_LogMessage("An error occured on StartWorkFlow");
+                soby_LogMessage(textStatus);
+                soby_LogMessage(errorThrown);
             },
             contentType: "text/xml; charset=utf-8"
         });

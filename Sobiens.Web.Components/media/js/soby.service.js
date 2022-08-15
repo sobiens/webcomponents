@@ -603,6 +603,14 @@ var SobyOrderByFields = /** @class */ (function (_super) {
         }
         return false;
     };
+    SobyOrderByFields.prototype.Clone = function () {
+        var orderByFields = new SobyOrderByFields();
+        for (var i = 0; i < this.length; i++) {
+            var orderByField = this[i];
+            orderByFields.push(new SobyOrderByField(orderByField.FieldName, orderByField.IsAsc));
+        }
+        return orderByFields;
+    };
     return SobyOrderByFields;
 }(Array));
 var SobyOrderByField = /** @class */ (function () {
@@ -1020,8 +1028,6 @@ var soby_WebServiceService = /** @class */ (function () {
             soby_LogMessage("service.DataSourceBuilder.PageIndex:" + service.DataSourceBuilder.PageIndex);
             soby_LogMessage("service.DataSourceBuilder.RowLimit:" + service.DataSourceBuilder.RowLimit);
             soby_LogMessage("service.DataSourceBuilder.ItemCount :" + service.DataSourceBuilder.ItemCount);
-            soby_LogMessage(items);
-            soby_LogMessage(service);
             var startIndex = (service.DataSourceBuilder.PageIndex * service.DataSourceBuilder.RowLimit) + 1;
             var endIndex = startIndex + service.DataSourceBuilder.ItemCount - 1;
             soby_LogMessage("startIndex :" + startIndex);
@@ -1183,6 +1189,9 @@ var soby_StaticDataBuilder = /** @class */ (function (_super) {
             if (this.MainQueryGenerated !== null) {
                 mainEnvelope = this.MainQueryGenerated(envelope);
             }
+            else {
+                mainEnvelope = envelope;
+            }
         }
         else {
             var envelope = whereQuery;
@@ -1197,12 +1206,15 @@ var soby_StaticDataBuilder = /** @class */ (function (_super) {
             if (envelope !== "" && pagingQuery !== "") {
                 envelope += "&";
             }
-            mainEnvelope += pagingQuery;
+            envelope += pagingQuery;
             if (this.MainQueryGenerated !== null) {
                 mainEnvelope = this.MainQueryGenerated(envelope);
             }
+            else {
+                mainEnvelope = envelope;
+            }
         }
-        return envelope;
+        return mainEnvelope;
     };
     soby_StaticDataBuilder.prototype.GetCountQuery = function (transport) {
         this.CountQueryBeingGenerated();
@@ -1402,6 +1414,13 @@ var soby_StaticDataService = /** @class */ (function () {
         if (this.Filters.Filters.length > 0) {
             for (var i = items.length - 1; i > -1; i--) {
                 if (this.CheckIfMatchFilters(items[i], this.Filters) === false) {
+                    items.splice(i, 1);
+                }
+            }
+        }
+        else if (this.DataSourceBuilder.Filters.Filters.length > 0) {
+            for (var i = items.length - 1; i > -1; i--) {
+                if (this.CheckIfMatchFilters(items[i], this.DataSourceBuilder.Filters) === false) {
                     items.splice(i, 1);
                 }
             }
